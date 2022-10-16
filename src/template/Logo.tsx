@@ -11,9 +11,9 @@ const Logo = (props: ILogoProps) => {
     : 'font-semibold text-xl';
 
   return (
-    <div className={`text-gray-900 flex items-center ${fontStyle}`}>
+    <div className={`flex items-center text-gray-900 ${fontStyle}`}>
       <svg
-        className="text-primary-500 stroke-current mr-1"
+        className="mr-1 stroke-current text-primary-500"
         xmlns="http://www.w3.org/2000/svg"
         width={size}
         height={size}

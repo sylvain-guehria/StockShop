@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 type IFooterTwoRowsCopyrightProps = {
   siteName: string;
@@ -9,7 +9,7 @@ const FooterTwoRowsCopyright = (props: IFooterTwoRowsCopyrightProps) => (
   <>
     {props.children}
 
-    <div className="text-center text-gray-500 text-sm mt-12">
+    <div className="mt-12 text-center text-sm text-gray-500">
       {`© Copyright ${new Date().getFullYear()} ${
         props.siteName
       }. All Rights Reserved.`}

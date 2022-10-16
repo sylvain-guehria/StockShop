@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import className from 'classnames';
 import Link from 'next/link';
 import type { ReactNode } from 'react';

@@ -1,6 +1,5 @@
-import { ReactNode } from 'react';
-
 import className from 'classnames';
+import type { ReactNode } from 'react';
 
 type IPricingCardProps = {
   name: string;
@@ -22,16 +21,16 @@ const PricingCard = (props: IPricingCardProps) => {
 
   return (
     <div className={pricingCardClass}>
-      <div className="inline-flex bg-primary-200 rounded-full px-3 py-1 text-sm font-semibold text-primary-600 tracking-wider">
+      <div className="inline-flex rounded-full bg-primary-200 px-3 py-1 text-sm font-semibold tracking-wider text-primary-600">
         {props.name}
       </div>
 
       <div className="mt-2">
-        <span className="text-gray-900 text-5xl font-bold">{props.price}</span>
+        <span className="text-5xl font-bold text-gray-900">{props.price}</span>
         <span className="ml-1">{`/ ${props.periodicity}`}</span>
       </div>
 
-      <div className="mt-4 text-gray-700 text-lg font-medium">
+      <div className="mt-4 text-lg font-medium text-gray-700">
         {props.description}
       </div>
 

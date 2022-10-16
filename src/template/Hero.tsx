@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { mainRoutes } from 'routes/mainRoutes';
 
 import { Background } from '../background/Background';
 import { Button } from '../button/Button';
@@ -11,21 +12,13 @@ const Hero = () => (
   <Background color="bg-gray-200">
     <Section yPadding="py-6">
       <NavbarTwoColumns logo={<Logo xl />}>
-        <li>
-          <Link href="/">
-            <a>Docs</a>
-          </Link>
-        </li>
-        <li>
-          <Link href="/">
-            <a>Blog</a>
-          </Link>
-        </li>
-        <li>
-          <Link href="/">
-            <a>Sign in</a>
-          </Link>
-        </li>
+        {mainRoutes.map((route) => (
+          <li key={route.path}>
+            <Link href={route.path}>
+              <a>{route.label}</a>
+            </Link>
+          </li>
+        ))}
         <li>
           <Link href="/">
             <a>
@@ -40,15 +33,15 @@ const Hero = () => (
       <HeroOneButton
         title={
           <>
-            {'The modern landing page for\n'}
-            <span className="text-primary-500">React developer</span>
+            {'Votre application de gestion de stock\n'}
+            <span className="text-primary-500">Et de vente en ligne</span>
           </>
         }
-        description="The easiest way to build React landing page in seconds."
+        description="Gérer votre inventaire et vendre vos produits en ligne n'a jamais été aussi facile."
         button={
           <Link href="/">
             <a>
-              <Button xl>Start your 14-day Free Trial</Button>
+              <Button xl>Créé votre compte gratuitement</Button>
             </a>
           </Link>
         }

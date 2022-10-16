@@ -1,5 +1,5 @@
-import { NextSeo } from 'next-seo';
 import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 
 import { AppConfig } from '../utils/AppConfig';
 

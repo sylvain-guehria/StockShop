@@ -9,7 +9,7 @@ import { PricingFeature } from '../pricing/PricingFeature';
 const Pricing = () => (
   <Background color="bg-gray-200">
     <Section title="Flexible Plans" subtitle="Pricing">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
         <PricingCard
           name="FREE"
           price="$0"

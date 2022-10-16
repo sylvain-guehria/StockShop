@@ -1,4 +1,5 @@
-import { ReactNode } from 'react';
+/* eslint-disable tailwindcss/no-custom-classname */
+import type { ReactNode } from 'react';
 
 type IQuestionAnswerProps = {
   question: string;
@@ -6,8 +7,8 @@ type IQuestionAnswerProps = {
 };
 
 const QuestionAnswer = (props: IQuestionAnswerProps) => (
-  <div className="question-answer mt-8 first:mt-0 sm:w-3/4 border border-gray-200 rounded-md shadow p-4 sm:p-6 mx-auto">
-    <div className="text-2xl text-primary-500 font-semibold">
+  <div className="question-answer mx-auto mt-8 rounded-md border border-gray-200 p-4 shadow first:mt-0 sm:w-3/4 sm:p-6">
+    <div className="text-2xl font-semibold text-primary-500">
       {props.question}
     </div>
 
