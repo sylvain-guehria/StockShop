@@ -50,6 +50,9 @@ module.exports = {
           900: '#22543d',
         },
       },
+      fontFamily: {
+        sans: ['Inter var'],
+      },
       lineHeight: {
         hero: '3.7rem',
       },

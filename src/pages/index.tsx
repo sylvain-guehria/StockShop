@@ -1,5 +1,14 @@
-import { Base } from '../template/Base';
+import Header from '@/components/Header/Header';
 
-const Index = () => <Base />;
+import { Base } from '../components/template/Base';
+
+const Index = () => {
+  return (
+    <>
+      <Header />
+      <Base />
+    </>
+  );
+};
 
 export default Index;

@@ -1,4 +1,4 @@
-import { LoginComponant } from '@/Login/LoginComponant';
+import { LoginComponant } from '@/components/Login/LoginComponant';
 
 const Login = () => <LoginComponant />;
 

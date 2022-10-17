@@ -1,5 +1,5 @@
+import { AppConfig } from '../../utils/AppConfig';
 import { Meta } from '../layout/Meta';
-import { AppConfig } from '../utils/AppConfig';
 import { Banner } from './Banner';
 import { Customer } from './Customer';
 import { FAQ } from './FAQ';
