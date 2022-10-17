@@ -1,7 +1,8 @@
 export const mainRoutes = [
   {
-    path: 'singin',
+    path: 'login',
     label: 'Connexion',
+    showInNavBar: true,
   },
   {
     path: 'signup',

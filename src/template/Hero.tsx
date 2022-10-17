@@ -12,13 +12,16 @@ const Hero = () => (
   <Background color="bg-gray-200">
     <Section yPadding="py-6">
       <NavbarTwoColumns logo={<Logo xl />}>
-        {mainRoutes.map((route) => (
-          <li key={route.path}>
-            <Link href={route.path}>
-              <a>{route.label}</a>
-            </Link>
-          </li>
-        ))}
+        {mainRoutes.map(
+          (route) =>
+            route.showInNavBar && (
+              <li key={route.path}>
+                <Link href={route.path}>
+                  <a>{route.label}</a>
+                </Link>
+              </li>
+            )
+        )}
         <li>
           <Link href="/">
             <a>
