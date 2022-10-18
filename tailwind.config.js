@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -21,6 +22,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        cyan: colors.cyan,
         primary: {
           100: '#EFEDFD',
           200: '#D8D1FA',

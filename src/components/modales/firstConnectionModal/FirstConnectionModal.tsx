@@ -1,6 +1,9 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { CheckIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 import { Fragment, useRef, useState } from 'react';
+
+import { sellerRoutes } from '@/routes/sellerRoutes';
 
 const FirstConnectionModal = () => {
   const [open, setOpen] = useState(true);
@@ -53,8 +56,8 @@ const FirstConnectionModal = () => {
                     >
                       C&apos;est votre première visite sur ce site ! Bienvenue.
                       Dite nous si vous venez gérer votre inventaire ou
-                      seuelement acheter des produits dans les inventaires de
-                      vos commerçant préféfés ?
+                      seulement acheter des produits dans les inventaires de vos
+                      commerçant préféfés ?
                     </Dialog.Title>
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
@@ -74,14 +77,16 @@ const FirstConnectionModal = () => {
                   >
                     Je viens seulement en tant qu&apos;acheteur
                   </button>
-                  <button
-                    type="button"
-                    className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
-                    onClick={() => setOpen(false)}
-                    ref={cancelButtonRef}
-                  >
-                    Je veux gérer mon inventaire
-                  </button>
+                  <Link href={sellerRoutes.stockDashboard.path}>
+                    <button
+                      type="button"
+                      className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
+                      onClick={() => setOpen(false)}
+                      ref={cancelButtonRef}
+                    >
+                      Je veux gérer mon inventaire
+                    </button>
+                  </Link>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
