@@ -18,7 +18,6 @@ const Meta = (props: IMetaProps) => (
         content="width=device-width,initial-scale=1"
         key="viewport"
       />
-      <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       <link rel="apple-touch-icon" href="/apple-touch-icon.png" key="apple" />
       <link
         rel="icon"

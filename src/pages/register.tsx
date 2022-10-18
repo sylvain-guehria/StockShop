@@ -1,10 +1,10 @@
-import LoginComponant from '@/components/Login/LoginComponant';
+import RegisterComponant from '@/components/register/RegisterComponant';
 import AuthLayout from '@/layouts/AuthLayout';
 
 const Login = () => {
   return (
     <AuthLayout>
-      <LoginComponant />
+      <RegisterComponant />
     </AuthLayout>
   );
 };

@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { mainRoutes } from '@/routes/mainRoutes';
 
-const LoginComponant = () => {
+const RegisterComponant = () => {
   return (
     <>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -15,16 +15,16 @@ const LoginComponant = () => {
             />
           </Link>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Se connecter à son compte
+            S&apos;inscrire avec son email
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Ou{' '}
-            <Link href={mainRoutes.register.path}>
+            Déjà inscrit ?{' '}
+            <Link href={mainRoutes.login.path}>
               <a
                 href="#"
                 className="font-medium text-primary-600 hover:text-primary-500"
               >
-                S&apos;inscrire gratuitement
+                Se connecter
               </a>
             </Link>
           </p>
@@ -71,38 +71,12 @@ const LoginComponant = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
-                    id="remember-me"
-                    name="remember-me"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-                  />
-                  <label
-                    htmlFor="remember-me"
-                    className="ml-2 block text-sm text-gray-900"
-                  >
-                    Se souvenir de moi
-                  </label>
-                </div>
-
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-medium text-primary-600 hover:text-primary-500"
-                  >
-                    Mot de passe oublié ?
-                  </a>
-                </div>
-              </div>
-
               <div>
                 <button
                   type="submit"
                   className="flex w-full justify-center rounded-md border border-transparent bg-primary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
                 >
-                  Se connecter
+                  S&apos;inscrire
                 </button>
               </div>
             </form>
@@ -186,4 +160,4 @@ const LoginComponant = () => {
     </>
   );
 };
-export default LoginComponant;
+export default RegisterComponant;
