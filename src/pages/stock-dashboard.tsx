@@ -1,5 +1,5 @@
-import StockDashboard from '@/components/seller/StockDashboard/StockDashboard';
-import SellerLayout from '@/layouts/sellerLayout';
+import StockDashboard from '@/components/seller/Dashboard/StockDashboard';
+import SellerLayout from '@/layouts/SellerLayout';
 
 const StockDashboardPage = () => {
   return (
