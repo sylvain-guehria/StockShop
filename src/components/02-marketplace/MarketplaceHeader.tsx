@@ -13,7 +13,7 @@ import { Fragment, Suspense, useState } from 'react';
 import { currencies, navigation } from './fakeDatas';
 
 const SearchBarModal = dynamic(
-  () => import('../modals/searchBar/SearchBarModal'),
+  () => import('../05-modals/searchBar/SearchBarModal'),
   {
     suspense: true,
   }

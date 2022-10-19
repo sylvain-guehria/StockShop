@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { Background } from '../04-lib/background/Background';
 import { Button } from '../04-lib/button/Button';
 import { Section } from '../04-lib/layout/Section';
-import { PricingCard } from '../pricing/PricingCard';
-import { PricingFeature } from '../pricing/PricingFeature';
+import { PricingCard } from '../04-lib/pricing/PricingCard';
+import { PricingFeature } from '../04-lib/pricing/PricingFeature';
 
 const Pricing = () => (
   <Background color="bg-gray-200">
