@@ -46,7 +46,7 @@ const SearchBarModal: FC<Props> = ({ isSearchBarOpen, setIsSearchBarOpen }) => {
                     type="text"
                     name="text"
                     id="text"
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                     placeholder={
                       getCurrentBreakpoint()
                         ? 'Chercher par ville ou nom de boutique'

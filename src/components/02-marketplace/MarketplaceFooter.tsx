@@ -111,12 +111,12 @@ const MarketplaceFooter = () => {
                     type="text"
                     autoComplete="email"
                     required
-                    className="w-full min-w-0 appearance-none rounded-md border border-gray-300 bg-white py-2 px-4 text-base text-gray-900 shadow-sm placeholder:text-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full min-w-0 appearance-none rounded-md border border-gray-300 bg-white py-2 px-4 text-base text-gray-900 shadow-sm placeholder:text-gray-500 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
                   />
                   <div className="mt-3 sm:mt-0 sm:ml-4 sm:shrink-0">
                     <button
                       type="submit"
-                      className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-white"
+                      className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary-600 py-2 px-4 text-base font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white"
                     >
                       Sign up
                     </button>
@@ -132,7 +132,7 @@ const MarketplaceFooter = () => {
                   alt=""
                   className="h-full w-full object-cover object-center saturate-0"
                 />
-                <div className="absolute inset-0 bg-indigo-600/90" />
+                <div className="absolute inset-0 bg-primary-600/90" />
               </div>
               <div className="relative mx-auto max-w-sm text-center">
                 <h3 className="text-2xl font-bold tracking-tight text-white">

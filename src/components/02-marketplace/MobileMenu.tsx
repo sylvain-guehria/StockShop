@@ -63,7 +63,7 @@ const MobileMenu: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
                         className={({ selected }) =>
                           classNames(
                             selected
-                              ? 'text-indigo-600 border-indigo-600'
+                              ? 'text-primary-600 border-primary-600'
                               : 'text-gray-900 border-transparent',
                             'flex-1 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium'
                           )
