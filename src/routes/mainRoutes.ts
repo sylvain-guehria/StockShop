@@ -15,4 +15,8 @@ export const mainRoutes = {
     path: 'pricing',
     label: 'Prix',
   },
+  contact: {
+    path: 'contact',
+    label: 'Nous Contacter',
+  },
 };

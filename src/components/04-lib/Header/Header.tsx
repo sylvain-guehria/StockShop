@@ -1,40 +1,13 @@
 import { Popover, Transition } from '@headlessui/react';
-import {
-  Bars3Icon,
-  ChartBarIcon,
-  CursorArrowRaysIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Fragment } from 'react';
 
 import { mainRoutes } from '@/routes/mainRoutes';
 import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
 
-import SolutionsButton from '../Popovers/SolutionsButton';
-
-export type Solution = {
-  name: string;
-  description: string;
-  href: string;
-  icon: any;
-};
-
-export const solutions: Solution[] = [
-  {
-    name: 'Gestion inventaire',
-    description:
-      'Get a better understanding of where your traffic is coming from.',
-    href: '#',
-    icon: ChartBarIcon,
-  },
-  {
-    name: 'Marketplace',
-    description: 'Speak directly to your customers in a more meaningful way.',
-    href: '#',
-    icon: CursorArrowRaysIcon,
-  },
-];
+import ServicesButton from '../Popovers/ServicesButton';
+import { services } from './services';
 
 export default function Header() {
   return (
@@ -45,18 +18,16 @@ export default function Header() {
       />
       <div className="relative z-20">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6 sm:py-4 md:justify-start md:space-x-10 lg:px-8">
-          <div>
-            <Link href={mainRoutes.home.path}>
-              <a className="flex">
-                <span className="sr-only">Your Company</span>
-                <img
-                  className="h-8 w-auto sm:h-10"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                  alt=""
-                />
-              </a>
-            </Link>
-          </div>
+          <Link href={mainRoutes.home.path}>
+            <a href="#">
+              <span className="sr-only">Your Company</span>
+              <img
+                className="h-11 w-auto"
+                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=700"
+                alt=""
+              />
+            </a>
+          </Link>
           <div className="-my-2 -mr-2 md:hidden">
             <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500">
               <span className="sr-only">Open menu</span>
@@ -65,7 +36,7 @@ export default function Header() {
           </div>
           <div className="hidden md:flex md:flex-1 md:items-center md:justify-between">
             <Popover.Group as="nav" className="flex space-x-10">
-              <SolutionsButton solutions={solutions} />
+              <ServicesButton services={services} />
               <Link href={mainRoutes.pricing.path}>
                 <a
                   href="#"
@@ -139,7 +110,7 @@ export default function Header() {
               <div className="mt-6 sm:mt-8">
                 <nav>
                   <div className="grid gap-7 sm:grid-cols-2 sm:gap-y-8 sm:gap-x-4">
-                    {solutions.map((item) => (
+                    {services.map((item) => (
                       <a
                         key={item.name}
                         href={item.href}

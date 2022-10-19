@@ -19,8 +19,10 @@ import { Fragment } from 'react';
 
 import { mainRoutes } from '@/routes/mainRoutes';
 
-import { solutions } from '../04-lib/Header/Header';
-import SolutionsButton from '../04-lib/Popovers/SolutionsButton';
+import { Background } from '../04-lib/background/Background';
+import { services } from '../04-lib/Header/services';
+import { Section } from '../04-lib/layout/Section';
+import ServicesButton from '../04-lib/Popovers/ServicesButton';
 
 const resources = [
   {
@@ -311,7 +313,7 @@ export default function Example() {
               </Popover.Button>
             </div>
             <Popover.Group as="nav" className="hidden space-x-10 md:flex">
-              <SolutionsButton solutions={solutions} />
+              <ServicesButton services={services} />
               <a
                 href="#"
                 className="text-base font-medium text-gray-500 hover:text-gray-900"
@@ -336,7 +338,7 @@ export default function Example() {
               </a>
               <a
                 href="#"
-                className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-gray-200 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
               >
                 Sign up
               </a>
@@ -376,7 +378,7 @@ export default function Example() {
                 </div>
                 <div className="mt-6">
                   <nav className="grid gap-y-8">
-                    {solutions.map((item) => (
+                    {services.map((item) => (
                       <a
                         key={item.name}
                         href={item.href}
@@ -456,9 +458,8 @@ export default function Example() {
         </Transition>
       </Popover>
 
-      {/* Pricing with four tiers and toggle */}
-      <div className="bg-gradient-to-b from-white to-gray-50">
-        <div className="mx-auto max-w-7xl px-4 pt-24 sm:px-6 lg:px-8">
+      <Background color="bg-gray-200">
+        <Section yPadding="pt-10 pb-5">
           <div className="sm:align-center sm:flex sm:flex-col">
             <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-center">
               Pricing Plans
@@ -482,6 +483,11 @@ export default function Example() {
               </button>
             </div>
           </div>
+        </Section>
+      </Background>
+      {/* Pricing with four tiers and toggle */}
+      <div className="bg-gradient-to-b from-white to-gray-50">
+        <div className="mx-auto max-w-7xl px-4 pt-24 sm:px-6 lg:px-8">
           <div className="mt-12 space-y-4 sm:mt-16 sm:grid sm:grid-cols-2 sm:gap-6 sm:space-y-0 lg:mx-auto lg:max-w-4xl xl:mx-0 xl:max-w-none xl:grid-cols-4">
             {tiers.map((tier) => (
               <div

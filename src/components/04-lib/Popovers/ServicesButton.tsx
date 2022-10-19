@@ -9,18 +9,24 @@ import classNames from 'classnames';
 import type { FC } from 'react';
 import { Fragment } from 'react';
 
-import type { Solution } from '../Header/Header';
+import { mainRoutes } from '@/routes/mainRoutes';
 
-const callsToAction = [
+import type { Service } from '../Header/services';
+
+export const callsToAction = [
   { name: 'Regarder une démo', href: '#', icon: PlayIcon },
-  { name: 'Commencer à utiliser Stock Shop', href: '#', icon: CheckCircleIcon },
-  { name: 'Nous contacter', href: '#', icon: PhoneIcon },
+  {
+    name: 'Commencer à utiliser Stock Shop',
+    href: mainRoutes.register.path,
+    icon: CheckCircleIcon,
+  },
+  { name: 'Nous contacter', href: mainRoutes.contact.path, icon: PhoneIcon },
 ];
 
 type Props = {
-  solutions: Solution[];
+  services: Service[];
 };
-const SolutionsButton: FC<Props> = ({ solutions }) => {
+const ServicesButton: FC<Props> = ({ services }) => {
   return (
     <Popover>
       {({ open }) => (
@@ -31,7 +37,7 @@ const SolutionsButton: FC<Props> = ({ solutions }) => {
               'group inline-flex items-center rounded-md text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2'
             )}
           >
-            <span>Solutions</span>
+            <span>Services</span>
             <ChevronDownIcon
               className={classNames(
                 open ? 'text-gray-600' : 'text-gray-400',
@@ -52,7 +58,7 @@ const SolutionsButton: FC<Props> = ({ solutions }) => {
           >
             <Popover.Panel className="absolute inset-x-0 top-full z-10 hidden bg-white shadow-lg md:block">
               <div className="mx-auto grid max-w-7xl gap-y-6 px-4 py-6 sm:grid-cols-2 sm:gap-8 sm:px-6 sm:py-8 lg:grid-cols-4 lg:px-8 lg:py-12 xl:py-16">
-                {solutions.map((item) => (
+                {services.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
@@ -108,4 +114,4 @@ const SolutionsButton: FC<Props> = ({ solutions }) => {
   );
 };
 
-export default SolutionsButton;
+export default ServicesButton;
