@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
-import { Background } from '../background/Background';
-import { Button } from '../button/Button';
-import { Section } from '../layout/Section';
+import { Background } from '../lib/background/Background';
+import { Button } from '../lib/button/Button';
+import { Section } from '../lib/layout/Section';
 import { PricingCard } from '../pricing/PricingCard';
 import { PricingFeature } from '../pricing/PricingFeature';
 

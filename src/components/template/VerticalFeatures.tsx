@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
-import { Background } from '../background/Background';
-import { Button } from '../button/Button';
-import { VerticalFeatureRow } from '../feature/VerticalFeatureRow';
-import { Section } from '../layout/Section';
+import { Background } from '../lib/background/Background';
+import { Button } from '../lib/button/Button';
+import { VerticalFeatureRow } from '../lib/feature/VerticalFeatureRow';
+import { Section } from '../lib/layout/Section';
 
 const VerticalFeatures = () => (
   <Background color="bg-gray-200">

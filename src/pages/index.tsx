@@ -1,12 +1,11 @@
 import dynamic from 'next/dynamic';
 
-import Header from '@/components/Header/Header';
+import Header from '@/components/lib/Header/Header';
 
 import { Base } from '../components/template/Base';
 
 const DynamicFirstConnectionModal = dynamic(
-  () =>
-    import('@/components/modales/firstConnectionModal/FirstConnectionModal'),
+  () => import('@/components/modals/firstConnectionModal/FirstConnectionModal'),
   {
     suspense: true,
   }

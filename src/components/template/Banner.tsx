@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
-import { Button } from '../button/Button';
-import { CTABanner } from '../cta/CTABanner';
-import { Section } from '../layout/Section';
+import { Button } from '../lib/button/Button';
+import { CTABanner } from '../lib/cta/CTABanner';
+import { Section } from '../lib/layout/Section';
 
 const Banner = () => (
   <Section yPadding="pb-16">

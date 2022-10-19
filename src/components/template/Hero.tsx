@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
-import { Background } from '../background/Background';
-import { Button } from '../button/Button';
-import { HeroOneButton } from '../hero/HeroOneButton';
-import { Section } from '../layout/Section';
+import { Background } from '../lib/background/Background';
+import { Button } from '../lib/button/Button';
+import { HeroOneButton } from '../lib/hero/HeroOneButton';
+import { Section } from '../lib/layout/Section';
 
 const Hero = () => (
   <Background color="bg-gray-200">
