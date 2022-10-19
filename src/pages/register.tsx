@@ -1,4 +1,4 @@
-import RegisterComponant from '@/components/register/RegisterComponant';
+import RegisterComponant from '@/components/03-auth/register/RegisterComponant';
 import AuthLayout from '@/layouts/AuthLayout';
 
 const Login = () => {

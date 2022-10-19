@@ -1,4 +1,4 @@
-import { Section } from '../lib/layout/Section';
+import { Section } from '../04-lib/layout/Section';
 
 const faqs = [
   {

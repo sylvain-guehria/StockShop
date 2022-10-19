@@ -2,13 +2,13 @@ import { Bars3CenterLeftIcon } from '@heroicons/react/24/outline';
 import type { FC, ReactNode } from 'react';
 import { useState } from 'react';
 
-import SellerSearchBarHeader from '@/components/seller/SearchBarHeader';
-import SellerSideBar from '@/components/seller/SideBar';
+import SellerSearchBarHeader from '@/components/01-stockManagement/SearchBarHeader';
+import SellerSideBar from '@/components/01-stockManagement/SideBar';
 
 type IBackgroundProps = {
   children: ReactNode;
 };
-const SellerLayout: FC<IBackgroundProps> = ({ children }) => {
+const StockManagementLayout: FC<IBackgroundProps> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -39,4 +39,4 @@ const SellerLayout: FC<IBackgroundProps> = ({ children }) => {
   );
 };
 
-export default SellerLayout;
+export default StockManagementLayout;

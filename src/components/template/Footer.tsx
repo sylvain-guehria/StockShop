@@ -1,11 +1,11 @@
 import Link from 'next/link';
 
 import { AppConfig } from '../../utils/AppConfig';
-import { Background } from '../lib/background/Background';
-import { FooterCompanyInfo } from '../lib/footer/FooterCompanyInfo';
-import { FooterLinks } from '../lib/footer/FooterLinks';
-import { FooterTwoRowsCopyright } from '../lib/footer/FooterTwoRowsCopyright';
-import { Section } from '../lib/layout/Section';
+import { Background } from '../04-lib/background/Background';
+import { FooterCompanyInfo } from '../04-lib/footer/FooterCompanyInfo';
+import { FooterLinks } from '../04-lib/footer/FooterLinks';
+import { FooterTwoRowsCopyright } from '../04-lib/footer/FooterTwoRowsCopyright';
+import { Section } from '../04-lib/layout/Section';
 import { Logo } from './Logo';
 
 const Footer = () => (

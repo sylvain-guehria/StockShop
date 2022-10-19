@@ -1,4 +1,4 @@
-import LoginComponant from '@/components/login/LoginComponant';
+import LoginComponant from '@/components/03-auth/login/LoginComponant';
 import AuthLayout from '@/layouts/AuthLayout';
 
 const Login = () => {

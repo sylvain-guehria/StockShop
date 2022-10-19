@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 
-import Header from '@/components/lib/Header/Header';
+import Header from '@/components/04-lib/Header/Header';
 
 import { Base } from '../components/template/Base';
 

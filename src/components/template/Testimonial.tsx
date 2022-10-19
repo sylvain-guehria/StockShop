@@ -1,5 +1,5 @@
-import { Section } from '../lib/layout/Section';
-import { TestimonialCard } from '../lib/testimonial/TestimonialCard';
+import { Section } from '../04-lib/layout/Section';
+import { TestimonialCard } from '../04-lib/testimonial/TestimonialCard';
 
 const Testimonial = () => (
   <Section title="Customer's Review" subtitle="Testimonials">
