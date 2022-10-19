@@ -15,7 +15,7 @@ const DynamicFirstConnectionModal = dynamic(
 const Index = () => {
   return (
     <>
-      <DynamicFirstConnectionModal />
+      {false && <DynamicFirstConnectionModal />}
       <Header />
       <Base />
     </>

@@ -11,4 +11,8 @@ export const mainRoutes = {
     path: 'login',
     label: 'Se connecter',
   },
+  pricing: {
+    path: 'pricing',
+    label: 'Prix',
+  },
 };

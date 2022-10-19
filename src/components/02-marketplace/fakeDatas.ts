@@ -3,7 +3,7 @@ export const currencies = ['CAD', 'USD', 'AUD', 'EUR', 'GBP'];
 export const navigation = {
   categories: [
     {
-      name: 'Women',
+      name: 'Menu 1',
       featured: [
         { name: 'Sleep', href: '#' },
         { name: 'Swimwear', href: '#' },
@@ -31,7 +31,7 @@ export const navigation = {
       ],
     },
     {
-      name: 'Men',
+      name: 'Menu 2',
       featured: [
         { name: 'Casual', href: '#' },
         { name: 'Boxers', href: '#' },

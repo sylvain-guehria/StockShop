@@ -1,5 +1,4 @@
 import { Popover, Transition } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
@@ -7,10 +6,13 @@ import {
   UserIcon,
 } from '@heroicons/react/24/outline';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import type { FC } from 'react';
 import { Fragment, Suspense, useState } from 'react';
 
-import { currencies, navigation } from './fakeDatas';
+import { mainRoutes } from '@/routes/mainRoutes';
+
+import { navigation } from './fakeDatas';
 
 const SearchBarModal = dynamic(
   () => import('../05-modals/searchBar/SearchBarModal'),
@@ -42,74 +44,23 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
       )}
       <header className="relative z-10">
         <nav aria-label="Top">
-          {/* Top navigation */}
-          <div className="bg-gray-900">
-            <div className="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-              {/* Currency selector */}
-              <form className="hidden lg:block lg:flex-1">
-                <div className="flex">
-                  <label htmlFor="desktop-currency" className="sr-only">
-                    Currency
-                  </label>
-                  <div className="group relative -ml-2 rounded-md border-transparent bg-gray-900 focus-within:ring-2 focus-within:ring-white">
-                    <select
-                      id="desktop-currency"
-                      name="currency"
-                      className="flex items-center rounded-md border-transparent bg-gray-900 bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-white focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-100"
-                    >
-                      {currencies.map((currency) => (
-                        <option key={currency}>{currency}</option>
-                      ))}
-                    </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                      <ChevronDownIcon
-                        className="h-5 w-5 text-gray-300"
-                        aria-hidden="true"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </form>
-
-              <p className="flex-1 text-center text-sm font-medium text-white lg:flex-none">
-                Get free delivery on orders over $100
-              </p>
-
-              <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                <a
-                  href="#"
-                  className="text-sm font-medium text-white hover:text-gray-100"
-                >
-                  Create an account
-                </a>
-                <span className="h-6 w-px bg-gray-600" aria-hidden="true" />
-                <a
-                  href="#"
-                  className="text-sm font-medium text-white hover:text-gray-100"
-                >
-                  Sign in
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Secondary navigation */}
           <div className="bg-white">
             <div className="border-b border-gray-200">
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
                   {/* Logo (lg+) */}
-                  <div className="hidden lg:flex lg:items-center">
-                    <a href="#">
-                      <span className="sr-only">Your Company</span>
-                      <img
-                        className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                        alt=""
-                      />
-                    </a>
-                  </div>
-
+                  <Link href={mainRoutes.home.path}>
+                    <div className="hidden lg:flex lg:items-center">
+                      <a href="#">
+                        <span className="sr-only">Your Company</span>
+                        <img
+                          className="h-8 w-auto"
+                          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                          alt=""
+                        />
+                      </a>
+                    </div>
+                  </Link>
                   <div className="hidden h-full lg:flex">
                     {/* Mega menus */}
                     <Popover.Group className="ml-8">
@@ -279,7 +230,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                           </Popover>
                         ))}
 
-                        {navigation.pages.map((page) => (
+                        {/* {navigation.pages.map((page) => (
                           <a
                             key={page.name}
                             href={page.href}
@@ -287,7 +238,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                           >
                             {page.name}
                           </a>
-                        ))}
+                        ))} */}
                       </div>
                     </Popover.Group>
                   </div>
@@ -378,6 +329,14 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                           </span>
                         </a>
                       </div>
+                      <Link href={mainRoutes.login.path}>
+                        <a
+                          href="#"
+                          className="ml-4 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
+                        >
+                          {mainRoutes.login.label}
+                        </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
