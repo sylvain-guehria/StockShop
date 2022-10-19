@@ -2,8 +2,8 @@ import { Bars3CenterLeftIcon } from '@heroicons/react/24/outline';
 import type { FC, ReactNode } from 'react';
 import { useState } from 'react';
 
-import SellerSearchBarHeader from '@/components/01-stockManagement/SearchBarHeader';
-import SellerSideBar from '@/components/01-stockManagement/SideBar';
+import StockManagementSearchBarHeader from '@/components/01-stockManagement/SearchBarHeader';
+import StockManagementSideBar from '@/components/01-stockManagement/SideBar';
 
 type IBackgroundProps = {
   children: ReactNode;
@@ -15,7 +15,7 @@ const StockManagementLayout: FC<IBackgroundProps> = ({ children }) => {
     <div className="h-full bg-gray-100">
       <div className="h-full">
         <div className="min-h-full">
-          <SellerSideBar
+          <StockManagementSideBar
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
           />
@@ -29,7 +29,7 @@ const StockManagementLayout: FC<IBackgroundProps> = ({ children }) => {
                 <span className="sr-only">Open sidebar</span>
                 <Bars3CenterLeftIcon className="h-6 w-6" aria-hidden="true" />
               </button>
-              <SellerSearchBarHeader />
+              <StockManagementSearchBarHeader />
             </div>
             {children}
           </div>

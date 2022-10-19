@@ -37,7 +37,7 @@ type Props = {
   setSidebarOpen: (bool: boolean) => void;
 };
 
-const SellerSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
+const StockManagementSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <>
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -211,4 +211,4 @@ const SellerSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
   );
 };
 
-export default SellerSideBar;
+export default StockManagementSideBar;

@@ -1,6 +1,6 @@
 import { BuildingOfficeIcon, CheckCircleIcon } from '@heroicons/react/20/solid';
 
-const SellerSubHeader = () => {
+const StockManagementSubHeader = () => {
   return (
     <div className="bg-white shadow">
       <div className="px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
@@ -65,4 +65,4 @@ const SellerSubHeader = () => {
   );
 };
 
-export default SellerSubHeader;
+export default StockManagementSubHeader;

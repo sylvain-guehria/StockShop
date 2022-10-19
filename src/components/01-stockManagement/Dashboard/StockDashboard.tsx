@@ -1,12 +1,12 @@
 import ActivityList from './ActivityList';
 import ActivityTable from './ActivityTable';
 import OverView from './OverView';
-import SellerSubHeader from './SubHeader';
+import StockManagementSubHeader from './SubHeader';
 
 const StockDashboard = () => {
   return (
     <main className="flex-1 pb-8">
-      <SellerSubHeader />
+      <StockManagementSubHeader />
       <div className="mt-8">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-lg font-medium leading-6 text-gray-900">

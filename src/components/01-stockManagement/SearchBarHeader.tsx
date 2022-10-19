@@ -7,7 +7,7 @@ import {
 import classNames from 'classnames';
 import { Fragment } from 'react';
 
-const SellerSearchBarHeader = () => {
+const StockManagementSearchBarHeader = () => {
   return (
     <div className="flex flex-1 justify-between px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
       <div className="flex flex-1">
@@ -117,4 +117,4 @@ const SellerSearchBarHeader = () => {
   );
 };
 
-export default SellerSearchBarHeader;
+export default StockManagementSearchBarHeader;
