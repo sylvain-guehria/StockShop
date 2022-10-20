@@ -3,7 +3,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Fragment } from 'react';
 
-import { mainRoutes } from '@/routes/mainRoutes';
+import { headerRoutes, mainRoutes } from '@/routes/mainRoutes';
 import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
 
 import ServicesButton from '../Popovers/ServicesButton';
@@ -24,7 +24,7 @@ export default function Header() {
                 <span className="sr-only">Your Company</span>
                 <img
                   className="h-11 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=700"
+                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
                   alt=""
                 />
               </a>
@@ -106,7 +106,7 @@ export default function Header() {
                 <div>
                   <img
                     className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=primary&shade=600"
+                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
                     alt="Your Company"
                   />
                 </div>
@@ -140,48 +140,27 @@ export default function Header() {
             </div>
             <div className="py-6 px-5">
               <div className="grid grid-cols-2 gap-4">
-                <a
-                  href="#"
-                  className="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
-                >
-                  Pricing
-                </a>
-                <a
-                  href="#"
-                  className="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
-                >
-                  Nous contacter
-                </a>
-                <a
-                  href="#"
-                  className="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
-                >
-                  XXX
-                </a>
-                <a
-                  href="#"
-                  className="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
-                >
-                  XXX
-                </a>
-                <a
-                  href="#"
-                  className="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
-                >
-                  XXX
-                </a>
-                <a
-                  href="#"
-                  className="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
-                >
-                  XXX
-                </a>
+                {headerRoutes.map((route) => (
+                  <Link key={route.path} href={route.path}>
+                    <a className="rounded-md text-base font-medium text-gray-900 hover:text-gray-700">
+                      {route.label}
+                    </a>
+                  </Link>
+                ))}
               </div>
               <div className="mt-6">
-                <Link href={mainRoutes.register.path}>
+                {/* <Link href={mainRoutes.register.path}>
                   <a
                     href="#"
                     className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-700"
+                  >
+                    {mainRoutes.register.label}
+                  </a>
+                </Link> */}
+                <Link href={mainRoutes.register.path}>
+                  <a
+                    href="#"
+                    className=" inline-flex  w-full items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-gray-200 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
                   >
                     {mainRoutes.register.label}
                   </a>

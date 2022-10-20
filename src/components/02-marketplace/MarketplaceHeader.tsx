@@ -51,7 +51,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                         <span className="sr-only">Your Company</span>
                         <img
                           className="h-11 w-auto"
-                          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
                           alt=""
                         />
                       </a>
@@ -91,7 +91,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                   <a href="#" className="lg:hidden">
                     <span className="sr-only">Your Company</span>
                     <img
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
                       alt=""
                       className="h-8 w-auto"
                     />

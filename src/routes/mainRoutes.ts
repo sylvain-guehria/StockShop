@@ -20,3 +20,5 @@ export const mainRoutes = {
     label: 'Nous Contacter',
   },
 };
+
+export const headerRoutes = [mainRoutes.pricing, mainRoutes.contact];

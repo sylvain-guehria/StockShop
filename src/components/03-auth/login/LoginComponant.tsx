@@ -10,7 +10,7 @@ const LoginComponant = () => {
           <Link href={mainRoutes.home.path}>
             <img
               className="mx-auto h-12 w-auto cursor-pointer"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
               alt="Your Company"
             />
           </Link>

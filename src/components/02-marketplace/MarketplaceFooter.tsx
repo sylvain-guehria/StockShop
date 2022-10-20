@@ -11,7 +11,7 @@ const MarketplaceFooter = () => {
           <div className="pt-16 pb-20">
             <div className="md:flex md:justify-center">
               <img
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
                 alt=""
                 className="h-8 w-auto"
               />

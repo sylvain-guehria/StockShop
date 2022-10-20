@@ -362,7 +362,7 @@ const Contact = () => {
             <div className="space-y-8 xl:col-span-1">
               <img
                 className="h-10"
-                src="https://tailwindui.com/img/logos/mark.svg?color=gray&shade=400"
+                src="https://tailwindui.com/img/logos/mark.svg?color=gray&shade=300"
                 alt="Company name"
               />
               <p className="text-base text-gray-400">
