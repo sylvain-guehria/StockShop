@@ -1,3 +1,4 @@
+import axios from 'axios';
 import dynamic from 'next/dynamic';
 
 import Header from '@/components/04-lib/Header/Header';
@@ -12,7 +13,13 @@ const DynamicFirstConnectionModal = dynamic(
   }
 );
 
+const getAllUsers = async () => {
+  const response = await axios.get('/api/user/getAll/');
+  return response.data;
+};
+
 const Index = () => {
+  getAllUsers();
   return (
     <>
       {false && <DynamicFirstConnectionModal />}
