@@ -1,4 +1,3 @@
-import { Popover, Transition } from '@headlessui/react';
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
@@ -8,11 +7,12 @@ import {
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import type { FC } from 'react';
-import { Fragment, Suspense, useState } from 'react';
+import { Suspense, useState } from 'react';
 
 import { mainRoutes } from '@/routes/mainRoutes';
 
-import { navigation } from './fakeDatas';
+import { services } from '../04-lib/Header/services';
+import ServicesButton from '../04-lib/Popovers/ServicesButton';
 
 const SearchBarModal = dynamic(
   () => import('../05-modals/searchBar/SearchBarModal'),
@@ -20,10 +20,6 @@ const SearchBarModal = dynamic(
     suspense: true,
   }
 );
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
 
 type Props = {
   setMobileMenuOpen: (value: boolean) => void;
@@ -45,9 +41,9 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
       <header className="relative z-10">
         <nav aria-label="Top">
           <div className="bg-white">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6">
-              <div className="flex items-center justify-between border-b border-gray-200 py-4 md:justify-start md:space-x-10">
-                <div className="flex justify-start lg:w-0 lg:flex-1">
+            <div className="border-b border-gray-200 ">
+              <div className="mx-auto max-w-7xl p-4 sm:px-6 lg:px-8">
+                <div className="flex  items-center justify-between">
                   {/* Logo (lg+) */}
                   <Link href={mainRoutes.home.path}>
                     <div className="hidden lg:flex lg:items-center">
@@ -61,186 +57,10 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                       </a>
                     </div>
                   </Link>
-                  <div className="hidden lg:flex">
-                    {/* Mega menus */}
-                    <Popover.Group className="ml-8">
-                      <div className="flex h-full justify-center space-x-8">
-                        {navigation.categories.map((category, categoryIdx) => (
-                          <Popover key={category.name} className="flex">
-                            {({ open }) => (
-                              <>
-                                <div className="relative flex">
-                                  <Popover.Button
-                                    className={classNames(
-                                      open
-                                        ? 'border-primary-600 text-primary-600'
-                                        : 'border-transparent text-gray-600 hover:text-gray-800',
-                                      'relative z-10 -mb-px flex items-center border-b-2 pt-px font-medium transition-colors duration-200 ease-out'
-                                    )}
-                                  >
-                                    {category.name}
-                                  </Popover.Button>
-                                </div>
 
-                                <Transition
-                                  as={Fragment}
-                                  enter="transition ease-out duration-200"
-                                  enterFrom="opacity-0"
-                                  enterTo="opacity-100"
-                                  leave="transition ease-in duration-150"
-                                  leaveFrom="opacity-100"
-                                  leaveTo="opacity-0"
-                                >
-                                  <Popover.Panel className="absolute inset-x-0 top-full text-gray-500 sm:text-sm">
-                                    {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
-                                    <div
-                                      className="absolute inset-0 top-1/2 bg-white shadow"
-                                      aria-hidden="true"
-                                    />
-
-                                    <div className="relative bg-white">
-                                      <div className="mx-auto max-w-7xl px-8">
-                                        <div className="grid grid-cols-2 items-start gap-y-10 gap-x-8 pt-10 pb-12">
-                                          <div className="grid grid-cols-2 gap-y-10 gap-x-8">
-                                            <div>
-                                              <p
-                                                id={`desktop-featured-heading-${categoryIdx}`}
-                                                className="font-medium text-gray-900"
-                                              >
-                                                Featured
-                                              </p>
-                                              <ul
-                                                role="list"
-                                                aria-labelledby={`desktop-featured-heading-${categoryIdx}`}
-                                                className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                              >
-                                                {category.featured.map(
-                                                  (item) => (
-                                                    <li
-                                                      key={item.name}
-                                                      className="flex"
-                                                    >
-                                                      <a
-                                                        href={item.href}
-                                                        className="hover:text-gray-800"
-                                                      >
-                                                        {item.name}
-                                                      </a>
-                                                    </li>
-                                                  )
-                                                )}
-                                              </ul>
-                                            </div>
-                                            <div>
-                                              <p
-                                                id="desktop-categories-heading"
-                                                className="font-medium text-gray-900"
-                                              >
-                                                Categories
-                                              </p>
-                                              <ul
-                                                role="list"
-                                                aria-labelledby="desktop-categories-heading"
-                                                className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                              >
-                                                {category.categories.map(
-                                                  (item) => (
-                                                    <li
-                                                      key={item.name}
-                                                      className="flex"
-                                                    >
-                                                      <a
-                                                        href={item.href}
-                                                        className="hover:text-gray-800"
-                                                      >
-                                                        {item.name}
-                                                      </a>
-                                                    </li>
-                                                  )
-                                                )}
-                                              </ul>
-                                            </div>
-                                          </div>
-                                          <div className="grid grid-cols-2 gap-y-10 gap-x-8">
-                                            <div>
-                                              <p
-                                                id="desktop-collection-heading"
-                                                className="font-medium text-gray-900"
-                                              >
-                                                Collection
-                                              </p>
-                                              <ul
-                                                role="list"
-                                                aria-labelledby="desktop-collection-heading"
-                                                className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                              >
-                                                {category.collection.map(
-                                                  (item) => (
-                                                    <li
-                                                      key={item.name}
-                                                      className="flex"
-                                                    >
-                                                      <a
-                                                        href={item.href}
-                                                        className="hover:text-gray-800"
-                                                      >
-                                                        {item.name}
-                                                      </a>
-                                                    </li>
-                                                  )
-                                                )}
-                                              </ul>
-                                            </div>
-
-                                            <div>
-                                              <p
-                                                id="desktop-brand-heading"
-                                                className="font-medium text-gray-900"
-                                              >
-                                                Brands
-                                              </p>
-                                              <ul
-                                                role="list"
-                                                aria-labelledby="desktop-brand-heading"
-                                                className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                              >
-                                                {category.brands.map((item) => (
-                                                  <li
-                                                    key={item.name}
-                                                    className="flex"
-                                                  >
-                                                    <a
-                                                      href={item.href}
-                                                      className="hover:text-gray-800"
-                                                    >
-                                                      {item.name}
-                                                    </a>
-                                                  </li>
-                                                ))}
-                                              </ul>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </Popover.Panel>
-                                </Transition>
-                              </>
-                            )}
-                          </Popover>
-                        ))}
-
-                        {/* {navigation.pages.map((page) => (
-                          <a
-                            key={page.name}
-                            href={page.href}
-                            className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                          >
-                            {page.name}
-                          </a>
-                        ))} */}
-                      </div>
-                    </Popover.Group>
+                  {/* <MegaMenu /> */}
+                  <div className="ml-8 hidden lg:flex">
+                    <ServicesButton services={services} />
                   </div>
 
                   {/* Mobile menu and search (lg-) */}
@@ -266,7 +86,6 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                       />
                     </div>
                   </div>
-
                   {/* Logo (lg-) */}
                   <a href="#" className="lg:hidden">
                     <span className="sr-only">Your Company</span>
@@ -276,7 +95,6 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                       className="h-8 w-auto"
                     />
                   </a>
-
                   <div className="flex flex-1 items-center justify-end">
                     <div className="flex items-center lg:ml-8">
                       <div className="flex space-x-8">
@@ -332,7 +150,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                       <Link href={mainRoutes.login.path}>
                         <a
                           href="#"
-                          className="ml-6 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
+                          className="ml-6 mr-1 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
                         >
                           {mainRoutes.login.label}
                         </a>
