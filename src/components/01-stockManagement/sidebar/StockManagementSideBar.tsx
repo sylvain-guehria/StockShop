@@ -9,7 +9,10 @@ import {
   ShieldCheckIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 import type { FC } from 'react';
+
+import { mainRoutes } from '@/routes/mainRoutes';
 
 import MobileSideBar from './MobileSideBar';
 
@@ -48,12 +51,14 @@ const StockManagementSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex grow flex-col overflow-y-auto bg-white pt-5 pb-4">
-          <div className="flex shrink-0 items-center px-4">
-            <img
-              className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=600"
-              alt="Easywire logo"
-            />
+          <div className="flex shrink-0 cursor-pointer items-center px-4">
+            <Link href={mainRoutes.home.path}>
+              <img
+                className="h-8 w-auto"
+                src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=600"
+                alt="Easywire logo"
+              />
+            </Link>
           </div>
           <nav
             className="mt-5 flex flex-1 flex-col divide-y divide-primary-300 overflow-y-auto"

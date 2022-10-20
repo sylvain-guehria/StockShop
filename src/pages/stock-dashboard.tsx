@@ -1,4 +1,4 @@
-import StockDashboard from '@/components/01-stockManagement/Dashboard/StockDashboard';
+import StockDashboard from '@/components/01-stockManagement/dashboard/StockDashboard';
 import StockManagementLayout from '@/layouts/StockManagementLayout';
 
 const StockDashboardPage = () => {

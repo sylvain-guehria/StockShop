@@ -7,8 +7,11 @@ import {
 import classNames from 'classnames';
 import { Fragment } from 'react';
 
-const StockManagementSearchBarHeader = () => {
+const StockManagementHeader = () => {
   return (
+    <div className="mx-auto max-w-7xl px-4 sm:px-6">
+    <div className="flex items-center justify-between border-b border-gray-200 py-4 md:justify-start md:space-x-10">
+      <div className="flex justify-start lg:w-0 lg:flex-1">
     <div className="flex flex-1 justify-between px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
       <div className="flex flex-1">
         <form className="flex w-full md:ml-0" action="#" method="GET">
@@ -26,7 +29,7 @@ const StockManagementSearchBarHeader = () => {
               id="search-field"
               name="search-field"
               className="block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 placeholder:text-gray-500 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
-              placeholder="Search transactions"
+              placeholder="Chercher un produit"
               type="search"
             />
           </div>
@@ -114,7 +117,9 @@ const StockManagementSearchBarHeader = () => {
         </Menu>
       </div>
     </div>
+    </div>
+    </div>
   );
 };
 
-export default StockManagementSearchBarHeader;
+export default StockManagementHeader;
