@@ -17,7 +17,7 @@ export default function Header() {
         aria-hidden="true"
       /> */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="flex items-center justify-between border-b border-gray-200 py-6 md:justify-start md:space-x-10">
+        <div className="flex items-center justify-between border-b border-gray-200 py-4 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link href={mainRoutes.home.path}>
               <a href="#">

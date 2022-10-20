@@ -45,9 +45,9 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
       <header className="relative z-10">
         <nav aria-label="Top">
           <div className="bg-white">
-            <div className="border-b border-gray-200">
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="flex h-16 items-center justify-between">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6">
+              <div className="flex items-center justify-between border-b border-gray-200 py-4 md:justify-start md:space-x-10">
+                <div className="flex justify-start lg:w-0 lg:flex-1">
                   {/* Logo (lg+) */}
                   <Link href={mainRoutes.home.path}>
                     <div className="hidden lg:flex lg:items-center">
@@ -61,7 +61,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                       </a>
                     </div>
                   </Link>
-                  <div className="hidden h-full lg:flex">
+                  <div className="hidden lg:flex">
                     {/* Mega menus */}
                     <Popover.Group className="ml-8">
                       <div className="flex h-full justify-center space-x-8">
@@ -74,8 +74,8 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                                     className={classNames(
                                       open
                                         ? 'border-primary-600 text-primary-600'
-                                        : 'border-transparent text-gray-700 hover:text-gray-800',
-                                      'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out'
+                                        : 'border-transparent text-gray-600 hover:text-gray-800',
+                                      'relative z-10 -mb-px flex items-center border-b-2 pt-px font-medium transition-colors duration-200 ease-out'
                                     )}
                                   >
                                     {category.name}
@@ -332,7 +332,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                       <Link href={mainRoutes.login.path}>
                         <a
                           href="#"
-                          className="ml-4 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
+                          className="ml-6 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
                         >
                           {mainRoutes.login.label}
                         </a>
