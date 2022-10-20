@@ -19,6 +19,14 @@ export const mainRoutes = {
     path: 'contact',
     label: 'Nous Contacter',
   },
+  profile: {
+    path: 'profile',
+    label: 'Profile',
+  },
 };
 
-export const headerRoutes = [mainRoutes.pricing, mainRoutes.contact];
+export const headerRoutes = [
+  mainRoutes.pricing,
+  mainRoutes.contact,
+  mainRoutes.profile,
+];
