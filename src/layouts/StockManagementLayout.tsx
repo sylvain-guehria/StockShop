@@ -3,7 +3,7 @@ import type { FC, ReactNode } from 'react';
 import { useState } from 'react';
 
 import StockManagementSearchBarHeader from '@/components/01-stockManagement/SearchBarHeader';
-import StockManagementSideBar from '@/components/01-stockManagement/SideBar';
+import StockManagementSideBar from '@/components/01-stockManagement/sidebar/StockManagementSideBar';
 
 type IBackgroundProps = {
   children: ReactNode;

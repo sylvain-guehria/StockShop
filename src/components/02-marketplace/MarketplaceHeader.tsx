@@ -50,7 +50,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                       <a href="#">
                         <span className="sr-only">Your Company</span>
                         <img
-                          className="h-8 w-auto"
+                          className="h-11 w-auto"
                           src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                           alt=""
                         />
@@ -59,6 +59,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                   </Link>
 
                   {/* <MegaMenu /> */}
+
                   <div className="ml-8 hidden lg:flex">
                     <ServicesButton services={services} />
                   </div>

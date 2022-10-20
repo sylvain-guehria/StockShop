@@ -1,5 +1,8 @@
 import { ChartBarIcon, CursorArrowRaysIcon } from '@heroicons/react/24/outline';
 
+import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
+import { stockManagementRoutes } from '@/routes/stockManagementRoutes';
+
 export type Service = {
   name: string;
   description: string;
@@ -12,13 +15,13 @@ export const services: Service[] = [
     name: 'Gestion inventaire',
     description:
       'Get a better understanding of where your traffic is coming from.',
-    href: '#',
+    href: stockManagementRoutes.stockDashboard.path,
     icon: ChartBarIcon,
   },
   {
     name: 'Marketplace',
     description: 'Speak directly to your customers in a more meaningful way.',
-    href: '#',
+    href: marketpalceRoutes.marketplace.path,
     icon: CursorArrowRaysIcon,
   },
 ];

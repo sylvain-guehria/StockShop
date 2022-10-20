@@ -1,43 +1,37 @@
 import { Dialog, Transition } from '@headlessui/react';
-import {
-  ClockIcon,
-  CogIcon,
-  CreditCardIcon,
-  DocumentChartBarIcon,
-  HomeIcon,
-  QuestionMarkCircleIcon,
-  ScaleIcon,
-  ShieldCheckIcon,
-  UserGroupIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline';
-import type { FC } from 'react';
+import { XMarkIcon } from '@heroicons/react/24/outline';
+import type { FC, SVGProps } from 'react';
 import { Fragment } from 'react';
-
-const navigation = [
-  { name: 'Home', href: '#', icon: HomeIcon, current: true },
-  { name: 'History', href: '#', icon: ClockIcon, current: false },
-  { name: 'Balances', href: '#', icon: ScaleIcon, current: false },
-  { name: 'Cards', href: '#', icon: CreditCardIcon, current: false },
-  { name: 'Recipients', href: '#', icon: UserGroupIcon, current: false },
-  { name: 'Reports', href: '#', icon: DocumentChartBarIcon, current: false },
-];
-const secondaryNavigation = [
-  { name: 'Settings', href: '#', icon: CogIcon },
-  { name: 'Help', href: '#', icon: QuestionMarkCircleIcon },
-  { name: 'Privacy', href: '#', icon: ShieldCheckIcon },
-];
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
+type Navigation = {
+  name: string;
+  href: string;
+  icon: (
+    props: SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+      titleId?: string | undefined;
+    }
+  ) => JSX.Element;
+  current?: boolean;
+};
+
 type Props = {
   sidebarOpen: boolean;
   setSidebarOpen: (bool: boolean) => void;
+  navigation: Navigation[];
+  secondaryNavigation: Navigation[];
 };
 
-const StockManagementSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
+const MobileSideBar: FC<Props> = ({
+  sidebarOpen,
+  setSidebarOpen,
+  navigation,
+  secondaryNavigation,
+}) => {
   return (
     <>
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -68,7 +62,7 @@ const StockManagementSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-cyan-700 pt-5 pb-4">
+              <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-primary-500 pt-5 pb-4">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-in-out duration-300"
@@ -95,12 +89,12 @@ const StockManagementSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
                 <div className="flex shrink-0 items-center px-4">
                   <img
                     className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=cyan&shade=300"
+                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
                     alt="Easywire logo"
                   />
                 </div>
                 <nav
-                  className="mt-5 h-full shrink-0 divide-y divide-cyan-800 overflow-y-auto"
+                  className="mt-5 h-full shrink-0 divide-y divide-primary-700 overflow-y-auto"
                   aria-label="Sidebar"
                 >
                   <div className="space-y-1 px-2">
@@ -110,14 +104,14 @@ const StockManagementSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
                         href={item.href}
                         className={classNames(
                           item.current
-                            ? 'bg-cyan-800 text-white'
-                            : 'text-cyan-100 hover:text-white hover:bg-cyan-600',
+                            ? 'bg-primary-700 text-white'
+                            : 'text-primary-100 hover:text-white hover:bg-primary-600',
                           'group flex items-center px-2 py-2 text-base font-medium rounded-md'
                         )}
                         aria-current={item.current ? 'page' : undefined}
                       >
                         <item.icon
-                          className="mr-4 h-6 w-6 shrink-0 text-cyan-200"
+                          className="mr-4 h-6 w-6 shrink-0 text-primary-200"
                           aria-hidden="true"
                         />
                         {item.name}
@@ -130,10 +124,10 @@ const StockManagementSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
                         <a
                           key={item.name}
                           href={item.href}
-                          className="group flex items-center rounded-md p-2 text-base font-medium text-cyan-100 hover:bg-cyan-600 hover:text-white"
+                          className="group flex items-center rounded-md p-2 text-base font-medium text-primary-100 hover:bg-primary-600 hover:text-white"
                         >
                           <item.icon
-                            className="mr-4 h-6 w-6 text-cyan-200"
+                            className="mr-4 h-6 w-6 text-primary-200"
                             aria-hidden="true"
                           />
                           {item.name}
@@ -150,65 +144,8 @@ const StockManagementSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
         </Dialog>
       </Transition.Root>
-
-      {/* Static sidebar for desktop */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
-        {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className="flex grow flex-col overflow-y-auto bg-cyan-700 pt-5 pb-4">
-          <div className="flex shrink-0 items-center px-4">
-            <img
-              className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=cyan&shade=300"
-              alt="Easywire logo"
-            />
-          </div>
-          <nav
-            className="mt-5 flex flex-1 flex-col divide-y divide-cyan-800 overflow-y-auto"
-            aria-label="Sidebar"
-          >
-            <div className="space-y-1 px-2">
-              {navigation.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? 'bg-cyan-800 text-white'
-                      : 'text-cyan-100 hover:text-white hover:bg-cyan-600',
-                    'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md'
-                  )}
-                  aria-current={item.current ? 'page' : undefined}
-                >
-                  <item.icon
-                    className="mr-4 h-6 w-6 shrink-0 text-cyan-200"
-                    aria-hidden="true"
-                  />
-                  {item.name}
-                </a>
-              ))}
-            </div>
-            <div className="mt-6 pt-6">
-              <div className="space-y-1 px-2">
-                {secondaryNavigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="group flex items-center rounded-md p-2 text-sm font-medium leading-6 text-cyan-100 hover:bg-cyan-600 hover:text-white"
-                  >
-                    <item.icon
-                      className="mr-4 h-6 w-6 text-cyan-200"
-                      aria-hidden="true"
-                    />
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </nav>
-        </div>
-      </div>
     </>
   );
 };
 
-export default StockManagementSideBar;
+export default MobileSideBar;
