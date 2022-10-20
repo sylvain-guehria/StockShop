@@ -41,14 +41,6 @@ const VerticalFeatureRow = (props: IVerticalFeatureRowProps) => {
       <div className="w-full p-6 sm:w-1/2">
         <img src={props.image.src} alt={props.image.alt} />
       </div>
-
-      <style jsx>
-        {`
-          .vertical-feature :global(p) {
-            @apply mt-2;
-          }
-        `}
-      </style>
     </div>
   );
 };

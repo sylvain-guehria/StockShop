@@ -13,22 +13,6 @@ const QuestionAnswer = (props: IQuestionAnswerProps) => (
     </div>
 
     <div className="mt-4 text-lg leading-7">{props.children}</div>
-
-    <style jsx>
-      {`
-        .question-answer :global(p) {
-          @apply mt-3;
-        }
-
-        .question-answer :global(a) {
-          @apply text-primary-500;
-        }
-
-        .question-answer :global(a:hover) {
-          @apply underline;
-        }
-      `}
-    </style>
   </div>
 );
 
