@@ -55,7 +55,7 @@ const StockManagementSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
             <Link href={mainRoutes.home.path}>
               <img
                 className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=600"
+                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
                 alt="Easywire logo"
               />
             </Link>
@@ -91,7 +91,7 @@ const StockManagementSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
                   <a
                     key={item.name}
                     href={item.href}
-                    className="group flex items-center rounded-md p-2 text-sm font-medium leading-6 text-primary-500 hover:bg-primary-200 "
+                    className="group flex items-center rounded-md p-2 text-sm font-medium leading-6 text-primary-500 hover:bg-primary-200"
                   >
                     <item.icon
                       className="mr-4 h-6 w-6 text-primary-300"

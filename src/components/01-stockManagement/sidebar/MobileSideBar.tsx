@@ -49,7 +49,7 @@ const MobileSideBar: FC<Props> = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-gray-600/75" />
+            <div className="fixed inset-0 bg-gray-700/75" />
           </Transition.Child>
 
           <div className="fixed inset-0 z-40 flex">
@@ -62,7 +62,7 @@ const MobileSideBar: FC<Props> = ({
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-primary-500 pt-5 pb-4">
+              <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-white pt-5 pb-4">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-in-out duration-300"
@@ -94,7 +94,7 @@ const MobileSideBar: FC<Props> = ({
                   />
                 </div>
                 <nav
-                  className="mt-5 h-full shrink-0 divide-y divide-primary-700 overflow-y-auto"
+                  className="mt-5 h-full shrink-0 divide-y divide-primary-300 overflow-y-auto"
                   aria-label="Sidebar"
                 >
                   <div className="space-y-1 px-2">
@@ -104,14 +104,14 @@ const MobileSideBar: FC<Props> = ({
                         href={item.href}
                         className={classNames(
                           item.current
-                            ? 'bg-primary-700 text-white'
-                            : 'text-primary-100 hover:text-white hover:bg-primary-600',
+                            ? 'bg-primary-400 text-white'
+                            : 'text-primary-500  hover:bg-primary-200',
                           'group flex items-center px-2 py-2 text-base font-medium rounded-md'
                         )}
                         aria-current={item.current ? 'page' : undefined}
                       >
                         <item.icon
-                          className="mr-4 h-6 w-6 shrink-0 text-primary-200"
+                          className="mr-4 h-6 w-6 shrink-0 text-primary-300"
                           aria-hidden="true"
                         />
                         {item.name}
@@ -124,10 +124,10 @@ const MobileSideBar: FC<Props> = ({
                         <a
                           key={item.name}
                           href={item.href}
-                          className="group flex items-center rounded-md p-2 text-base font-medium text-primary-100 hover:bg-primary-600 hover:text-white"
+                          className="group flex items-center rounded-md p-2 text-base font-medium text-primary-500 hover:bg-primary-200"
                         >
                           <item.icon
-                            className="mr-4 h-6 w-6 text-primary-200"
+                            className="mr-4 h-6 w-6 text-primary-300"
                             aria-hidden="true"
                           />
                           {item.name}
