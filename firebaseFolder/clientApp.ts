@@ -1,6 +1,15 @@
 // import { getAnalytics } from 'firebase/analytics';
 import firebaseClient from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import {
+  confirmPasswordReset,
+  createUserWithEmailAndPassword,
+  FacebookAuthProvider,
+  getAuth,
+  GoogleAuthProvider,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
@@ -23,4 +32,15 @@ const firestore = getFirestore();
 const auth = getAuth();
 const storage = getStorage();
 
-export { auth, firestore, storage };
+export {
+  auth,
+  confirmPasswordReset,
+  createUserWithEmailAndPassword,
+  FacebookAuthProvider,
+  firestore,
+  GoogleAuthProvider,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  storage,
+};
