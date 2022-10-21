@@ -44,4 +44,3 @@ local
 
 #firestore
 firebaseFolder/serviceAccountKey.json
-firebaseFolder/clientApp.ts
