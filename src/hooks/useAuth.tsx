@@ -16,6 +16,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import FirebaseUserRepository from '@/modules/user/firebaseUserRepository';
 import UserEntity from '@/modules/user/UserEntity';
+import { ROLES } from '@/modules/user/userType';
 
 type ContextType = {
   user: UserEntity | null;
@@ -48,12 +49,16 @@ function useProvideAuth() {
   const loginEmail = (email: string, password: string) => {
     setIsUserLoading(true);
     return signInWithEmailAndPassword(auth, email, password)
-      .then((response) => {
-        return response.user;
+      .then((userCredential) => {
+        return userCredential.user;
       })
-      .then(() => setIsUserLoading(false))
-      .catch((_e: Error) => {
-        // toast.error(e.message);
+      .catch((_error) => {
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
+        // toast.error(error.message);
+        // logger.error({ errorCode, errorMessage });
+      })
+      .finally(() => {
         setIsUserLoading(false);
       });
   };
@@ -62,19 +67,22 @@ function useProvideAuth() {
     setIsUserLoading(true);
     const provider = new GoogleAuthProvider();
     return signInWithPopup(auth, provider)
-      .then((response) => {
-        setIsUserLoading(false);
+      .then((userCredential) => {
         return {
-          uid: response.user?.uid,
-          email: response.user?.email,
-          // isNewUser: response.user?.isNewUser,
-          // firstName: response.additionalUserInfo?.profile?.given_name,
-          // lastName: response.additionalUserInfo?.profile?.family_name,
+          uid: userCredential.user?.uid,
+          email: userCredential.user?.email,
+          // isNewUser: userCredential.user?.isNewUser,
+          // firstName: userCredential.additionalUserInfo?.profile?.given_name,
+          // lastName: userCredential.additionalUserInfo?.profile?.family_name,
         };
       })
       .catch((_error) => {
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
         // toast.error(error.message);
-        // logger.error(error);
+        // logger.error({ errorCode, errorMessage });
+      })
+      .finally(() => {
         setIsUserLoading(false);
       });
   };
@@ -83,19 +91,22 @@ function useProvideAuth() {
     setIsUserLoading(true);
     const facebookProvider = new FacebookAuthProvider();
     return signInWithPopup(auth, facebookProvider)
-      .then((response) => {
-        setIsUserLoading(false);
+      .then((userCredential) => {
         return {
-          uid: response.user?.uid,
-          email: response.user?.email,
-          // isNewUser: response.additionalUserInfo?.isNewUser,
-          // firstName: response.additionalUserInfo?.profile?.first_name,
-          // lastName: response.additionalUserInfo?.profile?.last_name,
+          uid: userCredential.user?.uid,
+          email: userCredential.user?.email,
+          // isNewUser: userCredential.additionalUserInfo?.isNewUser,
+          // firstName: userCredential.additionalUserInfo?.profile?.first_name,
+          // lastName: userCredential.additionalUserInfo?.profile?.last_name,
         };
       })
       .catch((_error) => {
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
         // toast.error(error.message);
-        // logger.info(error);
+        // logger.error({ errorCode, errorMessage });
+      })
+      .finally(() => {
         setIsUserLoading(false);
       });
   };
@@ -103,17 +114,21 @@ function useProvideAuth() {
   const signUpEmail = (email: string, password: string) => {
     setIsUserLoading(true);
     return createUserWithEmailAndPassword(auth, email, password)
-      .then((response) => {
-        setIsUserLoading(false);
+      .then((userCredential) => {
+        // THIS CREATE THE USER IN FIREBASE BUT NOT IN DB
         return {
-          uid: response.user?.uid,
-          email: response.user?.email,
-          roles: ['user'],
+          uid: userCredential.user.uid,
+          email: userCredential.user.email,
+          roles: [ROLES.USER],
         };
       })
       .catch((_error) => {
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
         // toast.error(error.message);
-        // logger.error({ error });
+        // logger.error({ errorCode, errorMessage });
+      })
+      .finally(() => {
         setIsUserLoading(false);
       });
   };
