@@ -21,15 +21,15 @@ const getAllUsers = async () => {
 };
 
 const getUser = async () => {
-  const response = await axios.get('/api/user/U0NCNDNfzJQ13pr9CPnW/');
+  const response = await axios.get('/api/user/U0NCNDNfzJQ13pr9CPnW');
   // eslint-disable-next-line no-console
   console.log('getUser', response.data);
   return response.data;
 };
 
 const Index = () => {
-  getAllUsers();
-  getUser();
+  // getAllUsers();
+  // getUser();
   return (
     <>
       {false && <DynamicFirstConnectionModal />}

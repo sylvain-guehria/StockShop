@@ -1,5 +1,5 @@
 // import { getAnalytics } from 'firebase/analytics';
-import firebaseClient from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 import {
   confirmPasswordReset,
   createUserWithEmailAndPassword,
@@ -23,14 +23,21 @@ const firebaseConfig = {
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
-if (!firebaseClient.getApps().length) {
-  firebaseClient.initializeApp(firebaseConfig);
-}
+const app = initializeApp({ ...firebaseConfig });
 
-// const analytics = getAnalytics(app);
-const firestore = getFirestore();
-const auth = getAuth();
-const storage = getStorage();
+const auth = getAuth(app);
+const firestore = getFirestore(app);
+const storage = getStorage(app);
+
+console.log('INIT FIREEEEEEEEEEEEEEE');
+
+// if (!firebaseClient.getApps().length) {
+//   firebaseClient.initializeApp(firebaseConfig);
+// }
+
+// // const analytics = getAnalytics(app);
+// const firestore = getFirestore();
+// const auth = getAuth();
 
 export {
   auth,

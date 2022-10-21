@@ -21,11 +21,11 @@ import { ROLES } from '@/modules/user/userType';
 type ContextType = {
   user: UserEntity | null;
   loggedIn: boolean;
-  loginEmail?: any;
-  loginGoogle?: any;
-  loginFacebook?: any;
-  signUpEmail?: any;
-  signout?: any;
+  loginEmail: any;
+  loginGoogle: any;
+  loginFacebook: any;
+  signUpEmail: any;
+  signout: any;
   callSendPasswordResetEmail?: any;
   callConfirmPasswordReset?: any;
 };
