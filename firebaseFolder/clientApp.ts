@@ -13,6 +13,7 @@ import {
 } from 'firebase/auth';
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -47,6 +48,7 @@ const firestoreFunctions = {
   where,
   getDocs,
   setDoc,
+  deleteDoc,
 };
 
 export {

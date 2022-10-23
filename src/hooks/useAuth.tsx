@@ -17,7 +17,6 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import FirebaseUserRepository from '@/modules/user/firebaseUserRepository';
 import UserEntity from '@/modules/user/UserEntity';
-import { ROLES } from '@/modules/user/userType';
 
 type ContextType = {
   user: UserEntity | null;
@@ -124,14 +123,7 @@ export const AuthContextProvider = ({
   const signUpEmail = (email: string, password: string) => {
     setIsUserLoading(true);
     return createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // THIS CREATE THE USER IN FIREBASE BUT NOT IN DB
-        return {
-          uid: userCredential.user.uid,
-          email: userCredential.user.email,
-          roles: [ROLES.USER],
-        };
-      })
+      .then((userCredential) => userCredential.user.email)
       .catch((_error) => {
         // const errorCode = error.code;
         // const errorMessage = error.message;

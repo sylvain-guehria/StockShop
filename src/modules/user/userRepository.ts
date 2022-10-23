@@ -3,7 +3,7 @@
 import { methodMustBeImplemented } from '@/utils/abstract';
 
 import type UserEntity from './UserEntity';
-import type { PROVIDERS } from './userType';
+import type { PROVIDERS, ROLES } from './userType';
 
 /**
  * @abstract
@@ -24,11 +24,17 @@ class UserRepository {
   async add({
     email,
     provider,
+    role,
   }: {
     email: string;
     provider: PROVIDERS.EMAIL | PROVIDERS.GOOGLE | PROVIDERS.FACEBOOK;
+    role: ROLES.ADMIN | ROLES.SUPERADMIN | ROLES.USER;
   }): Promise<string> {
-    return methodMustBeImplemented({ email, provider });
+    return methodMustBeImplemented({ email, provider, role });
+  }
+
+  async delete(uid: string): Promise<void> {
+    return methodMustBeImplemented(uid);
   }
 
   async getAll(): Promise<UserEntity[]> {

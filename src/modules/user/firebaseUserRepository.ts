@@ -5,7 +5,7 @@ import { v4 as uuidV4 } from 'uuid';
 
 import UserEntity from './UserEntity';
 import UserRepository from './userRepository';
-import type { PROVIDERS } from './userType';
+import type { PROVIDERS, ROLES } from './userType';
 
 class FirebaseUserRepository extends UserRepository {
   async getById(uid: string): Promise<UserEntity> {
@@ -44,9 +44,11 @@ class FirebaseUserRepository extends UserRepository {
   async add({
     email,
     provider,
+    role,
   }: {
     email: string;
     provider: PROVIDERS.EMAIL | PROVIDERS.GOOGLE | PROVIDERS.FACEBOOK;
+    role: ROLES.ADMIN | ROLES.SUPERADMIN | ROLES.USER;
   }): Promise<string> {
     const uid = uuidV4();
     console.info('adding user in db...');
@@ -54,8 +56,16 @@ class FirebaseUserRepository extends UserRepository {
       uid,
       email,
       provider,
+      role,
     });
     console.info('User added in DB, uid: ', uid);
+    return res.data;
+  }
+
+  async delete(uid: string): Promise<void> {
+    console.info(`Deleting user with uid ${uid} in db...`);
+    const res = await axios.put('/api/user/delete', { uid });
+    console.info('User deleted in DB, uid: ', uid);
     return res.data;
   }
 

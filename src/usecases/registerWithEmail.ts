@@ -1,7 +1,7 @@
 import type { NextRouter } from 'next/router';
 
 import type userRepository from '../modules/user/userRepository';
-import { PROVIDERS } from '../modules/user/userType';
+import { PROVIDERS, ROLES } from '../modules/user/userType';
 
 export const registerWithEmail =
   (userRepository: userRepository) =>
@@ -17,22 +17,20 @@ export const registerWithEmail =
       uid = await userRepository.add({
         email,
         provider: PROVIDERS.EMAIL,
+        role: ROLES.USER,
       });
     } catch (e) {
       throw new Error('Error userRepository.add', e);
     }
-    // eslint-disable-next-line no-console
-    console.log('registeredWithEmail with uid : ', uid);
 
     // SIGN UP IN FIREBASE IF SUCCESS IN DB
     if (uid) {
-      try {
-        await signUpEmail(email, password);
+      const success = await signUpEmail(email, password);
+      if (success) {
         router.push('/');
-      } catch (e) {
-        // DELETE USER ADDED BEFORE
-        throw new Error('Error firebase signUpEmail', e);
+        return;
       }
+      await userRepository.delete(uid);
     }
   };
 
