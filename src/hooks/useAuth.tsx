@@ -27,14 +27,21 @@ type ContextType = {
   loginFacebook: any;
   signUpEmail: any;
   signout: any;
-  callSendPasswordResetEmail?: any;
-  callConfirmPasswordReset?: any;
+  callSendPasswordResetEmail: any;
+  callConfirmPasswordReset: any;
 };
 
 const userRepository = new FirebaseUserRepository();
 const AuthContext = createContext<ContextType>({
-  // user: UserEntity.new(null),
-  // isUserLoading: false,
+  user: UserEntity.new(null),
+  isUserLoading: false,
+  loginEmail: () => null,
+  loginGoogle: () => null,
+  loginFacebook: () => null,
+  signUpEmail: () => null,
+  signout: () => null,
+  callSendPasswordResetEmail: () => null,
+  callConfirmPasswordReset: () => null,
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -190,12 +197,11 @@ export const AuthContextProvider = ({
         } else {
           setUser(UserEntity.new({ ...user }));
         }
-        setIsUserLoading(false);
       } else {
         cookie.remove(tokenName);
         setUser(UserEntity.new(null));
-        setIsUserLoading(false);
       }
+      setIsUserLoading(false);
     });
 
     return () => unsubscribe();
@@ -219,10 +225,3 @@ export const AuthContextProvider = ({
     </AuthContext.Provider>
   );
 };
-
-// export function ProvideAuth({ children }: { children: React.ReactNode }) {
-//   const providedAuth = useProvideAuth();
-//   return (
-//     <authContext.Provider value={providedAuth}>{children}</authContext.Provider>
-//   );
-// }

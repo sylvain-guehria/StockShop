@@ -6,21 +6,33 @@ import { PROVIDERS } from '../modules/user/userType';
 export const registerWithEmail =
   (userRepository: userRepository) =>
   async (
-    signUpEmail,
+    signUpEmail: (arg0: string, arg1: string) => any,
     router: NextRouter,
-    { email, password, confirmPassword, acceptTerms }: RegisterInfo
+    { email, password }: RegisterInfo
   ): Promise<void> => {
-    const response = (await signUpEmail(email, password)) || {};
-    const uid = response?.uid;
-    if (uid) {
-      await userRepository.add({
-        uid,
+    let uid = '';
+
+    // ADD IN DB
+    try {
+      uid = await userRepository.add({
         email,
-        firstName,
-        lastName,
         provider: PROVIDERS.EMAIL,
       });
-      router.push('/');
+    } catch (e) {
+      throw new Error('Error userRepository.add', e);
+    }
+    // eslint-disable-next-line no-console
+    console.log('registeredWithEmail with uid : ', uid);
+
+    // SIGN UP IN FIREBASE IF SUCCESS IN DB
+    if (uid) {
+      try {
+        await signUpEmail(email, password);
+        router.push('/');
+      } catch (e) {
+        // DELETE USER ADDED BEFORE
+        throw new Error('Error firebase signUpEmail', e);
+      }
     }
   };
 
@@ -33,6 +45,4 @@ type AuthResponse = {
 type RegisterInfo = {
   email: string;
   password: string;
-  confirmPassword: string;
-  acceptTerms: boolean;
 };

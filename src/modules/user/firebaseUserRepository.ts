@@ -1,19 +1,16 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-console */
 import axios from 'axios';
 import { v4 as uuidV4 } from 'uuid';
 
-import UserEntity, { defaultHistory } from './UserEntity';
+import UserEntity from './UserEntity';
 import UserRepository from './userRepository';
-import type { User } from './userType';
-import { ROLES } from './userType';
+import type { PROVIDERS } from './userType';
 
 class FirebaseUserRepository extends UserRepository {
-  constructor() {
-    super();
-  }
-
   async getById(uid: string): Promise<UserEntity> {
-    // logger.info('get user in db with uid: ', uid);
-    const response = await axios.get(`/user/${uid}`);
+    console.info('get user in db with uid: ', uid);
+    const response = await axios.get(`/api/user/${uid}`);
     const {
       email,
       pseudo,
@@ -28,7 +25,7 @@ class FirebaseUserRepository extends UserRepository {
       history,
     } = response.data;
 
-    return new UserEntity({
+    return UserEntity.new({
       uid,
       email,
       pseudo,
@@ -44,28 +41,27 @@ class FirebaseUserRepository extends UserRepository {
     });
   }
 
-  async add(user: User): Promise<unknown> {
-    // logger.info('add user in db with uid: ', user.uid);
-    const res = await axios.post('/user/save', {
-      uid: user.uid || uuidV4(),
-      email: user.email || '',
-      provider: user.provider || '',
-      pseudo: user.pseudo || '',
-      firstName: user.firstName || '',
-      lastName: user.lastName || '',
-      language: user.language || '',
-      phoneNumber: user.phoneNumber || '',
-      role: user.role || ROLES.USER,
-      creationDate: Date.now(),
-      lastLogin: Date.now(),
-      history: user.history || defaultHistory,
+  async add({
+    email,
+    provider,
+  }: {
+    email: string;
+    provider: PROVIDERS.EMAIL | PROVIDERS.GOOGLE | PROVIDERS.FACEBOOK;
+  }): Promise<string> {
+    const uid = uuidV4();
+    console.info('adding user in db...');
+    const res = await axios.post('/api/user/save', {
+      uid,
+      email,
+      provider,
     });
-    return res;
+    console.info('User added in DB, uid: ', uid);
+    return res.data;
   }
 
   async getAll(): Promise<UserEntity[]> {
-    // logger.info('get all users in db');
-    const response = await axios.get('/user/getAll');
+    console.info('get all users in db');
+    const response = await axios.get('/api/user/getAll');
     return response.data.map(
       (user: UserEntity) =>
         new UserEntity({
@@ -86,8 +82,8 @@ class FirebaseUserRepository extends UserRepository {
   }
 
   async update(user: UserEntity): Promise<void> {
-    // logger.info('update user uid: ', user.uid);
-    await axios.put(`/user/${user.uid}`, {
+    console.info('update user uid: ', user.uid);
+    await axios.put(`/api/user/${user.uid}`, {
       uid: user.getId(),
       email: user.getEmail(),
       provider: user.getProvider(),
@@ -99,7 +95,6 @@ class FirebaseUserRepository extends UserRepository {
       role: user.getRole(),
       creationDate: user.getCreationDate(),
       lastLogin: user.getLastLogin(),
-      history: user.getHistory(),
     });
   }
 }

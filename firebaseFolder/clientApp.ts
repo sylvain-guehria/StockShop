@@ -11,7 +11,16 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  query,
+  setDoc,
+  where,
+} from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
@@ -30,7 +39,15 @@ const auth = getAuth(app);
 const firestore = getFirestore(app);
 const storage = getStorage(app);
 
-console.log('INIT FIREEEEEEEEEEEEEEE_BASE');
+const firestoreFunctions = {
+  doc,
+  getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+  setDoc,
+};
 
 export {
   app,
@@ -39,6 +56,7 @@ export {
   createUserWithEmailAndPassword,
   FacebookAuthProvider,
   firestore,
+  firestoreFunctions,
   GoogleAuthProvider,
   onAuthStateChanged,
   sendPasswordResetEmail,

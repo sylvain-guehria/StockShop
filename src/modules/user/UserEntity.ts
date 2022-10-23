@@ -165,7 +165,5 @@ class UserEntity implements User {
 export default UserEntity;
 
 export const defaultHistory = {
-  [HISTORYTYPE.ITEMS]: [],
-  [HISTORYTYPE.TICKETS]: [],
   [HISTORYTYPE.SUBSCRIBTIONS]: [],
 };

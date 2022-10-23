@@ -15,11 +15,9 @@ interface RegisterFormType {
   acceptTerms: boolean;
 }
 const RegisterForm = () => {
-  const authObject = useAuth();
+  const { signUpEmail } = useAuth();
   const router = useRouter();
   const formOptions = { resolver: yupResolver(validationSchema) };
-
-  console.log('authObject', authObject);
 
   const {
     register,
@@ -30,12 +28,10 @@ const RegisterForm = () => {
   const onSubmit: SubmitHandler<RegisterFormType> = async (
     data: RegisterFormType
   ) => {
-    const { email, password, confirmPassword, acceptTerms } = data;
-    registerWithEmailUseCase(authObject.signUpEmail, router, {
+    const { email, password } = data;
+    registerWithEmailUseCase(signUpEmail, router, {
       email,
       password,
-      confirmPassword,
-      acceptTerms,
     });
   };
 

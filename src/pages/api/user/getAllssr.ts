@@ -1,6 +1,6 @@
-import { firestore, firestoreFunctions } from 'firebaseFolder/clientApp';
-
-const { getDocs, collection } = firestoreFunctions;
+import type { DocumentData } from '@firebase/firestore';
+// @ts-ignore
+import firestore from 'firebaseFolder/firestore';
 
 const getAllUsers = async (
   _req: any,
@@ -14,8 +14,11 @@ const getAllUsers = async (
   }
 ) => {
   try {
-    const querySnapshot = await getDocs(collection(firestore, 'users'));
-    const usersData = querySnapshot.forEach((doc) => doc.data());
+    const users = await firestore.collection('users').get();
+    const usersData = users.docs.map((user: DocumentData) => ({
+      id: user.id,
+      ...user.data(),
+    }));
     res.status(200).json(usersData);
   } catch (e) {
     // eslint-disable-next-line no-console

@@ -1,7 +1,9 @@
+/* eslint-disable class-methods-use-this */
+
 import { methodMustBeImplemented } from '@/utils/abstract';
 
 import type UserEntity from './UserEntity';
-import type { User } from './userType';
+import type { PROVIDERS } from './userType';
 
 /**
  * @abstract
@@ -19,8 +21,14 @@ class UserRepository {
     throw methodMustBeImplemented(uid);
   }
 
-  async add(user: User): Promise<unknown> {
-    throw methodMustBeImplemented(user);
+  async add({
+    email,
+    provider,
+  }: {
+    email: string;
+    provider: PROVIDERS.EMAIL | PROVIDERS.GOOGLE | PROVIDERS.FACEBOOK;
+  }): Promise<string> {
+    return methodMustBeImplemented({ email, provider });
   }
 
   async getAll(): Promise<UserEntity[]> {
