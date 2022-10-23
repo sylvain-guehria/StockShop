@@ -6,6 +6,7 @@ import {
   createUserWithEmailAndPassword,
   FacebookAuthProvider,
   GoogleAuthProvider,
+  onAuthStateChanged,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -20,7 +21,7 @@ import { ROLES } from '@/modules/user/userType';
 
 type ContextType = {
   user: UserEntity | null;
-  loggedIn: boolean;
+  isUserLoading: boolean;
   loginEmail: any;
   loginGoogle: any;
   loginFacebook: any;
@@ -31,18 +32,20 @@ type ContextType = {
 };
 
 const userRepository = new FirebaseUserRepository();
-const authContext = createContext<ContextType>({
-  user: UserEntity.new(null),
-  loggedIn: false,
+const AuthContext = createContext<ContextType>({
+  // user: UserEntity.new(null),
+  // isUserLoading: false,
 });
 
-export const useAuth = () => {
-  return useContext(authContext);
-};
+export const useAuth = () => useContext(AuthContext);
 
-function useProvideAuth() {
+export const AuthContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [user, setUser] = useState<UserEntity | null>(null);
-  const [loggedIn, setIsUserLoading] = useState(true);
+  const [isUserLoading, setIsUserLoading] = useState(true);
   const router = useRouter();
   const tokenName = 'firebaseToken';
 
@@ -176,7 +179,7 @@ function useProvideAuth() {
       await userRepository.update(updatedUser);
     };
 
-    const unsubscribe = auth.onAuthStateChanged(async (firebaseuser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseuser) => {
       if (firebaseuser) {
         const token = await firebaseuser.getIdToken();
         cookie.set(tokenName, token, { expires: 14 });
@@ -198,22 +201,28 @@ function useProvideAuth() {
     return () => unsubscribe();
   }, []);
 
-  return {
-    user,
-    loggedIn,
-    loginEmail,
-    loginGoogle,
-    loginFacebook,
-    signUpEmail,
-    signout,
-    callSendPasswordResetEmail,
-    callConfirmPasswordReset,
-  };
-}
-
-export function ProvideAuth({ children }: { children: React.ReactNode }) {
-  const providedAuth = useProvideAuth();
   return (
-    <authContext.Provider value={providedAuth}>{children}</authContext.Provider>
+    <AuthContext.Provider
+      value={{
+        user,
+        isUserLoading,
+        loginEmail,
+        loginGoogle,
+        loginFacebook,
+        signUpEmail,
+        signout,
+        callSendPasswordResetEmail,
+        callConfirmPasswordReset,
+      }}
+    >
+      {isUserLoading ? null : children}
+    </AuthContext.Provider>
   );
-}
+};
+
+// export function ProvideAuth({ children }: { children: React.ReactNode }) {
+//   const providedAuth = useProvideAuth();
+//   return (
+//     <authContext.Provider value={providedAuth}>{children}</authContext.Provider>
+//   );
+// }

@@ -19,7 +19,6 @@ const RegisterForm = () => {
   const router = useRouter();
   const formOptions = { resolver: yupResolver(validationSchema) };
 
-  // auth ne s'initi pas, on reçoit le createContext par default, probleme car firebase ne s'init plus ?
   console.log('authObject', authObject);
 
   const {

@@ -6,6 +6,7 @@ import {
   FacebookAuthProvider,
   getAuth,
   GoogleAuthProvider,
+  onAuthStateChanged,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -14,38 +15,32 @@ import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID,
-  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
-
 const app = initializeApp({ ...firebaseConfig });
 
+// const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const firestore = getFirestore(app);
 const storage = getStorage(app);
 
-console.log('INIT FIREEEEEEEEEEEEEEE');
-
-// if (!firebaseClient.getApps().length) {
-//   firebaseClient.initializeApp(firebaseConfig);
-// }
-
-// // const analytics = getAnalytics(app);
-// const firestore = getFirestore();
-// const auth = getAuth();
+console.log('INIT FIREEEEEEEEEEEEEEE_BASE');
 
 export {
+  app,
   auth,
   confirmPasswordReset,
   createUserWithEmailAndPassword,
   FacebookAuthProvider,
   firestore,
   GoogleAuthProvider,
+  onAuthStateChanged,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,

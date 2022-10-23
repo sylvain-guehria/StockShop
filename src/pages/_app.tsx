@@ -1,6 +1,8 @@
 import '../styles/global.css';
 
 import type { AppProps } from 'next/app';
+
+import { AuthContextProvider } from '@/hooks/useAuth';
 // import App from 'next/app';
 // import cookies from 'next-cookies';
 
@@ -8,7 +10,11 @@ const dev = process.env.NODE_ENV === 'development';
 const server = dev ? 'http://localhost:3000' : 'https://mydomain.com/';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  return <Component {...pageProps} />;
+  return (
+    <AuthContextProvider>
+      <Component {...pageProps} />
+    </AuthContextProvider>
+  );
 };
 
 export default MyApp;
