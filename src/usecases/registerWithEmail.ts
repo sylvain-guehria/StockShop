@@ -1,5 +1,3 @@
-import type { NextRouter } from 'next/router';
-
 import type { UserRepository } from '../modules/user/userRepository';
 import { PROVIDERS, ROLES } from '../modules/user/userType';
 
@@ -10,9 +8,8 @@ export const registerWithEmail =
       email: string,
       password: string
     ) => Promise<string | void | null>,
-    router: NextRouter,
     { email, password }: RegisterInfo
-  ): Promise<void> => {
+  ): Promise<string> => {
     let uid = '';
 
     try {
@@ -25,15 +22,13 @@ export const registerWithEmail =
       throw new Error('Error userRepository.add');
     }
 
-    // SIGN UP IN FIREBASE IF SUCCESS IN DB
     if (uid) {
-      const success = await signUpEmail(email, password);
-      if (success) {
-        router.push('/');
-        return;
-      }
+      const response = await signUpEmail(email, password);
+      if (response === email) return email;
       await userRepository.delete(uid);
+      return response || '';
     }
+    return '';
   };
 
 type RegisterInfo = {

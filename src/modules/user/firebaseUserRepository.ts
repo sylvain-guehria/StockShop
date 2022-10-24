@@ -4,7 +4,7 @@ import axios from 'axios';
 import { v4 as uuidV4 } from 'uuid';
 
 import UserEntity from './UserEntity';
-import UserRepository from './userRepository';
+import { UserRepository } from './userRepository';
 import type { PROVIDERS, ROLES } from './userType';
 
 class FirebaseUserRepository extends UserRepository {
@@ -64,9 +64,7 @@ class FirebaseUserRepository extends UserRepository {
 
   async delete(uid: string): Promise<void> {
     console.info(`Deleting user with uid ${uid} in db...`);
-    const res = await axios.put('/api/user/delete', { uid });
-    console.info('User deleted in DB, uid: ', uid);
-    return res.data;
+    return axios.post('/api/user/delete', { uid });
   }
 
   async getAll(): Promise<UserEntity[]> {

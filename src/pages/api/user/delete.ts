@@ -20,7 +20,7 @@ const deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
 
     await deleteDoc(doc(firestore, TableNames.USERS, uid));
 
-    res.status(200);
+    res.status(200).end();
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error('error when saving user', e);

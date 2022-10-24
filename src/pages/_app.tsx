@@ -2,6 +2,8 @@ import '../styles/global.css';
 
 import type { AppProps } from 'next/app';
 
+import ToastContainer from '@/components/08-toaster/ToastContainer';
+import { ToastProvider } from '@/components/08-toaster/ToastContext';
 import { AuthContextProvider } from '@/hooks/useAuth';
 // import App from 'next/app';
 // import cookies from 'next-cookies';
@@ -12,7 +14,10 @@ import { AuthContextProvider } from '@/hooks/useAuth';
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <AuthContextProvider>
-      <Component {...pageProps} />
+      <ToastProvider>
+        <Component {...pageProps} />
+        <ToastContainer />
+      </ToastProvider>
     </AuthContextProvider>
   );
 };

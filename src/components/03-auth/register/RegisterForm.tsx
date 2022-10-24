@@ -1,9 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { AuthFirebaseErrorCodes } from 'firebaseFolder/errorCodes';
 import { useRouter } from 'next/router';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
+import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
 import { registerWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './RegisterFormValidation';
@@ -17,22 +20,30 @@ interface RegisterFormType {
 const RegisterForm = () => {
   const { signUpEmail } = useAuth();
   const router = useRouter();
+  const toast = useToast(4000);
+
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   const {
     register,
     handleSubmit,
-    // formState: { errors },
+    formState: { errors },
   } = useForm<RegisterFormType>(formOptions);
 
   const onSubmit: SubmitHandler<RegisterFormType> = async (
     data: RegisterFormType
   ) => {
     const { email, password } = data;
-    registerWithEmailUseCase(signUpEmail, router, {
+    const response = await registerWithEmailUseCase(signUpEmail, {
       email,
       password,
     });
+    if (response === AuthFirebaseErrorCodes.EmailAlreadyInUse) {
+      toast(ToasterTypeEnum.ERROR, 'Cet email est déjà utilisé.');
+    }
+    if (response === email) {
+      router.push('/');
+    }
   };
 
   return (
@@ -50,10 +61,10 @@ const RegisterForm = () => {
             {...register('email')}
             type="email"
             autoComplete="email"
-            required
             className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
           />
         </div>
+        <div className="text-sm text-red-600">{errors.email?.message}</div>
       </div>
 
       <div>
@@ -69,10 +80,10 @@ const RegisterForm = () => {
             {...register('password')}
             type="password"
             autoComplete="current-password"
-            required
             className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
           />
         </div>
+        <div className="text-sm text-red-600">{errors.password?.message}</div>
       </div>
 
       <div>
@@ -87,9 +98,11 @@ const RegisterForm = () => {
             id="confirmPassword"
             {...register('confirmPassword')}
             type="password"
-            required
             className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
           />
+        </div>
+        <div className="text-sm text-red-600">
+          {errors.confirmPassword?.message}
         </div>
       </div>
 
@@ -104,6 +117,9 @@ const RegisterForm = () => {
           <label className="cursor-pointer text-sm font-medium text-primary-600 hover:text-primary-500">
             Accepter les termes
           </label>
+        </div>
+        <div className="text-sm text-red-600">
+          {errors.acceptTerms?.message}
         </div>
       </div>
 

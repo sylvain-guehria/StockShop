@@ -122,17 +122,15 @@ export const AuthContextProvider = ({
 
   const signUpEmail = (email: string, password: string) => {
     setIsUserLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => userCredential.user.email)
-      .catch((_error) => {
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        // toast.error(error.message);
-        // logger.error({ errorCode, errorMessage });
-      })
-      .finally(() => {
-        setIsUserLoading(false);
-      });
+    return (
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => userCredential.user.email)
+        .catch((error) => error.code)
+        // logger.error({ errorCode });
+        .finally(() => {
+          setIsUserLoading(false);
+        })
+    );
   };
 
   const signout = () => {
@@ -141,7 +139,7 @@ export const AuthContextProvider = ({
       .then(() => {
         // toast.info('Aurevoir =)');
         setUser(UserEntity.new(null));
-        router.push('/');
+        // router.push('/');
       })
       .catch((_error) => {
         // toast.error(error.message);
@@ -213,7 +211,7 @@ export const AuthContextProvider = ({
         callConfirmPasswordReset,
       }}
     >
-      {isUserLoading ? null : children}
+      {children}
     </AuthContext.Provider>
   );
 };
