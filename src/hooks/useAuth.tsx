@@ -55,13 +55,14 @@ export const AuthContextProvider = ({
   const router = useRouter();
   const tokenName = 'firebaseToken';
 
-  const loginEmail = (email: string, password: string) => {
+  const loginEmail = async (
+    email: string,
+    password: string
+  ): Promise<string> => {
     setIsUserLoading(true);
     return signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        return userCredential.user;
-      })
-      .catch((_error) => {})
+      .then((userCredential) => userCredential.user.email)
+      .catch((error) => error.code)
       .finally(() => {
         setIsUserLoading(false);
       });
@@ -161,13 +162,9 @@ export const AuthContextProvider = ({
       if (firebaseuser) {
         const token = await firebaseuser.getIdToken();
         cookie.set(tokenName, token, { expires: 14 });
-        const fullUser = await fetchUserInformation(firebaseuser.uid);
-        if (fullUser && fullUser.getEmail()) {
-          updateLastConnected(fullUser.updateLastLogin());
-          setUser(fullUser);
-        } else {
-          setUser(UserEntity.new({ ...user }));
-        }
+        const userEntity = await fetchUserInformation(firebaseuser.uid);
+        updateLastConnected(userEntity.updateLastLogin());
+        setUser(userEntity.logInUser());
       } else {
         cookie.remove(tokenName);
         setUser(UserEntity.new());

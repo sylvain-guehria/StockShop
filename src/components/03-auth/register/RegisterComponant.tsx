@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { mainRoutes } from '@/routes/mainRoutes';
 
-import LoginOtherPlatformForm from '../login/LoginOtherPlatformForm';
+import LoginOtherPlatformForm from '../login-platform/LoginOtherPlatformForm';
 import RegisterForm from './RegisterForm';
 
 const RegisterComponant = () => {

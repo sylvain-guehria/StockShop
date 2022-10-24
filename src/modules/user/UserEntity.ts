@@ -168,6 +168,11 @@ class UserEntity implements User {
   isUserLoggedIn(): boolean {
     return this.loggedIn;
   }
+
+  logInUser(): UserEntity {
+    this.loggedIn = true;
+    return this;
+  }
 }
 
 export default UserEntity;

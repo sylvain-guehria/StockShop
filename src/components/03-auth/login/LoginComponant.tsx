@@ -2,8 +2,8 @@ import Link from 'next/link';
 
 import { mainRoutes } from '@/routes/mainRoutes';
 
+import LoginOtherPlatformForm from '../login-platform/LoginOtherPlatformForm';
 import LoginEmailForm from './LoginEmailForm';
-import LoginOtherPlatformForm from './LoginOtherPlatformForm';
 
 const LoginComponant = () => {
   return (
