@@ -1,6 +1,6 @@
 import type { ToastType } from './ToastContext';
 import { useToastDispatchContext } from './ToastContext';
-import { ToasterTypeEnum } from './toasterEnum';
+import { ToasterActionsEnum, ToasterTypeEnum } from './toasterEnum';
 
 export default function Toast({ type, message, id }: ToastType) {
   const dispatch = useToastDispatchContext();
@@ -31,7 +31,7 @@ export default function Toast({ type, message, id }: ToastType) {
               <div className="-m-1.5">
                 <button
                   onClick={() => {
-                    dispatch({ type: 'DELETE_TOAST', id });
+                    dispatch({ type: ToasterActionsEnum.DELETE_TOAST, id });
                   }}
                   className="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
                 >
@@ -61,7 +61,6 @@ export default function Toast({ type, message, id }: ToastType) {
           <div className="flex">
             <div className="shrink-0">
               <svg
-                svg="h-5 w-5 text-red-400"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
@@ -81,7 +80,7 @@ export default function Toast({ type, message, id }: ToastType) {
               <div className="-m-1.5">
                 <button
                   onClick={() => {
-                    dispatch({ type: 'DELETE_TOAST', id });
+                    dispatch({ type: ToasterActionsEnum.DELETE_TOAST, id });
                   }}
                   className="inline-flex rounded-md bg-red-50 p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-green-50"
                 >

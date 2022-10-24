@@ -5,5 +5,5 @@ export enum ToasterTypeEnum {
 
 export enum ToasterActionsEnum {
   ADD_TOAST = 'ADD_TOAST',
-  DELETE_TOAST = 'ADD_TOAST',
+  DELETE_TOAST = 'DELETE_TOAST',
 }

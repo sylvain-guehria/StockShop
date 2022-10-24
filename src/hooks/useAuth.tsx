@@ -61,12 +61,7 @@ export const AuthContextProvider = ({
       .then((userCredential) => {
         return userCredential.user;
       })
-      .catch((_error) => {
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        // toast.error(error.message);
-        // logger.error({ errorCode, errorMessage });
-      })
+      .catch((_error) => {})
       .finally(() => {
         setIsUserLoading(false);
       });
@@ -85,12 +80,7 @@ export const AuthContextProvider = ({
           // lastName: userCredential.additionalUserInfo?.profile?.family_name,
         };
       })
-      .catch((_error) => {
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        // toast.error(error.message);
-        // logger.error({ errorCode, errorMessage });
-      })
+      .catch((_error) => {})
       .finally(() => {
         setIsUserLoading(false);
       });
@@ -109,12 +99,7 @@ export const AuthContextProvider = ({
           // lastName: userCredential.additionalUserInfo?.profile?.last_name,
         };
       })
-      .catch((_error) => {
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        // toast.error(error.message);
-        // logger.error({ errorCode, errorMessage });
-      })
+      .catch((_error) => {})
       .finally(() => {
         setIsUserLoading(false);
       });
@@ -137,28 +122,24 @@ export const AuthContextProvider = ({
     return auth
       .signOut()
       .then(() => {
-        // toast.info('Aurevoir =)');
         setUser(UserEntity.new(null));
-        // router.push('/');
+        router.push('/');
       })
-      .catch((_error) => {
-        // toast.error(error.message);
-        // logger.error(error);
-      });
+      .catch((_error) => {});
   };
 
   const callSendPasswordResetEmail = async (email: string) => {
     sendPasswordResetEmail(auth, email)
-      .then(() => {
-        // toast.info('Un email pour vient de vous être envoyer');
-      })
+      .then(() => {})
       .catch((_error) => {
-        // toast.error(error.message);
         // logger.error(error);
       });
   };
 
-  const callConfirmPasswordReset = (newPassword: string, code: string) => {
+  const callConfirmPasswordReset = async (
+    newPassword: string,
+    code: string
+  ) => {
     const resetCode = code || '';
 
     return confirmPasswordReset(auth, resetCode, newPassword).then(() => {

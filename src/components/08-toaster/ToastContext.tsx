@@ -1,14 +1,21 @@
-import { createContext, useContext, useReducer } from 'react';
+import type { ReactNode } from 'react';
+import React, { createContext, useContext, useReducer } from 'react';
 
 import type { ToasterTypeEnum } from './toasterEnum';
 import { ToasterActionsEnum } from './toasterEnum';
 
-const ToastStateContext = createContext({ toasts: [] });
-const ToastDispatchContext = createContext(null);
+const defaultContext: StateType = {
+  toasts: [],
+};
+
+const dispatchDefault: React.Dispatch<ActionType> = () => null;
+
+const ToastStateContext = createContext(defaultContext);
+const ToastDispatchContext = createContext(dispatchDefault);
 
 type ActionType = {
   type: ToasterActionsEnum.ADD_TOAST | ToasterActionsEnum.DELETE_TOAST;
-  toast: ToastType;
+  toast?: ToastType;
   id: string;
 };
 
@@ -40,12 +47,13 @@ function ToastReducer(state: StateType, action: ActionType) {
       };
     }
     default: {
-      throw new Error('unhandled action');
+      throw new Error(`unhandled action ${action}`);
     }
   }
 }
 
-export function ToastProvider({ children }) {
+export function ToastProvider({ children }: { children: ReactNode }) {
+  // @ts-ignore
   const [state, dispatch] = useReducer(ToastReducer, {
     toasts: [],
   });

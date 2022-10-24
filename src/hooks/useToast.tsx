@@ -12,7 +12,9 @@ export function useToast(delay: number) {
     message: string
   ) {
     const id = uuidV4();
+    const id2 = uuidV4();
     dispatch({
+      id: id2,
       type: ToasterActionsEnum.ADD_TOAST,
       toast: {
         type,

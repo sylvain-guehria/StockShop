@@ -16,10 +16,10 @@ const deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
     if (!docSnap.exists()) {
       res.statusMessage = `User with uid : ${uid} does not exist`;
       res.status(400).end();
+      return;
     }
 
     await deleteDoc(doc(firestore, TableNames.USERS, uid));
-
     res.status(200).end();
   } catch (e) {
     // eslint-disable-next-line no-console

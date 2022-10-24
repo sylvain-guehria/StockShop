@@ -19,6 +19,7 @@ const saveUser = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (querySnapshot.size) {
       res.status(400).end(AuthFirebaseErrorCodes.EmailAlreadyInUse);
+      return;
     }
 
     const docRef = firestoreFunctions.doc(firestore, USERS, uid);
