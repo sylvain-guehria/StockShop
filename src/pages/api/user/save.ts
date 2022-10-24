@@ -1,4 +1,5 @@
 import { firestore, firestoreFunctions } from 'firebaseFolder/clientApp';
+import { AuthFirebaseErrorCodes } from 'firebaseFolder/errorCodes';
 import { TableNames, UserAttibutes } from 'firebaseFolder/tableNames';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
@@ -17,8 +18,7 @@ const saveUser = async (req: NextApiRequest, res: NextApiResponse) => {
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.size) {
-      res.statusMessage = 'Cet email est déjà utilisé.';
-      res.status(400).end();
+      res.status(400).end(AuthFirebaseErrorCodes.EmailAlreadyInUse);
     }
 
     const docRef = firestoreFunctions.doc(firestore, USERS, uid);

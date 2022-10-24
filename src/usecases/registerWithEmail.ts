@@ -19,7 +19,8 @@ export const registerWithEmail =
         role: ROLES.USER,
       });
     } catch (e) {
-      throw new Error('Error userRepository.add');
+      // @ts-ignore
+      return e.response.data;
     }
 
     if (uid) {

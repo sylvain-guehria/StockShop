@@ -27,11 +27,13 @@ function ToastReducer(state: StateType, action: ActionType) {
     case ToasterActionsEnum.ADD_TOAST: {
       return {
         ...state,
-        toasts: [...state.toasts, action.toast],
+        toasts: [...state.toasts, action.toast].filter((toast) => toast),
       };
     }
     case ToasterActionsEnum.DELETE_TOAST: {
-      const updatedToasts = state.toasts.filter((e) => e.id !== action.id);
+      const updatedToasts = state.toasts
+        .filter((toast) => toast.id !== action.id)
+        .filter((toast) => toast);
       return {
         ...state,
         toasts: updatedToasts,
