@@ -19,7 +19,7 @@ import FirebaseUserRepository from '@/modules/user/firebaseUserRepository';
 import UserEntity from '@/modules/user/UserEntity';
 
 type ContextType = {
-  user: UserEntity | null;
+  user: UserEntity;
   isUserLoading: boolean;
   loginEmail: any;
   loginGoogle: any;
@@ -32,7 +32,7 @@ type ContextType = {
 
 const userRepository = new FirebaseUserRepository();
 const AuthContext = createContext<ContextType>({
-  user: UserEntity.new(null),
+  user: UserEntity.new(),
   isUserLoading: false,
   loginEmail: () => null,
   loginGoogle: () => null,
@@ -50,7 +50,7 @@ export const AuthContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [user, setUser] = useState<UserEntity | null>(null);
+  const [user, setUser] = useState<UserEntity>(UserEntity.new());
   const [isUserLoading, setIsUserLoading] = useState(true);
   const router = useRouter();
   const tokenName = 'firebaseToken';
@@ -122,7 +122,7 @@ export const AuthContextProvider = ({
     return auth
       .signOut()
       .then(() => {
-        setUser(UserEntity.new(null));
+        setUser(UserEntity.new());
         router.push('/');
       })
       .catch((_error) => {});
@@ -170,7 +170,7 @@ export const AuthContextProvider = ({
         }
       } else {
         cookie.remove(tokenName);
-        setUser(UserEntity.new(null));
+        setUser(UserEntity.new());
       }
       setIsUserLoading(false);
     });

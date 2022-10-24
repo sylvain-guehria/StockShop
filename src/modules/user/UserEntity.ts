@@ -2,6 +2,10 @@
 import type { User } from './userType';
 import { HISTORYTYPE, ROLES } from './userType';
 
+export const defaultHistory = {
+  [HISTORYTYPE.SUBSCRIBTIONS]: [],
+};
+
 class UserEntity implements User {
   loggedIn;
 
@@ -31,7 +35,7 @@ class UserEntity implements User {
 
   history;
 
-  static new(user: User | null): UserEntity {
+  static new(user?: User): UserEntity {
     return user
       ? new UserEntity({
           lastLogin: Date.now(),
@@ -160,10 +164,10 @@ class UserEntity implements User {
   isSuperAdmin(): boolean {
     return this.getRole() === ROLES.SUPERADMIN;
   }
+
+  isUserLoggedIn(): boolean {
+    return this.loggedIn;
+  }
 }
 
 export default UserEntity;
-
-export const defaultHistory = {
-  [HISTORYTYPE.SUBSCRIBTIONS]: [],
-};
