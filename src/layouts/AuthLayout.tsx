@@ -6,7 +6,7 @@ type IBackgroundProps = {
 
 const AuthLayout: FC<IBackgroundProps> = ({ children }) => {
   return (
-    <div className="h-full bg-gray-50">
+    <div className="h-screen bg-gray-50">
       <div className="h-full">{children}</div>
     </div>
   );

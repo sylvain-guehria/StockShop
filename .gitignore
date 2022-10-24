@@ -41,3 +41,6 @@ local
 
 # vercel
 .vercel
+
+#firestore
+firebaseFolder/serviceAccountKey.json

@@ -4,7 +4,7 @@ import { Banner } from './Banner';
 import { Customer } from './Customer';
 import { FAQ } from './FAQ';
 import { Features } from './Features';
-import { Footer } from './Footer';
+import Footer from './Footer';
 import HeroIncentive from './HeroIncentive';
 import { Pricing } from './Pricing';
 import { Testimonial } from './Testimonial';
@@ -26,4 +26,4 @@ const Base = () => (
   </div>
 );
 
-export { Base };
+export default Base;
