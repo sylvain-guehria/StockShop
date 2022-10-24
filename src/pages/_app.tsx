@@ -6,8 +6,8 @@ import { AuthContextProvider } from '@/hooks/useAuth';
 // import App from 'next/app';
 // import cookies from 'next-cookies';
 
-const dev = process.env.NODE_ENV === 'development';
-const server = dev ? 'http://localhost:3000' : 'https://mydomain.com/';
+// const dev = process.env.NODE_ENV === 'development';
+// const server = dev ? 'http://localhost:3000' : 'https://mydomain.com/';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (

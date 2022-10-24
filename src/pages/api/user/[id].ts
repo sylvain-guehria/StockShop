@@ -1,15 +1,7 @@
-const getUserById = async (
-  req: { query: { id: any }; method: string; body: any },
-  res: {
-    status: (arg0: number) => {
-      (): any;
-      new (): any;
-      json: { (arg0: any): void; new (): any };
-      end: { (): void; new (): any };
-    };
-  }
-) => {
-  const { id } = req.query;
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+const getUserById = async (req: NextApiRequest, res: NextApiResponse) => {
+  // const { id } = req.query;
   try {
     if (req.method === 'PUT') {
       // await firestore

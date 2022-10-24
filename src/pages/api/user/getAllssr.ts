@@ -1,18 +1,8 @@
 import type { DocumentData } from '@firebase/firestore';
-// @ts-ignore
 import firestore from 'firebaseFolder/firestore';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-const getAllUsers = async (
-  _req: any,
-  res: {
-    status: (arg0: number) => {
-      (): any;
-      new (): any;
-      json: { (arg0: any): void; new (): any };
-      end: { (): void; new (): any };
-    };
-  }
-) => {
+const getAllUsers = async (_req: NextApiRequest, res: NextApiResponse) => {
   try {
     const users = await firestore.collection('users').get();
     const usersData = users.docs.map((user: DocumentData) => ({

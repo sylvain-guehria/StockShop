@@ -1,24 +1,22 @@
 /* eslint-disable class-methods-use-this */
 
-import { methodMustBeImplemented } from '@/utils/abstract';
-
 import type UserEntity from './UserEntity';
 import type { PROVIDERS, ROLES } from './userType';
 
 /**
  * @abstract
  */
-class UserRepository {
+export abstract class UserRepository {
   constructor() {
     if (this.constructor === UserRepository) {
       throw new TypeError(
-        'Abstract class "ProfileRepository" cannot be instantiated, it can only be extended.'
+        'Abstract class "UserRepository" cannot be instantiated, it can only be extended.'
       );
     }
   }
 
-  async getById(uid: string): Promise<UserEntity> {
-    throw methodMustBeImplemented(uid);
+  getById(uid: string): Promise<UserEntity> {
+    throw new Error(`You tried to call an abstract methode, arg: ${uid}`);
   }
 
   async add({
@@ -30,19 +28,21 @@ class UserRepository {
     provider: PROVIDERS.EMAIL | PROVIDERS.GOOGLE | PROVIDERS.FACEBOOK;
     role: ROLES.ADMIN | ROLES.SUPERADMIN | ROLES.USER;
   }): Promise<string> {
-    return methodMustBeImplemented({ email, provider, role });
+    throw new Error(
+      `You tried to call an abstract methode, arg: ${{ email, provider, role }}`
+    );
   }
 
   async delete(uid: string): Promise<void> {
-    return methodMustBeImplemented(uid);
+    throw new Error(`You tried to call an abstract methode, arg: ${uid}`);
   }
 
   async getAll(): Promise<UserEntity[]> {
-    throw methodMustBeImplemented();
+    throw new Error(`You tried to call an abstract methode, arg`);
   }
 
   async update(user: UserEntity): Promise<void> {
-    throw methodMustBeImplemented(user);
+    throw new Error(`You tried to call an abstract methode, arg: ${{ user }}`);
   }
 }
 

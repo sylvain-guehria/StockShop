@@ -2,7 +2,6 @@ import type {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
 } from 'next';
-import { useRouter } from 'next/router';
 import nookies from 'nookies';
 import React from 'react';
 
@@ -11,8 +10,6 @@ import { firebaseAdmin } from '../../firebaseFolder/firestore';
 const AuthenticatedPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-  const router = useRouter();
-
   return (
     <div>
       <p>{props.message!}</p>
@@ -37,8 +34,8 @@ export default AuthenticatedPage;
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   try {
     const cookies = nookies.get(ctx);
-    console.log(JSON.stringify(cookies, null, 2));
-    const token = await firebaseAdmin.auth().verifyIdToken(cookies.token);
+    // console.log(JSON.stringify(cookies, null, 2));
+    const token = await firebaseAdmin.auth().verifyIdToken(cookies.token || '');
     const { uid, email } = token;
 
     // the user is authenticated!

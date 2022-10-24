@@ -1,5 +1,6 @@
 import { firestore, firestoreFunctions } from 'firebaseFolder/clientApp';
 import { TableNames, UserAttibutes } from 'firebaseFolder/tableNames';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 const { USERS } = TableNames;
 const { EMAIL } = UserAttibutes;
@@ -7,7 +8,7 @@ const { EMAIL } = UserAttibutes;
 const { collection, query, where, getDocs, setDoc, doc } = firestoreFunctions;
 
 // CLIENT SIDE
-const saveUser = async (req, res) => {
+const saveUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const usersRef = collection(firestore, USERS);
     const { uid, email, provider } = req.body;

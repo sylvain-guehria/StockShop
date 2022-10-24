@@ -1,18 +1,9 @@
 import { firestore, firestoreFunctions } from 'firebaseFolder/clientApp';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 const { getDocs, collection } = firestoreFunctions;
 
-const getAllUsers = async (
-  _req: any,
-  res: {
-    status: (arg0: number) => {
-      (): any;
-      new (): any;
-      json: { (arg0: any): void; new (): any };
-      end: { (): void; new (): any };
-    };
-  }
-) => {
+const getAllUsers = async (_req: NextApiRequest, res: NextApiResponse) => {
   try {
     const querySnapshot = await getDocs(collection(firestore, 'users'));
     const usersData = querySnapshot.forEach((doc) => doc.data());

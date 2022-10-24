@@ -1,6 +1,6 @@
 import type { NextRouter } from 'next/router';
 
-import type UserRepository from '../modules/user/userRepository';
+import type { UserRepository } from '../modules/user/userRepository';
 import { PROVIDERS, ROLES } from '../modules/user/userType';
 
 export const registerWithEmail =
@@ -22,7 +22,7 @@ export const registerWithEmail =
         role: ROLES.USER,
       });
     } catch (e) {
-      throw new Error('Error userRepository.add', e);
+      throw new Error('Error userRepository.add');
     }
 
     // SIGN UP IN FIREBASE IF SUCCESS IN DB

@@ -1,9 +1,12 @@
+/* eslint-disable no-console */
+import type { NextApiRequest, NextApiResponse } from 'next';
+
 import { firebaseAdmin } from '../../../firebaseFolder/firestore';
 
-const validate = async (token) => {
+const validate = async (token: string) => {
   // Check that the user has a valid token
   const decodedToken = await firebaseAdmin.auth().verifyIdToken(token, true);
-  let userData;
+  let userData = {};
   // Get user Firebase data from token
   const user = await firebaseAdmin.auth().getUser(decodedToken.uid);
   // Get any additional user data from the Firebase DB
@@ -23,16 +26,16 @@ const validate = async (token) => {
   // Assign the user result that will be passed to your _app.js file with populated data from the getUser and db functions
   const result = {
     user: {
+      ...userData,
       uid: user.uid,
       email: user.email,
-      username: userData.username,
       emailVerified: user.emailVerified,
     },
   };
   return result;
 };
 
-const validateToken = async (req, res) => {
+const validateToken = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     // Check if there is a token and if not return undefined.
     const { token } = JSON.parse(req.headers.authorization || '{}');
