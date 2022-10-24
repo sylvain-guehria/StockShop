@@ -6,7 +6,10 @@ import { PROVIDERS, ROLES } from '../modules/user/userType';
 export const registerWithEmail =
   (userRepository: UserRepository) =>
   async (
-    signUpEmail: (arg0: string, arg1: string) => any,
+    signUpEmail: (
+      email: string,
+      password: string
+    ) => Promise<string | void | null>,
     router: NextRouter,
     { email, password }: RegisterInfo
   ): Promise<void> => {
@@ -32,12 +35,6 @@ export const registerWithEmail =
       await userRepository.delete(uid);
     }
   };
-
-type AuthResponse = {
-  uid: string | undefined;
-  email: string | null | undefined;
-  firstName: string | undefined;
-};
 
 type RegisterInfo = {
   email: string;

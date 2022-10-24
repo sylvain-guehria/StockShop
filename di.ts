@@ -1,14 +1,6 @@
 import FirebaseUserRepository from '@/modules/user/firebaseUserRepository';
 import UserService from '@/modules/user/userService';
 
-import storageFunctions from './firebaseFolder/storage';
+export const userRepository = new FirebaseUserRepository();
 
-const userRepository = new FirebaseUserRepository();
-
-export const userServiceDi = new UserService(userRepository, storageFunctions);
-
-export default {
-  userRepository,
-  userServiceDi,
-  storageFunctions,
-};
+export const userServiceDi = new UserService(userRepository);

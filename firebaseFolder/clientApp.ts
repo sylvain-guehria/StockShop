@@ -22,7 +22,13 @@ import {
   setDoc,
   where,
 } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
+import {
+  deleteObject,
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -51,6 +57,13 @@ const firestoreFunctions = {
   deleteDoc,
 };
 
+const storageFunctions = {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  deleteObject,
+};
+
 export {
   app,
   auth,
@@ -65,4 +78,5 @@ export {
   signInWithEmailAndPassword,
   signInWithPopup,
   storage,
+  storageFunctions,
 };

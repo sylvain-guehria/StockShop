@@ -4,7 +4,10 @@ import { registerWithEmail } from './registerWithEmail';
 
 let userRepository: UserRepository;
 let router: any;
-let signUpEmail: (email: string, password: string) => void;
+let signUpEmail: (
+  email: string,
+  password: string
+) => Promise<string | void | null>;
 
 beforeEach(() => {
   userRepository = {
