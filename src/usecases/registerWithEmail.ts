@@ -1,10 +1,10 @@
 import type { NextRouter } from 'next/router';
 
-import type userRepository from '../modules/user/userRepository';
+import type UserRepository from '../modules/user/userRepository';
 import { PROVIDERS, ROLES } from '../modules/user/userType';
 
 export const registerWithEmail =
-  (userRepository: userRepository) =>
+  (userRepository: UserRepository) =>
   async (
     signUpEmail: (arg0: string, arg1: string) => any,
     router: NextRouter,
@@ -12,7 +12,6 @@ export const registerWithEmail =
   ): Promise<void> => {
     let uid = '';
 
-    // ADD IN DB
     try {
       uid = await userRepository.add({
         email,
