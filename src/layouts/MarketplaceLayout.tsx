@@ -18,6 +18,7 @@ const DynamicFirstConnectionModal = dynamic(
 type Props = {
   children: ReactNode;
 };
+
 const MarketplaceLayout: FC<Props> = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user } = useAuth();

@@ -94,8 +94,8 @@ class FirebaseUserRepository extends UserRepository {
   }
 
   async update(user: UserEntity): Promise<void> {
-    console.info('update user uid: ', user.uid);
-    await axios.put(`/api/user/${user.uid}`, {
+    console.info('update user uid: ', user.getId());
+    await axios.put(`/api/user/${user.getId()}`, {
       uid: user.getId(),
       email: user.getEmail(),
       provider: user.getProvider(),
@@ -107,6 +107,8 @@ class FirebaseUserRepository extends UserRepository {
       role: user.getRole(),
       creationDate: user.getCreationDate(),
       lastLogin: user.getLastLogin(),
+      hasStockManagementServiceActivated: user.isSeller(),
+      hasSeenFirstConnectionModal: user.hasSeenFirstConnectionModal,
     });
   }
 }

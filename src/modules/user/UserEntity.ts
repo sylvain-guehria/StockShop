@@ -189,6 +189,16 @@ class UserEntity implements User {
   needToSeeFirstConnectionModal(): boolean {
     return !this.hasSeenFirstConnectionModal;
   }
+
+  activateSockManagement(): UserEntity {
+    this.hasStockManagementServiceActivated = true;
+    return this;
+  }
+
+  markFirstConnectionModalAsSeen(): UserEntity {
+    this.hasSeenFirstConnectionModal = true;
+    return this;
+  }
 }
 
 export default UserEntity;
