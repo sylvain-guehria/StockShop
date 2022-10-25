@@ -4,7 +4,6 @@ import axios from 'axios';
 
 import UserEntity from './UserEntity';
 import { UserRepository } from './userRepository';
-import type { PROVIDERS, ROLES } from './userType';
 
 class FirebaseUserRepository extends UserRepository {
   async getById(uid: string): Promise<UserEntity> {
@@ -44,25 +43,17 @@ class FirebaseUserRepository extends UserRepository {
     });
   }
 
-  async add({
-    email,
-    provider,
-    role,
-    uid,
-  }: {
-    email: string;
-    provider: PROVIDERS.EMAIL | PROVIDERS.GOOGLE | PROVIDERS.FACEBOOK;
-    role: ROLES.ADMIN | ROLES.SUPERADMIN | ROLES.USER;
-    uid: string;
-  }): Promise<string> {
+  async add(user: UserEntity): Promise<string> {
     console.info('adding user in db...');
-    const res = await axios.post('/api/user/save', {
-      uid,
-      email,
-      provider,
-      role,
+    const res = await axios.post('/api/user/add', {
+      uid: user.getUid(),
+      email: user.getEmail(),
+      provider: user.getProvider(),
+      role: user.getRole(),
+      creationDate: new Date().getTime(),
+      lastLogin: new Date().getTime(),
     });
-    console.info('User added in DB, uid: ', uid);
+    console.info('User added in DB, uid: ', user.getUid());
     return res.data;
   }
 
@@ -94,9 +85,9 @@ class FirebaseUserRepository extends UserRepository {
   }
 
   async update(user: UserEntity): Promise<void> {
-    console.info('update user uid: ', user.getId());
-    await axios.put(`/api/user/${user.getId()}`, {
-      uid: user.getId(),
+    console.info('update user uid: ', user.getUid());
+    await axios.put(`/api/user/${user.getUid()}`, {
+      uid: user.getUid(),
       email: user.getEmail(),
       provider: user.getProvider(),
       pseudo: user.getPseudo(),

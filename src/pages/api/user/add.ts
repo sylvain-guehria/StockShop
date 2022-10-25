@@ -6,15 +6,19 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 const { USERS } = TableNames;
 const { EMAIL } = UserAttibutes;
 
-const { collection, query, where, getDocs, setDoc, doc } = firestoreFunctions;
+const { collection, query, where, getDocs, setDoc, doc, getDoc } =
+  firestoreFunctions;
 
 // CLIENT SIDE
-const saveUser = async (req: NextApiRequest, res: NextApiResponse) => {
+const addUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const usersRef = collection(firestore, USERS);
-    const { uid, email, provider } = req.body;
+    const { ...user } = req.body;
 
-    const q = query(collection(firestore, USERS), where(EMAIL, '==', email));
+    const q = query(
+      collection(firestore, USERS),
+      where(EMAIL, '==', user.email)
+    );
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.size) {
@@ -22,20 +26,17 @@ const saveUser = async (req: NextApiRequest, res: NextApiResponse) => {
       return;
     }
 
-    const docRef = firestoreFunctions.doc(firestore, USERS, uid);
-    const docSnap = await firestoreFunctions.getDoc(docRef);
+    const docRef = doc(firestore, USERS, user.uid);
+    const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      res.statusMessage = `A user already has this uid : ${uid}, cannot create new user`;
+      res.statusMessage = `A user already has this uid : ${user.uid}, cannot create new user`;
       res.status(400).end();
+      return;
     }
 
-    await setDoc(doc(usersRef, uid), {
-      uid,
-      email,
-      provider,
-    });
-    res.status(200).json(uid);
+    await setDoc(doc(usersRef, user.uid), user);
+    res.status(200).json(user.uid);
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error('error when saving user', e);
@@ -43,4 +44,4 @@ const saveUser = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default saveUser;
+export default addUser;

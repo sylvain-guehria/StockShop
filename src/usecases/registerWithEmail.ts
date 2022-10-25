@@ -1,3 +1,5 @@
+import UserEntity from '@/modules/user/UserEntity';
+
 import type { UserRepository } from '../modules/user/userRepository';
 import { PROVIDERS, ROLES } from '../modules/user/userType';
 
@@ -8,12 +10,14 @@ export const registerWithEmail =
       const response = await signUpEmail(email, password);
 
       if (response?.uid) {
-        await userRepository.add({
-          email,
-          provider: PROVIDERS.EMAIL,
-          role: ROLES.USER,
-          uid: response.uid,
-        });
+        await userRepository.add(
+          UserEntity.new({
+            email,
+            provider: PROVIDERS.EMAIL,
+            role: ROLES.USER,
+            uid: response.uid,
+          })
+        );
       }
       return response;
     } catch (e) {

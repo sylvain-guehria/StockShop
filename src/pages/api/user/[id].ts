@@ -1,26 +1,43 @@
+import { firestore, firestoreFunctions } from 'firebaseFolder/clientApp';
+import { TableNames } from 'firebaseFolder/tableNames';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+const { updateDoc, doc, getDoc } = firestoreFunctions;
+const { USERS } = TableNames;
+
 const getUserById = async (req: NextApiRequest, res: NextApiResponse) => {
-  // const { id } = req.query;
+  const {
+    query: { id },
+    method,
+  } = req;
+
+  if (!id) {
+    res.status(400).end('User uid is mandatory');
+    return;
+  }
+
+  const userRef = doc(firestore, USERS, id as string);
+  const userSnapshot = await getDoc(userRef);
+
   try {
-    if (req.method === 'PUT') {
-      // await firestore
-      //   .collection('users')
-      //   .doc(id)
-      //   .update({
-      //     ...req.body,
-      //   });
-    } else if (req.method === 'GET') {
-      // const doc = await firestore.collection('users').doc(id).get();
-      // if (!doc.exists) {
-      //   // res.status(200).end();
-      // } else {
-      //   res.status(200).json(doc.data());
-      // }
-    } else if (req.method === 'DELETE') {
-      // await firestore.collection('users').doc(id).delete();
+    switch (method) {
+      case 'GET':
+        if (!userSnapshot.exists) {
+          res.status(200).end();
+        } else {
+          res.status(200).json(userSnapshot.data());
+        }
+        break;
+      case 'PUT':
+        await updateDoc(userRef, {
+          ...req.body,
+        });
+        res.status(200).end();
+        break;
+      default:
+        res.setHeader('Allow', ['GET', 'PUT']);
+        res.status(405).end(`Method ${method} Not Allowed`);
     }
-    res.status(200).end();
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);

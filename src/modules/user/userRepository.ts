@@ -1,7 +1,6 @@
 /* eslint-disable class-methods-use-this */
 
 import type UserEntity from './UserEntity';
-import type { PROVIDERS, ROLES } from './userType';
 
 /**
  * @abstract
@@ -19,25 +18,8 @@ export abstract class UserRepository {
     throw new Error(`You tried to call an abstract methode, arg: ${uid}`);
   }
 
-  async add({
-    email,
-    provider,
-    role,
-    uid,
-  }: {
-    email: string;
-    provider: PROVIDERS.EMAIL | PROVIDERS.GOOGLE | PROVIDERS.FACEBOOK;
-    role: ROLES.ADMIN | ROLES.SUPERADMIN | ROLES.USER;
-    uid: string;
-  }): Promise<string> {
-    throw new Error(
-      `You tried to call an abstract methode, arg: ${{
-        email,
-        provider,
-        role,
-        uid,
-      }}`
-    );
+  async add(user: UserEntity): Promise<string> {
+    throw new Error(`You tried to call an abstract methode, arg: ${user}`);
   }
 
   async delete(uid: string): Promise<void> {

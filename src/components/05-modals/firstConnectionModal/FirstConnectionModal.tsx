@@ -7,7 +7,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { SUBROLES } from '@/modules/user/userType';
 import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
 import { stockManagementRoutes } from '@/routes/stockManagementRoutes';
-import { chooseRoleOnFirstConnectionUseCase } from '@/usecases/usecases';
+import { chooseSubRoleOnFirstConnectionUseCase } from '@/usecases/usecases';
 
 const FirstConnectionModal = () => {
   const [open, setOpen] = useState(true);
@@ -18,7 +18,7 @@ const FirstConnectionModal = () => {
   const onChooseRoleFirstConnection = async (
     subrole: SUBROLES.BUYER | SUBROLES.SELLER
   ) => {
-    chooseRoleOnFirstConnectionUseCase(user, subrole).then(() =>
+    chooseSubRoleOnFirstConnectionUseCase(user, subrole).then(() =>
       setOpen(false)
     );
   };

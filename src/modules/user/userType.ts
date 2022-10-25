@@ -2,14 +2,14 @@ export interface User {
   loggedIn?: boolean;
   email?: string;
   pseudo?: string;
-  provider?: string;
+  provider?: ProviderType;
   uid?: string;
   password?: string;
   firstName?: string;
   lastName?: string;
   language?: string;
   phoneNumber?: string;
-  role?: string;
+  role?: RoleType;
   creationDate?: number;
   lastLogin?: number;
   history?: History;
@@ -38,6 +38,8 @@ export enum ROLES {
   USER = 'user',
 }
 
+export type RoleType = ROLES.SUPERADMIN | ROLES.ADMIN | ROLES.USER;
+
 export enum SUBROLES {
   SELLER = 'seller',
   BUYER = 'buyer',
@@ -47,7 +49,14 @@ export enum PROVIDERS {
   FACEBOOK = 'facebook',
   GOOGLE = 'google',
   EMAIL = 'email',
+  NOTKNOWN = 'notKnown',
 }
+
+export type ProviderType =
+  | PROVIDERS.EMAIL
+  | PROVIDERS.FACEBOOK
+  | PROVIDERS.GOOGLE
+  | PROVIDERS.NOTKNOWN;
 
 export enum HISTORYTYPE {
   ITEMS = 'items',

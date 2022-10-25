@@ -1,43 +1,43 @@
 /* eslint-disable complexity */
-import type { User } from './userType';
-import { HISTORYTYPE, ROLES } from './userType';
+import type { ProviderType, RoleType, User } from './userType';
+import { HISTORYTYPE, PROVIDERS, ROLES } from './userType';
 
 export const defaultHistory = {
   [HISTORYTYPE.SUBSCRIBTIONS]: [],
 };
 
 class UserEntity implements User {
-  loggedIn;
+  loggedIn: boolean;
 
-  email;
+  email: string;
 
-  pseudo;
+  pseudo: string;
 
-  uid;
+  uid: string;
 
-  password;
+  password: string;
 
-  firstName;
+  firstName: string;
 
-  lastName;
+  lastName: string;
 
-  language;
+  language: string;
 
-  phoneNumber;
+  phoneNumber: string;
 
-  role;
+  role: RoleType;
 
-  creationDate;
+  creationDate: number;
 
-  lastLogin;
+  lastLogin: number;
 
-  provider;
+  provider: ProviderType;
 
   history;
 
-  hasStockManagementServiceActivated;
+  hasStockManagementServiceActivated: boolean;
 
-  hasSeenFirstConnectionModal;
+  hasSeenFirstConnectionModal: boolean;
 
   static new(user?: User): UserEntity {
     return user
@@ -52,7 +52,7 @@ class UserEntity implements User {
   constructor(user: User) {
     this.loggedIn = user.loggedIn || false;
     this.email = user.email || '';
-    this.provider = user.provider || '';
+    this.provider = user.provider || PROVIDERS.NOTKNOWN;
     this.pseudo = user.pseudo || '';
     this.uid = user.uid || '';
     this.password = user.password || '';
@@ -60,7 +60,7 @@ class UserEntity implements User {
     this.lastName = user.lastName || '';
     this.language = user.language || '';
     this.phoneNumber = user.phoneNumber || '';
-    this.role = user.role || '';
+    this.role = user.role || ROLES.USER;
     this.creationDate = user.creationDate || 0;
     this.lastLogin = user.lastLogin || 0;
     this.history = user.history || defaultHistory;
@@ -70,20 +70,20 @@ class UserEntity implements User {
       user.hasSeenFirstConnectionModal || false;
   }
 
-  getId(): string {
+  getUid(): string {
     return this.uid;
   }
 
-  getProvider(): string {
+  getProvider(): ProviderType {
     return this.provider;
   }
 
-  setRole(role: string): UserEntity {
+  setRole(role: RoleType): UserEntity {
     this.role = role;
     return this;
   }
 
-  getRole(): string {
+  getRole(): RoleType {
     return this.role;
   }
 

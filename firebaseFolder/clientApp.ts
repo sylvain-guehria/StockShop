@@ -20,6 +20,7 @@ import {
   getFirestore,
   query,
   setDoc,
+  updateDoc,
   where,
 } from 'firebase/firestore';
 import {
@@ -55,6 +56,7 @@ const firestoreFunctions = {
   getDocs,
   setDoc,
   deleteDoc,
+  updateDoc,
 };
 
 const storageFunctions = {

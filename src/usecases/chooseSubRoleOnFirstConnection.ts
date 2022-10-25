@@ -2,7 +2,7 @@ import type UserEntity from '@/modules/user/UserEntity';
 import type { UserRepository } from '@/modules/user/userRepository';
 import { SUBROLES } from '@/modules/user/userType';
 
-export const chooseRoleOnFirstConnection =
+export const chooseSubRoleOnFirstConnection =
   (userRepository: UserRepository) =>
   async (
     user: UserEntity,
