@@ -36,6 +36,8 @@ export enum ROLES {
   SUPERADMIN = 'superadmin',
   ADMIN = 'admin',
   USER = 'user',
+  SELLER = 'seller',
+  BUYER = 'buyer',
 }
 
 export enum PROVIDERS {

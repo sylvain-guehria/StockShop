@@ -42,7 +42,6 @@ class UserEntity implements User {
   static new(user?: User): UserEntity {
     return user
       ? new UserEntity({
-          lastLogin: Date.now(),
           ...user,
         })
       : new UserEntity({
@@ -179,6 +178,7 @@ class UserEntity implements User {
 
   logInUser(): UserEntity {
     this.loggedIn = true;
+    this.updateLastLogin();
     return this;
   }
 
@@ -192,6 +192,11 @@ class UserEntity implements User {
 
   activateSockManagement(): UserEntity {
     this.hasStockManagementServiceActivated = true;
+    return this;
+  }
+
+  desActivateSockManagement(): UserEntity {
+    this.hasStockManagementServiceActivated = false;
     return this;
   }
 

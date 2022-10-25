@@ -3,13 +3,23 @@ import { CheckIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Fragment, useRef, useState } from 'react';
 
+import { useAuth } from '@/hooks/useAuth';
+import { ROLES } from '@/modules/user/userType';
 import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
 import { stockManagementRoutes } from '@/routes/stockManagementRoutes';
+import { chooseRoleOnFirstConnectionUseCase } from '@/usecases/usecases';
 
 const FirstConnectionModal = () => {
   const [open, setOpen] = useState(true);
+  const { user } = useAuth();
 
   const cancelButtonRef = useRef(null);
+
+  const onChooseRoleFirstConnection = async (
+    role: ROLES.BUYER | ROLES.SELLER
+  ) => {
+    chooseRoleOnFirstConnectionUseCase(user, role).then(() => setOpen(false));
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -75,7 +85,7 @@ const FirstConnectionModal = () => {
                     <button
                       type="button"
                       className="inline-flex w-full justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
-                      onClick={() => setOpen(false)}
+                      onClick={() => onChooseRoleFirstConnection(ROLES.BUYER)}
                     >
                       Je viens seulement en tant qu&apos;acheteur
                     </button>
@@ -84,7 +94,7 @@ const FirstConnectionModal = () => {
                     <button
                       type="button"
                       className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
-                      onClick={() => setOpen(false)}
+                      onClick={() => onChooseRoleFirstConnection(ROLES.SELLER)}
                       ref={cancelButtonRef}
                     >
                       Je veux gérer mon inventaire
