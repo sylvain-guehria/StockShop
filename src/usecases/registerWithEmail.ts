@@ -13,7 +13,7 @@ export const registerWithEmail =
         await userRepository.add(
           UserEntity.new({
             email,
-            provider: PROVIDERS.EMAIL,
+            provider: PROVIDERS.PASSWORD,
             role: ROLES.USER,
             uid: response.uid,
           })

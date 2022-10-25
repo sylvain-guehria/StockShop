@@ -44,14 +44,14 @@ export enum SUBROLES {
 }
 
 export enum PROVIDERS {
-  FACEBOOK = 'facebook',
-  GOOGLE = 'google',
-  EMAIL = 'email',
+  FACEBOOK = 'facebook.com',
+  GOOGLE = 'google.com',
+  PASSWORD = 'password',
   NOTKNOWN = 'notKnown',
 }
 
 export type ProviderType =
-  | PROVIDERS.EMAIL
+  | PROVIDERS.PASSWORD
   | PROVIDERS.FACEBOOK
   | PROVIDERS.GOOGLE
   | PROVIDERS.NOTKNOWN;

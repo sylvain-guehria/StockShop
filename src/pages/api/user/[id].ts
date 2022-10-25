@@ -22,18 +22,18 @@ const getUserById = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     switch (method) {
       case 'GET':
-        if (!userSnapshot.exists) {
-          res.status(200).end();
-        } else {
-          res.status(200).json(userSnapshot.data());
+        if (!userSnapshot.exists()) {
+          res.status(400).end(`User with id ${id} does not exist`);
+          return;
         }
-        break;
+        res.status(200).json(userSnapshot.data());
+        return;
       case 'PUT':
         await updateDoc(userRef, {
           ...req.body,
         });
         res.status(200).end();
-        break;
+        return;
       default:
         res.setHeader('Allow', ['GET', 'PUT']);
         res.status(405).end(`Method ${method} Not Allowed`);

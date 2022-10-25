@@ -17,6 +17,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import FirebaseUserRepository from '@/modules/user/firebaseUserRepository';
 import UserEntity from '@/modules/user/UserEntity';
+import type { ProviderType } from '@/modules/user/userType';
 
 type ContextType = {
   user: UserEntity;
@@ -151,15 +152,34 @@ export const AuthContextProvider = ({
   useEffect(() => {
     const fetchUserInformation = async (uid: string) => {
       setIsUserLoading(true);
-      return userRepository.getById(uid);
+      try {
+        return await userRepository.getById(uid);
+      } catch (e) {
+        return '';
+      }
     };
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
+        firebaseUser.reload();
         const token = await firebaseUser.getIdToken();
+
         cookie.set(tokenName, token, { expires: 14 });
-        const userEntity = await fetchUserInformation(firebaseUser.uid);
-        setUser(userEntity.logInUser());
+
+        await fetchUserInformation(firebaseUser.uid).then((fetchedUser) => {
+          if (fetchedUser) {
+            setUser(fetchedUser.logInUser());
+          } else {
+            setUser(
+              UserEntity.new({
+                email: firebaseUser.email as string,
+                uid: firebaseUser.uid,
+                provider: firebaseUser.providerData[0]
+                  ?.providerId as ProviderType,
+              }).logInUser()
+            );
+          }
+        });
       } else {
         cookie.remove(tokenName);
         setUser(UserEntity.new());
