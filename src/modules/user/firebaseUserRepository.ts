@@ -23,6 +23,8 @@ class FirebaseUserRepository extends UserRepository {
       lastLogin,
       provider,
       history,
+      hasStockManagementServiceActivated,
+      hasSeenFirstConnectionModal,
     } = response.data;
 
     return UserEntity.new({
@@ -38,6 +40,8 @@ class FirebaseUserRepository extends UserRepository {
       lastLogin,
       provider,
       history,
+      hasStockManagementServiceActivated,
+      hasSeenFirstConnectionModal,
     });
   }
 

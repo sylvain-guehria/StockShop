@@ -13,6 +13,8 @@ export interface User {
   creationDate?: number;
   lastLogin?: number;
   history?: History;
+  hasStockManagementServiceActivated?: boolean;
+  hasSeenFirstConnectionModal?: boolean;
 }
 
 export interface Users {

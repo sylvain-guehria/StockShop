@@ -35,6 +35,10 @@ class UserEntity implements User {
 
   history;
 
+  hasStockManagementServiceActivated;
+
+  hasSeenFirstConnectionModal;
+
   static new(user?: User): UserEntity {
     return user
       ? new UserEntity({
@@ -61,6 +65,10 @@ class UserEntity implements User {
     this.creationDate = user.creationDate || 0;
     this.lastLogin = user.lastLogin || 0;
     this.history = user.history || defaultHistory;
+    this.hasStockManagementServiceActivated =
+      user.hasStockManagementServiceActivated || false;
+    this.hasSeenFirstConnectionModal =
+      user.hasSeenFirstConnectionModal || false;
   }
 
   getId(): string {
@@ -172,6 +180,14 @@ class UserEntity implements User {
   logInUser(): UserEntity {
     this.loggedIn = true;
     return this;
+  }
+
+  isSeller(): boolean {
+    return this.hasStockManagementServiceActivated;
+  }
+
+  needToSeeFirstConnectionModal(): boolean {
+    return !this.hasSeenFirstConnectionModal;
   }
 }
 
