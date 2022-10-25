@@ -17,8 +17,6 @@ class FirebaseUserRepository extends UserRepository {
       language,
       phoneNumber,
       role,
-      creationDate,
-      lastLogin,
       provider,
       history,
       hasStockManagementServiceActivated,
@@ -34,8 +32,6 @@ class FirebaseUserRepository extends UserRepository {
       language,
       phoneNumber,
       role,
-      creationDate,
-      lastLogin,
       provider,
       history,
       hasStockManagementServiceActivated,
@@ -50,8 +46,6 @@ class FirebaseUserRepository extends UserRepository {
       email: user.getEmail(),
       provider: user.getProvider(),
       role: user.getRole(),
-      creationDate: new Date().getTime(),
-      lastLogin: new Date().getTime(),
     });
     console.info('User added in DB, uid: ', user.getUid());
     return res.data;
@@ -77,8 +71,6 @@ class FirebaseUserRepository extends UserRepository {
           language: user.language,
           phoneNumber: user.phoneNumber,
           role: user.role,
-          creationDate: user.creationDate,
-          lastLogin: user.lastLogin,
           history: user.history,
         })
     );
@@ -96,8 +88,6 @@ class FirebaseUserRepository extends UserRepository {
       language: user.getLanguage(),
       phoneNumber: user.getPhoneNumber(),
       role: user.getRole(),
-      creationDate: user.getCreationDate(),
-      lastLogin: user.getLastLogin(),
       hasStockManagementServiceActivated: user.isSeller(),
       hasSeenFirstConnectionModal: user.hasSeenFirstConnectionModal,
     });

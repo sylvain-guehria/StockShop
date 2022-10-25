@@ -10,8 +10,6 @@ export interface User {
   language?: string;
   phoneNumber?: string;
   role?: RoleType;
-  creationDate?: number;
-  lastLogin?: number;
   history?: History;
   hasStockManagementServiceActivated?: boolean;
   hasSeenFirstConnectionModal?: boolean;

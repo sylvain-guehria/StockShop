@@ -27,10 +27,6 @@ class UserEntity implements User {
 
   role: RoleType;
 
-  creationDate: number;
-
-  lastLogin: number;
-
   provider: ProviderType;
 
   history;
@@ -61,8 +57,6 @@ class UserEntity implements User {
     this.language = user.language || '';
     this.phoneNumber = user.phoneNumber || '';
     this.role = user.role || ROLES.USER;
-    this.creationDate = user.creationDate || 0;
-    this.lastLogin = user.lastLogin || 0;
     this.history = user.history || defaultHistory;
     this.hasStockManagementServiceActivated =
       user.hasStockManagementServiceActivated || false;
@@ -146,24 +140,6 @@ class UserEntity implements User {
     return this.phoneNumber;
   }
 
-  initCreationDate(): UserEntity {
-    this.creationDate = Date.now();
-    return this;
-  }
-
-  getCreationDate(): number {
-    return this.creationDate;
-  }
-
-  getLastLogin(): number {
-    return this.lastLogin;
-  }
-
-  updateLastLogin(): UserEntity {
-    this.lastLogin = Date.now();
-    return this;
-  }
-
   isAdmin(): boolean {
     return this.getRole() === ROLES.ADMIN;
   }
@@ -178,7 +154,6 @@ class UserEntity implements User {
 
   logInUser(): UserEntity {
     this.loggedIn = true;
-    this.updateLastLogin();
     return this;
   }
 

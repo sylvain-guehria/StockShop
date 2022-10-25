@@ -154,16 +154,11 @@ export const AuthContextProvider = ({
       return userRepository.getById(uid);
     };
 
-    const updateLastConnected = async (updatedUser: UserEntity) => {
-      await userRepository.update(updatedUser);
-    };
-
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseuser) => {
-      if (firebaseuser) {
-        const token = await firebaseuser.getIdToken();
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        const token = await firebaseUser.getIdToken();
         cookie.set(tokenName, token, { expires: 14 });
-        const userEntity = await fetchUserInformation(firebaseuser.uid);
-        updateLastConnected(userEntity.updateLastLogin());
+        const userEntity = await fetchUserInformation(firebaseUser.uid);
         setUser(userEntity.logInUser());
       } else {
         cookie.remove(tokenName);
