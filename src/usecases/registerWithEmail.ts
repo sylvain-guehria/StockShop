@@ -3,36 +3,27 @@ import { PROVIDERS, ROLES } from '../modules/user/userType';
 
 export const registerWithEmail =
   (userRepository: UserRepository) =>
-  async (
-    signUpEmail: (
-      email: string,
-      password: string
-    ) => Promise<string | void | null>,
-    { email, password }: RegisterInfo
-  ): Promise<string> => {
-    let uid = '';
-
+  async (signUpEmail: SignUpEmailType, { email, password }: RegisterInfo) => {
     try {
-      uid = await userRepository.add({
-        email,
-        provider: PROVIDERS.EMAIL,
-        role: ROLES.USER,
-      });
-    } catch (e) {
-      // @ts-ignore
-      return e.response.data;
-    }
-
-    if (uid) {
       const response = await signUpEmail(email, password);
-      if (response === email) return email;
-      await userRepository.delete(uid);
-      return response || '';
+
+      if (response?.uid) {
+        await userRepository.add({
+          email,
+          provider: PROVIDERS.EMAIL,
+          role: ROLES.USER,
+          uid: response.uid,
+        });
+      }
+      return response;
+    } catch (e) {
+      return e;
     }
-    return '';
   };
 
 type RegisterInfo = {
   email: string;
   password: string;
 };
+
+type SignUpEmailType = (email: string, password: string) => Promise<any>;

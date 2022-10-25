@@ -19,24 +19,6 @@ beforeEach(() => {
   signUpEmail = jest.fn();
 });
 
-const FAILED = false;
-
-it('Add the user to the database with the role "user" and the provider "email"', async () => {
-  const email = 'sylvain.guehria@gmail.com';
-  const password = 'password';
-
-  await registerWithEmail(userRepository)(signUpEmail, {
-    email,
-    password,
-  });
-
-  expect(userRepository.add).toHaveBeenCalledWith({
-    email: 'sylvain.guehria@gmail.com',
-    provider: 'email',
-    role: 'user',
-  });
-});
-
 it('Signup the user in firebase', async () => {
   const email = 'sylvain.guehria@gmail.com';
   const password = 'password';
@@ -51,31 +33,40 @@ it('Signup the user in firebase', async () => {
   expect(signUpEmail).toHaveBeenCalledWith(email, password);
 });
 
-it('Do not signup the user in firebase if the user is not added in DB', async () => {
+it('Add the user to the database with the role "user" and the provider "email"', async () => {
   const email = 'sylvain.guehria@gmail.com';
   const password = 'password';
 
-  (userRepository.add as jest.Mock).mockResolvedValue(FAILED);
+  (signUpEmail as jest.Mock).mockResolvedValue({ uid: 'uid' });
 
   await registerWithEmail(userRepository)(signUpEmail, {
     email,
     password,
   });
 
-  expect(signUpEmail).toHaveBeenCalledTimes(0);
+  expect(signUpEmail).toHaveBeenCalledWith(
+    'sylvain.guehria@gmail.com',
+    'password'
+  );
+
+  expect(userRepository.add).toHaveBeenCalledWith({
+    email: 'sylvain.guehria@gmail.com',
+    provider: 'email',
+    role: 'user',
+    uid: 'uid',
+  });
 });
 
-it('Delete the added user if he is added in DB but not signed up in firebase', async () => {
+it('Do not signup the user in the database if the user is not add to firebase', async () => {
   const email = 'sylvain.guehria@gmail.com';
   const password = 'password';
 
-  (userRepository.add as jest.Mock).mockResolvedValue('uidtodelete');
-  (signUpEmail as jest.Mock).mockResolvedValue(false);
+  (signUpEmail as jest.Mock).mockResolvedValue({});
 
   await registerWithEmail(userRepository)(signUpEmail, {
     email,
     password,
   });
 
-  expect(userRepository.delete).toHaveBeenCalledWith('uidtodelete');
+  expect(userRepository.add).toHaveBeenCalledTimes(0);
 });

@@ -1,7 +1,6 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-console */
 import axios from 'axios';
-import { v4 as uuidV4 } from 'uuid';
 
 import UserEntity from './UserEntity';
 import { UserRepository } from './userRepository';
@@ -49,12 +48,13 @@ class FirebaseUserRepository extends UserRepository {
     email,
     provider,
     role,
+    uid,
   }: {
     email: string;
     provider: PROVIDERS.EMAIL | PROVIDERS.GOOGLE | PROVIDERS.FACEBOOK;
     role: ROLES.ADMIN | ROLES.SUPERADMIN | ROLES.USER;
+    uid: string;
   }): Promise<string> {
-    const uid = uuidV4();
     console.info('adding user in db...');
     const res = await axios.post('/api/user/save', {
       uid,

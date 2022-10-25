@@ -23,13 +23,20 @@ export abstract class UserRepository {
     email,
     provider,
     role,
+    uid,
   }: {
     email: string;
     provider: PROVIDERS.EMAIL | PROVIDERS.GOOGLE | PROVIDERS.FACEBOOK;
     role: ROLES.ADMIN | ROLES.SUPERADMIN | ROLES.USER;
+    uid: string;
   }): Promise<string> {
     throw new Error(
-      `You tried to call an abstract methode, arg: ${{ email, provider, role }}`
+      `You tried to call an abstract methode, arg: ${{
+        email,
+        provider,
+        role,
+        uid,
+      }}`
     );
   }
 

@@ -38,10 +38,13 @@ const RegisterForm = () => {
       email,
       password,
     });
-    if (response === AuthFirebaseErrorCodes.EmailAlreadyInUse) {
+    if (
+      response.data === AuthFirebaseErrorCodes.EmailAlreadyInUse ||
+      response.code === AuthFirebaseErrorCodes.EmailAlreadyInUse
+    ) {
       toast(ToasterTypeEnum.ERROR, 'Cet email est déjà utilisé.');
     }
-    if (response === email) {
+    if (response.email === email) {
       router.push('/');
     }
   };

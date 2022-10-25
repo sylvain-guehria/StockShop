@@ -36,6 +36,9 @@ export enum ROLES {
   SUPERADMIN = 'superadmin',
   ADMIN = 'admin',
   USER = 'user',
+}
+
+export enum SUBROLES {
   SELLER = 'seller',
   BUYER = 'buyer',
 }

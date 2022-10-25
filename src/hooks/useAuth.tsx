@@ -110,8 +110,8 @@ export const AuthContextProvider = ({
     setIsUserLoading(true);
     return (
       createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => userCredential.user.email)
-        .catch((error) => error.code)
+        .then((userCredential) => userCredential.user)
+        .catch((error) => error)
         // logger.error({ errorCode });
         .finally(() => {
           setIsUserLoading(false);

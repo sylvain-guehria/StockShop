@@ -100,7 +100,7 @@ export const trendingProducts = [
     ],
   },
   {
-    id: 1,
+    id: 2,
     name: 'Machined Pen',
     color: 'Black',
     price: '$35',
@@ -116,7 +116,7 @@ export const trendingProducts = [
     ],
   },
   {
-    id: 1,
+    id: 3,
     name: 'Machined Pen',
     color: 'Black',
     price: '$35',

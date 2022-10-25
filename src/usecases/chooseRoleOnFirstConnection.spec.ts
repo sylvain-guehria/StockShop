@@ -1,6 +1,6 @@
 import UserEntity from '@/modules/user/UserEntity';
 import type { UserRepository } from '@/modules/user/userRepository';
-import { ROLES } from '@/modules/user/userType';
+import { SUBROLES } from '@/modules/user/userType';
 
 import { chooseRoleOnFirstConnection } from './chooseRoleOnFirstConnection';
 
@@ -25,7 +25,7 @@ it('The user want to be a buyer only', async () => {
   expectedUser.hasStockManagementServiceActivated = false;
   expectedUser.hasSeenFirstConnectionModal = true;
 
-  await chooseRoleOnFirstConnection(userRepository)(user, ROLES.BUYER);
+  await chooseRoleOnFirstConnection(userRepository)(user, SUBROLES.BUYER);
 
   expect(userRepository.update).toHaveBeenCalledWith(expectedUser);
 });
@@ -39,7 +39,7 @@ it('The user want to become a seller', async () => {
   expectedUser.hasStockManagementServiceActivated = true;
   expectedUser.hasSeenFirstConnectionModal = true;
 
-  await chooseRoleOnFirstConnection(userRepository)(user, ROLES.SELLER);
+  await chooseRoleOnFirstConnection(userRepository)(user, SUBROLES.SELLER);
 
   expect(userRepository.update).toHaveBeenCalledWith(expectedUser);
 });
