@@ -44,3 +44,5 @@ local
 
 #firestore
 firebaseFolder/serviceAccountKey.json
+
+.vscode
