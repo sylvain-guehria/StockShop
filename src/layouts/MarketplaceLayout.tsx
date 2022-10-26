@@ -22,7 +22,8 @@ type Props = {
 const MarketplaceLayout: FC<Props> = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user } = useAuth();
-  const displayFirstConnectionModal = user.needToSeeFirstConnectionModal();
+  const displayFirstConnectionModal =
+    user.isLoggedIn() && user.needToSeeFirstConnectionModal();
 
   return (
     <div className="bg-white">

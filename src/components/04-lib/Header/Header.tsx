@@ -38,7 +38,7 @@ export default function Header() {
           </div>
           <div className="hidden md:flex md:flex-1 md:items-center md:justify-between">
             <Popover.Group as="nav" className="hidden space-x-10 md:flex">
-              <ServicesButton services={services} />
+              <ServicesButton />
               <Link href={mainRoutes.pricing.path}>
                 <a
                   href="#"

@@ -21,7 +21,8 @@ type Props = {
 const StockManagementLayout: FC<Props> = ({ children }) => {
   const { user } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const displayFirstConnectionModal = user.needToSeeFirstConnectionModal();
+  const displayFirstConnectionModal =
+    user.isLoggedIn() && user.needToSeeFirstConnectionModal();
 
   return (
     <div className="h-screen bg-gray-100">

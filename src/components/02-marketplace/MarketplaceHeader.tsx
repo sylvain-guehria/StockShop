@@ -12,7 +12,6 @@ import { Suspense, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { mainRoutes } from '@/routes/mainRoutes';
 
-import { services } from '../04-lib/Header/services';
 import ServicesButton from '../04-lib/Popovers/ServicesButton';
 import ProfileDropdown from '../07-profile/ProfileDropdown';
 
@@ -64,7 +63,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                   {/* <MegaMenu /> */}
 
                   <div className="ml-8 hidden lg:flex">
-                    <ServicesButton services={services} />
+                    <ServicesButton />
                   </div>
 
                   {/* Mobile menu and search (lg-) */}

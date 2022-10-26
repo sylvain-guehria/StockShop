@@ -1,10 +1,14 @@
-import { Dialog, Tab, Transition } from '@headlessui/react';
-import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/20/solid';
-import classNames from 'classnames';
+import { Dialog, Transition } from '@headlessui/react';
+import { XMarkIcon } from '@heroicons/react/20/solid';
+import Link from 'next/link';
 import type { FC } from 'react';
 import { Fragment } from 'react';
 
-import { currencies, navigation } from './fakeDatas';
+import { useAuth } from '@/hooks/useAuth';
+import { mainRoutes } from '@/routes/mainRoutes';
+
+import MobileServicesButton from '../04-lib/Popovers/MobileServicesButton';
+import { navigation } from './fakeDatas';
 
 type Props = {
   mobileMenuOpen: boolean;
@@ -12,6 +16,7 @@ type Props = {
 };
 
 const MobileMenu: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
+  const { user, callsignOut } = useAuth();
   return (
     <Transition.Root show={mobileMenuOpen} as={Fragment}>
       <Dialog
@@ -53,128 +58,7 @@ const MobileMenu: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
                 </button>
               </div>
 
-              {/* Links */}
-              <Tab.Group as="div" className="mt-2">
-                <div className="border-b border-gray-200">
-                  <Tab.List className="-mb-px flex space-x-8 px-4">
-                    {navigation.categories.map((category) => (
-                      <Tab
-                        key={category.name}
-                        className={({ selected }) =>
-                          classNames(
-                            selected
-                              ? 'text-primary-600 border-primary-600'
-                              : 'text-gray-900 border-transparent',
-                            'flex-1 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium'
-                          )
-                        }
-                      >
-                        {category.name}
-                      </Tab>
-                    ))}
-                  </Tab.List>
-                </div>
-                <Tab.Panels as={Fragment}>
-                  {navigation.categories.map((category, categoryIdx) => (
-                    <Tab.Panel
-                      key={category.name}
-                      className="space-y-12 px-4 pt-10 pb-6"
-                    >
-                      <div className="grid grid-cols-1 items-start gap-y-10 gap-x-6">
-                        <div className="grid grid-cols-1 gap-y-10 gap-x-6">
-                          <div>
-                            <p
-                              id={`mobile-featured-heading-${categoryIdx}`}
-                              className="font-medium text-gray-900"
-                            >
-                              Featured
-                            </p>
-                            <ul
-                              role="list"
-                              aria-labelledby={`mobile-featured-heading-${categoryIdx}`}
-                              className="mt-6 space-y-6"
-                            >
-                              {category.featured.map((item) => (
-                                <li key={item.name} className="flex">
-                                  <a href={item.href} className="text-gray-500">
-                                    {item.name}
-                                  </a>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                          <div>
-                            <p
-                              id="mobile-categories-heading"
-                              className="font-medium text-gray-900"
-                            >
-                              Categories
-                            </p>
-                            <ul
-                              role="list"
-                              aria-labelledby="mobile-categories-heading"
-                              className="mt-6 space-y-6"
-                            >
-                              {category.categories.map((item) => (
-                                <li key={item.name} className="flex">
-                                  <a href={item.href} className="text-gray-500">
-                                    {item.name}
-                                  </a>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-1 gap-y-10 gap-x-6">
-                          <div>
-                            <p
-                              id="mobile-collection-heading"
-                              className="font-medium text-gray-900"
-                            >
-                              Collection
-                            </p>
-                            <ul
-                              role="list"
-                              aria-labelledby="mobile-collection-heading"
-                              className="mt-6 space-y-6"
-                            >
-                              {category.collection.map((item) => (
-                                <li key={item.name} className="flex">
-                                  <a href={item.href} className="text-gray-500">
-                                    {item.name}
-                                  </a>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-
-                          <div>
-                            <p
-                              id="mobile-brand-heading"
-                              className="font-medium text-gray-900"
-                            >
-                              Brands
-                            </p>
-                            <ul
-                              role="list"
-                              aria-labelledby="mobile-brand-heading"
-                              className="mt-6 space-y-6"
-                            >
-                              {category.brands.map((item) => (
-                                <li key={item.name} className="flex">
-                                  <a href={item.href} className="text-gray-500">
-                                    {item.name}
-                                  </a>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </Tab.Panel>
-                  ))}
-                </Tab.Panels>
-              </Tab.Group>
+              <MobileServicesButton />
 
               <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                 {navigation.pages.map((page) => (
@@ -189,52 +73,33 @@ const MobileMenu: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
                 ))}
               </div>
 
-              <div className="space-y-6 border-t border-gray-200 py-6 px-4">
-                <div className="flow-root">
-                  <a
-                    href="#"
-                    className="-m-2 block p-2 font-medium text-gray-900"
-                  >
-                    Create an account
-                  </a>
-                </div>
-                <div className="flow-root">
-                  <a
-                    href="#"
-                    className="-m-2 block p-2 font-medium text-gray-900"
-                  >
-                    Sign in
-                  </a>
-                </div>
-              </div>
-
-              <div className="space-y-6 border-t border-gray-200 py-6 px-4">
-                {/* Currency selector */}
-                <form>
-                  <div className="inline-block">
-                    <label htmlFor="mobile-currency" className="sr-only">
-                      Currency
-                    </label>
-                    <div className="group relative -ml-2 rounded-md border-transparent focus-within:ring-2 focus-within:ring-white">
-                      <select
-                        id="mobile-currency"
-                        name="currency"
-                        className="flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800"
+              {user.isLoggedOut() && (
+                <div className="space-y-6 border-t border-gray-200 py-6 px-4">
+                  <div className="flow-root">
+                    <Link href={mainRoutes.login.path}>
+                      <a
+                        href="#"
+                        className="mr-1 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
                       >
-                        {currencies.map((currency) => (
-                          <option key={currency}>{currency}</option>
-                        ))}
-                      </select>
-                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                        <ChevronDownIcon
-                          className="h-5 w-5 text-gray-500"
-                          aria-hidden="true"
-                        />
-                      </div>
-                    </div>
+                        {mainRoutes.login.label}
+                      </a>
+                    </Link>
                   </div>
-                </form>
-              </div>
+                </div>
+              )}
+
+              {user.isLoggedIn() && (
+                <div className="space-y-6 border-t border-gray-200 py-6 px-4">
+                  <button
+                    onClick={() => callsignOut()}
+                    className="ml-6 mr-1 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
+                  >
+                    Se Déconnecter
+                  </button>
+                </div>
+              )}
+
+              <div className="space-y-6 border-t border-gray-200 py-6 px-4"></div>
             </Dialog.Panel>
           </Transition.Child>
         </div>

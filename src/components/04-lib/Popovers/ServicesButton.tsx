@@ -11,7 +11,7 @@ import { Fragment } from 'react';
 
 import { mainRoutes } from '@/routes/mainRoutes';
 
-import type { Service } from '../Header/services';
+import { services } from '../Header/services';
 
 export const callsToAction = [
   { name: 'Regarder une démo', href: '#', icon: PlayIcon },
@@ -23,10 +23,7 @@ export const callsToAction = [
   { name: 'Nous contacter', href: mainRoutes.contact.path, icon: PhoneIcon },
 ];
 
-type Props = {
-  services: Service[];
-};
-const ServicesButton: FC<Props> = ({ services }) => {
+const ServicesButton: FC = () => {
   return (
     <Popover>
       {({ open }) => (

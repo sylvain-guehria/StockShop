@@ -4,15 +4,18 @@ import classNames from 'classnames';
 import type { FC } from 'react';
 import { Fragment } from 'react';
 
+import { useAuth } from '@/hooks/useAuth';
+
 type Props = {
   logo?: React.ComponentProps<'svg'>;
 };
 
 const ProfileDropdown: FC<Props> = ({ logo }) => {
+  const { callsignOut } = useAuth();
   return (
     <Menu as="div" className="relative ml-3">
       <div>
-        <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 lg:rounded-md lg:p-2 lg:hover:bg-gray-50">
+        <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 lg:rounded-md lg:p-2 lg:hover:bg-gray-50">
           <>
             {logo || (
               <img
@@ -23,7 +26,7 @@ const ProfileDropdown: FC<Props> = ({ logo }) => {
             )}
             <span className="ml-3 hidden text-sm font-medium text-gray-700 lg:block">
               <span className="sr-only">Open user menu for </span>
-              Emilia Birch
+              User
             </span>
             <ChevronDownIcon
               className="ml-1 hidden h-5 w-5 shrink-0 text-gray-400 lg:block"
@@ -70,15 +73,15 @@ const ProfileDropdown: FC<Props> = ({ logo }) => {
           </Menu.Item>
           <Menu.Item>
             {({ active }) => (
-              <a
-                href="#"
+              <div
                 className={classNames(
                   active ? 'bg-gray-100' : '',
-                  'block px-4 py-2 text-sm text-gray-700'
+                  'block px-4 py-2 text-sm text-gray-700 cursor-pointer'
                 )}
+                onClick={() => callsignOut()}
               >
                 Logout
-              </a>
+              </div>
             )}
           </Menu.Item>
         </Menu.Items>
