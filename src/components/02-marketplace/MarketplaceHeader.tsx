@@ -14,6 +14,7 @@ import { mainRoutes } from '@/routes/mainRoutes';
 
 import { services } from '../04-lib/Header/services';
 import ServicesButton from '../04-lib/Popovers/ServicesButton';
+import ProfileDropdown from '../07-profile/ProfileDropdown';
 
 const SearchBarModal = dynamic(
   () => import('../05-modals/searchBar/SearchBarModal'),
@@ -100,7 +101,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                   </a>
                   <div className="flex flex-1 items-center justify-end">
                     <div className="flex items-center lg:ml-8">
-                      <div className="flex space-x-8">
+                      <div className="flex items-center space-x-8">
                         <div
                           className="hidden lg:flex"
                           onClick={() => setIsSearchBarOpen(true)}
@@ -117,15 +118,19 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                           </a>
                         </div>
 
-                        <div className="flex">
-                          <a
-                            href="#"
-                            className="-m-2 p-2 text-gray-400 hover:text-gray-500"
-                          >
+                        {user.isLoggedIn() && (
+                          <div className="flex text-gray-400 hover:text-gray-500">
                             <span className="sr-only">Account</span>
-                            <UserIcon className="h-6 w-6" aria-hidden="true" />
-                          </a>
-                        </div>
+                            <ProfileDropdown
+                              logo={
+                                <UserIcon
+                                  className="h-6 w-6"
+                                  aria-hidden="true"
+                                />
+                              }
+                            />
+                          </div>
+                        )}
                       </div>
 
                       <span
