@@ -16,9 +16,9 @@ const VerticalFeatures = () => (
         }}
         action={
           <Link href="/">
-            <a>
+            <div className="cursor-pointer">
               <Button>Learn more</Button>
-            </a>
+            </div>
           </Link>
         }
       >
@@ -56,9 +56,9 @@ const VerticalFeatures = () => (
         }}
         action={
           <Link href="/">
-            <a>
+            <div className="cursor-pointer">
               <Button>Read more</Button>
-            </a>
+            </div>
           </Link>
         }
       >

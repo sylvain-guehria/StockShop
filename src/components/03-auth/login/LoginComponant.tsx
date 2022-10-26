@@ -23,12 +23,9 @@ const LoginComponant = () => {
           <p className="mt-2 text-center text-sm text-gray-600">
             Ou{' '}
             <Link href={mainRoutes.register.path}>
-              <a
-                href="#"
-                className="font-medium text-primary-600 hover:text-primary-500"
-              >
+              <div className="cursor-pointer font-medium text-primary-600 hover:text-primary-500">
                 S&apos;inscrire gratuitement
-              </a>
+              </div>
             </Link>
           </p>
         </div>

@@ -1,10 +1,12 @@
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import classNames from 'classnames';
+import Link from 'next/link';
 import type { FC } from 'react';
 import { Fragment } from 'react';
 
 import { useAuth } from '@/hooks/useAuth';
+import { mainRoutes } from '@/routes/mainRoutes';
 
 type Props = {
   logo?: React.ComponentProps<'svg'>;
@@ -47,28 +49,30 @@ const ProfileDropdown: FC<Props> = ({ logo }) => {
         <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none">
           <Menu.Item>
             {({ active }) => (
-              <a
-                href="#"
-                className={classNames(
-                  active ? 'bg-gray-100' : '',
-                  'block px-4 py-2 text-sm text-gray-700'
-                )}
-              >
-                Your Profile
-              </a>
+              <Link href={mainRoutes.profile.path}>
+                <div
+                  className={classNames(
+                    active ? 'bg-gray-100' : '',
+                    'block px-4 py-2 text-sm text-gray-700'
+                  )}
+                >
+                  {mainRoutes.profile.label}
+                </div>
+              </Link>
             )}
           </Menu.Item>
           <Menu.Item>
             {({ active }) => (
-              <a
-                href="#"
-                className={classNames(
-                  active ? 'bg-gray-100' : '',
-                  'block px-4 py-2 text-sm text-gray-700'
-                )}
-              >
-                Settings
-              </a>
+              <Link href="#">
+                <div
+                  className={classNames(
+                    active ? 'bg-gray-100' : '',
+                    'block px-4 py-2 text-sm text-gray-700'
+                  )}
+                >
+                  Settings
+                </div>
+              </Link>
             )}
           </Menu.Item>
           <Menu.Item>

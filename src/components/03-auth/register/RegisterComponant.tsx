@@ -23,12 +23,9 @@ const RegisterComponant = () => {
           <p className="mt-2 text-center text-sm text-gray-600">
             Déjà inscrit ?{' '}
             <Link href={mainRoutes.login.path}>
-              <a
-                href="#"
-                className="font-medium text-primary-600 hover:text-primary-500"
-              >
+              <div className="cursor-pointer font-medium text-primary-600 hover:text-primary-500">
                 Se connecter
-              </a>
+              </div>
             </Link>
           </p>
         </div>

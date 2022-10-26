@@ -17,9 +17,9 @@ const Pricing = () => (
           description="Best for individuals"
           button={
             <Link href="/">
-              <a>
+              <div className="cursor-pointer">
                 <Button full>Get Started</Button>
-              </a>
+              </div>
             </Link>
           }
         >
@@ -36,9 +36,9 @@ const Pricing = () => (
           description="Best for small teams"
           button={
             <Link href="/">
-              <a>
+              <div className="cursor-pointer">
                 <Button full>Get Started</Button>
-              </a>
+              </div>
             </Link>
           }
         >
@@ -55,9 +55,9 @@ const Pricing = () => (
           description="Best for industry leader"
           button={
             <Link href="/">
-              <a>
+              <div className="cursor-pointer">
                 <Button full>Get Started</Button>
-              </a>
+              </div>
             </Link>
           }
         >

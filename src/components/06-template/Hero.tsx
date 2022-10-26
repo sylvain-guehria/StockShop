@@ -18,9 +18,9 @@ const Hero = () => (
         description="Gérer votre inventaire et vendre vos produits en ligne n'a jamais été aussi facile."
         button={
           <Link href="/">
-            <a>
+            <div className="cursor-pointer">
               <Button xl>Créé votre compte gratuitement</Button>
-            </a>
+            </div>
           </Link>
         }
         image={{
