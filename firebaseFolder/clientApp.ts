@@ -11,6 +11,7 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
 } from 'firebase/auth';
 import {
   collection,
@@ -81,6 +82,7 @@ export {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
   storage,
   storageFunctions,
 };

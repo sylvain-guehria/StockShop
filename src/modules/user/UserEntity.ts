@@ -148,8 +148,12 @@ class UserEntity implements User {
     return this.getRole() === ROLES.SUPERADMIN;
   }
 
-  isUserLoggedIn(): boolean {
+  isLoggedIn(): boolean {
     return this.loggedIn;
+  }
+
+  isLoggedOut(): boolean {
+    return !this.loggedIn;
   }
 
   logInUser(): UserEntity {

@@ -10,6 +10,7 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
 } from 'firebaseFolder/clientApp';
 import cookie from 'js-cookie';
 import { useRouter } from 'next/router';
@@ -26,7 +27,7 @@ type ContextType = {
   loginGoogle: any;
   loginFacebook: any;
   signUpEmail: any;
-  signout: any;
+  callsignOut: any;
   callSendPasswordResetEmail: any;
   callConfirmPasswordReset: any;
 };
@@ -39,7 +40,7 @@ const AuthContext = createContext<ContextType>({
   loginGoogle: () => null,
   loginFacebook: () => null,
   signUpEmail: () => null,
-  signout: () => null,
+  callsignOut: () => null,
   callSendPasswordResetEmail: () => null,
   callConfirmPasswordReset: () => null,
 });
@@ -69,7 +70,7 @@ export const AuthContextProvider = ({
       });
   };
 
-  const loginGoogle = () => {
+  const loginGoogle = async () => {
     setIsUserLoading(true);
     const provider = new GoogleAuthProvider();
     return signInWithPopup(auth, provider)
@@ -88,7 +89,7 @@ export const AuthContextProvider = ({
       });
   };
 
-  const loginFacebook = () => {
+  const loginFacebook = async () => {
     setIsUserLoading(true);
     const facebookProvider = new FacebookAuthProvider();
     return signInWithPopup(auth, facebookProvider)
@@ -107,7 +108,7 @@ export const AuthContextProvider = ({
       });
   };
 
-  const signUpEmail = (email: string, password: string) => {
+  const signUpEmail = async (email: string, password: string) => {
     setIsUserLoading(true);
     return (
       createUserWithEmailAndPassword(auth, email, password)
@@ -120,9 +121,8 @@ export const AuthContextProvider = ({
     );
   };
 
-  const signout = () => {
-    return auth
-      .signOut()
+  const callsignOut = async () => {
+    return signOut(auth)
       .then(() => {
         setUser(UserEntity.new());
         router.push('/');
@@ -199,7 +199,7 @@ export const AuthContextProvider = ({
         loginGoogle,
         loginFacebook,
         signUpEmail,
-        signout,
+        callsignOut,
         callSendPasswordResetEmail,
         callConfirmPasswordReset,
       }}
