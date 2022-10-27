@@ -1,4 +1,6 @@
-import { useRouter } from 'next/router';
+'use client';
+
+import { useRouter } from 'next/navigation';
 import type { FC, ReactNode } from 'react';
 
 import Header from '@/components/04-lib/Header/Header';

@@ -1,3 +1,5 @@
+'use client';
+
 import { Disclosure, Menu, Switch, Transition } from '@headlessui/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import {

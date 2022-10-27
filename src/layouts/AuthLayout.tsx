@@ -1,14 +1,16 @@
-import { useRouter } from 'next/router';
+'use client';
+
+import { useRouter } from 'next/navigation';
 import type { FC, ReactNode } from 'react';
 
 import { useAuth } from '@/hooks/useAuth';
 import { mainRoutes } from '@/routes/mainRoutes';
 
-type IBackgroundProps = {
+type Props = {
   children: ReactNode;
 };
 
-const AuthLayout: FC<IBackgroundProps> = ({ children }) => {
+const AuthLayout: FC<Props> = ({ children }) => {
   const { user } = useAuth();
   const router = useRouter();
   if (user.isLoggedIn()) router.push(mainRoutes.home.path);

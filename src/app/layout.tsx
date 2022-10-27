@@ -9,6 +9,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <title>Next.js</title>
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
       <body>{children}</body>
     </html>

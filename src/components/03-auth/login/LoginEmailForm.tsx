@@ -1,3 +1,5 @@
+'use client';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AuthFirebaseErrorCodes } from 'firebaseFolder/errorCodes';
 import { useState } from 'react';

@@ -12,8 +12,9 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebaseFolder/clientApp';
+import { tokenName } from 'firebaseFolder/constant';
 import cookie from 'js-cookie';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import FirebaseUserRepository from '@/modules/user/firebaseUserRepository';
@@ -55,7 +56,6 @@ export const AuthContextProvider = ({
   const [user, setUser] = useState<UserEntity>(UserEntity.new());
   const [isUserLoading, setIsUserLoading] = useState(true);
   const router = useRouter();
-  const tokenName = 'firebaseToken';
 
   const loginEmail = async (
     email: string,
