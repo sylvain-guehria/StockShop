@@ -1,7 +1,7 @@
 import RegisterClientPage from './RegisterClientPage';
 
-const Login = () => {
+const Register = () => {
   return <RegisterClientPage />;
 };
 
-export default Login;
+export default Register;

@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import type { FC, ReactNode } from 'react';
 
 import Header from '@/components/04-lib/Header/Header';
+import Providers from '@/hooks/Providers';
 import { useAuth } from '@/hooks/useAuth';
 import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
 import { stockManagementRoutes } from '@/routes/stockManagementRoutes';
@@ -29,4 +30,12 @@ const VisitorLayout: FC<Props> = ({ children }) => {
   );
 };
 
-export default VisitorLayout;
+const VisitorLayoutWithProviders: FC<Props> = ({ children }) => {
+  return (
+    <Providers>
+      <VisitorLayout>{children}</VisitorLayout>
+    </Providers>
+  );
+};
+
+export default VisitorLayoutWithProviders;

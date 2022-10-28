@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import type { FC, ReactNode } from 'react';
 
+import Providers from '@/hooks/Providers';
 import { useAuth } from '@/hooks/useAuth';
 import { mainRoutes } from '@/routes/mainRoutes';
 
@@ -21,4 +22,12 @@ const AuthLayout: FC<Props> = ({ children }) => {
   );
 };
 
-export default AuthLayout;
+const AuthLayoutWithProviders: FC<Props> = ({ children }) => {
+  return (
+    <Providers>
+      <AuthLayout>{children}</AuthLayout>
+    </Providers>
+  );
+};
+
+export default AuthLayoutWithProviders;

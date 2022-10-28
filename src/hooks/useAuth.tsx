@@ -155,16 +155,17 @@ export const AuthContextProvider = ({
       try {
         return await userRepository.getById(uid);
       } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('ERROR FETCHED', e);
         return '';
       }
     };
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        firebaseUser.reload();
-        const token = await firebaseUser.getIdToken();
+        const token = await firebaseUser.getIdToken(true);
 
-        cookie.set(tokenName, token, { expires: 14 });
+        cookie.set(tokenName, token);
 
         await fetchUserInformation(firebaseUser.uid).then((fetchedUser) => {
           if (fetchedUser) {

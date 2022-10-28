@@ -20,14 +20,14 @@ const RegisterComponant = () => {
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
             S&apos;inscrire avec son email
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <div className="mt-2 text-center text-sm text-gray-600">
             Déjà inscrit ?{' '}
             <Link href={mainRoutes.login.path}>
               <div className="cursor-pointer font-medium text-primary-600 hover:text-primary-500">
                 Se connecter
               </div>
             </Link>
-          </p>
+          </div>
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">

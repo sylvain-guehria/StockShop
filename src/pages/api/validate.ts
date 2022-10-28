@@ -21,7 +21,7 @@ const validate = async (token: string) => {
     })
     .catch((error) => {
       // eslint-disable-next-line no-console
-      console.log('Error getting document:', error);
+      console.error('Error getting document:', error);
     });
   // Assign the user result that will be passed to your _app.js file with populated data from the getUser and db functions
   const result = {
@@ -51,7 +51,7 @@ const validateToken = async (req: NextApiRequest, res: NextApiResponse) => {
   } catch (err) {
     // Return undefined if there is no user. You may also send a different status or handle the error in any way that you wish.
     // eslint-disable-next-line no-console
-    console.log(err);
+    console.error(err);
     const result = undefined;
     return res.status(200).send(result);
   }

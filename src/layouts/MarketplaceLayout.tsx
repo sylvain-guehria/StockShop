@@ -7,6 +7,7 @@ import { useState } from 'react';
 import MarketplaceFooter from '@/components/02-marketplace/MarketplaceFooter';
 import MarketplaceHeader from '@/components/02-marketplace/MarketplaceHeader';
 import MobileMenu from '@/components/02-marketplace/MobileMenu';
+import Providers from '@/hooks/Providers';
 import { useAuth } from '@/hooks/useAuth';
 
 const DynamicFirstConnectionModal = dynamic(
@@ -40,4 +41,13 @@ const MarketplaceLayout: FC<Props> = ({ children }) => {
     </div>
   );
 };
-export default MarketplaceLayout;
+
+const MarketplaceLayoutWithProviders: FC<Props> = ({ children }) => {
+  return (
+    <Providers>
+      <MarketplaceLayout>{children}</MarketplaceLayout>
+    </Providers>
+  );
+};
+
+export default MarketplaceLayoutWithProviders;
