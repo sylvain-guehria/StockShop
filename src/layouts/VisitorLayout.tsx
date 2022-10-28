@@ -17,8 +17,10 @@ const VisitorLayout: FC<Props> = ({ children }) => {
   const { user } = useAuth();
   const router = useRouter();
 
-  if (user.isLoggedIn() && user.isSeller())
+  if (user.isLoggedIn() && user.isSeller()) {
     router.push(stockManagementRoutes.stockDashboard.path);
+    return null;
+  }
 
   if (user.isLoggedIn()) router.push(marketpalceRoutes.marketplace.path);
 
