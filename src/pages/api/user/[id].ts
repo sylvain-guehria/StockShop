@@ -5,7 +5,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 const { updateDoc, doc, getDoc } = firestoreFunctions;
 const { USERS } = TableNames;
 
-const getUserById = async (req: NextApiRequest, res: NextApiResponse) => {
+const userById = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
     query: { id },
     method,
@@ -45,4 +45,4 @@ const getUserById = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default getUserById;
+export default userById;

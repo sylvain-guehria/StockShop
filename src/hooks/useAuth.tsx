@@ -156,7 +156,7 @@ export const AuthContextProvider = ({
         return await userRepository.getById(uid);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error('ERROR FETCHED', e);
+        console.error('ERROR fetchUserInformation', e);
         return '';
       }
     };
@@ -165,7 +165,7 @@ export const AuthContextProvider = ({
       if (firebaseUser) {
         const token = await firebaseUser.getIdToken(true);
 
-        cookie.set(tokenName, token);
+        cookie.set(tokenName, token, { expires: 14 });
 
         await fetchUserInformation(firebaseUser.uid).then((fetchedUser) => {
           if (fetchedUser) {

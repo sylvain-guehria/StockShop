@@ -1,32 +1,39 @@
+// import { tokenName } from 'firebaseFolder/constant';
+// import { firebaseAdmin } from 'firebaseFolder/firestore';
+// import { cookies } from 'next/headers';
+
 import VisitorLayout from '@/layouts/VisitorLayout';
 
 import Base from '../components/06-template/Base';
 
-// const isAuthenticated = async () => {
+// async function validateUser() {
+//   const tokenCookie = cookies().get(tokenName);
+//   if (!tokenCookie) return UserEntity.new();
+//   let decodedToken;
+//   let userData = {};
+
 //   try {
-//     const nextCookies = cookies();
-//     const tokenCookies = nextCookies.get(tokenName);
-//     console.log('tokenCookies------------', tokenCookies);
-
-//     const token = await firebaseAdmin.auth().verifyIdToken(tokenCookies || '');
-//     // eslint-disable-next-line unused-imports/no-unused-vars
-//     const { uid, email } = token;
-//     console.log('token------------------------', token);
-
-//     return token;
+//     decodedToken = await firebaseAdmin
+//       .auth()
+//       .verifyIdToken(tokenCookie || '', true);
 //   } catch (err) {
-//     // either the `token` cookie didn't exist
-//     // or token verification failed
-//     // either way: redirect to the login page
-//     console.log('prob------------------------', err);
-
-//     return false;
+//     return UserEntity.new();
 //   }
-// };
+
+//   const { uid, email } = decodedToken;
+
+//   userData = await fetch(`/api/user/${uid}`);
+
+//   const result = {
+//     ...userData,
+//     uid,
+//     email,
+//   };
+//   return UserEntity.new(result);
+// }
 
 const HomePage = async () => {
-  // const isAuth = await isAuthenticated();
-  // console.log({ isAuth });
+  // const user = await validateUser();
   return (
     <VisitorLayout>
       <Base />
