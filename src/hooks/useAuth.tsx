@@ -5,6 +5,7 @@ import {
   confirmPasswordReset,
   createUserWithEmailAndPassword,
   FacebookAuthProvider,
+  getAdditionalUserInfo,
   GoogleAuthProvider,
   onAuthStateChanged,
   sendPasswordResetEmail,
@@ -20,6 +21,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import FirebaseUserRepository from '@/modules/user/firebaseUserRepository';
 import UserEntity from '@/modules/user/UserEntity';
 import type { ProviderType } from '@/modules/user/userType';
+import { mainRoutes } from '@/routes/mainRoutes';
 
 type ContextType = {
   user: UserEntity;
@@ -74,16 +76,28 @@ export const AuthContextProvider = ({
     setIsUserLoading(true);
     const provider = new GoogleAuthProvider();
     return signInWithPopup(auth, provider)
-      .then((userCredential) => {
+      .then((result) => {
+        const userDetails = getAdditionalUserInfo(result);
+        const { user: googleUser } = result;
         return {
-          uid: userCredential.user?.uid,
-          email: userCredential.user?.email,
-          // isNewUser: userCredential.user?.isNewUser,
-          // firstName: userCredential.additionalUserInfo?.profile?.given_name,
-          // lastName: userCredential.additionalUserInfo?.profile?.family_name,
+          uid: googleUser.uid,
+          email: googleUser.email,
+          isNewUser: userDetails?.isNewUser,
+          firstName: userDetails?.profile?.given_name,
+          lastName: userDetails?.profile?.family_name,
+          locale: userDetails?.profile?.locale,
         };
       })
-      .catch((_error) => {})
+      .catch((error) => {
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // eslint-disable-next-line no-console
+        console.error({
+          errorCode: error.code,
+          errorMessage: error.message,
+          credential,
+        });
+        return error.code;
+      })
       .finally(() => {
         setIsUserLoading(false);
       });
@@ -125,7 +139,7 @@ export const AuthContextProvider = ({
     return signOut(auth)
       .then(() => {
         setUser(UserEntity.new());
-        router.push('/');
+        router.push(mainRoutes.home.path);
       })
       .catch((_error) => {});
   };
