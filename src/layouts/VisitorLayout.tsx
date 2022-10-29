@@ -19,10 +19,13 @@ const VisitorLayout: FC<Props> = ({ children }) => {
 
   if (user.isLoggedIn() && user.isSeller()) {
     router.push(stockManagementRoutes.stockDashboard.path);
-    return null;
+    return <div>Loading...</div>;
   }
 
-  if (user.isLoggedIn()) router.push(marketpalceRoutes.marketplace.path);
+  if (user.isLoggedIn()) {
+    router.push(marketpalceRoutes.marketplace.path);
+    return <div>Loading...</div>;
+  }
 
   return (
     <>

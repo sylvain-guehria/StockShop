@@ -1,6 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 import type { FC, ReactNode } from 'react';
 import { useState } from 'react';
 
@@ -8,6 +9,7 @@ import StockManagementHeader from '@/components/01-stockManagement/header/StockM
 import StockManagementSideBar from '@/components/01-stockManagement/sidebar/StockManagementSideBar';
 import Providers from '@/hooks/Providers';
 import { useAuth } from '@/hooks/useAuth';
+import { mainRoutes } from '@/routes/mainRoutes';
 
 const DynamicFirstConnectionModal = dynamic(
   () =>
@@ -23,9 +25,16 @@ type Props = {
 
 const StockManagementLayout: FC<Props> = ({ children }) => {
   const { user } = useAuth();
+  const router = useRouter();
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const displayFirstConnectionModal =
     user.isLoggedIn() && user.needToSeeFirstConnectionModal();
+
+  if (!user.isLoggedIn() || !user.isSeller()) {
+    router.push(mainRoutes.home.path);
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="h-screen bg-gray-100">

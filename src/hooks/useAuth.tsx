@@ -15,13 +15,11 @@ import {
 } from 'firebaseFolder/clientApp';
 // import { tokenName } from 'firebaseFolder/constant';
 // import cookie from 'js-cookie';
-import { useRouter } from 'next/navigation';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import FirebaseUserRepository from '@/modules/user/firebaseUserRepository';
 import UserEntity from '@/modules/user/UserEntity';
 import type { ProviderType } from '@/modules/user/userType';
-import { mainRoutes } from '@/routes/mainRoutes';
 
 type ContextType = {
   user: UserEntity;
@@ -57,7 +55,6 @@ export const AuthContextProvider = ({
 }) => {
   const [user, setUser] = useState<UserEntity>(UserEntity.new());
   const [isUserLoading, setIsUserLoading] = useState(true);
-  const router = useRouter();
 
   const loginEmail = async (
     email: string,
@@ -139,7 +136,6 @@ export const AuthContextProvider = ({
     return signOut(auth)
       .then(() => {
         setUser(UserEntity.new());
-        router.push(mainRoutes.home.path);
       })
       .catch((_error) => {});
   };
