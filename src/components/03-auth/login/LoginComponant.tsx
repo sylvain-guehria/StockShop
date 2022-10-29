@@ -20,17 +20,14 @@ const LoginComponant = () => {
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
             Se connecter à son compte
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <div className="mt-2 text-center text-sm text-gray-600">
             Ou{' '}
             <Link href={mainRoutes.register.path}>
-              <a
-                href="#"
-                className="font-medium text-primary-600 hover:text-primary-500"
-              >
+              <div className="cursor-pointer font-medium text-primary-600 hover:text-primary-500">
                 S&apos;inscrire gratuitement
-              </a>
+              </div>
             </Link>
-          </p>
+          </div>
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">

@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AuthFirebaseErrorCodes } from 'firebaseFolder/errorCodes';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 

@@ -9,7 +9,7 @@ const OverView = () => {
       amount: '$30,659.45',
     },
     {
-      name: 'Account balance',
+      name: 'Account balance 2',
       href: '#',
       icon: ScaleIcon,
       amount: '$30,659.45',

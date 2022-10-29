@@ -11,7 +11,7 @@ if (!admin.apps.length) {
   } catch (error) {
     // @ts-ignore
     // eslint-disable-next-line no-console
-    console.log('Firebase admin initialization error', error.stack);
+    console.error('Firebase admin initialization error', error.stack);
   }
 }
 export default admin.firestore();

@@ -48,15 +48,13 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                 <div className="flex  items-center justify-between">
                   {/* Logo (lg+) */}
                   <Link href={mainRoutes.home.path}>
-                    <div className="hidden lg:flex lg:items-center">
-                      <a href="#">
-                        <span className="sr-only">Your Company</span>
-                        <img
-                          className="h-11 w-auto"
-                          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
-                          alt=""
-                        />
-                      </a>
+                    <div className="hidden cursor-pointer lg:flex lg:items-center">
+                      <span className="sr-only">Your Company</span>
+                      <img
+                        className="h-11 w-auto"
+                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
+                        alt=""
+                      />
                     </div>
                   </Link>
 
@@ -156,12 +154,9 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                       </div>
                       {user.isLoggedOut() && (
                         <Link href={mainRoutes.login.path}>
-                          <a
-                            href="#"
-                            className="ml-6 mr-1 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
-                          >
+                          <div className="ml-6 mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200">
                             {mainRoutes.login.label}
-                          </a>
+                          </div>
                         </Link>
                       )}
                     </div>

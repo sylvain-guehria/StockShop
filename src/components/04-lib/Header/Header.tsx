@@ -1,3 +1,5 @@
+'use client';
+
 import { Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -20,14 +22,14 @@ export default function Header() {
         <div className="flex items-center justify-between border-b border-gray-200 py-4 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link href={mainRoutes.home.path}>
-              <a href="#">
+              <div>
                 <span className="sr-only">Your Company</span>
                 <img
-                  className="h-11 w-auto"
+                  className="h-11 w-auto cursor-pointer"
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
                   alt=""
                 />
-              </a>
+              </div>
             </Link>
           </div>
           <div className="-my-2 -mr-2 md:hidden">
@@ -40,48 +42,35 @@ export default function Header() {
             <Popover.Group as="nav" className="hidden space-x-10 md:flex">
               <ServicesButton />
               <Link href={mainRoutes.pricing.path}>
-                <a
-                  href="#"
-                  className="text-base font-medium text-gray-600 hover:text-gray-900"
-                >
+                <div className="cursor-pointer text-base font-medium text-gray-600 hover:text-gray-900">
                   {mainRoutes.pricing.label}
-                </a>
+                </div>
               </Link>
               <Link href={marketpalceRoutes.marketplace.path}>
-                <a
-                  href="#"
-                  className="text-base font-medium text-gray-600 hover:text-gray-900"
-                >
+                <div className="cursor-pointer text-base font-medium text-gray-600 hover:text-gray-900">
                   {marketpalceRoutes.marketplace.label}
-                </a>
+                </div>
               </Link>
               {/* <MoreButton /> */}
             </Popover.Group>
           </div>
           <div className="hidden items-center justify-end space-x-8 md:flex md:flex-1 lg:w-0">
             <Link href={mainRoutes.login.path}>
-              <a
-                href="#"
-                className="text-base font-medium text-gray-600 hover:text-gray-900"
-              >
+              <div className="cursor-pointer text-base font-medium text-gray-600 hover:text-gray-900">
                 {mainRoutes.login.label}
-              </a>
+              </div>
             </Link>
             {/* <Link href={mainRoutes.register.path}>
-              <a
-                href="#"
-                className="ml-8 inline-flex items-center justify-center rounded-md border border-transparent bg-primary-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-600"
+              <div
+                className="cursor-pointer ml-8 inline-flex items-center justify-center rounded-md border border-transparent bg-primary-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-600"
               >
                 {mainRoutes.register.label}
-              </a>
+              </div>
             </Link> */}
             <Link href={mainRoutes.register.path}>
-              <a
-                href="#"
-                className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-gray-200 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
-              >
+              <div className="inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-gray-200 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200">
                 {mainRoutes.register.label}
-              </a>
+              </div>
             </Link>
           </div>
         </div>
@@ -142,38 +131,31 @@ export default function Header() {
               <div className="grid grid-cols-2 gap-4">
                 {headerRoutes.map((route) => (
                   <Link key={route.path} href={route.path}>
-                    <a className="rounded-md text-base font-medium text-gray-900 hover:text-gray-700">
+                    <div className="cursor-pointer rounded-md text-base font-medium text-gray-900 hover:text-gray-700">
                       {route.label}
-                    </a>
+                    </div>
                   </Link>
                 ))}
               </div>
               <div className="mt-6">
                 {/* <Link href={mainRoutes.register.path}>
-                  <a
-                    href="#"
+                  <div
                     className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-700"
                   >
                     {mainRoutes.register.label}
-                  </a>
+                  </div>
                 </Link> */}
                 <Link href={mainRoutes.register.path}>
-                  <a
-                    href="#"
-                    className=" inline-flex  w-full items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-gray-200 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
-                  >
+                  <div className="inline-flex w-full  cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-gray-200 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200">
                     {mainRoutes.register.label}
-                  </a>
+                  </div>
                 </Link>
                 <p className="mt-6 text-center text-base font-medium text-gray-500">
                   Déjà inscrit ?{' '}
                   <Link href={mainRoutes.login.path}>
-                    <a
-                      href="#"
-                      className="text-primary-600 hover:text-primary-500"
-                    >
+                    <div className="cursor-pointer text-primary-600 hover:text-primary-500">
                       {mainRoutes.login.label}
-                    </a>
+                    </div>
                   </Link>
                 </p>
               </div>

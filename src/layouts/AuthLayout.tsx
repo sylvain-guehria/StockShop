@@ -1,14 +1,17 @@
-import { useRouter } from 'next/router';
+'use client';
+
+import { useRouter } from 'next/navigation';
 import type { FC, ReactNode } from 'react';
 
+import Providers from '@/hooks/Providers';
 import { useAuth } from '@/hooks/useAuth';
 import { mainRoutes } from '@/routes/mainRoutes';
 
-type IBackgroundProps = {
+type Props = {
   children: ReactNode;
 };
 
-const AuthLayout: FC<IBackgroundProps> = ({ children }) => {
+const AuthLayout: FC<Props> = ({ children }) => {
   const { user } = useAuth();
   const router = useRouter();
   if (user.isLoggedIn()) router.push(mainRoutes.home.path);
@@ -19,4 +22,12 @@ const AuthLayout: FC<IBackgroundProps> = ({ children }) => {
   );
 };
 
-export default AuthLayout;
+const AuthLayoutWithProviders: FC<Props> = ({ children }) => {
+  return (
+    <Providers>
+      <AuthLayout>{children}</AuthLayout>
+    </Providers>
+  );
+};
+
+export default AuthLayoutWithProviders;

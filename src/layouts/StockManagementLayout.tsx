@@ -1,9 +1,12 @@
+'use client';
+
 import dynamic from 'next/dynamic';
 import type { FC, ReactNode } from 'react';
 import { useState } from 'react';
 
 import StockManagementHeader from '@/components/01-stockManagement/header/StockManagementHeader';
 import StockManagementSideBar from '@/components/01-stockManagement/sidebar/StockManagementSideBar';
+import Providers from '@/hooks/Providers';
 import { useAuth } from '@/hooks/useAuth';
 
 const DynamicFirstConnectionModal = dynamic(
@@ -41,4 +44,12 @@ const StockManagementLayout: FC<Props> = ({ children }) => {
   );
 };
 
-export default StockManagementLayout;
+const StockManagementLayoutWithProviders: FC<Props> = ({ children }) => {
+  return (
+    <Providers>
+      <StockManagementLayout>{children}</StockManagementLayout>
+    </Providers>
+  );
+};
+
+export default StockManagementLayoutWithProviders;

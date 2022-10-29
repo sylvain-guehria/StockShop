@@ -1,4 +1,3 @@
-/* eslint-disable tailwindcss/no-custom-classname */
 import { CheckIcon as CheckIconMini } from '@heroicons/react/20/solid';
 import { CheckIcon as CheckIconOutline } from '@heroicons/react/24/outline';
 
@@ -154,7 +153,7 @@ export default function Example() {
       <Header />
       <Background color="bg-gray-200">
         <Section yPadding="pt-10 pb-5">
-          <div className="sm:align-center sm:flex sm:flex-col">
+          <div className="sm:flex sm:flex-col">
             <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-center">
               Pricing Plans
             </h1>

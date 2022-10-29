@@ -77,12 +77,9 @@ const MobileMenu: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                   <div className="flow-root">
                     <Link href={mainRoutes.login.path}>
-                      <a
-                        href="#"
-                        className="mr-1 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
-                      >
+                      <div className="mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200">
                         {mainRoutes.login.label}
-                      </a>
+                      </div>
                     </Link>
                   </div>
                 </div>

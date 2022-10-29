@@ -12,8 +12,9 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebaseFolder/clientApp';
-import cookie from 'js-cookie';
-import { useRouter } from 'next/router';
+// import { tokenName } from 'firebaseFolder/constant';
+// import cookie from 'js-cookie';
+import { useRouter } from 'next/navigation';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import FirebaseUserRepository from '@/modules/user/firebaseUserRepository';
@@ -55,7 +56,6 @@ export const AuthContextProvider = ({
   const [user, setUser] = useState<UserEntity>(UserEntity.new());
   const [isUserLoading, setIsUserLoading] = useState(true);
   const router = useRouter();
-  const tokenName = 'firebaseToken';
 
   const loginEmail = async (
     email: string,
@@ -155,16 +155,16 @@ export const AuthContextProvider = ({
       try {
         return await userRepository.getById(uid);
       } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('ERROR fetchUserInformation', e);
         return '';
       }
     };
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        firebaseUser.reload();
-        const token = await firebaseUser.getIdToken();
-
-        cookie.set(tokenName, token, { expires: 14 });
+        // const token = await firebaseUser.getIdToken(true);
+        // cookie.set(tokenName, token);
 
         await fetchUserInformation(firebaseUser.uid).then((fetchedUser) => {
           if (fetchedUser) {
@@ -181,7 +181,7 @@ export const AuthContextProvider = ({
           }
         });
       } else {
-        cookie.remove(tokenName);
+        // cookie.remove(tokenName);
         setUser(UserEntity.new());
       }
       setIsUserLoading(false);
