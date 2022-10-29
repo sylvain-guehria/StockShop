@@ -12,8 +12,8 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebaseFolder/clientApp';
-import { tokenName } from 'firebaseFolder/constant';
-import cookie from 'js-cookie';
+// import { tokenName } from 'firebaseFolder/constant';
+// import cookie from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
@@ -163,9 +163,8 @@ export const AuthContextProvider = ({
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        const token = await firebaseUser.getIdToken(true);
-
-        cookie.set(tokenName, token, { expires: 14 });
+        // const token = await firebaseUser.getIdToken(true);
+        // cookie.set(tokenName, token);
 
         await fetchUserInformation(firebaseUser.uid).then((fetchedUser) => {
           if (fetchedUser) {
@@ -182,7 +181,7 @@ export const AuthContextProvider = ({
           }
         });
       } else {
-        cookie.remove(tokenName);
+        // cookie.remove(tokenName);
         setUser(UserEntity.new());
       }
       setIsUserLoading(false);
