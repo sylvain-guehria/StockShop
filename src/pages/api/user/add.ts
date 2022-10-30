@@ -39,7 +39,7 @@ const addUser = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json(user.uid);
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error('error when saving user', e);
+    console.error('error when adding user', e);
     res.status(400).end();
   }
 };

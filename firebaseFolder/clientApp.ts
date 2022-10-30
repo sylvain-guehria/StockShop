@@ -3,6 +3,7 @@ import { initializeApp } from 'firebase/app';
 import {
   confirmPasswordReset,
   createUserWithEmailAndPassword,
+  deleteUser,
   FacebookAuthProvider,
   getAdditionalUserInfo,
   getAuth,
@@ -73,6 +74,7 @@ export {
   auth,
   confirmPasswordReset,
   createUserWithEmailAndPassword,
+  deleteUser,
   FacebookAuthProvider,
   firestore,
   firestoreFunctions,

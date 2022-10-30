@@ -3,7 +3,6 @@ import 'firebase/firestore';
 import {
   auth,
   confirmPasswordReset,
-  createUserWithEmailAndPassword,
   FacebookAuthProvider,
   getAdditionalUserInfo,
   GoogleAuthProvider,
@@ -19,7 +18,6 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import FirebaseUserRepository from '@/modules/user/firebaseUserRepository';
 import UserEntity from '@/modules/user/UserEntity';
-import type { ProviderType } from '@/modules/user/userType';
 
 type ContextType = {
   user: UserEntity;
@@ -27,7 +25,6 @@ type ContextType = {
   loginEmail: any;
   loginGoogle: any;
   loginFacebook: any;
-  signUpEmail: any;
   callsignOut: any;
   callSendPasswordResetEmail: any;
   callConfirmPasswordReset: any;
@@ -40,7 +37,6 @@ const AuthContext = createContext<ContextType>({
   loginEmail: () => null,
   loginGoogle: () => null,
   loginFacebook: () => null,
-  signUpEmail: () => null,
   callsignOut: () => null,
   callSendPasswordResetEmail: () => null,
   callConfirmPasswordReset: () => null,
@@ -119,19 +115,6 @@ export const AuthContextProvider = ({
       });
   };
 
-  const signUpEmail = async (email: string, password: string) => {
-    setIsUserLoading(true);
-    return (
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => userCredential.user)
-        .catch((error) => error)
-        // logger.error({ errorCode });
-        .finally(() => {
-          setIsUserLoading(false);
-        })
-    );
-  };
-
   const callsignOut = async () => {
     return signOut(auth)
       .then(() => {
@@ -173,30 +156,21 @@ export const AuthContextProvider = ({
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        // const token = await firebaseUser.getIdToken(true);
-        // cookie.set(tokenName, token);
-
-        await fetchUserInformation(firebaseUser.uid).then((fetchedUser) => {
-          if (fetchedUser) {
-            setUser(fetchedUser.logInUser());
-          } else {
-            setUser(
-              UserEntity.new({
-                email: firebaseUser.email as string,
-                uid: firebaseUser.uid,
-                provider: firebaseUser.providerData[0]
-                  ?.providerId as ProviderType,
-              }).logInUser()
-            );
-          }
-        });
-      } else {
-        // cookie.remove(tokenName);
-        setUser(UserEntity.new());
+        if (
+          firebaseUser.metadata.creationTime ===
+          firebaseUser.metadata.lastSignInTime
+        )
+          return;
+        const fetchedUser = await fetchUserInformation(firebaseUser.uid);
+        if (fetchedUser) {
+          setUser(fetchedUser.logInUser());
+        } else {
+          callsignOut();
+          setUser(UserEntity.new());
+        }
       }
-      setIsUserLoading(false);
+      // setIsUserLoading(false);
     });
-
     return () => unsubscribe();
   }, []);
 
@@ -208,7 +182,6 @@ export const AuthContextProvider = ({
         loginEmail,
         loginGoogle,
         loginFacebook,
-        signUpEmail,
         callsignOut,
         callSendPasswordResetEmail,
         callConfirmPasswordReset,

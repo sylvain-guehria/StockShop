@@ -1,13 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { AuthFirebaseErrorCodes } from 'firebaseFolder/errorCodes';
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  deleteUser,
+} from 'firebaseFolder/clientApp';
 import { useRouter } from 'next/navigation';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
-import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
-import { mainRoutes } from '@/routes/mainRoutes';
 import { registerWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './RegisterFormValidation';
@@ -19,7 +20,6 @@ interface RegisterFormType {
   acceptTerms: boolean;
 }
 const RegisterForm = () => {
-  const { signUpEmail } = useAuth();
   const router = useRouter();
   const toast = useToast(4000);
 
@@ -35,19 +35,15 @@ const RegisterForm = () => {
     data: RegisterFormType
   ) => {
     const { email, password } = data;
-    const response = await registerWithEmailUseCase(signUpEmail, {
+    const response = await registerWithEmailUseCase({
       email,
       password,
+      createUserWithEmailAndPassword,
+      deleteUser,
+      auth,
+      router,
+      toast,
     });
-    if (
-      response.data === AuthFirebaseErrorCodes.EmailAlreadyInUse ||
-      response.code === AuthFirebaseErrorCodes.EmailAlreadyInUse
-    ) {
-      toast(ToasterTypeEnum.ERROR, 'Cet email est déjà utilisé.');
-    }
-    if (response.email === email) {
-      router.push(mainRoutes.home.path);
-    }
   };
 
   return (
