@@ -1,3 +1,5 @@
+import '../../../styles/global.css';
+
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import {
   Bars4Icon,
