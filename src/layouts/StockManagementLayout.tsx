@@ -1,6 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { notFound } from 'next/navigation';
 import type { FC, ReactNode } from 'react';
 import { useState } from 'react';
 
@@ -22,10 +23,18 @@ type Props = {
 };
 
 const StockManagementLayout: FC<Props> = ({ children }) => {
-  const { user } = useAuth();
+  const { user, isUserLoading } = useAuth();
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const displayFirstConnectionModal =
     user.isLoggedIn() && user.needToSeeFirstConnectionModal();
+
+  if (isUserLoading) return <div>Loading...</div>;
+
+  if (!user.isLoggedIn() || !user.isSeller()) {
+    notFound();
+    return null;
+  }
 
   return (
     <div className="h-screen bg-gray-100">

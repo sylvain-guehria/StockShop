@@ -14,15 +14,16 @@ type Props = {
 };
 
 const VisitorLayout: FC<Props> = ({ children }) => {
-  const { user } = useAuth();
+  const { user, isUserLoading } = useAuth();
   const router = useRouter();
 
-  if (user.isLoggedIn() && user.isSeller()) {
+  if (!isUserLoading && user.isLoggedIn() && user.isSeller()) {
     router.push(stockManagementRoutes.stockDashboard.path);
-    return null;
   }
 
-  if (user.isLoggedIn()) router.push(marketpalceRoutes.marketplace.path);
+  if (!isUserLoading && user.isLoggedIn() && !user.isSeller()) {
+    router.push(marketpalceRoutes.marketplace.path);
+  }
 
   return (
     <>

@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
+import { mainRoutes } from '@/routes/mainRoutes';
 import { registerWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './RegisterFormValidation';
@@ -45,7 +46,7 @@ const RegisterForm = () => {
       toast(ToasterTypeEnum.ERROR, 'Cet email est déjà utilisé.');
     }
     if (response.email === email) {
-      router.push('/');
+      router.push(mainRoutes.home.path);
     }
   };
 

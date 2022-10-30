@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
-import type { ProviderType, RoleType, User } from './userType';
-import { HISTORYTYPE, PROVIDERS, ROLES } from './userType';
+import type { LocaleType, ProviderType, RoleType, User } from './userType';
+import { HISTORYTYPE, LOCALES, PROVIDERS, ROLES } from './userType';
 
 export const defaultHistory = {
   [HISTORYTYPE.SUBSCRIBTIONS]: [],
@@ -35,6 +35,8 @@ class UserEntity implements User {
 
   hasSeenFirstConnectionModal: boolean;
 
+  locale: LocaleType;
+
   static new(user?: User): UserEntity {
     return user
       ? new UserEntity({
@@ -57,6 +59,7 @@ class UserEntity implements User {
     this.language = user.language || '';
     this.phoneNumber = user.phoneNumber || '';
     this.role = user.role || ROLES.USER;
+    this.locale = user.locale || LOCALES.FR;
     this.history = user.history || defaultHistory;
     this.hasStockManagementServiceActivated =
       user.hasStockManagementServiceActivated || false;
@@ -79,6 +82,10 @@ class UserEntity implements User {
 
   getRole(): RoleType {
     return this.role;
+  }
+
+  getLocale(): LocaleType {
+    return this.locale;
   }
 
   setFirstName(firstName: string): UserEntity {

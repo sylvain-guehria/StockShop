@@ -3,6 +3,12 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import type { FC, SVGProps } from 'react';
 import { Fragment } from 'react';
 
+import {
+  navigation,
+  secondaryNavigation,
+  thirdNavigation,
+} from './navigations';
+
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
@@ -22,16 +28,9 @@ type Navigation = {
 type Props = {
   sidebarOpen: boolean;
   setSidebarOpen: (bool: boolean) => void;
-  navigation: Navigation[];
-  secondaryNavigation: Navigation[];
 };
 
-const MobileSideBar: FC<Props> = ({
-  sidebarOpen,
-  setSidebarOpen,
-  navigation,
-  secondaryNavigation,
-}) => {
+const MobileSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <>
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -98,7 +97,7 @@ const MobileSideBar: FC<Props> = ({
                   aria-label="Sidebar"
                 >
                   <div className="space-y-1 px-2">
-                    {navigation.map((item) => (
+                    {navigation.map((item: Navigation) => (
                       <a
                         key={item.name}
                         href={item.href}
@@ -120,7 +119,24 @@ const MobileSideBar: FC<Props> = ({
                   </div>
                   <div className="mt-6 pt-6">
                     <div className="space-y-1 px-2">
-                      {secondaryNavigation.map((item) => (
+                      {secondaryNavigation.map((item: Navigation) => (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className="group flex items-center rounded-md p-2 text-base font-medium text-primary-500 hover:bg-primary-200"
+                        >
+                          <item.icon
+                            className="mr-4 h-6 w-6 text-primary-300"
+                            aria-hidden="true"
+                          />
+                          {item.name}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="mt-6 pt-6">
+                    <div className="space-y-1 px-2">
+                      {thirdNavigation.map((item: Navigation) => (
                         <a
                           key={item.name}
                           href={item.href}

@@ -88,10 +88,11 @@ const FirstConnectionModal = () => {
                       type="button"
                       className="inline-flex w-full justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
                       onClick={() =>
-                        onChooseRoleFirstConnection(SUBROLES.BUYER)
+                        onChooseRoleFirstConnection(SUBROLES.SELLER)
                       }
+                      ref={cancelButtonRef}
                     >
-                      Je viens seulement en tant qu&apos;acheteur
+                      Je veux gérer mon inventaire
                     </button>
                   </Link>
                   <Link href={stockManagementRoutes.stockDashboard.path}>
@@ -99,11 +100,10 @@ const FirstConnectionModal = () => {
                       type="button"
                       className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
                       onClick={() =>
-                        onChooseRoleFirstConnection(SUBROLES.SELLER)
+                        onChooseRoleFirstConnection(SUBROLES.BUYER)
                       }
-                      ref={cancelButtonRef}
                     >
-                      Je veux gérer mon inventaire
+                      Je viens seulement en tant qu&apos;acheteur
                     </button>
                   </Link>
                 </div>

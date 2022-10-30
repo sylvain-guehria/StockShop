@@ -13,6 +13,7 @@ export interface User {
   history?: History;
   hasStockManagementServiceActivated?: boolean;
   hasSeenFirstConnectionModal?: boolean;
+  locale?: LocaleType;
 }
 
 export interface Users {
@@ -36,7 +37,12 @@ export enum ROLES {
   USER = 'user',
 }
 
+export enum LOCALES {
+  FR = 'fr',
+}
+
 export type RoleType = ROLES.SUPERADMIN | ROLES.ADMIN | ROLES.USER;
+export type LocaleType = LOCALES.FR;
 
 export enum SUBROLES {
   SELLER = 'seller',

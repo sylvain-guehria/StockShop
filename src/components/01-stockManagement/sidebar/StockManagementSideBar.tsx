@@ -1,34 +1,14 @@
-import {
-  ClockIcon,
-  CogIcon,
-  CreditCardIcon,
-  DocumentChartBarIcon,
-  HomeIcon,
-  QuestionMarkCircleIcon,
-  ScaleIcon,
-  ShieldCheckIcon,
-  UserGroupIcon,
-} from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import type { FC } from 'react';
 
 import { mainRoutes } from '@/routes/mainRoutes';
 
 import MobileSideBar from './MobileSideBar';
-
-export const navigation = [
-  { name: 'Home', href: '#', icon: HomeIcon, current: true },
-  { name: 'History', href: '#', icon: ClockIcon, current: false },
-  { name: 'Balances', href: '#', icon: ScaleIcon, current: false },
-  { name: 'Cards', href: '#', icon: CreditCardIcon, current: false },
-  { name: 'Recipients', href: '#', icon: UserGroupIcon, current: false },
-  { name: 'Reports', href: '#', icon: DocumentChartBarIcon, current: false },
-];
-export const secondaryNavigation = [
-  { name: 'Settings', href: '#', icon: CogIcon },
-  { name: 'Help', href: '#', icon: QuestionMarkCircleIcon },
-  { name: 'Privacy', href: '#', icon: ShieldCheckIcon },
-];
+import {
+  navigation,
+  secondaryNavigation,
+  thirdNavigation,
+} from './navigations';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -45,8 +25,6 @@ const StockManagementSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
       <MobileSideBar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
-        navigation={navigation}
-        secondaryNavigation={secondaryNavigation}
       />
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         {/* Sidebar component, swap this element with another sidebar if you like */}
@@ -88,6 +66,23 @@ const StockManagementSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
             <div className="mt-6 pt-6">
               <div className="space-y-1 px-2">
                 {secondaryNavigation.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="group flex items-center rounded-md p-2 text-sm font-medium leading-6 text-primary-500 hover:bg-primary-200"
+                  >
+                    <item.icon
+                      className="mr-4 h-6 w-6 text-primary-300"
+                      aria-hidden="true"
+                    />
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+            <div className="mt-6 pt-6">
+              <div className="space-y-1 px-2">
+                {thirdNavigation.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
