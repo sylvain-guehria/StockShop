@@ -24,16 +24,18 @@ type Props = {
 };
 
 const StockManagementLayout: FC<Props> = ({ children }) => {
-  const { user } = useAuth();
+  const { user, isUserLoading } = useAuth();
   const router = useRouter();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const displayFirstConnectionModal =
     user.isLoggedIn() && user.needToSeeFirstConnectionModal();
 
+  if (isUserLoading) return <div>Loading...</div>;
+
   if (!user.isLoggedIn() || !user.isSeller()) {
     router.push(mainRoutes.home.path);
-    return <div>Loading...</div>;
+    return <div>Forbidden link...</div>;
   }
 
   return (

@@ -12,11 +12,10 @@ type Props = {
 };
 
 const AuthLayout: FC<Props> = ({ children }) => {
-  const { user } = useAuth();
+  const { user, isUserLoading } = useAuth();
   const router = useRouter();
-  if (user.isLoggedIn()) {
+  if (!isUserLoading && user.isLoggedIn()) {
     router.push(mainRoutes.home.path);
-    return <div>Loading...</div>;
   }
   return (
     <div className="h-screen bg-gray-50">
