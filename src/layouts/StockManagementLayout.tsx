@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 import StockManagementHeader from '@/components/01-stockManagement/header/StockManagementHeader';
 import StockManagementSideBar from '@/components/01-stockManagement/sidebar/StockManagementSideBar';
+import Spinner from '@/components/04-lib/spinner/Spinner';
 import Providers from '@/hooks/Providers';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -29,7 +30,7 @@ const StockManagementLayout: FC<Props> = ({ children }) => {
   const displayFirstConnectionModal =
     user.isLoggedIn() && user.needToSeeFirstConnectionModal();
 
-  if (isUserLoading) return <div>Loading...</div>;
+  if (isUserLoading) return <Spinner />;
 
   if (!user.isLoggedIn() || !user.isSeller()) {
     notFound();
