@@ -68,7 +68,10 @@ export const registerWithEmail =
       throw new FirebaseAuthenticationError(e.code);
     }
 
-    if (userCredentialFromFirebase?.user?.uid === userUidFromDatabase) {
+    if (
+      userCredentialFromFirebase?.user?.uid === userUidFromDatabase &&
+      auth.currentUser
+    ) {
       sendEmailVerification(auth.currentUser as User).catch(() => {
         // eslint-disable-next-line no-console
         console.error(

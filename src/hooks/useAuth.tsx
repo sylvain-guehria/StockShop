@@ -161,7 +161,8 @@ export const AuthContextProvider = ({
       if (firebaseUser) {
         setIsUserLoading(true);
         const isFirstConnexion = isFirebaseUserFirstConnexion(
-          firebaseUser.metadata.creationTime || '0'
+          // @ts-ignore
+          firebaseUser.metadata.createdAt || '0'
         );
 
         if (isFirstConnexion) {
@@ -173,15 +174,14 @@ export const AuthContextProvider = ({
                 ?.providerId as ProviderType,
             }).logInUser()
           );
-          setIsUserLoading(false);
-          return;
-        }
-        const fetchedUser = await fetchUserInformation(firebaseUser.uid);
-        if (fetchedUser) {
-          setUser(fetchedUser.logInUser());
         } else {
-          callsignOut();
-          setUser(UserEntity.new());
+          const fetchedUser = await fetchUserInformation(firebaseUser.uid);
+          if (fetchedUser) {
+            setUser(fetchedUser.logInUser());
+          } else {
+            callsignOut();
+            setUser(UserEntity.new());
+          }
         }
       }
       setIsUserLoading(false);
