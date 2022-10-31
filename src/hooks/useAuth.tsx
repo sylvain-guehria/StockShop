@@ -18,6 +18,9 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import FirebaseUserRepository from '@/modules/user/firebaseUserRepository';
 import UserEntity from '@/modules/user/UserEntity';
+import type { ProviderType } from '@/modules/user/userType';
+
+import { isFirebaseUserFirstConnexion } from './hooksUtils';
 
 type ContextType = {
   user: UserEntity;
@@ -50,7 +53,7 @@ export const AuthContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [user, setUser] = useState<UserEntity>(UserEntity.new());
-  const [isUserLoading, setIsUserLoading] = useState(true);
+  const [isUserLoading, setIsUserLoading] = useState(false);
 
   const loginEmail = async (
     email: string,
@@ -156,11 +159,23 @@ export const AuthContextProvider = ({
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        if (
-          firebaseUser.metadata.creationTime ===
-          firebaseUser.metadata.lastSignInTime
-        )
+        setIsUserLoading(true);
+        const isFirstConnexion = isFirebaseUserFirstConnexion(
+          firebaseUser.metadata.creationTime || '0'
+        );
+
+        if (isFirstConnexion) {
+          setUser(
+            UserEntity.new({
+              email: firebaseUser.email as string,
+              uid: firebaseUser.uid,
+              provider: firebaseUser.providerData[0]
+                ?.providerId as ProviderType,
+            }).logInUser()
+          );
+          setIsUserLoading(false);
           return;
+        }
         const fetchedUser = await fetchUserInformation(firebaseUser.uid);
         if (fetchedUser) {
           setUser(fetchedUser.logInUser());
@@ -169,7 +184,7 @@ export const AuthContextProvider = ({
           setUser(UserEntity.new());
         }
       }
-      // setIsUserLoading(false);
+      setIsUserLoading(false);
     });
     return () => unsubscribe();
   }, []);
