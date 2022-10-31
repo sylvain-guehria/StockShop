@@ -6,7 +6,6 @@ import {
   FacebookAuthProvider,
   onAuthStateChanged,
   sendPasswordResetEmail,
-  signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from 'firebaseFolder/clientApp';
@@ -23,7 +22,6 @@ import { isFirebaseUserFirstConnexion } from './hooksUtils';
 type ContextType = {
   user: UserEntity;
   isUserLoading: boolean;
-  loginEmail: any;
   loginFacebook: any;
   callsignOut: any;
   callSendPasswordResetEmail: any;
@@ -34,7 +32,6 @@ const userRepository = new FirebaseUserRepository();
 const AuthContext = createContext<ContextType>({
   user: UserEntity.new(),
   isUserLoading: false,
-  loginEmail: () => null,
   loginFacebook: () => null,
   callsignOut: () => null,
   callSendPasswordResetEmail: () => null,
@@ -50,19 +47,6 @@ export const AuthContextProvider = ({
 }) => {
   const [user, setUser] = useState<UserEntity>(UserEntity.new());
   const [isUserLoading, setIsUserLoading] = useState(false);
-
-  const loginEmail = async (
-    email: string,
-    password: string
-  ): Promise<string> => {
-    setIsUserLoading(true);
-    return signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => userCredential.user.email)
-      .catch((error) => error.code)
-      .finally(() => {
-        setIsUserLoading(false);
-      });
-  };
 
   const loginFacebook = async () => {
     setIsUserLoading(true);
@@ -159,7 +143,6 @@ export const AuthContextProvider = ({
       value={{
         user,
         isUserLoading,
-        loginEmail,
         loginFacebook,
         callsignOut,
         callSendPasswordResetEmail,

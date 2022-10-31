@@ -1,13 +1,28 @@
-export const loginWithEmail =
-  () =>
-  async (
-    loginEmail: (email: string, password: string) => Promise<string>,
-    { email, password }: LoginInfo
-  ): Promise<string> => {
-    return loginEmail(email, password);
-  };
+import type { Auth, UserCredential } from 'firebase/auth';
+import { FirebaseAuthenticationError } from 'firebaseFolder/errorCodes';
 
-type LoginInfo = {
+type LoginWithEmailParamsType = {
+  signInWithEmailAndPassword: (
+    auth: Auth,
+    email: string,
+    password: string
+  ) => Promise<UserCredential>;
   email: string;
   password: string;
+  auth: Auth;
 };
+
+export const loginWithEmail =
+  () =>
+  async ({
+    signInWithEmailAndPassword,
+    email,
+    password,
+    auth,
+  }: LoginWithEmailParamsType) => {
+    try {
+      signInWithEmailAndPassword(auth, email, password);
+    } catch (error: any) {
+      throw new FirebaseAuthenticationError(error.code);
+    }
+  };

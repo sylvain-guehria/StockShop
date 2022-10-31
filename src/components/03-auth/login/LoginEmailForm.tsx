@@ -1,12 +1,14 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { auth, signInWithEmailAndPassword } from 'firebaseFolder/clientApp';
 import { AuthFirebaseErrorCodes } from 'firebaseFolder/errorCodes';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
-import { useAuth } from '@/hooks/useAuth';
+import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { useToast } from '@/hooks/useToast';
 import { loginWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './LoginFormValidation';
@@ -18,9 +20,8 @@ interface LoginFormType {
 }
 
 const LoginEmailForm = () => {
-  const { loginEmail } = useAuth();
   const [wrongEmailPasswordError, setWrongEmailPasswordError] = useState(false);
-
+  const toast = useToast(4000);
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   const {
@@ -33,15 +34,24 @@ const LoginEmailForm = () => {
     data: LoginFormType
   ) => {
     const { email, password } = data;
-    const response = await loginWithEmailUseCase(loginEmail, {
-      email,
-      password,
-    });
-    if (
-      response === AuthFirebaseErrorCodes.WrongPassword ||
-      response === AuthFirebaseErrorCodes.UserNotFound
-    ) {
-      setWrongEmailPasswordError(true);
+    try {
+      loginWithEmailUseCase({
+        signInWithEmailAndPassword,
+        email,
+        password,
+        auth,
+      });
+    } catch (error: any) {
+      console.log('error-------------------------', error);
+      if (
+        error.errorCode === AuthFirebaseErrorCodes.WrongPassword ||
+        error.errorCode === AuthFirebaseErrorCodes.UserNotFound ||
+        error.errorCode === AuthFirebaseErrorCodes.InvalidEmail
+      ) {
+        setWrongEmailPasswordError(true);
+      } else {
+        toast(ToasterTypeEnum.ERROR, error.message);
+      }
     }
   };
 

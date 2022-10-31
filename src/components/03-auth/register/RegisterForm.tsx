@@ -11,6 +11,8 @@ import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
+import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { useToast } from '@/hooks/useToast';
 import { registerWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './RegisterFormValidation';
@@ -23,6 +25,7 @@ interface RegisterFormType {
 }
 const RegisterForm = () => {
   const router = useRouter();
+  const toast = useToast(4000);
   const [errorMessage, setErrorMessage] = useState('');
 
   const formOptions = { resolver: yupResolver(validationSchema) };
@@ -47,9 +50,11 @@ const RegisterForm = () => {
         router,
         sendEmailVerification,
       });
-    } catch (e: any) {
-      if (e.errorCode === AuthFirebaseErrorCodes.EmailAlreadyInUse) {
-        setErrorMessage(e.message);
+    } catch (error: any) {
+      if (error.errorCode === AuthFirebaseErrorCodes.EmailAlreadyInUse) {
+        setErrorMessage(error.message);
+      } else {
+        toast(ToasterTypeEnum.ERROR, error.message);
       }
     }
   };
