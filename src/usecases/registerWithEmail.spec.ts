@@ -1,12 +1,19 @@
+import type { Auth, UserCredential } from 'firebase/auth';
+
 import type { UserRepository } from '@/modules/user/userRepository';
 
 import { registerWithEmail } from './registerWithEmail';
 
 let userRepository: UserRepository;
-let signUpEmail: (
+let createUserWithEmailAndPassword: (
+  auth: Auth,
   email: string,
   password: string
-) => Promise<string | void | null>;
+) => Promise<UserCredential>;
+
+let router: {
+  push: (url: string) => void;
+};
 
 beforeEach(() => {
   userRepository = {
@@ -16,7 +23,10 @@ beforeEach(() => {
     getAll: jest.fn(),
     update: jest.fn(),
   };
-  signUpEmail = jest.fn();
+  createUserWithEmailAndPassword = jest.fn();
+  router = {
+    push: jest.fn(),
+  };
 });
 
 it('Signup the user in firebase', async () => {
@@ -25,9 +35,14 @@ it('Signup the user in firebase', async () => {
 
   (userRepository.add as jest.Mock).mockResolvedValue('uid');
 
-  await registerWithEmail(userRepository)(signUpEmail, {
+  await registerWithEmail(userRepository)({
     email,
     password,
+    createUserWithEmailAndPassword,
+    auth,
+    router,
+    deleteUser,
+    sendEmailVerification,
   });
 
   expect(signUpEmail).toHaveBeenCalledWith(email, password);

@@ -3,12 +3,14 @@ import {
   auth,
   createUserWithEmailAndPassword,
   deleteUser,
+  sendEmailVerification,
 } from 'firebaseFolder/clientApp';
+import { AuthFirebaseErrorCodes } from 'firebaseFolder/errorCodes';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
-import { useToast } from '@/hooks/useToast';
 import { registerWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './RegisterFormValidation';
@@ -21,7 +23,7 @@ interface RegisterFormType {
 }
 const RegisterForm = () => {
   const router = useRouter();
-  const toast = useToast(4000);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -35,15 +37,21 @@ const RegisterForm = () => {
     data: RegisterFormType
   ) => {
     const { email, password } = data;
-    const response = await registerWithEmailUseCase({
-      email,
-      password,
-      createUserWithEmailAndPassword,
-      deleteUser,
-      auth,
-      router,
-      toast,
-    });
+    try {
+      await registerWithEmailUseCase({
+        email,
+        password,
+        createUserWithEmailAndPassword,
+        deleteUser,
+        auth,
+        router,
+        sendEmailVerification,
+      });
+    } catch (e: any) {
+      if (e.errorCode === AuthFirebaseErrorCodes.EmailAlreadyInUse) {
+        setErrorMessage(e.message);
+      }
+    }
   };
 
   return (
@@ -105,6 +113,10 @@ const RegisterForm = () => {
           {errors.confirmPassword?.message}
         </div>
       </div>
+
+      {errorMessage && (
+        <div className="text-sm text-red-600">{errorMessage}</div>
+      )}
 
       <div className="flex items-center justify-between">
         <div className="flex items-center">

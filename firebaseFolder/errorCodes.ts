@@ -3,23 +3,27 @@ export enum AuthFirebaseErrorCodes {
   WrongPassword = 'auth/wrong-password',
   UserNotFound = 'auth/user-not-found',
   TokenExpired = 'auth/id-token-expired',
+  InvalidEmail = 'auth/invalid-email',
 }
 
 class FirebaseAuthenticationError extends Error {
+  errorCode;
+
   constructor(errorCode: string) {
     super(errorCode);
+    this.errorCode = errorCode;
 
     switch (errorCode) {
-      case 'auth/email-already-in-use':
-        this.message = 'email-already-in-use';
+      case AuthFirebaseErrorCodes.EmailAlreadyInUse:
+        this.message = 'Cet email est déjà utilisé';
         break;
-      case 'auth/invalid-email':
+      case AuthFirebaseErrorCodes.InvalidEmail:
         this.message = 'invalid-email';
         break;
-      case 'auth/user-not-found':
+      case AuthFirebaseErrorCodes.UserNotFound:
         this.message = 'user-not-found';
         break;
-      case 'auth/wrong-password':
+      case AuthFirebaseErrorCodes.WrongPassword:
         this.message = 'wrong-password';
         break;
       default:

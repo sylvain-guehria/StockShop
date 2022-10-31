@@ -1,10 +1,33 @@
+import type {
+  ActionCodeSettings,
+  Auth,
+  User,
+  UserCredential,
+} from 'firebase/auth';
 import { FirebaseAuthenticationError } from 'firebaseFolder/errorCodes';
+import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 
-import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import UserEntity from '@/modules/user/UserEntity';
 
 import type { UserRepository } from '../modules/user/userRepository';
 import { PROVIDERS, ROLES } from '../modules/user/userType';
+
+type RegisterWithEmailParams = {
+  email: string;
+  password: string;
+  createUserWithEmailAndPassword: (
+    auth: Auth,
+    email: string,
+    password: string
+  ) => Promise<UserCredential>;
+  auth: Auth;
+  router: AppRouterInstance;
+  deleteUser: (user: User) => Promise<void>;
+  sendEmailVerification: (
+    user: User,
+    actionCodeSettings?: ActionCodeSettings | null
+  ) => Promise<void>;
+};
 
 export const registerWithEmail =
   (userRepository: UserRepository) =>
@@ -14,29 +37,22 @@ export const registerWithEmail =
     createUserWithEmailAndPassword,
     auth,
     router,
-    toast,
     deleteUser,
-  }) => {
+    sendEmailVerification,
+  }: RegisterWithEmailParams) => {
     let userCredentialFromFirebase;
     let userUidFromDatabase;
     try {
-      console.log('createUserWithEmailAndPassword');
       userCredentialFromFirebase = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
-      console.log(
-        'createUserWithEmailAndPassword succeedded',
-        userCredentialFromFirebase
-      );
-    } catch (e) {
-      console.log('createUserWithEmailAndPassword failed');
-      throw new FirebaseAuthenticationError(e.code).message;
+    } catch (e: any) {
+      throw new FirebaseAuthenticationError(e.code);
     }
     try {
       if (userCredentialFromFirebase?.user?.uid) {
-        console.log('userRepository.add ');
         userUidFromDatabase = await userRepository.add(
           UserEntity.new({
             email,
@@ -45,25 +61,20 @@ export const registerWithEmail =
             uid: userCredentialFromFirebase?.user?.uid,
           })
         );
-        console.log('userRepository.add succeedded', userUidFromDatabase);
       }
-    } catch (e) {
-      deleteUser(auth.currentUser);
-      console.log('userRepository.add failed => deleteUser');
-      throw new FirebaseAuthenticationError(e.code).message;
+    } catch (e: any) {
+      deleteUser(auth.currentUser as User);
+      throw new FirebaseAuthenticationError(e.code);
     }
-    console.log(
-      'userCredentialFromFirebase.user.uid',
-      userCredentialFromFirebase?.user?.uid
-    );
-    console.log('userUidFromDatabase', userUidFromDatabase);
 
     if (userCredentialFromFirebase?.user?.uid === userUidFromDatabase) {
-      console.log('router.push all succedd ');
-      router.push('/');
-      toast({
-        type: ToasterTypeEnum.SUCCESS,
-        message: 'We have created your account for you.',
+      sendEmailVerification(auth.currentUser as User).then(() => {
+        // eslint-disable-next-line no-console
+        console.error(
+          'sendEmailVerification failed for user:',
+          auth.currentUser
+        );
       });
+      router.push('/');
     }
   };
