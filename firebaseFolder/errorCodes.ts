@@ -6,7 +6,7 @@ export enum AuthFirebaseErrorCodes {
   InvalidEmail = 'auth/invalid-email',
 }
 
-class FirebaseAuthenticationError extends Error {
+export class FirebaseAuthenticationError extends Error {
   errorCode;
 
   constructor(errorCode: string) {
@@ -32,5 +32,3 @@ class FirebaseAuthenticationError extends Error {
     }
   }
 }
-
-export { FirebaseAuthenticationError };

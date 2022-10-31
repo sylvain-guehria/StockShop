@@ -4,11 +4,12 @@ import type {
   User,
   UserCredential,
 } from 'firebase/auth';
-import { FirebaseAuthenticationError } from 'firebaseFolder/errorCodes';
 import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 
 import UserEntity from '@/modules/user/UserEntity';
+import { mainRoutes } from '@/routes/mainRoutes';
 
+import { FirebaseAuthenticationError } from '../../firebaseFolder/errorCodes';
 import type { UserRepository } from '../modules/user/userRepository';
 import { PROVIDERS, ROLES } from '../modules/user/userType';
 
@@ -68,13 +69,13 @@ export const registerWithEmail =
     }
 
     if (userCredentialFromFirebase?.user?.uid === userUidFromDatabase) {
-      sendEmailVerification(auth.currentUser as User).then(() => {
+      sendEmailVerification(auth.currentUser as User).catch(() => {
         // eslint-disable-next-line no-console
         console.error(
           'sendEmailVerification failed for user:',
           auth.currentUser
         );
       });
-      router.push('/');
+      router.push(mainRoutes.home.path);
     }
   };
