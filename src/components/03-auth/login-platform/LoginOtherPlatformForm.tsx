@@ -1,17 +1,26 @@
-import { useRouter } from 'next/navigation';
+import {
+  auth,
+  getAdditionalUserInfo,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from 'firebaseFolder/clientApp';
 
-import { useAuth } from '@/hooks/useAuth';
-import { mainRoutes } from '@/routes/mainRoutes';
+import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { useToast } from '@/hooks/useToast';
 import { loginWithGoogleUseCase } from '@/usecases/usecases';
 
 const LoginOtherPlatformForm = () => {
-  const { loginGoogle } = useAuth();
-  const router = useRouter();
-
+  const toast = useToast(4000);
   const handleLoginGoogle = async () => {
-    const response = await loginWithGoogleUseCase(loginGoogle);
-    if (response.uid) {
-      router.push(mainRoutes.home.path);
+    try {
+      await loginWithGoogleUseCase({
+        signInWithPopup,
+        getAdditionalUserInfo,
+        provider: new GoogleAuthProvider(),
+        auth,
+      });
+    } catch (e: any) {
+      toast(ToasterTypeEnum.ERROR, e.message);
     }
   };
   return (

@@ -39,10 +39,11 @@ export enum ROLES {
 
 export enum LOCALES {
   FR = 'fr',
+  EN = 'en',
 }
 
 export type RoleType = ROLES.SUPERADMIN | ROLES.ADMIN | ROLES.USER;
-export type LocaleType = LOCALES.FR;
+export type LocaleType = LOCALES.FR | LOCALES.EN | '';
 
 export enum SUBROLES {
   SELLER = 'seller',

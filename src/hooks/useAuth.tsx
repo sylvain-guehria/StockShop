@@ -4,8 +4,6 @@ import {
   auth,
   confirmPasswordReset,
   FacebookAuthProvider,
-  getAdditionalUserInfo,
-  GoogleAuthProvider,
   onAuthStateChanged,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
@@ -26,7 +24,6 @@ type ContextType = {
   user: UserEntity;
   isUserLoading: boolean;
   loginEmail: any;
-  loginGoogle: any;
   loginFacebook: any;
   callsignOut: any;
   callSendPasswordResetEmail: any;
@@ -38,7 +35,6 @@ const AuthContext = createContext<ContextType>({
   user: UserEntity.new(),
   isUserLoading: false,
   loginEmail: () => null,
-  loginGoogle: () => null,
   loginFacebook: () => null,
   callsignOut: () => null,
   callSendPasswordResetEmail: () => null,
@@ -63,37 +59,6 @@ export const AuthContextProvider = ({
     return signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => userCredential.user.email)
       .catch((error) => error.code)
-      .finally(() => {
-        setIsUserLoading(false);
-      });
-  };
-
-  const loginGoogle = async () => {
-    setIsUserLoading(true);
-    const provider = new GoogleAuthProvider();
-    return signInWithPopup(auth, provider)
-      .then((result) => {
-        const userDetails = getAdditionalUserInfo(result);
-        const { user: googleUser } = result;
-        return {
-          uid: googleUser.uid,
-          email: googleUser.email,
-          isNewUser: userDetails?.isNewUser,
-          firstName: userDetails?.profile?.given_name,
-          lastName: userDetails?.profile?.family_name,
-          locale: userDetails?.profile?.locale,
-        };
-      })
-      .catch((error) => {
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // eslint-disable-next-line no-console
-        console.error({
-          errorCode: error.code,
-          errorMessage: error.message,
-          credential,
-        });
-        return error.code;
-      })
       .finally(() => {
         setIsUserLoading(false);
       });
@@ -195,7 +160,6 @@ export const AuthContextProvider = ({
         user,
         isUserLoading,
         loginEmail,
-        loginGoogle,
         loginFacebook,
         callsignOut,
         callSendPasswordResetEmail,
