@@ -1,41 +1,27 @@
 import 'firebase/firestore';
 
-import {
-  auth,
-  confirmPasswordReset,
-  FacebookAuthProvider,
-  onAuthStateChanged,
-  sendPasswordResetEmail,
-  signInWithPopup,
-  signOut,
-} from 'firebaseFolder/clientApp';
-// import { tokenName } from 'firebaseFolder/constant';
-// import cookie from 'js-cookie';
+import { auth, onAuthStateChanged, signOut } from 'firebaseFolder/clientApp';
+import { useRouter } from 'next/navigation';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import FirebaseUserRepository from '@/modules/user/firebaseUserRepository';
 import UserEntity from '@/modules/user/UserEntity';
 import type { ProviderType } from '@/modules/user/userType';
+import { mainRoutes } from '@/routes/mainRoutes';
 
 import { isFirebaseUserFirstConnexion } from './hooksUtils';
 
 type ContextType = {
   user: UserEntity;
   isUserLoading: boolean;
-  loginFacebook: any;
   callsignOut: any;
-  callSendPasswordResetEmail: any;
-  callConfirmPasswordReset: any;
 };
 
 const userRepository = new FirebaseUserRepository();
 const AuthContext = createContext<ContextType>({
   user: UserEntity.new(),
   isUserLoading: false,
-  loginFacebook: () => null,
   callsignOut: () => null,
-  callSendPasswordResetEmail: () => null,
-  callConfirmPasswordReset: () => null,
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -45,58 +31,19 @@ export const AuthContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const router = useRouter();
   const [user, setUser] = useState<UserEntity>(UserEntity.new());
-  const [isUserLoading, setIsUserLoading] = useState(false);
-
-  const loginFacebook = async () => {
-    setIsUserLoading(true);
-    const facebookProvider = new FacebookAuthProvider();
-    return signInWithPopup(auth, facebookProvider)
-      .then((userCredential) => {
-        return {
-          uid: userCredential.user?.uid,
-          email: userCredential.user?.email,
-          // isNewUser: userCredential.additionalUserInfo?.isNewUser,
-          // firstName: userCredential.additionalUserInfo?.profile?.first_name,
-          // lastName: userCredential.additionalUserInfo?.profile?.last_name,
-        };
-      })
-      .catch((_error) => {})
-      .finally(() => {
-        setIsUserLoading(false);
-      });
-  };
+  const [isUserLoading, setIsUserLoading] = useState(true);
 
   const callsignOut = async () => {
-    return signOut(auth)
-      .then(() => {
-        setUser(UserEntity.new());
-      })
-      .catch((_error) => {});
-  };
-
-  const callSendPasswordResetEmail = async (email: string) => {
-    sendPasswordResetEmail(auth, email)
-      .then(() => {})
-      .catch((_error) => {
-        // logger.error(error);
-      });
-  };
-
-  const callConfirmPasswordReset = async (
-    newPassword: string,
-    code: string
-  ) => {
-    const resetCode = code || '';
-
-    return confirmPasswordReset(auth, resetCode, newPassword).then(() => {
-      return true;
+    return signOut(auth).then(() => {
+      setUser(UserEntity.new());
+      router.push(mainRoutes.home.path);
     });
   };
 
   useEffect(() => {
     const fetchUserInformation = async (uid: string) => {
-      setIsUserLoading(true);
       try {
         return await userRepository.getById(uid);
       } catch (e) {
@@ -107,8 +54,8 @@ export const AuthContextProvider = ({
     };
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      setIsUserLoading(true);
       if (firebaseUser) {
-        setIsUserLoading(true);
         const isFirstConnexion = isFirebaseUserFirstConnexion(
           // @ts-ignore
           firebaseUser.metadata.createdAt || '0'
@@ -143,10 +90,7 @@ export const AuthContextProvider = ({
       value={{
         user,
         isUserLoading,
-        loginFacebook,
         callsignOut,
-        callSendPasswordResetEmail,
-        callConfirmPasswordReset,
       }}
     >
       {children}
