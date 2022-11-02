@@ -1,19 +1,35 @@
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import axios from 'axios';
 import classNames from 'classnames';
+import { auth, signOut } from 'firebaseFolder/clientApp';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import type { FC } from 'react';
 import { Fragment } from 'react';
 
-import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
+import { logoutUseCase } from '@/usecases/usecases';
+
+import { ToasterTypeEnum } from '../08-toaster/toasterEnum';
 
 type Props = {
   logo?: React.ComponentProps<'svg'>;
 };
 
 const ProfileDropdown: FC<Props> = ({ logo }) => {
-  const { callsignOut } = useAuth();
+  const router = useRouter();
+  const toast = useToast(4000);
+
+  const handleSingOut = async () => {
+    try {
+      await logoutUseCase({ auth, signOut, axios });
+      router.push(mainRoutes.home.path);
+    } catch (error: any) {
+      toast(ToasterTypeEnum.ERROR, error.message);
+    }
+  };
   return (
     <Menu as="div" className="relative ml-3">
       <div>
@@ -82,7 +98,7 @@ const ProfileDropdown: FC<Props> = ({ logo }) => {
                   active ? 'bg-gray-100' : '',
                   'block px-4 py-2 text-sm text-gray-700 cursor-pointer'
                 )}
-                onClick={() => callsignOut()}
+                onClick={handleSingOut}
               >
                 Logout
               </div>
