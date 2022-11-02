@@ -14,10 +14,11 @@ const sessionLogout = async (req: NextApiRequest, res: NextApiResponse) => {
       return authAdmin.revokeRefreshTokens(decodedClaims.sub);
     })
     .then(() => {
-      res.redirect('/');
+      res.status(200).end().redirect('/');
+      return res.status(200).end().redirect('/');
     })
-    .catch((_error) => {
-      res.redirect('/');
+    .catch((error) => {
+      return res.status(400).end(error).redirect('/');
     });
 };
 
