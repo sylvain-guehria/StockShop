@@ -1,6 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import axios from 'axios';
 import { auth, signInWithEmailAndPassword } from 'firebaseFolder/clientApp';
 import { AuthFirebaseErrorCodes } from 'firebaseFolder/errorCodes';
 import Link from 'next/link';
@@ -42,6 +43,7 @@ const LoginEmailForm = () => {
         email,
         password,
         auth,
+        axios,
       });
     } catch (error: any) {
       if (
