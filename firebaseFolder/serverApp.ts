@@ -14,6 +14,10 @@ if (!admin.apps.length) {
     console.error('Firebase admin initialization error', error.stack);
   }
 }
-export default admin.firestore();
 const firebaseAdmin = admin;
-export { firebaseAdmin };
+export default firebaseAdmin;
+
+const authAdmin = admin.auth();
+const firestoreAdmin = admin.firestore();
+
+export { authAdmin, firestoreAdmin };

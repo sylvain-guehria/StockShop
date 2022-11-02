@@ -1,5 +1,3 @@
-import 'firebase/firestore';
-
 import { auth, onAuthStateChanged, signOut } from 'firebaseFolder/clientApp';
 import { useRouter } from 'next/navigation';
 import React, { createContext, useContext, useEffect, useState } from 'react';
@@ -36,9 +34,11 @@ export const AuthContextProvider = ({
   const [isUserLoading, setIsUserLoading] = useState(true);
 
   const callsignOut = async () => {
+    setIsUserLoading(true);
     return signOut(auth).then(() => {
       setUser(UserEntity.new());
       router.push(mainRoutes.home.path);
+      setIsUserLoading(false);
     });
   };
 
