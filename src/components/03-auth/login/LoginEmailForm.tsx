@@ -1,12 +1,16 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { auth, signInWithEmailAndPassword } from 'firebaseFolder/clientApp';
 import { AuthFirebaseErrorCodes } from 'firebaseFolder/errorCodes';
+import Link from 'next/link';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
-import { useAuth } from '@/hooks/useAuth';
+import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { useToast } from '@/hooks/useToast';
+import { mainRoutes } from '@/routes/mainRoutes';
 import { loginWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './LoginFormValidation';
@@ -18,9 +22,8 @@ interface LoginFormType {
 }
 
 const LoginEmailForm = () => {
-  const { loginEmail } = useAuth();
   const [wrongEmailPasswordError, setWrongEmailPasswordError] = useState(false);
-
+  const toast = useToast(4000);
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   const {
@@ -33,15 +36,23 @@ const LoginEmailForm = () => {
     data: LoginFormType
   ) => {
     const { email, password } = data;
-    const response = await loginWithEmailUseCase(loginEmail, {
-      email,
-      password,
-    });
-    if (
-      response === AuthFirebaseErrorCodes.WrongPassword ||
-      response === AuthFirebaseErrorCodes.UserNotFound
-    ) {
-      setWrongEmailPasswordError(true);
+    try {
+      await loginWithEmailUseCase({
+        signInWithEmailAndPassword,
+        email,
+        password,
+        auth,
+      });
+    } catch (error: any) {
+      if (
+        error.errorCode === AuthFirebaseErrorCodes.WrongPassword ||
+        error.errorCode === AuthFirebaseErrorCodes.UserNotFound ||
+        error.errorCode === AuthFirebaseErrorCodes.InvalidEmail
+      ) {
+        setWrongEmailPasswordError(true);
+      } else {
+        toast(ToasterTypeEnum.ERROR, error.message);
+      }
     }
   };
 
@@ -58,7 +69,7 @@ const LoginEmailForm = () => {
           <input
             id="email"
             {...register('email')}
-            type="email"
+            type="text"
             autoComplete="email"
             className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
           />
@@ -107,12 +118,11 @@ const LoginEmailForm = () => {
         </div>
 
         <div className="text-sm">
-          <a
-            href="#"
-            className="font-medium text-primary-600 hover:text-primary-500"
-          >
-            Mot de passe oublié ?
-          </a>
+          <div className="cursor-pointer font-medium text-primary-600 hover:text-primary-500">
+            <Link href={mainRoutes.resetPassword.path}>
+              {mainRoutes.resetPassword.label}
+            </Link>
+          </div>
         </div>
       </div>
 

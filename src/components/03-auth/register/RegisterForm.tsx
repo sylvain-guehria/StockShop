@@ -1,13 +1,18 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  deleteUser,
+  sendEmailVerification,
+} from 'firebaseFolder/clientApp';
 import { AuthFirebaseErrorCodes } from 'firebaseFolder/errorCodes';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
-import { mainRoutes } from '@/routes/mainRoutes';
 import { registerWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './RegisterFormValidation';
@@ -19,9 +24,9 @@ interface RegisterFormType {
   acceptTerms: boolean;
 }
 const RegisterForm = () => {
-  const { signUpEmail } = useAuth();
   const router = useRouter();
   const toast = useToast(4000);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -35,18 +40,22 @@ const RegisterForm = () => {
     data: RegisterFormType
   ) => {
     const { email, password } = data;
-    const response = await registerWithEmailUseCase(signUpEmail, {
-      email,
-      password,
-    });
-    if (
-      response.data === AuthFirebaseErrorCodes.EmailAlreadyInUse ||
-      response.code === AuthFirebaseErrorCodes.EmailAlreadyInUse
-    ) {
-      toast(ToasterTypeEnum.ERROR, 'Cet email est déjà utilisé.');
-    }
-    if (response.email === email) {
-      router.push(mainRoutes.home.path);
+    try {
+      await registerWithEmailUseCase({
+        email,
+        password,
+        createUserWithEmailAndPassword,
+        deleteUser,
+        auth,
+        router,
+        sendEmailVerification,
+      });
+    } catch (error: any) {
+      if (error.errorCode === AuthFirebaseErrorCodes.EmailAlreadyInUse) {
+        setErrorMessage(error.message);
+      } else {
+        toast(ToasterTypeEnum.ERROR, error.message);
+      }
     }
   };
 
@@ -63,7 +72,7 @@ const RegisterForm = () => {
           <input
             id="email"
             {...register('email')}
-            type="email"
+            type="text"
             autoComplete="email"
             className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
           />
@@ -109,6 +118,10 @@ const RegisterForm = () => {
           {errors.confirmPassword?.message}
         </div>
       </div>
+
+      {errorMessage && (
+        <div className="text-sm text-red-600">{errorMessage}</div>
+      )}
 
       <div className="flex items-center justify-between">
         <div className="flex items-center">

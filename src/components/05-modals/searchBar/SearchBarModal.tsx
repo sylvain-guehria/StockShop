@@ -11,6 +11,7 @@ type Props = {
 };
 
 const SearchBarModal: FC<Props> = ({ isSearchBarOpen, setIsSearchBarOpen }) => {
+  // SEE =>  https://tailwindui.com/components/application-ui/navigation/command-palettes
   return (
     <Transition.Root show={isSearchBarOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setIsSearchBarOpen}>

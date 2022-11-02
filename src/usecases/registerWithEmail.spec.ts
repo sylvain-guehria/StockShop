@@ -1,72 +1,184 @@
-import type { UserRepository } from '@/modules/user/userRepository';
+import type { Auth, UserCredential } from 'firebase/auth';
+
+import UserEntity from '@/modules/user/UserEntity';
+import { PROVIDERS, ROLES } from '@/modules/user/userType';
+import { mainRoutes } from '@/routes/mainRoutes';
 
 import { registerWithEmail } from './registerWithEmail';
 
-let userRepository: UserRepository;
-let signUpEmail: (
+const createUserWithEmailAndPassword: (
+  auth: Auth,
   email: string,
   password: string
-) => Promise<string | void | null>;
+) => Promise<UserCredential> = jest.fn();
 
-beforeEach(() => {
-  userRepository = {
-    add: jest.fn(),
-    delete: jest.fn(),
-    getById: jest.fn(),
-    getAll: jest.fn(),
-    update: jest.fn(),
-  };
-  signUpEmail = jest.fn();
-});
+const userRepository = {
+  add: jest.fn(),
+  delete: jest.fn(),
+  getById: jest.fn(),
+  getAll: jest.fn(),
+  update: jest.fn(),
+};
+const router = {
+  push: jest.fn(),
+  back: jest.fn(),
+  forward: jest.fn(),
+  refresh: jest.fn(),
+  replace: jest.fn(),
+  prefetch: jest.fn(),
+};
 
-it('Signup the user in firebase', async () => {
+const deleteUser = jest.fn();
+const sendEmailVerification = jest.fn();
+
+it('Create and signup the user in firebase', async () => {
   const email = 'sylvain.guehria@gmail.com';
   const password = 'password';
+  const auth = { currentUser: { uid: 'uid-123' } } as Auth;
 
-  (userRepository.add as jest.Mock).mockResolvedValue('uid');
+  (createUserWithEmailAndPassword as jest.Mock).mockResolvedValue({
+    user: { uid: 'uid-123' },
+  });
+  (userRepository.add as jest.Mock).mockResolvedValue('uid-123');
+  (sendEmailVerification as jest.Mock).mockResolvedValue(true);
 
-  await registerWithEmail(userRepository)(signUpEmail, {
+  await registerWithEmail(userRepository)({
     email,
     password,
+    createUserWithEmailAndPassword,
+    auth,
+    router,
+    deleteUser,
+    sendEmailVerification,
   });
 
-  expect(signUpEmail).toHaveBeenCalledWith(email, password);
+  expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(
+    auth,
+    email,
+    password
+  );
 });
 
 it('Add the user to the database with the role "user" and the provider "email"', async () => {
   const email = 'sylvain.guehria@gmail.com';
   const password = 'password';
+  const auth = { currentUser: { uid: 'uid-123' } } as Auth;
 
-  (signUpEmail as jest.Mock).mockResolvedValue({ uid: 'uid' });
+  (createUserWithEmailAndPassword as jest.Mock).mockResolvedValue({
+    user: { uid: 'uid-123' },
+  });
+  (userRepository.add as jest.Mock).mockResolvedValue('uid-123');
+  (sendEmailVerification as jest.Mock).mockResolvedValue(true);
 
-  await registerWithEmail(userRepository)(signUpEmail, {
+  await registerWithEmail(userRepository)({
     email,
     password,
+    createUserWithEmailAndPassword,
+    auth,
+    router,
+    deleteUser,
+    sendEmailVerification,
   });
-
-  expect(signUpEmail).toHaveBeenCalledWith(
-    'sylvain.guehria@gmail.com',
-    'password'
+  expect(userRepository.add).toHaveBeenCalledTimes(1);
+  expect(userRepository.add).toHaveBeenCalledWith(
+    UserEntity.new({
+      email: 'sylvain.guehria@gmail.com',
+      provider: PROVIDERS.PASSWORD,
+      role: ROLES.USER,
+      uid: 'uid-123',
+    })
   );
-
-  expect(userRepository.add).toHaveBeenCalledWith({
-    email: 'sylvain.guehria@gmail.com',
-    provider: 'email',
-    role: 'user',
-    uid: 'uid',
-  });
 });
 
-it('Do not signup the user in the database if the user is not add to firebase', async () => {
+it('Do not add the user in the database if the user is not added to firebase', async () => {
   const email = 'sylvain.guehria@gmail.com';
   const password = 'password';
+  const auth = { currentUser: { uid: 'uid-123' } } as Auth;
 
-  (signUpEmail as jest.Mock).mockResolvedValue({});
+  (createUserWithEmailAndPassword as jest.Mock).mockResolvedValue({});
+  (userRepository.add as jest.Mock).mockResolvedValue('uid-123');
 
-  await registerWithEmail(userRepository)(signUpEmail, {
+  await registerWithEmail(userRepository)({
     email,
     password,
+    createUserWithEmailAndPassword,
+    auth,
+    router,
+    deleteUser,
+    sendEmailVerification,
+  });
+  expect(userRepository.add).toHaveBeenCalledTimes(0);
+});
+
+it('Delete the user from firebase if the user is not added to the database', async () => {
+  const email = 'sylvain.guehria@gmail.com';
+  const password = 'password';
+  const auth = { currentUser: { uid: 'uid-123' } } as Auth;
+
+  (createUserWithEmailAndPassword as jest.Mock).mockResolvedValue({
+    user: { uid: 'uid-123' },
+  });
+  (userRepository.add as jest.Mock).mockImplementation(() => {
+    throw new Error();
   });
 
-  expect(userRepository.add).toHaveBeenCalledTimes(0);
+  try {
+    await registerWithEmail(userRepository)({
+      email,
+      password,
+      createUserWithEmailAndPassword,
+      auth,
+      router,
+      deleteUser,
+      sendEmailVerification,
+    });
+  } catch (e) {
+    expect(userRepository.add).toHaveBeenCalledTimes(1);
+    expect(userRepository.add).toHaveBeenCalledWith(
+      UserEntity.new({
+        email,
+        provider: PROVIDERS.PASSWORD,
+        role: ROLES.USER,
+        uid: 'uid-123',
+      })
+    );
+    expect(deleteUser).toHaveBeenCalledWith({ uid: 'uid-123' });
+  }
+});
+
+it('send an Email Verification and redirect the user if the user is added to firebase and the DB', async () => {
+  const email = 'sylvain.guehria@gmail.com';
+  const password = 'password';
+  const auth = { currentUser: { uid: 'uid-123' } } as Auth;
+
+  (createUserWithEmailAndPassword as jest.Mock).mockResolvedValue({
+    user: { uid: 'uid-123' },
+  });
+  (userRepository.add as jest.Mock).mockResolvedValue('uid-123');
+  (sendEmailVerification as jest.Mock).mockResolvedValue(true);
+
+  await registerWithEmail(userRepository)({
+    email,
+    password,
+    createUserWithEmailAndPassword,
+    auth,
+    router,
+    deleteUser,
+    sendEmailVerification,
+  });
+  expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(
+    auth,
+    email,
+    password
+  );
+  expect(userRepository.add).toHaveBeenCalledWith(
+    UserEntity.new({
+      email: 'sylvain.guehria@gmail.com',
+      provider: PROVIDERS.PASSWORD,
+      role: ROLES.USER,
+      uid: 'uid-123',
+    })
+  );
+  expect(sendEmailVerification).toHaveBeenCalledWith({ uid: 'uid-123' });
+  expect(router.push).toHaveBeenCalledWith(mainRoutes.home.path);
 });

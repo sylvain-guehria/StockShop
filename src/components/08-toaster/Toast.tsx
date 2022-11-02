@@ -4,6 +4,7 @@ import { ToasterActionsEnum, ToasterTypeEnum } from './toasterEnum';
 
 export default function Toast({ type, message, id }: ToastType) {
   const dispatch = useToastDispatchContext();
+  // see => https://tailwindui.com/components/application-ui/overlays/notifications
   return (
     <>
       {type === ToasterTypeEnum.SUCCESS && (

@@ -12,7 +12,7 @@ const { collection, query, where, getDocs, setDoc, doc, getDoc } =
 // CLIENT SIDE
 const addUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const usersRef = collection(firestore, USERS);
+    // const usersRef = collection(firestore, USERS);
     const { ...user } = req.body;
 
     const q = query(
@@ -34,12 +34,12 @@ const addUser = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(400).end();
       return;
     }
-
-    await setDoc(doc(usersRef, user.uid), user);
+    await setDoc(doc(firestore, USERS, user.uid), user);
+    // await setDoc(doc(usersRef, user.uid), user);
     res.status(200).json(user.uid);
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error('error when saving user', e);
+    console.error('error when adding user', e);
     res.status(400).end();
   }
 };
