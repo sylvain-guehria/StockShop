@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import type { FC, ReactNode } from 'react';
 import { useState } from 'react';
 
@@ -33,7 +33,7 @@ const StockManagementLayout: FC<Props> = ({ children }) => {
   if (isUserLoading) return <Spinner />;
 
   if (!user.isLoggedIn() || !user.isSeller()) {
-    notFound();
+    redirect('404');
     return null;
   }
 

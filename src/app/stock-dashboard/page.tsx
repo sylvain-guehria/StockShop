@@ -1,6 +1,3 @@
-// import { tokenName } from 'firebaseFolder/constant';
-// import { firebaseAdmin } from 'firebaseFolder/firestore';
-// import { cookies } from 'next/headers';
 import { sessionCookieName } from 'firebaseFolder/constant';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -27,6 +24,7 @@ const StockDashboardPage = async () => {
   const uid = await validateUser();
   if (!uid) {
     redirect(mainRoutes.home.path);
+    return null;
   }
   return <StockDashboard />;
 };

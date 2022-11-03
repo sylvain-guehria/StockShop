@@ -3,11 +3,13 @@
 import { Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import logo from 'public/assets/images/stockshop.png';
 import { Fragment } from 'react';
 
 import { headerRoutes, mainRoutes } from '@/routes/mainRoutes';
 import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
 
+import NextImage from '../nextImage/NextImage';
 import ServicesButton from '../Popovers/ServicesButton';
 import { services } from './services';
 
@@ -24,10 +26,10 @@ export default function Header() {
             <Link href={mainRoutes.home.path}>
               <div>
                 <span className="sr-only">Your Company</span>
-                <img
+                <NextImage
                   className="h-11 w-auto cursor-pointer"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
-                  alt=""
+                  src={logo}
+                  alt="stock shop logo"
                 />
               </div>
             </Link>
