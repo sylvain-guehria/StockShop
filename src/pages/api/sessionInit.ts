@@ -1,4 +1,5 @@
 import { setCookie } from 'cookies-next';
+import { sessionCookieName } from 'firebaseFolder/constant';
 import { authAdmin } from 'firebaseFolder/serverApp';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
@@ -13,7 +14,11 @@ const sessionInit = async (req: NextApiRequest, res: NextApiResponse) => {
       expiresIn: towWeeksInMillisSeconds,
     });
 
-    setCookie('session', sessionToken, { req, res, maxAge: towWeeksInSeconds });
+    setCookie(sessionCookieName, sessionToken, {
+      req,
+      res,
+      maxAge: towWeeksInSeconds,
+    });
 
     return res.status(200).end();
   } catch (e: any) {

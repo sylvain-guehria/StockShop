@@ -4,7 +4,7 @@ import axios from 'axios';
 import classNames from 'classnames';
 import { auth, signOut } from 'firebaseFolder/clientApp';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 import { Fragment } from 'react';
 

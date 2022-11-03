@@ -4,6 +4,10 @@ export enum AuthFirebaseErrorCodes {
   UserNotFound = 'auth/user-not-found',
   TokenExpired = 'auth/id-token-expired',
   InvalidEmail = 'auth/invalid-email',
+  UserDisabled = 'auth/user-disabled',
+  OperationNotAllowed = 'auth/operation-not-allowed',
+  WeakPassword = 'auth/weak-password',
+  SessionCookieRevoked = 'auth/session-cookie-revoked',
 }
 
 export class FirebaseAuthenticationError extends Error {

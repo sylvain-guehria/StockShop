@@ -1,12 +1,15 @@
+import { setCookie } from 'cookies-next';
 import { authAdmin } from 'firebaseFolder/serverApp';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const sessionLogout = async (req: NextApiRequest, res: NextApiResponse) => {
-  const sessionCookie = req.cookies.session || '';
-  res.setHeader(
-    'Set-Cookie',
-    'jwt=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
-  );
+  // const sessionCookie = req.cookies.session || '';
+  // res.setHeader(
+  //   'Set-Cookie',
+  //   'jwt=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+  // );
+
+  const { sessionCookie } = req.body;
 
   authAdmin
     .verifySessionCookie(sessionCookie)
@@ -14,7 +17,7 @@ const sessionLogout = async (req: NextApiRequest, res: NextApiResponse) => {
       return authAdmin.revokeRefreshTokens(decodedClaims.sub);
     })
     .then(() => {
-      res.status(200).end().redirect('/');
+      setCookie('session', null, { req, res });
       return res.status(200).end().redirect('/');
     })
     .catch((error) => {

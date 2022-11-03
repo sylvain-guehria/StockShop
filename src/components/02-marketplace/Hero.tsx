@@ -17,7 +17,7 @@ const Hero = () => {
                   <li key={offer.name} className="flex flex-col">
                     <a
                       href={offer.href}
-                      className="bg-grey-200 relative flex flex-1 flex-col justify-center py-6 px-4 text-center focus:z-10"
+                      className="relative flex flex-1 flex-col justify-center py-6 px-4 text-center focus:z-10"
                     >
                       <p className="text-sm text-gray-500">{offer.name}</p>
                       <p className="font-semibold text-gray-900">
