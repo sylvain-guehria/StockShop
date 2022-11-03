@@ -1,28 +1,23 @@
-import { setCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
+import { sessionCookieName } from 'firebaseFolder/constant';
 import { authAdmin } from 'firebaseFolder/serverApp';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const sessionLogout = async (req: NextApiRequest, res: NextApiResponse) => {
-  // const sessionCookie = req.cookies.session || '';
-  // res.setHeader(
-  //   'Set-Cookie',
-  //   'jwt=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
-  // );
+  const sessionCookie = getCookie(sessionCookieName, { req, res });
 
-  const { sessionCookie } = req.body;
+  if (!sessionCookie) return res.status(400).end('No session cookie');
 
-  authAdmin
-    .verifySessionCookie(sessionCookie)
-    .then((decodedClaims) => {
-      return authAdmin.revokeRefreshTokens(decodedClaims.sub);
-    })
-    .then(() => {
-      setCookie('session', null, { req, res });
-      return res.status(200).end().redirect('/');
-    })
-    .catch((error) => {
-      return res.status(400).end(error).redirect('/');
-    });
+  try {
+    const decodedClaims = await authAdmin.verifySessionCookie(
+      sessionCookie as string
+    );
+    await authAdmin.revokeRefreshTokens(decodedClaims.sub);
+    setCookie('session', null, { req, res });
+    return res.status(200).end('Session revoked');
+  } catch (error: any) {
+    return res.status(400).end(error).redirect('/');
+  }
 };
 
 export default sessionLogout;

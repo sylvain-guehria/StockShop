@@ -1,6 +1,5 @@
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
-import axios from 'axios';
 import classNames from 'classnames';
 import { auth, signOut } from 'firebaseFolder/clientApp';
 import Link from 'next/link';
@@ -24,7 +23,7 @@ const ProfileDropdown: FC<Props> = ({ logo }) => {
 
   const handleSingOut = async () => {
     try {
-      await logoutUseCase({ auth, signOut, axios });
+      await logoutUseCase({ auth, signOut });
       router.push(mainRoutes.home.path);
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);

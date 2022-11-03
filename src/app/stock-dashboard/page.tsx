@@ -8,13 +8,16 @@ import { mainRoutes } from '@/routes/mainRoutes';
 async function validateUser() {
   const sessionCookie = cookies().get(sessionCookieName);
   try {
-    const res = await fetch(`${process.env.NEXT_CLIENT_URL}/api/profile`, {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        Cookie: `${sessionCookieName}=${sessionCookie}`,
-      },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/api/checkUserSession`,
+      {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          Cookie: `${sessionCookieName}=${sessionCookie}`,
+        },
+      }
+    );
     return await res.json();
   } catch (error) {
     return null;
