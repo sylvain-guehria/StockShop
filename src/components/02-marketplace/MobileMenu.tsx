@@ -1,13 +1,18 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/20/solid';
+import { auth, signOut } from 'firebaseFolder/clientApp';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 import { Fragment } from 'react';
 
 import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
+import { logoutUseCase } from '@/usecases/usecases';
 
 import MobileServicesButton from '../04-lib/Popovers/MobileServicesButton';
+import { ToasterTypeEnum } from '../08-toaster/toasterEnum';
 import { navigation } from './fakeDatas';
 
 type Props = {
@@ -16,7 +21,19 @@ type Props = {
 };
 
 const MobileMenu: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
-  const { user, callsignOut } = useAuth();
+  const { user } = useAuth();
+  const router = useRouter();
+  const toast = useToast(4000);
+
+  const handleSingOut = async () => {
+    try {
+      await logoutUseCase({ auth, signOut });
+      router.push(mainRoutes.home.path);
+    } catch (error: any) {
+      toast(ToasterTypeEnum.ERROR, error.message);
+    }
+  };
+
   return (
     <Transition.Root show={mobileMenuOpen} as={Fragment}>
       <Dialog
@@ -88,7 +105,7 @@ const MobileMenu: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
               {user.isLoggedIn() && (
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                   <button
-                    onClick={() => callsignOut()}
+                    onClick={handleSingOut}
                     className="ml-6 mr-1 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
                   >
                     Se Déconnecter

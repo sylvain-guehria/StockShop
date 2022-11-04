@@ -1,10 +1,10 @@
 import type { DocumentData } from '@firebase/firestore';
-import firestore from 'firebaseFolder/firestore';
+import { firestoreAdmin } from 'firebaseFolder/serverApp';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const getAllUsers = async (_req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const users = await firestore.collection('users').get();
+    const users = await firestoreAdmin.collection('users').get();
     const usersData = users.docs.map((user: DocumentData) => ({
       id: user.id,
       ...user.data(),

@@ -1,1 +1,1 @@
-export const tokenName = 'firebaseToken';
+export const sessionCookieName = 'session';

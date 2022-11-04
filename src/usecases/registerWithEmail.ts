@@ -1,3 +1,4 @@
+import type { AxiosStatic } from 'axios';
 import type {
   ActionCodeSettings,
   Auth,
@@ -28,6 +29,7 @@ type RegisterWithEmailParams = {
     user: User,
     actionCodeSettings?: ActionCodeSettings | null
   ) => Promise<void>;
+  axios: AxiosStatic;
 };
 
 export const registerWithEmail =
@@ -40,15 +42,20 @@ export const registerWithEmail =
     router,
     deleteUser,
     sendEmailVerification,
+    axios,
   }: RegisterWithEmailParams) => {
-    let userCredentialFromFirebase;
-    let userUidFromDatabase;
+    let userCredentialFromFirebase: UserCredential;
+    let userUidFromDatabase: string = '';
     try {
       userCredentialFromFirebase = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
+      const idToken = await userCredentialFromFirebase.user.getIdToken();
+      await axios.post('/api/sessionInit', {
+        idToken,
+      });
     } catch (e: any) {
       throw new FirebaseAuthenticationError(e.code);
     }

@@ -1,3 +1,4 @@
+import type { AxiosStatic } from 'axios';
 import type { Auth, UserCredential } from 'firebase/auth';
 
 import UserEntity from '@/modules/user/UserEntity';
@@ -31,13 +32,17 @@ const router = {
 const deleteUser = jest.fn();
 const sendEmailVerification = jest.fn();
 
+const axios = {
+  post: jest.fn(),
+} as unknown as AxiosStatic;
+
 it('Create and signup the user in firebase', async () => {
   const email = 'sylvain.guehria@gmail.com';
   const password = 'password';
   const auth = { currentUser: { uid: 'uid-123' } } as Auth;
 
   (createUserWithEmailAndPassword as jest.Mock).mockResolvedValue({
-    user: { uid: 'uid-123' },
+    user: { uid: 'uid-123', getIdToken: () => 'sessionToken' },
   });
   (userRepository.add as jest.Mock).mockResolvedValue('uid-123');
   (sendEmailVerification as jest.Mock).mockResolvedValue(true);
@@ -50,6 +55,7 @@ it('Create and signup the user in firebase', async () => {
     router,
     deleteUser,
     sendEmailVerification,
+    axios,
   });
 
   expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(
@@ -65,7 +71,7 @@ it('Add the user to the database with the role "user" and the provider "email"',
   const auth = { currentUser: { uid: 'uid-123' } } as Auth;
 
   (createUserWithEmailAndPassword as jest.Mock).mockResolvedValue({
-    user: { uid: 'uid-123' },
+    user: { uid: 'uid-123', getIdToken: () => 'sessionToken' },
   });
   (userRepository.add as jest.Mock).mockResolvedValue('uid-123');
   (sendEmailVerification as jest.Mock).mockResolvedValue(true);
@@ -78,6 +84,7 @@ it('Add the user to the database with the role "user" and the provider "email"',
     router,
     deleteUser,
     sendEmailVerification,
+    axios,
   });
   expect(userRepository.add).toHaveBeenCalledTimes(1);
   expect(userRepository.add).toHaveBeenCalledWith(
@@ -90,12 +97,47 @@ it('Add the user to the database with the role "user" and the provider "email"',
   );
 });
 
+it('Init the session token when user is registered', async () => {
+  const email = 'sylvain.guehria@gmail.com';
+  const password = 'password';
+  const auth = { currentUser: { uid: 'uid-123' } } as Auth;
+
+  (createUserWithEmailAndPassword as jest.Mock).mockResolvedValue({
+    user: {
+      uid: 'uid-123',
+      getIdToken: () => 'sessionToken',
+    },
+  });
+  (userRepository.add as jest.Mock).mockResolvedValue('uid-123');
+  (sendEmailVerification as jest.Mock).mockResolvedValue(true);
+
+  await registerWithEmail(userRepository)({
+    email,
+    password,
+    createUserWithEmailAndPassword,
+    auth,
+    router,
+    deleteUser,
+    sendEmailVerification,
+    axios,
+  });
+  expect(axios.post).toHaveBeenCalledTimes(1);
+  expect(axios.post).toHaveBeenCalledWith('/api/sessionInit', {
+    idToken: 'sessionToken',
+  });
+});
+
 it('Do not add the user in the database if the user is not added to firebase', async () => {
   const email = 'sylvain.guehria@gmail.com';
   const password = 'password';
   const auth = { currentUser: { uid: 'uid-123' } } as Auth;
 
-  (createUserWithEmailAndPassword as jest.Mock).mockResolvedValue({});
+  (createUserWithEmailAndPassword as jest.Mock).mockResolvedValue({
+    user: {
+      uid: '',
+      getIdToken: () => '',
+    },
+  });
   (userRepository.add as jest.Mock).mockResolvedValue('uid-123');
 
   await registerWithEmail(userRepository)({
@@ -106,6 +148,7 @@ it('Do not add the user in the database if the user is not added to firebase', a
     router,
     deleteUser,
     sendEmailVerification,
+    axios,
   });
   expect(userRepository.add).toHaveBeenCalledTimes(0);
 });
@@ -116,7 +159,10 @@ it('Delete the user from firebase if the user is not added to the database', asy
   const auth = { currentUser: { uid: 'uid-123' } } as Auth;
 
   (createUserWithEmailAndPassword as jest.Mock).mockResolvedValue({
-    user: { uid: 'uid-123' },
+    user: {
+      uid: 'uid-123',
+      getIdToken: () => 'sessionToken',
+    },
   });
   (userRepository.add as jest.Mock).mockImplementation(() => {
     throw new Error();
@@ -131,6 +177,7 @@ it('Delete the user from firebase if the user is not added to the database', asy
       router,
       deleteUser,
       sendEmailVerification,
+      axios,
     });
   } catch (e) {
     expect(userRepository.add).toHaveBeenCalledTimes(1);
@@ -152,7 +199,7 @@ it('send an Email Verification and redirect the user if the user is added to fir
   const auth = { currentUser: { uid: 'uid-123' } } as Auth;
 
   (createUserWithEmailAndPassword as jest.Mock).mockResolvedValue({
-    user: { uid: 'uid-123' },
+    user: { uid: 'uid-123', getIdToken: () => 'sessionToken' },
   });
   (userRepository.add as jest.Mock).mockResolvedValue('uid-123');
   (sendEmailVerification as jest.Mock).mockResolvedValue(true);
@@ -165,6 +212,7 @@ it('send an Email Verification and redirect the user if the user is added to fir
     router,
     deleteUser,
     sendEmailVerification,
+    axios,
   });
   expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(
     auth,
