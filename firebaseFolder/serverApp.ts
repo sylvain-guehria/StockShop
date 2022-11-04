@@ -21,8 +21,7 @@ if (process.env.ENV === 'local') {
   process.env.FIREBASE_STORAGE_EMULATOR_HOST = 'localhost:9199';
 }
 
-const firebaseAdmin = admin;
-export default firebaseAdmin;
+export default admin;
 
 const authAdmin = admin.auth();
 const firestoreAdmin = admin.firestore();

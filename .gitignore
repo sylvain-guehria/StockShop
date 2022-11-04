@@ -42,7 +42,10 @@ local
 # vercel
 .vercel
 
-#firestore
+#firebase
 firebaseFolder/serviceAccountKey.json
+firestore-debug.log
+firebase-debug.log
+ui-debug.log
 
 .vscode
