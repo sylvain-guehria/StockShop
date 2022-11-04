@@ -1,6 +1,7 @@
 import type { Auth } from 'firebase/auth';
 import Cookie from 'js-cookie';
 
+import { sessionCookieName } from '../../firebaseFolder/constant';
 import { FirebaseAuthenticationError } from '../../firebaseFolder/errorCodes';
 import { logout } from './logout';
 
@@ -11,7 +12,7 @@ const signOut: SignOut = jest.fn();
 const originalEnv = process.env;
 
 beforeEach(() => {
-  fetch.resetMocks();
+  (fetch as any).resetMocks();
   jest.resetModules();
   process.env = {
     ...originalEnv,
@@ -26,7 +27,7 @@ afterEach(() => {
 
 it('Logout from firebase client', async () => {
   const auth = { name: 'auth' } as Auth;
-  fetch.mockResponseOnce({});
+  (fetch as any).mockResponseOnce({});
 
   await logout()({
     signOut,
@@ -39,9 +40,13 @@ it('Logout from firebase client', async () => {
 
 it('Logout the session', async () => {
   const auth = { name: 'auth' } as Auth;
-  Cookie.get.mockImplementation(() => 'mockedSessionCookie');
 
-  fetch.mockResponseOnce({});
+  const listenerGetCookie = jest.spyOn(Cookie, 'get');
+  listenerGetCookie.mockImplementation(() => {
+    return { [sessionCookieName]: 'mockedSessionCookie' };
+  });
+
+  (fetch as any).mockResponseOnce({});
 
   await logout()({
     signOut,
@@ -65,7 +70,8 @@ it('Do not logout the session if it failed to logout from firebase client', asyn
   const error = new Error('error') as any;
   error.code = 'auth/unknown';
 
-  signOut.mockImplementation(() => Promise.reject(error));
+  const addListenerSignOut = signOut as jest.MockedFunction<SignOut>;
+  addListenerSignOut.mockImplementation(() => Promise.reject(error));
 
   try {
     await logout()({
