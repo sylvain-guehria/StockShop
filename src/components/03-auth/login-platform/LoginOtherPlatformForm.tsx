@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   auth,
   getAdditionalUserInfo,
@@ -18,6 +19,7 @@ const LoginOtherPlatformForm = () => {
         getAdditionalUserInfo,
         provider: new GoogleAuthProvider(),
         auth,
+        axios,
       });
     } catch (e: any) {
       toast(ToasterTypeEnum.ERROR, e.message);

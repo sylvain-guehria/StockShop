@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import axios from 'axios';
 import {
   auth,
   createUserWithEmailAndPassword,
@@ -49,6 +50,7 @@ const RegisterForm = () => {
         auth,
         router,
         sendEmailVerification,
+        axios,
       });
     } catch (error: any) {
       if (error.errorCode === AuthFirebaseErrorCodes.EmailAlreadyInUse) {

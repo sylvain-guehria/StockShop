@@ -1,3 +1,4 @@
+import type { AxiosStatic } from 'axios';
 import type {
   AdditionalUserInfo,
   Auth,
@@ -21,6 +22,7 @@ type LoginWithGoogleParamsType = {
   ) => AdditionalUserInfo | null;
   provider: AuthProvider;
   auth: Auth;
+  axios: AxiosStatic;
 };
 
 export const loginWithGoogle =
@@ -30,11 +32,18 @@ export const loginWithGoogle =
     getAdditionalUserInfo,
     provider,
     auth,
+    axios,
   }: LoginWithGoogleParamsType): Promise<any> => {
     try {
-      const response = await signInWithPopup(auth, provider);
-      const userDetails = getAdditionalUserInfo(response);
-      const { user: googleUser } = response;
+      const userCredentialFromFirebase = await signInWithPopup(auth, provider);
+      const userDetails = getAdditionalUserInfo(userCredentialFromFirebase);
+      const { user: googleUser } = userCredentialFromFirebase;
+
+      const idToken = await userCredentialFromFirebase.user.getIdToken();
+
+      await axios.post('/api/sessionInit', {
+        idToken,
+      });
 
       const isNewUser = userDetails?.isNewUser;
 
