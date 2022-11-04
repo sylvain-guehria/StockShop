@@ -7,8 +7,8 @@ import { logout } from './logout';
 
 Cookie.get = jest.fn();
 
-type SignOut = (auth: Auth) => Promise<void>;
-const signOut: SignOut = jest.fn();
+type SignOutType = (auth: Auth) => Promise<void>;
+const signOut: SignOutType = jest.fn();
 const originalEnv = process.env;
 
 beforeEach(() => {
@@ -70,7 +70,7 @@ it('Do not logout the session if it failed to logout from firebase client', asyn
   const error = new Error('error') as any;
   error.code = 'auth/unknown';
 
-  const addListenerSignOut = signOut as jest.MockedFunction<SignOut>;
+  const addListenerSignOut = signOut as jest.MockedFunction<SignOutType>;
   addListenerSignOut.mockImplementation(() => Promise.reject(error));
 
   try {
