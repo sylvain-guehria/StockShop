@@ -54,9 +54,20 @@ const auth = getAuth(app);
 const firestore = getFirestore(app);
 const storage = getStorage(app);
 
-connectFirestoreEmulator(firestore, 'localhost', 8080);
-connectAuthEmulator(auth, 'http://localhost:9099');
-connectStorageEmulator(storage, 'localhost', 9199);
+const EMULATORS_STARTED = 'EMULATORS_STARTED';
+
+function startEmulators() {
+  // @ts-ignore
+  if (!global[EMULATORS_STARTED]) {
+    // @ts-ignore
+    global[EMULATORS_STARTED] = true;
+    connectFirestoreEmulator(firestore, 'localhost', 8080);
+    connectAuthEmulator(auth, 'http://localhost:9099');
+    connectStorageEmulator(storage, 'localhost', 9199);
+  }
+}
+
+startEmulators();
 
 const firestoreFunctions = {
   doc,
