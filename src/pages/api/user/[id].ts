@@ -1,8 +1,7 @@
-import { firestore, firestoreFunctions } from 'firebaseFolder/clientApp';
+import { firestoreAdmin } from 'firebaseFolder/serverApp';
 import { TableNames } from 'firebaseFolder/tableNames';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const { updateDoc, doc, getDoc } = firestoreFunctions;
 const { USERS } = TableNames;
 
 const userById = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -16,22 +15,24 @@ const userById = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const userRef = doc(firestore, USERS, id as string);
-  const userSnapshot = await getDoc(userRef);
+  const userRef = await firestoreAdmin
+    .collection(USERS)
+    .doc(id as string)
+    .get();
+
+  const userDoc = await firestoreAdmin.collection(USERS).doc(id as string);
 
   try {
     switch (method) {
       case 'GET':
-        if (!userSnapshot.exists()) {
+        if (!userRef.exists) {
           res.status(400).end(`User with id ${id} does not exist`);
           return;
         }
-        res.status(200).json(userSnapshot.data());
+        res.status(200).json(userRef.data());
         return;
       case 'PUT':
-        await updateDoc(userRef, {
-          ...req.body,
-        });
+        userDoc.update({ ...req.body });
         res.status(200).end();
         return;
       default:
