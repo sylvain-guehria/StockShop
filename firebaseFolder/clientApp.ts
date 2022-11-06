@@ -2,7 +2,6 @@
 import { initializeApp } from 'firebase/app';
 import {
   confirmPasswordReset,
-  connectAuthEmulator,
   createUserWithEmailAndPassword,
   deleteUser,
   FacebookAuthProvider,
@@ -18,7 +17,6 @@ import {
 } from 'firebase/auth';
 import {
   collection,
-  connectFirestoreEmulator,
   deleteDoc,
   doc,
   getDoc,
@@ -30,7 +28,6 @@ import {
   where,
 } from 'firebase/firestore';
 import {
-  connectStorageEmulator,
   deleteObject,
   getDownloadURL,
   getStorage,
@@ -54,20 +51,21 @@ const auth = getAuth(app);
 const firestore = getFirestore(app);
 const storage = getStorage(app);
 
-const EMULATORS_STARTED = 'EMULATORS_STARTED';
+// const EMULATORS_STARTED = 'EMULATORS_STARTED';
+// function startEmulators() {
+//   // @ts-ignore
+//   if (!global[EMULATORS_STARTED]) {
+//     // @ts-ignore
+//     global[EMULATORS_STARTED] = true;
+//     connectFirestoreEmulator(firestore, 'localhost', 8080);
+//     connectAuthEmulator(auth, 'http://localhost:9099');
+//     connectStorageEmulator(storage, 'localhost', 9199);
+//   }
+// }
 
-function startEmulators() {
-  // @ts-ignore
-  if (!global[EMULATORS_STARTED]) {
-    // @ts-ignore
-    global[EMULATORS_STARTED] = true;
-    connectFirestoreEmulator(firestore, 'localhost', 8080);
-    connectAuthEmulator(auth, 'http://localhost:9099');
-    connectStorageEmulator(storage, 'localhost', 9199);
-  }
-}
-
-startEmulators();
+// if (process.env.ENV === 'local') {
+//   startEmulators();
+// }
 
 const firestoreFunctions = {
   doc,
