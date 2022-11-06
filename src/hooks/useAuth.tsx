@@ -1,9 +1,12 @@
 import { auth, onAuthStateChanged, signOut } from 'firebaseFolder/clientApp';
+import { sessionCookieName } from 'firebaseFolder/constant';
+import Cookies from 'js-cookie';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import FirebaseUserRepository from '@/modules/user/firebaseUserRepository';
 import UserEntity from '@/modules/user/UserEntity';
 import type { ProviderType } from '@/modules/user/userType';
+import { logoutUseCase } from '@/usecases/usecases';
 
 import { isFirebaseUserFirstConnexion } from './hooksUtils';
 
@@ -48,6 +51,13 @@ export const AuthContextProvider = ({
     };
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      const cookies = Cookies.get();
+      const sessionCookie = cookies ? cookies[sessionCookieName] : '';
+
+      if (!firebaseUser && sessionCookie) {
+        logoutUseCase({ signOut, auth });
+      }
+
       setIsUserLoading(true);
       if (firebaseUser) {
         const isFirstConnexion = isFirebaseUserFirstConnexion(

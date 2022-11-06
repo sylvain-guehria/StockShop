@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
 import { mainRoutes } from '@/routes/mainRoutes';
-import { validateUser } from '@/utils/pagesUtils';
+import { validateUser } from '@/utils/validateUserServerSide';
 
 import ResetPasswordPage from './resetPasswordPage';
 
