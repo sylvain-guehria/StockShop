@@ -7,7 +7,7 @@ import { validateUser } from '@/utils/validateUserServerSide';
 const StockDashboardPage = async () => {
   const uid = await validateUser();
   if (!uid) {
-    redirect(mainRoutes.home.path);
+    redirect(mainRoutes.login.path);
     return null;
   }
   return <StockDashboard />;

@@ -77,7 +77,7 @@ const ServicesButton: FC = () => {
                           </p>
                         </div>
                         <p className="mt-2 text-sm font-medium text-primary-600 lg:mt-4">
-                          Learn more
+                          {item.callToAction}
                           <span aria-hidden="true"> &rarr;</span>
                         </p>
                       </div>

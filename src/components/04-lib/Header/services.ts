@@ -11,6 +11,7 @@ export type Service = {
   description: string;
   href: string;
   icon: any;
+  callToAction: string;
 };
 
 export const services: Service[] = [
@@ -20,11 +21,14 @@ export const services: Service[] = [
       'Gérer votre inventaire ave un outil simple et intuitif. Cette page est accessible uniquement aux utilisateurs connectés.',
     href: stockManagementRoutes.stockDashboard.path,
     icon: ArchiveBoxIcon,
+    callToAction: 'Gérer mon inventaire',
   },
   {
     name: 'Marketplace',
-    description: 'Speak directly to your customers in a more meaningful way.',
+    description:
+      'Trouver des commerces dans votre villes et parcourez leurs inventaires.',
     href: marketpalceRoutes.marketplace.path,
     icon: CursorArrowRaysIcon,
+    callToAction: 'Trouver un commerce',
   },
 ];
