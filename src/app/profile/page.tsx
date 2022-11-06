@@ -1,6 +1,15 @@
-import Profile from '@/components/07-profile/Profile';
+import { redirect } from 'next/navigation';
 
-const ProfilePage = () => {
+import Profile from '@/components/07-profile/Profile';
+import { mainRoutes } from '@/routes/mainRoutes';
+import { validateUser } from '@/utils/pagesUtils';
+
+const ProfilePage = async () => {
+  const uid = await validateUser();
+  if (!uid) {
+    redirect(mainRoutes.home.path);
+    return null;
+  }
   return <Profile />;
 };
 
