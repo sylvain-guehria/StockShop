@@ -70,9 +70,9 @@ export const registerWithEmail =
           })
         );
       }
-    } catch (e: any) {
+    } catch (error: any) {
       deleteUser(auth.currentUser as User);
-      throw new FirebaseAuthenticationError(e.code);
+      throw new FirebaseAuthenticationError(error.response?.data || error.code);
     }
 
     if (

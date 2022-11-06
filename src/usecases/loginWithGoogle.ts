@@ -36,15 +36,9 @@ export const loginWithGoogle =
   }: LoginWithGoogleParamsType): Promise<any> => {
     try {
       const userCredentialFromFirebase = await signInWithPopup(auth, provider);
+
       const userDetails = getAdditionalUserInfo(userCredentialFromFirebase);
       const { user: googleUser } = userCredentialFromFirebase;
-
-      const idToken = await userCredentialFromFirebase.user.getIdToken();
-
-      await axios.post('/api/sessionInit', {
-        idToken,
-      });
-
       const isNewUser = userDetails?.isNewUser;
 
       if (isNewUser) {
@@ -59,7 +53,13 @@ export const loginWithGoogle =
           })
         );
       }
+
+      const idToken = await userCredentialFromFirebase.user.getIdToken();
+
+      await axios.post('/api/sessionInit', {
+        idToken,
+      });
     } catch (error: any) {
-      throw new FirebaseAuthenticationError(error.code);
+      throw new FirebaseAuthenticationError(error.response?.data || error.code);
     }
   };
