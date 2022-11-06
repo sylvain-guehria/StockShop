@@ -1,8 +1,6 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import type { SVGProps } from 'react';
 
-import Header from '../04-lib/Header/Header';
-
 const footerNavigation = {
   solutions: [
     { name: 'Marketing', href: '#' },
@@ -96,7 +94,6 @@ const footerNavigation = {
 const Contact = () => {
   return (
     <div className="bg-white">
-      <Header />
       <main>
         {/* Header */}
         <div className="bg-gray-50 py-24 sm:py-32">

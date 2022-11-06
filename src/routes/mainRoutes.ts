@@ -4,27 +4,27 @@ export const mainRoutes = {
     label: '',
   },
   register: {
-    path: 'register',
+    path: '/register',
     label: "S'inscrire",
   },
   login: {
-    path: 'login',
+    path: '/login',
     label: 'Se connecter',
   },
   resetPassword: {
-    path: 'reset-password',
+    path: '/reset-password',
     label: 'Mot de passe oublié ?',
   },
   pricing: {
-    path: 'pricing',
+    path: '/pricing',
     label: 'Prix',
   },
   contact: {
-    path: 'contact',
+    path: '/contact',
     label: 'Nous Contacter',
   },
   profile: {
-    path: 'profile',
+    path: '/profile',
     label: 'Profile',
   },
 };

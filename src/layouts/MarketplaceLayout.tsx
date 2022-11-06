@@ -1,53 +1,20 @@
-'use client';
-
-import dynamic from 'next/dynamic';
 import type { FC, ReactNode } from 'react';
-import { useState } from 'react';
 
+import MarketplaceHeaderAndDrawer from '@/components/02-marketplace/Header/MarketplaceHeaderAndDrawer';
 import MarketplaceFooter from '@/components/02-marketplace/MarketplaceFooter';
-import MarketplaceHeader from '@/components/02-marketplace/MarketplaceHeader';
-import MobileMenu from '@/components/02-marketplace/MobileMenu';
-import Providers from '@/hooks/Providers';
-import { useAuth } from '@/hooks/useAuth';
-
-const DynamicFirstConnectionModal = dynamic(
-  () =>
-    import('@/components/05-modals/firstConnectionModal/FirstConnectionModal'),
-  {
-    suspense: true,
-  }
-);
 
 type Props = {
   children: ReactNode;
 };
 
 const MarketplaceLayout: FC<Props> = ({ children }) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { user } = useAuth();
-  const displayFirstConnectionModal =
-    user.isLoggedIn() && user.needToSeeFirstConnectionModal();
-
   return (
     <div className="bg-white">
-      {displayFirstConnectionModal && <DynamicFirstConnectionModal />}
-      <MobileMenu
-        mobileMenuOpen={mobileMenuOpen}
-        setMobileMenuOpen={setMobileMenuOpen}
-      />
-      <MarketplaceHeader setMobileMenuOpen={setMobileMenuOpen} />
+      <MarketplaceHeaderAndDrawer />
       {children}
       <MarketplaceFooter />
     </div>
   );
 };
 
-const MarketplaceLayoutWithProviders: FC<Props> = ({ children }) => {
-  return (
-    <Providers>
-      <MarketplaceLayout>{children}</MarketplaceLayout>
-    </Providers>
-  );
-};
-
-export default MarketplaceLayoutWithProviders;
+export default MarketplaceLayout;

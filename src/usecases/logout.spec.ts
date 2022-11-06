@@ -6,6 +6,7 @@ import { FirebaseAuthenticationError } from '../../firebaseFolder/errorCodes';
 import { logout } from './logout';
 
 Cookie.get = jest.fn();
+Cookie.remove = jest.fn();
 
 type SignOutType = (auth: Auth) => Promise<void>;
 const signOut: SignOutType = jest.fn();
@@ -62,6 +63,25 @@ it('Logout the session', async () => {
       method: 'GET',
     }
   );
+});
+
+it('Remove the session token from cookies', async () => {
+  const auth = { name: 'auth' } as Auth;
+
+  const listenerGetCookie = jest.spyOn(Cookie, 'get');
+  listenerGetCookie.mockImplementation(() => {
+    return { [sessionCookieName]: 'mockedSessionCookie' };
+  });
+
+  (fetch as any).mockResponseOnce({});
+
+  await logout()({
+    signOut,
+    auth,
+  });
+
+  expect(Cookie.remove).toHaveBeenCalledTimes(1);
+  expect(Cookie.remove).toHaveBeenCalledWith(sessionCookieName);
 });
 
 it('Do not logout the session if it failed to logout from firebase client', async () => {

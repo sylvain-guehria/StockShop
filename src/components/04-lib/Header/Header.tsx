@@ -2,18 +2,38 @@
 
 import { Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { auth, signOut } from 'firebaseFolder/clientApp';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import logo from 'public/assets/images/stockshop.png';
 import { Fragment } from 'react';
 
+import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import Providers from '@/hooks/Providers';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
 import { headerRoutes, mainRoutes } from '@/routes/mainRoutes';
 import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
+import { logoutUseCase } from '@/usecases/usecases';
 
 import NextImage from '../nextImage/NextImage';
 import ServicesButton from '../Popovers/ServicesButton';
 import { services } from './services';
 
-export default function Header() {
+const Header = () => {
+  const { user } = useAuth();
+  const router = useRouter();
+  const toast = useToast(4000);
+
+  const handleSingOut = async () => {
+    try {
+      await logoutUseCase({ auth, signOut });
+      router.push(mainRoutes.home.path);
+    } catch (error: any) {
+      toast(ToasterTypeEnum.ERROR, error.message);
+    }
+  };
+
   return (
     <Popover className="relative bg-white">
       {/* <div
@@ -57,23 +77,31 @@ export default function Header() {
             </Popover.Group>
           </div>
           <div className="hidden items-center justify-end space-x-8 md:flex md:flex-1 lg:w-0">
-            <Link href={mainRoutes.login.path}>
-              <div className="cursor-pointer text-base font-medium text-gray-600 hover:text-gray-900">
-                {mainRoutes.login.label}
-              </div>
-            </Link>
-            {/* <Link href={mainRoutes.register.path}>
-              <div
-                className="cursor-pointer ml-8 inline-flex items-center justify-center rounded-md border border-transparent bg-primary-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-600"
-              >
-                {mainRoutes.register.label}
-              </div>
-            </Link> */}
-            <Link href={mainRoutes.register.path}>
-              <div className="inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-gray-200 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200">
-                {mainRoutes.register.label}
-              </div>
-            </Link>
+            {user.isLoggedIn() ? (
+              <>
+                {/* <div className="ml-8 inline-flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-primary-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-600"> */}
+                <div
+                  onClick={handleSingOut}
+                  className="inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-gray-200 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
+                >
+                  Se déconnecter
+                </div>
+              </>
+            ) : (
+              <>
+                <Link href={mainRoutes.login.path}>
+                  <div className="cursor-pointer text-base font-medium text-gray-600 hover:text-gray-900">
+                    {mainRoutes.login.label}
+                  </div>
+                </Link>
+                <Link href={mainRoutes.register.path}>
+                  {/* <div className="ml-8 inline-flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-primary-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-600"> */}
+                  <div className="inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-gray-200 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200">
+                    {mainRoutes.register.label}
+                  </div>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -140,26 +168,33 @@ export default function Header() {
                 ))}
               </div>
               <div className="mt-6">
-                {/* <Link href={mainRoutes.register.path}>
-                  <div
-                    className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-700"
-                  >
-                    {mainRoutes.register.label}
-                  </div>
-                </Link> */}
-                <Link href={mainRoutes.register.path}>
-                  <div className="inline-flex w-full  cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-gray-200 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200">
-                    {mainRoutes.register.label}
-                  </div>
-                </Link>
-                <p className="mt-6 text-center text-base font-medium text-gray-500">
-                  Déjà inscrit ?{' '}
-                  <Link href={mainRoutes.login.path}>
-                    <div className="cursor-pointer text-primary-600 hover:text-primary-500">
-                      {mainRoutes.login.label}
+                {user.isLoggedIn() ? (
+                  <>
+                    <div
+                      onClick={handleSingOut}
+                      className="inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-gray-200 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200"
+                    >
+                      Se déconnecter
                     </div>
-                  </Link>
-                </p>
+                  </>
+                ) : (
+                  <>
+                    <Link href={mainRoutes.register.path}>
+                      {/* <div className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-700"> */}
+                      <div className="inline-flex w-full cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-gray-200 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200">
+                        {mainRoutes.register.label}
+                      </div>
+                    </Link>
+                    <div className="mt-6 text-center text-base font-medium text-gray-500">
+                      Déjà inscrit ?{' '}
+                      <Link href={mainRoutes.login.path}>
+                        <div className="cursor-pointer text-primary-600 hover:text-primary-500">
+                          {mainRoutes.login.label}
+                        </div>
+                      </Link>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -167,4 +202,14 @@ export default function Header() {
       </Transition>
     </Popover>
   );
-}
+};
+
+const HeaderWithProviders = () => {
+  return (
+    <Providers>
+      <Header />
+    </Providers>
+  );
+};
+
+export default HeaderWithProviders;
