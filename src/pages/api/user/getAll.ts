@@ -1,12 +1,14 @@
-import { firestore, firestoreFunctions } from 'firebaseFolder/clientApp';
+import type { DocumentData } from '@firebase/firestore';
+import { firestoreAdmin } from 'firebaseFolder/serverApp';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-const { getDocs, collection } = firestoreFunctions;
 
 const getAllUsers = async (_req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const querySnapshot = await getDocs(collection(firestore, 'users'));
-    const usersData = querySnapshot.forEach((doc) => doc.data());
+    const users = await firestoreAdmin.collection('users').get();
+    const usersData = users.docs.map((user: DocumentData) => ({
+      id: user.id,
+      ...user.data(),
+    }));
     res.status(200).json(usersData);
   } catch (e) {
     // eslint-disable-next-line no-console
