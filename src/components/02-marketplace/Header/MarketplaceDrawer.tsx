@@ -6,21 +6,24 @@ import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 import { Fragment } from 'react';
 
+import MobileServicesButton from '@/components/04-lib/Popovers/MobileServicesButton';
+import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { logoutUseCase } from '@/usecases/usecases';
 
-import MobileServicesButton from '../04-lib/Popovers/MobileServicesButton';
-import { ToasterTypeEnum } from '../08-toaster/toasterEnum';
-import { navigation } from './fakeDatas';
+import { navigation } from '../fakeDatas';
 
 type Props = {
   mobileMenuOpen: boolean;
   setMobileMenuOpen: (value: boolean) => void;
 };
 
-const MobileMenu: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
+const MarketplaceDrawer: FC<Props> = ({
+  mobileMenuOpen,
+  setMobileMenuOpen,
+}) => {
   const { user } = useAuth();
   const router = useRouter();
   const toast = useToast(4000);
@@ -122,4 +125,4 @@ const MobileMenu: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
   );
 };
 
-export default MobileMenu;
+export default MarketplaceDrawer;

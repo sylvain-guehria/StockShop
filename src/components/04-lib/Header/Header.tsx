@@ -25,8 +25,6 @@ const Header = () => {
   const router = useRouter();
   const toast = useToast(4000);
 
-  console.log('user', user);
-
   const handleSingOut = async () => {
     try {
       await logoutUseCase({ auth, signOut });

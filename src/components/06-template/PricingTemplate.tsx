@@ -2,7 +2,6 @@ import { CheckIcon as CheckIconMini } from '@heroicons/react/20/solid';
 import { CheckIcon as CheckIconOutline } from '@heroicons/react/24/outline';
 
 import { Background } from '../04-lib/background/Background';
-import Header from '../04-lib/Header/Header';
 import { Section } from '../04-lib/layout/Section';
 import Footer from './Footer';
 
@@ -150,7 +149,6 @@ const faqs = [
 export default function Example() {
   return (
     <div className="bg-white">
-      <Header />
       <Background color="bg-gray-200">
         <Section yPadding="pt-10 pb-5">
           <div className="sm:flex sm:flex-col">

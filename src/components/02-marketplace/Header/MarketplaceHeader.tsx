@@ -12,11 +12,11 @@ import { Suspense, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { mainRoutes } from '@/routes/mainRoutes';
 
-import ServicesButton from '../04-lib/Popovers/ServicesButton';
-import ProfileDropdown from '../07-profile/ProfileDropdown';
+import ServicesButton from '../../04-lib/Popovers/ServicesButton';
+import ProfileDropdown from '../../07-profile/ProfileDropdown';
 
 const SearchBarModal = dynamic(
-  () => import('../05-modals/searchBar/SearchBarModal'),
+  () => import('../../05-modals/searchBar/SearchBarModal'),
   {
     suspense: true,
   }
