@@ -1,14 +1,11 @@
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import type { FC } from 'react';
 
 import { mainRoutes } from '@/routes/mainRoutes';
 
 import MobileSideBar from './MobileSideBar';
-import {
-  navigation,
-  secondaryNavigation,
-  thirdNavigation,
-} from './navigations';
+import { navigation, secondaryNavigation } from './navigations';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -20,6 +17,7 @@ type Props = {
 };
 
 const StockManagementSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
+  const pathname = usePathname();
   return (
     <>
       <MobileSideBar
@@ -44,56 +42,44 @@ const StockManagementSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
           >
             <div className="space-y-1 px-2">
               {navigation.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? 'bg-primary-400 text-white'
-                      : 'text-primary-500  hover:bg-primary-200',
-                    'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md'
-                  )}
-                  aria-current={item.current ? 'page' : undefined}
-                >
-                  <item.icon
-                    className="mr-4 h-6 w-6 shrink-0 text-primary-300"
-                    aria-hidden="true"
-                  />
-                  {item.name}
-                </a>
+                <Link key={item.name} href={item.path}>
+                  <div
+                    className={classNames(
+                      item.path === pathname
+                        ? 'bg-primary-400 text-white'
+                        : 'text-primary-500  hover:bg-primary-200',
+                      'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md'
+                    )}
+                    aria-current={item.path === pathname ? 'page' : undefined}
+                  >
+                    <item.icon
+                      className="mr-4 h-6 w-6 shrink-0 text-primary-300"
+                      aria-hidden="true"
+                    />
+                    {item.name}
+                  </div>
+                </Link>
               ))}
             </div>
             <div className="mt-6 pt-6">
               <div className="space-y-1 px-2">
                 {secondaryNavigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="group flex items-center rounded-md p-2 text-sm font-medium leading-6 text-primary-500 hover:bg-primary-200"
-                  >
-                    <item.icon
-                      className="mr-4 h-6 w-6 text-primary-300"
-                      aria-hidden="true"
-                    />
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-            <div className="mt-6 pt-6">
-              <div className="space-y-1 px-2">
-                {thirdNavigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="group flex items-center rounded-md p-2 text-sm font-medium leading-6 text-primary-500 hover:bg-primary-200"
-                  >
-                    <item.icon
-                      className="mr-4 h-6 w-6 text-primary-300"
-                      aria-hidden="true"
-                    />
-                    {item.name}
-                  </a>
+                  <Link key={item.name} href={item.path}>
+                    <div
+                      className={classNames(
+                        item.path === pathname
+                          ? 'bg-primary-400 text-white'
+                          : 'text-primary-500  hover:bg-primary-200',
+                        'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md'
+                      )}
+                    >
+                      <item.icon
+                        className="mr-4 h-6 w-6 text-primary-300"
+                        aria-hidden="true"
+                      />
+                      {item.name}
+                    </div>
+                  </Link>
                 ))}
               </div>
             </div>

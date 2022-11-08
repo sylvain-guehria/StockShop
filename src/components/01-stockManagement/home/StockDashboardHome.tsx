@@ -2,7 +2,7 @@ import ActivityList from './ActivityList';
 import ActivityTable from './ActivityTable';
 import OverView from './OverView';
 
-const StockDashboard = () => {
+const StockDashboardHome = () => {
   return (
     <main className="flex-1 pb-8">
       {/* <StockManagementSubHeader /> */}
@@ -23,4 +23,4 @@ const StockDashboard = () => {
   );
 };
 
-export default StockDashboard;
+export default StockDashboardHome;

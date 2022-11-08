@@ -3,24 +3,50 @@ import {
   ClockIcon,
   CogIcon,
   CreditCardIcon,
-  HomeIcon,
   QuestionMarkCircleIcon,
   ShoppingBagIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/outline';
 
+import { stockManagementRoutes } from '@/routes/stockManagementRoutes';
+
 export const navigation = [
-  { name: 'Home', href: '#', icon: HomeIcon, current: true },
-  { name: 'Mon stock', href: '#', icon: ArchiveBoxIcon, current: false },
-  { name: 'Ventes', href: '#', icon: ClockIcon, current: false },
-  { name: 'À acheter', href: '#', icon: CreditCardIcon, current: false },
-  { name: 'Clients', href: '#', icon: UserGroupIcon, current: false },
+  // { name: 'Home', path: '#', icon: HomeIcon, current: true },
+  {
+    name: stockManagementRoutes.myStock.label,
+    path: stockManagementRoutes.myStock.path,
+    icon: ArchiveBoxIcon,
+  },
+  {
+    name: stockManagementRoutes.sells.label,
+    path: stockManagementRoutes.sells.path,
+    icon: ClockIcon,
+  },
+  {
+    name: stockManagementRoutes.toPurchase.label,
+    path: stockManagementRoutes.toPurchase.path,
+    icon: CreditCardIcon,
+  },
+  {
+    name: stockManagementRoutes.clients.label,
+    path: stockManagementRoutes.clients.path,
+    icon: UserGroupIcon,
+  },
+  {
+    name: stockManagementRoutes.myMarketPlace.label,
+    path: stockManagementRoutes.myMarketPlace.path,
+    icon: ShoppingBagIcon,
+  },
 ];
 export const secondaryNavigation = [
-  { name: 'Settings', href: '#', icon: CogIcon },
-  { name: 'Help', href: '#', icon: QuestionMarkCircleIcon },
-];
-
-export const thirdNavigation = [
-  { name: 'Ma Marketplace', href: '/marketplace', icon: ShoppingBagIcon },
+  {
+    name: stockManagementRoutes.setting.label,
+    path: stockManagementRoutes.setting.path,
+    icon: CogIcon,
+  },
+  {
+    name: stockManagementRoutes.help.label,
+    path: stockManagementRoutes.help.path,
+    icon: QuestionMarkCircleIcon,
+  },
 ];

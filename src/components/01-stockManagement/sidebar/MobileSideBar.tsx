@@ -1,13 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { usePathname } from 'next/navigation';
 import type { FC, SVGProps } from 'react';
 import { Fragment } from 'react';
 
-import {
-  navigation,
-  secondaryNavigation,
-  thirdNavigation,
-} from './navigations';
+import { navigation, secondaryNavigation } from './navigations';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -15,14 +12,13 @@ function classNames(...classes: string[]) {
 
 type Navigation = {
   name: string;
-  href: string;
+  path: string;
   icon: (
     props: SVGProps<SVGSVGElement> & {
       title?: string | undefined;
       titleId?: string | undefined;
     }
   ) => JSX.Element;
-  current?: boolean;
 };
 
 type Props = {
@@ -31,6 +27,7 @@ type Props = {
 };
 
 const MobileSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
+  const pathname = usePathname();
   return (
     <>
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -100,14 +97,16 @@ const MobileSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
                     {navigation.map((item: Navigation) => (
                       <a
                         key={item.name}
-                        href={item.href}
+                        href={item.path}
                         className={classNames(
-                          item.current
+                          item.path === pathname
                             ? 'bg-primary-400 text-white'
                             : 'text-primary-500  hover:bg-primary-200',
                           'group flex items-center px-2 py-2 text-base font-medium rounded-md'
                         )}
-                        aria-current={item.current ? 'page' : undefined}
+                        aria-current={
+                          item.path === pathname ? 'page' : undefined
+                        }
                       >
                         <item.icon
                           className="mr-4 h-6 w-6 shrink-0 text-primary-300"
@@ -122,24 +121,7 @@ const MobileSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
                       {secondaryNavigation.map((item: Navigation) => (
                         <a
                           key={item.name}
-                          href={item.href}
-                          className="group flex items-center rounded-md p-2 text-base font-medium text-primary-500 hover:bg-primary-200"
-                        >
-                          <item.icon
-                            className="mr-4 h-6 w-6 text-primary-300"
-                            aria-hidden="true"
-                          />
-                          {item.name}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="mt-6 pt-6">
-                    <div className="space-y-1 px-2">
-                      {thirdNavigation.map((item: Navigation) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
+                          href={item.path}
                           className="group flex items-center rounded-md p-2 text-base font-medium text-primary-500 hover:bg-primary-200"
                         >
                           <item.icon
