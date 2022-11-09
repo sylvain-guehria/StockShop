@@ -7,9 +7,8 @@ export const validationSchema = object().shape({
     .required('Veuillez entrer votre email')
     .email('Email invalide'),
   phone: string(),
-  message: string().max(
-    500,
-    'Votre message est trop long, maximum 500 caractères'
-  ),
+  message: string()
+    .max(500, 'Votre message est trop long, maximum 500 caractères')
+    .min(10, 'Donnez nous un peu plus de précision, minimum 10 caractères'),
   soureOfHeard: string(),
 });

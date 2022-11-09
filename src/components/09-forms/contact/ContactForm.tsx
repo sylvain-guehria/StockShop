@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
+import { sendContactUsEmail } from '@/sendinblue/sender';
 
 import { validationSchema } from './ContactFormValidation';
 
@@ -27,15 +28,38 @@ const ContactForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<ContactFormType>(formOptions);
 
   const onSubmit: SubmitHandler<ContactFormType> = async (
     data: ContactFormType
   ) => {
-    const { fullName, company, phone, message, soureOfHeard } = data;
+    const { fullName, company, phone, message, soureOfHeard, email } = data;
     try {
       // eslint-disable-next-line no-console
-      console.log({ fullName, company, phone, message, soureOfHeard });
+      await sendContactUsEmail({
+        sender: {
+          fullName,
+          company,
+          phone,
+          soureOfHeard,
+          email,
+        },
+        message,
+      }).then((success) => {
+        if (success) {
+          toast(
+            ToasterTypeEnum.SUCCESS,
+            'Votre email à été envoyé, nous vous répondrons aussi vite que possible =)'
+          );
+          reset();
+        } else {
+          toast(
+            ToasterTypeEnum.SUCCESS,
+            "Il semblerait qu'il y ai un problème dans l'envoie du mail. Veuillez rééssayer plus tard"
+          );
+        }
+      });
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);
     }
@@ -141,9 +165,10 @@ const ContactForm = () => {
             {...register('message')}
             aria-describedby="message-description"
             rows={4}
+            maxLength={500}
             className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
-            defaultValue={''}
           />
+          <div className="text-sm text-red-600">{errors.message?.message}</div>
         </div>
       </div>
       <div className="sm:col-span-2">

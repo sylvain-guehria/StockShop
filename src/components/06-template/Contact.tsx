@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import ContactImg from 'public/assets/images/contact.png';
 
-import { contactEmail } from '@/constants/emails';
+import { addressEmails } from '@/sendinblue/emailConfig';
 
 import { Section } from '../04-lib/layout/Section';
 import ContactForm from '../09-forms/contact/ContactForm';
@@ -49,9 +49,9 @@ const Contact = () => {
                   email à{' '}
                   <a
                     className="text-primary-600"
-                    href={`mailto: ${contactEmail}`}
+                    href={`mailto: ${addressEmails.INENTORY_MARKET_FR}`}
                   >
-                    {contactEmail}
+                    {addressEmails.INENTORY_MARKET_FR}
                   </a>
                 </p>
                 <ContactForm />
