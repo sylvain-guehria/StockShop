@@ -4,7 +4,7 @@ import ContactImg from 'public/assets/images/contact.png';
 import { contactEmail } from '@/constants/emails';
 
 import { Section } from '../04-lib/layout/Section';
-import ContactForm from '../09-forms/ContactForm';
+import ContactForm from '../09-forms/contact/ContactForm';
 
 const Contact = () => {
   return (
@@ -27,9 +27,9 @@ const Contact = () => {
 
         {/* Contact Section */}
         <div className="relative bg-white">
-          <div className="lg:absolute lg:inset-0">
+          <div className="lg:absolute lg:inset-0 ">
             <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-              <div className="h-56 w-full object-cover lg:absolute lg:h-full">
+              <div className="h-full w-full object-cover lg:absolute">
                 <Image
                   src={ContactImg}
                   alt="Zanzi illustrations from getillustrations.com"
@@ -39,7 +39,7 @@ const Contact = () => {
           </div>
           <div className="relative py-16 px-4 sm:py-24 sm:px-6 lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-2 lg:px-8 lg:py-32">
             <div className="lg:pr-8">
-              <div className="mx-auto max-w-md sm:max-w-lg lg:mx-0">
+              <div className="mx-auto max-w-md  sm:max-w-lg lg:mx-0">
                 <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
                   Rentrons en contact
                 </h2>

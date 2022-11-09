@@ -1,62 +1,69 @@
+'use client';
+
+import { yupResolver } from '@hookform/resolvers/yup';
+import type { SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+
+import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
+import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { useToast } from '@/hooks/useToast';
+
+import { validationSchema } from './ContactFormValidation';
+
+interface ContactFormType {
+  fullName: string;
+  company: string;
+  phone: string;
+  message: string;
+  soureOfHeard: string;
+  email: string;
+}
+
 const ContactForm = () => {
+  const toast = useToast(4000);
+  const formOptions = { resolver: yupResolver(validationSchema) };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ContactFormType>(formOptions);
+
+  const onSubmit: SubmitHandler<ContactFormType> = async (
+    data: ContactFormType
+  ) => {
+    const { fullName, company, phone, message, soureOfHeard } = data;
+    try {
+      // eslint-disable-next-line no-console
+      console.log({ fullName, company, phone, message, soureOfHeard });
+    } catch (error: any) {
+      toast(ToasterTypeEnum.ERROR, error.message);
+    }
+  };
+
   return (
     <form
-      action="#"
-      method="POST"
       className="mt-9 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
+      onSubmit={handleSubmit(onSubmit)}
     >
       <div>
         <label
-          htmlFor="first-name"
+          htmlFor="fullName"
           className="block text-sm font-medium text-gray-700"
         >
-          First name
+          Nom
         </label>
         <div className="mt-1">
           <input
             type="text"
-            name="first-name"
-            id="first-name"
+            id="fullName"
+            {...register('fullName')}
             autoComplete="given-name"
             className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
           />
         </div>
       </div>
       <div>
-        <label
-          htmlFor="last-name"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Last name
-        </label>
-        <div className="mt-1">
-          <input
-            type="text"
-            name="last-name"
-            id="last-name"
-            autoComplete="family-name"
-            className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
-          />
-        </div>
-      </div>
-      <div className="sm:col-span-2">
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Email
-        </label>
-        <div className="mt-1">
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
-          />
-        </div>
-      </div>
-      <div className="sm:col-span-2">
         <label
           htmlFor="company"
           className="block text-sm font-medium text-gray-700"
@@ -66,11 +73,34 @@ const ContactForm = () => {
         <div className="mt-1">
           <input
             type="text"
-            name="company"
+            {...register('company')}
             id="company"
-            autoComplete="organization"
+            autoComplete="family-name"
             className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
           />
+        </div>
+      </div>
+      <div className="sm:col-span-2">
+        <div className="flex justify-between">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Email
+          </label>
+          <span id="phone-description" className="text-sm text-gray-500">
+            Obligatoire
+          </span>
+        </div>
+        <div className="mt-1">
+          <input
+            id="email"
+            type="text"
+            {...register('email')}
+            autoComplete="email"
+            className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
+          />
+          <div className="text-sm text-red-600">{errors.email?.message}</div>
         </div>
       </div>
       <div className="sm:col-span-2">
@@ -81,14 +111,11 @@ const ContactForm = () => {
           >
             Phone
           </label>
-          <span id="phone-description" className="text-sm text-gray-500">
-            Optional
-          </span>
         </div>
         <div className="mt-1">
           <input
             type="text"
-            name="phone"
+            {...register('phone')}
             id="phone"
             autoComplete="tel"
             aria-describedby="phone-description"
@@ -99,23 +126,20 @@ const ContactForm = () => {
       <div className="sm:col-span-2">
         <div className="flex justify-between">
           <label
-            htmlFor="how-can-we-help"
+            htmlFor="message"
             className="block text-sm font-medium text-gray-700"
           >
-            How can we help you?
+            Comment pouvez-vous nous aider ?
           </label>
-          <span
-            id="how-can-we-help-description"
-            className="text-sm text-gray-500"
-          >
+          <span id="message-max" className="text-sm text-gray-500">
             Max. 500 characters
           </span>
         </div>
         <div className="mt-1">
           <textarea
-            id="how-can-we-help"
-            name="how-can-we-help"
-            aria-describedby="how-can-we-help-description"
+            id="message"
+            {...register('message')}
+            aria-describedby="message-description"
             rows={4}
             className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
             defaultValue={''}
@@ -124,27 +148,23 @@ const ContactForm = () => {
       </div>
       <div className="sm:col-span-2">
         <label
-          htmlFor="how-did-you-hear-about-us"
+          htmlFor="soureOfHeard"
           className="block text-sm font-medium text-gray-700"
         >
-          How did you hear about us?
+          Ou nous avez vous connu?
         </label>
         <div className="mt-1">
           <input
             type="text"
-            name="how-did-you-hear-about-us"
-            id="how-did-you-hear-about-us"
+            {...register('soureOfHeard')}
+            id="soureOfHeard"
             className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
+            placeholder="Google, Facebook, Instagram, Bouch à oreille..."
           />
         </div>
       </div>
       <div className="text-right sm:col-span-2">
-        <button
-          type="submit"
-          className="inline-flex justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-primary-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
-        >
-          Submit
-        </button>
+        <LinkButton>Envoyer</LinkButton>
       </div>
     </form>
   );

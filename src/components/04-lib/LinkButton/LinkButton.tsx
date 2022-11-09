@@ -2,8 +2,9 @@ import Link from 'next/link';
 import type { FC } from 'react';
 
 type Props = {
-  href: string;
+  href?: string;
   children: string;
+  type?: 'button' | 'submit' | 'reset';
   style?: 'primary' | 'secondary';
 };
 
@@ -18,8 +19,13 @@ const styles = {
   secondary: secondaryStyle,
 };
 
-const LinkButton: FC<Props> = ({ href, children, style = 'primary' }) => {
-  return (
+const LinkButton: FC<Props> = ({
+  href,
+  children,
+  style = 'primary',
+  type = 'submit',
+}) => {
+  return href ? (
     <Link href={href}>
       <div
         className={`mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent ${styles[style]}`}
@@ -27,6 +33,12 @@ const LinkButton: FC<Props> = ({ href, children, style = 'primary' }) => {
         {children}
       </div>
     </Link>
+  ) : (
+    <div
+      className={`mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent ${styles[style]}`}
+    >
+      <button type={type}>{children}</button>
+    </div>
   );
 };
 export default LinkButton;
