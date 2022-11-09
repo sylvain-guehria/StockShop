@@ -1,7 +1,7 @@
 'use client';
 
 import RegisterComponant from '@/components/03-auth/register/RegisterComponant';
-import Providers from '@/hooks/Providers';
+import Providers from '@/layouts/Providers';
 
 const RegisterClientPage = () => {
   return (

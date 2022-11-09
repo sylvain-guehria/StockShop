@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 import ToastContainer from '@/components/08-toaster/ToastContainer';
 import { ToastProvider } from '@/components/08-toaster/ToastContext';
 
-import { AuthContextProvider } from './useAuth';
+import { AuthContextProvider } from '../hooks/useAuth';
 
 const Providers = ({ children }: { children: ReactNode }) => {
   return (

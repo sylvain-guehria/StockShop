@@ -7,7 +7,7 @@ import { Customer } from './Customer';
 import { FAQ } from './FAQ';
 import { Features } from './Features';
 import Footer from './Footer';
-import HeroIncentive from './HeroIncentive';
+import Hero from './Hero';
 import { Pricing } from './Pricing';
 import { Testimonial } from './Testimonial';
 import { VerticalFeatures } from './VerticalFeatures';
@@ -15,8 +15,7 @@ import { VerticalFeatures } from './VerticalFeatures';
 const Base = () => (
   <div className="text-gray-600 antialiased">
     <Meta title={AppConfig.title} description={AppConfig.description} />
-    <HeroIncentive />
-    {/* <Hero /> */}
+    <Hero />
     <Customer />
     <Features />
     <VerticalFeatures />

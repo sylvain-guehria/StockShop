@@ -1,7 +1,7 @@
 'use client';
 
 import LoginComponant from '@/components/03-auth/login/LoginComponant';
-import Providers from '@/hooks/Providers';
+import Providers from '@/layouts/Providers';
 
 const LoginClientPage = () => {
   return (

@@ -18,7 +18,7 @@ export const services: Service[] = [
   {
     name: 'Gestion inventaire',
     description:
-      'Gérer votre inventaire ave un outil simple et intuitif. Cette page est accessible uniquement aux utilisateurs connectés.',
+      'Gérez votre inventaire ave un outil simple et intuitif. Cette page est accessible uniquement aux utilisateurs connectés.',
     href: stockManagementRoutes.stockDashboard.path,
     icon: ArchiveBoxIcon,
     callToAction: 'Gérer mon inventaire',
@@ -26,7 +26,7 @@ export const services: Service[] = [
   {
     name: 'Marketplace',
     description:
-      'Trouver des commerces dans votre villes et parcourez leurs inventaires.',
+      'Trouvez des commerces dans votre villes et parcourez leurs inventaires.',
     href: marketpalceRoutes.marketplace.path,
     icon: CursorArrowRaysIcon,
     callToAction: 'Trouver un commerce',

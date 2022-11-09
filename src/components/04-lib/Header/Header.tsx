@@ -9,9 +9,9 @@ import logo from 'public/assets/images/stockshop.png';
 import { Fragment } from 'react';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
-import Providers from '@/hooks/Providers';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
+import Providers from '@/layouts/Providers';
 import { headerRoutes, mainRoutes } from '@/routes/mainRoutes';
 import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
 import { logoutUseCase } from '@/usecases/usecases';
