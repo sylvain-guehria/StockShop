@@ -1,4 +1,5 @@
-/* eslint-disable tailwindcss/no-custom-classname */
+import Image from 'next/image';
+import ContactImg from 'public/assets/images/contact.png';
 import type { SVGProps } from 'react';
 
 const footerNavigation = {
@@ -96,15 +97,14 @@ const Contact = () => {
     <div className="bg-white">
       <main>
         {/* Header */}
-        <div className="bg-gray-50 py-24 sm:py-32">
+        <div className="bg-gray-50 py-5 sm:py-8">
           <div className="mx-auto max-w-md pl-4 pr-8 sm:max-w-lg sm:px-6 lg:max-w-7xl lg:px-8">
-            <h1 className="text-center text-4xl font-bold leading-10 tracking-tight text-gray-900 sm:text-5xl sm:leading-none lg:text-6xl">
-              Get in touch
+            <h1 className="text-center text-3xl font-bold leading-10 tracking-tight text-gray-900 sm:text-5xl sm:leading-none lg:text-5xl">
+              Contactez-nous
             </h1>
             <p className="mx-auto mt-6 max-w-3xl text-center text-xl leading-normal text-gray-500">
-              Convallis feugiat et aliquet pellentesque dictum nisi, velit.
-              Egestas fermentum adipiscing risus quam ac consectetur mattis
-              turpis tristique.
+              Contactez-nous via le formulaire ci-dessous, nous vous répondrons
+              dans les plus brefs délais.
             </p>
           </div>
         </div>
@@ -113,11 +113,12 @@ const Contact = () => {
         <div className="relative bg-white">
           <div className="lg:absolute lg:inset-0">
             <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-              <img
-                className="h-56 w-full object-cover lg:absolute lg:h-full"
-                src="https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80"
-                alt=""
-              />
+              <div className="h-56 w-full object-cover lg:absolute lg:h-full">
+                <Image
+                  src={ContactImg}
+                  alt="Zanzi illustrations from getillustrations.com"
+                />
+              </div>
             </div>
           </div>
           <div className="relative py-16 px-4 sm:py-24 sm:px-6 lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-2 lg:px-8 lg:py-32">
@@ -127,9 +128,9 @@ const Contact = () => {
                   Let&apos;s work together
                 </h2>
                 <p className="mt-4 text-lg text-gray-500 sm:mt-3">
-                  We’d love to hear from you! Send us a message using the form
-                  opposite, or email us. We’d love to hear from you! Send us a
-                  message using the form opposite, or email us.
+                  We&apos;d love to hear from you! Send us a message using the
+                  form opposite, or email us. We&apos;d love to hear from you!
+                  Send us a message using the form opposite, or email us.
                 </p>
                 <form
                   action="#"
@@ -149,7 +150,7 @@ const Contact = () => {
                         name="first-name"
                         id="first-name"
                         autoComplete="given-name"
-                        className="focus:border-grape-500 focus:ring-grape-500 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
+                        className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
                       />
                     </div>
                   </div>
@@ -166,7 +167,7 @@ const Contact = () => {
                         name="last-name"
                         id="last-name"
                         autoComplete="family-name"
-                        className="focus:border-grape-500 focus:ring-grape-500 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
+                        className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
                       />
                     </div>
                   </div>
@@ -183,7 +184,7 @@ const Contact = () => {
                         name="email"
                         type="email"
                         autoComplete="email"
-                        className="focus:border-grape-500 focus:ring-grape-500 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
+                        className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
                       />
                     </div>
                   </div>
@@ -200,7 +201,7 @@ const Contact = () => {
                         name="company"
                         id="company"
                         autoComplete="organization"
-                        className="focus:border-grape-500 focus:ring-grape-500 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
+                        className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
                       />
                     </div>
                   </div>
@@ -226,7 +227,7 @@ const Contact = () => {
                         id="phone"
                         autoComplete="tel"
                         aria-describedby="phone-description"
-                        className="focus:border-grape-500 focus:ring-grape-500 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
+                        className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
                       />
                     </div>
                   </div>
@@ -251,7 +252,7 @@ const Contact = () => {
                         name="how-can-we-help"
                         aria-describedby="how-can-we-help-description"
                         rows={4}
-                        className="focus:border-grape-500 focus:ring-grape-500 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
+                        className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
                         defaultValue={''}
                       />
                     </div>
@@ -267,7 +268,7 @@ const Contact = () => {
                           name="budget"
                           defaultValue="under_25k"
                           type="radio"
-                          className="text-grape-600 focus:ring-grape-500 h-4 w-4 border-gray-300"
+                          className="text-grape-600  h-4 w-4 border-gray-300"
                         />
                         <label htmlFor="budget-under-25k" className="ml-3">
                           <span className="block text-sm text-gray-700">
@@ -281,7 +282,7 @@ const Contact = () => {
                           name="budget"
                           defaultValue="25k-50k"
                           type="radio"
-                          className="text-grape-600 focus:ring-grape-500 h-4 w-4 border-gray-300"
+                          className="text-grape-600  h-4 w-4 border-gray-300"
                         />
                         <label htmlFor="budget-25k-50k" className="ml-3">
                           <span className="block text-sm text-gray-700">
@@ -295,7 +296,7 @@ const Contact = () => {
                           name="budget"
                           defaultValue="50k-100k"
                           type="radio"
-                          className="text-grape-600 focus:ring-grape-500 h-4 w-4 border-gray-300"
+                          className="text-grape-600  h-4 w-4 border-gray-300"
                         />
                         <label htmlFor="budget-50k-100k" className="ml-3">
                           <span className="block text-sm text-gray-700">
@@ -309,7 +310,7 @@ const Contact = () => {
                           name="budget"
                           defaultValue="over_100k"
                           type="radio"
-                          className="text-grape-600 focus:ring-grape-500 h-4 w-4 border-gray-300"
+                          className="text-grape-600  h-4 w-4 border-gray-300"
                         />
                         <label htmlFor="budget-over-100k" className="ml-3">
                           <span className="block text-sm text-gray-700">
@@ -331,14 +332,14 @@ const Contact = () => {
                         type="text"
                         name="how-did-you-hear-about-us"
                         id="how-did-you-hear-about-us"
-                        className="focus:border-grape-500 focus:ring-grape-500 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
+                        className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
                       />
                     </div>
                   </div>
                   <div className="text-right sm:col-span-2">
                     <button
                       type="submit"
-                      className="bg-grape-600 hover:bg-grape-700 focus:ring-grape-500 inline-flex justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+                      className="bg-grape-600 hover:bg-grape-700  inline-flex justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
                     >
                       Submit
                     </button>

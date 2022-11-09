@@ -1,3 +1,7 @@
+import Link from 'next/link';
+
+import { mainRoutes } from '@/routes/mainRoutes';
+
 import { Section } from '../04-lib/layout/Section';
 
 const faqs = [
@@ -48,16 +52,13 @@ const FAQ = () => (
         </dl>
       </div>
     </section>
-    <div className="mt-7 max-w-xl">
-      <p className="mt-4 text-lg text-gray-500">
-        Si vous ne trouvez pas réponse{' '}
-        <a
-          href="#"
-          className="text-lg font-medium text-primary-600 hover:text-primary-500"
-        >
+    <div className="mt-7 flex max-w-xl text-lg text-gray-500">
+      Si vous ne trouvez pas réponse{' '}
+      <Link href={mainRoutes.contact.path}>
+        <div className="ml-2 text-lg font-medium text-primary-600 hover:text-primary-500">
           envoyez nous un email.
-        </a>{' '}
-      </p>
+        </div>{' '}
+      </Link>
     </div>
   </Section>
 );
