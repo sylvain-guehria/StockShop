@@ -6,7 +6,6 @@ import { Banner } from './Banner';
 import { Customer } from './Customer';
 import { FAQ } from './FAQ';
 import { Features } from './Features';
-import Footer from './Footer';
 import Hero from './Hero';
 import { Pricing } from './Pricing';
 import { Testimonial } from './Testimonial';
@@ -23,7 +22,6 @@ const Base = () => (
     <Pricing />
     <FAQ />
     <Banner />
-    <Footer />
   </div>
 );
 
