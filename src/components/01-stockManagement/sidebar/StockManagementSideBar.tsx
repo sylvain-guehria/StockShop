@@ -2,8 +2,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { FC } from 'react';
 
+import NextImage from '@/components/04-lib/nextImage/NextImage';
 import { mainRoutes } from '@/routes/mainRoutes';
 
+import stockshopLogo from '../../../../public/assets/images/stockshop.png';
 import MobileSideBar from './MobileSideBar';
 import { navigation, secondaryNavigation } from './navigations';
 
@@ -29,10 +31,10 @@ const StockManagementSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
         <div className="flex grow flex-col overflow-y-auto bg-white pt-5 pb-4">
           <div className="flex shrink-0 cursor-pointer items-center px-4">
             <Link href={mainRoutes.home.path}>
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
-                alt="Easywire logo"
+              <NextImage
+                className="h-11 w-auto cursor-pointer"
+                src={stockshopLogo}
+                alt="stock shop logo"
               />
             </Link>
           </div>

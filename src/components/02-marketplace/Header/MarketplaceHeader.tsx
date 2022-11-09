@@ -9,9 +9,11 @@ import Link from 'next/link';
 import type { FC } from 'react';
 import { Suspense, useState } from 'react';
 
+import NextImage from '@/components/04-lib/nextImage/NextImage';
 import { useAuth } from '@/hooks/useAuth';
 import { mainRoutes } from '@/routes/mainRoutes';
 
+import stockshopLogo from '../../../../public/assets/images/stockshop.png';
 import ServicesButton from '../../04-lib/Popovers/ServicesButton';
 import ProfileDropdown from '../../07-profile/ProfileDropdown';
 
@@ -50,10 +52,10 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                   <Link href={mainRoutes.home.path}>
                     <div className="hidden cursor-pointer lg:flex lg:items-center">
                       <span className="sr-only">Your Company</span>
-                      <img
-                        className="h-11 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
-                        alt=""
+                      <NextImage
+                        className="h-11 w-auto cursor-pointer"
+                        src={stockshopLogo}
+                        alt="stock shop logo"
                       />
                     </div>
                   </Link>
@@ -90,10 +92,10 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                   {/* Logo (lg-) */}
                   <a href="#" className="lg:hidden">
                     <span className="sr-only">Your Company</span>
-                    <img
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
-                      alt=""
-                      className="h-8 w-auto"
+                    <NextImage
+                      className="h-11 w-auto cursor-pointer"
+                      src={stockshopLogo}
+                      alt="stock shop logo"
                     />
                   </a>
                   <div className="flex flex-1 items-center justify-end">

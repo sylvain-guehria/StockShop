@@ -4,6 +4,9 @@ import { usePathname } from 'next/navigation';
 import type { FC, SVGProps } from 'react';
 import { Fragment } from 'react';
 
+import NextImage from '@/components/04-lib/nextImage/NextImage';
+
+import stockshopLogo from '../../../../public/assets/images/stockshop.png';
 import { navigation, secondaryNavigation } from './navigations';
 
 function classNames(...classes: string[]) {
@@ -83,10 +86,10 @@ const MobileSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
                   </div>
                 </Transition.Child>
                 <div className="flex shrink-0 items-center px-4">
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
-                    alt="Easywire logo"
+                  <NextImage
+                    className="h-11 w-auto cursor-pointer"
+                    src={stockshopLogo}
+                    alt="stock shop logo"
                   />
                 </div>
                 <nav

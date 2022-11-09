@@ -1,3 +1,5 @@
+import stockshopLogo from '../../../public/assets/images/stockshop.png';
+import NextImage from '../04-lib/nextImage/NextImage';
 import { footerNavigation } from './fakeDatas';
 
 const MarketplaceFooter = () => {
@@ -10,10 +12,10 @@ const MarketplaceFooter = () => {
         <div className="border-t border-gray-200">
           <div className="pt-16 pb-20">
             <div className="md:flex md:justify-center">
-              <img
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
-                alt=""
-                className="h-8 w-auto"
+              <NextImage
+                className="h-11 w-auto cursor-pointer"
+                src={stockshopLogo}
+                alt="stock shop logo"
               />
             </div>
             <div className="mx-auto mt-16 max-w-5xl xl:grid xl:grid-cols-2 xl:gap-8">
