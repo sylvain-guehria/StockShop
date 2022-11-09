@@ -10,7 +10,7 @@ export const sendMail = async ({
 }: SendEmailArgs): Promise<boolean> => {
   try {
     const request = await axios
-      .post('/email/send', {
+      .post('/api/email/send', {
         sender,
         receiver,
         message,

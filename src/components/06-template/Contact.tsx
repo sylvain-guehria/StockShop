@@ -1,6 +1,9 @@
+'use client';
+
 import Image from 'next/image';
 import ContactImg from 'public/assets/images/contact.png';
 
+import Providers from '@/layouts/Providers';
 import { addressEmails } from '@/sendinblue/emailConfig';
 
 import { Section } from '../04-lib/layout/Section';
@@ -63,4 +66,13 @@ const Contact = () => {
     </div>
   );
 };
-export default Contact;
+
+const ContactWithProviders = () => {
+  return (
+    <Providers>
+      <Contact />
+    </Providers>
+  );
+};
+
+export default ContactWithProviders;

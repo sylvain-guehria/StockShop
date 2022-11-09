@@ -37,7 +37,7 @@ const ContactForm = () => {
     const { fullName, company, phone, message, soureOfHeard, email } = data;
     try {
       // eslint-disable-next-line no-console
-      await sendContactUsEmail({
+      const success = await sendContactUsEmail({
         sender: {
           fullName,
           company,
@@ -46,20 +46,14 @@ const ContactForm = () => {
           email,
         },
         message,
-      }).then((success) => {
-        if (success) {
-          toast(
-            ToasterTypeEnum.SUCCESS,
-            'Votre email à été envoyé, nous vous répondrons aussi vite que possible =)'
-          );
-          reset();
-        } else {
-          toast(
-            ToasterTypeEnum.SUCCESS,
-            "Il semblerait qu'il y ai un problème dans l'envoie du mail. Veuillez rééssayer plus tard"
-          );
-        }
       });
+      if (success) {
+        toast(
+          ToasterTypeEnum.SUCCESS,
+          'Votre email à été envoyé, nous vous répondrons aussi vite que possible =)'
+        );
+        reset();
+      }
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);
     }
@@ -194,4 +188,5 @@ const ContactForm = () => {
     </form>
   );
 };
+
 export default ContactForm;
