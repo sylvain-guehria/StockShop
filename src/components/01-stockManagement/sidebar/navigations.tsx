@@ -1,10 +1,11 @@
 import {
   ArchiveBoxIcon,
-  ClockIcon,
+  ArrowRightOnRectangleIcon,
   CogIcon,
   CreditCardIcon,
   QuestionMarkCircleIcon,
   ShoppingBagIcon,
+  Squares2X2Icon,
   UserGroupIcon,
 } from '@heroicons/react/24/outline';
 
@@ -20,7 +21,7 @@ export const navigation = [
   {
     name: stockManagementRoutes.sells.label,
     path: stockManagementRoutes.sells.path,
-    icon: ClockIcon,
+    icon: ArrowRightOnRectangleIcon,
   },
   {
     name: stockManagementRoutes.toPurchase.label,
@@ -43,6 +44,11 @@ export const secondaryNavigation = [
     name: stockManagementRoutes.setting.label,
     path: stockManagementRoutes.setting.path,
     icon: CogIcon,
+  },
+  {
+    name: stockManagementRoutes.myCompany.label,
+    path: stockManagementRoutes.myCompany.path,
+    icon: Squares2X2Icon,
   },
   {
     name: stockManagementRoutes.help.label,

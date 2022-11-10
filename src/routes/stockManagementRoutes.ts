@@ -5,7 +5,7 @@ export const stockManagementRoutes = {
   },
   myStock: {
     path: '/stock-dashboard/my-stock/',
-    label: 'Mon stock',
+    label: 'Mes stocks',
   },
   sells: {
     path: '/stock-dashboard/sells/',
@@ -26,6 +26,10 @@ export const stockManagementRoutes = {
   setting: {
     path: '/stock-dashboard/setting/',
     label: 'Paramètres',
+  },
+  myCompany: {
+    path: '/stock-dashboard/my-company/',
+    label: 'Mon entreprise',
   },
   help: {
     path: '/stock-dashboard/help/',
