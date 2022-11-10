@@ -1,4 +1,7 @@
-import { PlusCircleIcon } from '@heroicons/react/20/solid';
+import {
+  InformationCircleIcon,
+  PlusCircleIcon,
+} from '@heroicons/react/20/solid';
 
 import { stockManagementRoutes } from '@/routes/stockManagementRoutes';
 
@@ -55,8 +58,9 @@ const MyStock = () => {
           <main className="flex-1">
             <div className="border-b border-gray-200 p-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
               <div className="min-w-0 flex-1">
-                <h1 className="text-lg font-medium leading-6 text-gray-900 sm:truncate">
+                <h1 className="flex text-lg font-medium leading-6 text-gray-900 sm:truncate">
                   {stockManagementRoutes.myStock.label}
+                  <InformationCircleIcon className="ml-3 h-6 w-6 shrink-0 text-primary-400" />
                 </h1>
               </div>
               <div className="mt-4 flex sm:mt-0 sm:ml-4">
