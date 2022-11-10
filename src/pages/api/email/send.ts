@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import sendinblue from '@/sendinblue/sendinblue';
+import sendTransacEmail from '@/sendinblue/sendTransacEmail';
 import type { Receiver, Sender } from '@/sendinblue/type';
 
 const sendEmail = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -33,16 +33,8 @@ const sendEmail = async (req: NextApiRequest, res: NextApiResponse) => {
       message,
     },
   };
-  try {
-    if (req.method === 'POST') {
-      await sendinblue(sendSmtpEmail);
-    }
-    res.status(200).end();
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(e);
-    res.status(400).end();
-  }
+  const success = await sendTransacEmail(sendSmtpEmail);
+  return res.status(success ? 200 : 400).end();
 };
 
 export default sendEmail;

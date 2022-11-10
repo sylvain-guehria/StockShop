@@ -8,8 +8,8 @@ export const sendContactUsEmail = async ({
 }: {
   sender: Sender;
   message: string;
-}): Promise<boolean> => {
-  return sendMail({
+}): Promise<void> => {
+  await sendMail({
     sender,
     receiver: {
       email: addressEmails.INENTORY_MARKET_FR as string,

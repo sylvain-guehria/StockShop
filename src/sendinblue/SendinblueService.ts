@@ -7,22 +7,11 @@ export const sendMail = async ({
   receiver,
   message,
   templateId,
-}: SendEmailArgs): Promise<boolean> => {
-  try {
-    const request = await axios
-      .post('/api/email/send', {
-        sender,
-        receiver,
-        message,
-        templateId,
-      })
-      .then((res) => {
-        return res;
-      });
-    return request.status === 200;
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error(err);
-    return false;
-  }
+}: SendEmailArgs): Promise<void> => {
+  await axios.post('/api/email/send', {
+    sender,
+    receiver,
+    message,
+    templateId,
+  });
 };

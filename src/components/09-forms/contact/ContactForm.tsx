@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
+import { addressEmails } from '@/sendinblue/emailConfig';
 import { sendContactUsEmail } from '@/sendinblue/sender';
 
 import { validationSchema } from './ContactFormValidation';
@@ -36,8 +37,7 @@ const ContactForm = () => {
   ) => {
     const { fullName, company, phone, message, soureOfHeard, email } = data;
     try {
-      // eslint-disable-next-line no-console
-      const success = await sendContactUsEmail({
+      await sendContactUsEmail({
         sender: {
           fullName,
           company,
@@ -47,15 +47,16 @@ const ContactForm = () => {
         },
         message,
       });
-      if (success) {
-        toast(
-          ToasterTypeEnum.SUCCESS,
-          'Votre email à été envoyé, nous vous répondrons aussi vite que possible =)'
-        );
-        reset();
-      }
-    } catch (error: any) {
-      toast(ToasterTypeEnum.ERROR, error.message);
+      toast(
+        ToasterTypeEnum.SUCCESS,
+        'Votre email à été envoyé, nous vous répondrons aussi vite que possible =)'
+      );
+      reset();
+    } catch (error) {
+      toast(
+        ToasterTypeEnum.ERROR,
+        `Il semble que nous ayons un problème avec notre serveur mail, veuillez envoyer un email directement à ${addressEmails.INENTORY_MARKET_FR}`
+      );
     }
   };
 
