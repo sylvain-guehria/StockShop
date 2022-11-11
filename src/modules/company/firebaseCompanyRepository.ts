@@ -6,6 +6,8 @@ import CompanyEntity from './CompanyEntity';
 import { CompanyRepository } from './companyRepository';
 
 class FirebaseCompanyRepository extends CompanyRepository {
+  baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL;
+
   async getById(uid: string): Promise<CompanyEntity> {
     console.info('get company in db with uid: ', uid);
     const response = await axios.get(`/api/company/${uid}`);
@@ -57,6 +59,41 @@ class FirebaseCompanyRepository extends CompanyRepository {
       name: company.getName(),
       vat: company.getVat(),
       address: company.getAddress(),
+    });
+  }
+
+  async getCompanyByUserId(userId: string): Promise<CompanyEntity | null> {
+    console.info('get company in db with userId: ', userId);
+    const response = await axios.get(
+      `${this.baseUrl}/api/company/getCompanyByUserId`,
+      {
+        params: { userId },
+      }
+    );
+    const { name, vat, address, uid } = response.data;
+
+    return uid
+      ? CompanyEntity.new({
+          uid,
+          name,
+          vat,
+          address,
+        })
+      : null;
+  }
+
+  async createCompanyByUserId(userId: string): Promise<CompanyEntity> {
+    console.info('create company in db with userId: ', userId);
+    const response = await axios.post(`${this.baseUrl}/api/company/add`, {
+      userId,
+    });
+    const { name, vat, address, uid } = response.data;
+
+    return CompanyEntity.new({
+      uid,
+      name,
+      vat,
+      address,
     });
   }
 }
