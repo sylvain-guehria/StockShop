@@ -35,7 +35,7 @@ const MyInventory: FC<Props> = ({ inventories, products = [] }) => {
                 </div>
               </div>
               <div className="mt-4 flex sm:mt-0 sm:ml-4">
-                <div className="inline-flex items-center rounded-md border border-transparent bg-primary-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:order-1 sm:ml-3">
+                <div className="inline-flex cursor-pointer items-center rounded-md border border-transparent bg-primary-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:order-1 sm:ml-3">
                   Créer un nouvel inventaire
                   <PlusCircleIcon className="ml-3 h-6 w-6 shrink-0 text-primary-100" />
                 </div>
