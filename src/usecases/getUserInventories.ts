@@ -17,21 +17,20 @@ export const getUserInventories =
       if (!company) {
         company = await companyRepository.createCompanyByUserId(userUid);
       }
-      // let inventories =
-      //   await inventoryRepository.getInventoriesByUserIdAndCompanyId(
-      //     userUid,
-      //     company.uid
-      //   );
-      // if (!inventories) {
-      //   const inventory =
-      //     await inventoryRepository.createInventoryByUserIdAndCompanyId(
-      //       userUid,
-      //       company.uid
-      //     );
-      //   inventories = [inventory];
-      // }
-      // return inventories;
-      return [];
+      let inventories =
+        await inventoryRepository.getInventoriesByUserIdAndCompanyId(
+          userUid,
+          company.uid
+        );
+      if (!inventories || inventories.length === 0) {
+        const inventory =
+          await inventoryRepository.createInventoryByUserIdAndCompanyId(
+            userUid,
+            company.uid
+          );
+        inventories = [inventory];
+      }
+      return inventories;
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log('error------------', error);

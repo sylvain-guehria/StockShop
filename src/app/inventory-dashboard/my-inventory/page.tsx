@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 
+import MyInventory from '@/components/01-inventoryManagement/my-inventory/MyInventory';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { getUserInventoriesUseCase } from '@/usecases/usecases';
 import { validateUser } from '@/utils/validateUserServerSide';
@@ -11,12 +12,9 @@ const MyInventoryPage = async () => {
     return null;
   }
   const inventories = await getUserInventoriesUseCase({ userUid });
-  // const defaultInventoryUid = inventories.find(
-  //   (inventory: Inventory) => inventory.isDefaultInventory
-  // )?.uid;
+
   // const items = await getItemsByInventoryUid(defaultInventoryUid);
-  // return <MyInventory inventories={inventories} items={items} />;
-  return null;
+  return <MyInventory inventories={inventories} items={[]} />;
 };
 
 export default MyInventoryPage;

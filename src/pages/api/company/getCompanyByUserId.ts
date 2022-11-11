@@ -13,9 +13,6 @@ const getCompanyByUserId = async (
     method,
   } = req;
 
-  console.log('userId-************************', userId);
-  console.log('method***********************', method);
-
   if (!userId) {
     res.status(400).end('User uid is mandatory');
     return;
@@ -27,7 +24,7 @@ const getCompanyByUserId = async (
     .get();
 
   if (!userRef.exists) {
-    res.status(404).end(`User with uid ${userId} found`);
+    res.status(404).end(`User with uid ${userId} not found`);
     return;
   }
 

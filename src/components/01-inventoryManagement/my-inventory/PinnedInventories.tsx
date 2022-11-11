@@ -5,21 +5,7 @@ import { EllipsisVerticalIcon } from '@heroicons/react/20/solid';
 import type { FC } from 'react';
 import { Fragment } from 'react';
 
-export type Inventory = {
-  id: number;
-  title: string;
-  initials: string;
-  team: string;
-  members: {
-    name: string;
-    handle: string;
-    imageUrl: string;
-  }[];
-  totalMembers: number;
-  lastUpdated: string;
-  pinned: boolean;
-  bgColorClass: string;
-};
+import type { Inventory } from '@/modules/inventory/inventoryType';
 
 type Props = {
   inventories: Inventory[];
@@ -35,18 +21,18 @@ const PinnedInventories: FC<Props> = ({ inventories }) => {
       role="list"
       className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4"
     >
-      {inventories.map((project) => (
+      {inventories.map((inventory) => (
         <li
-          key={project.id}
+          key={inventory.uid}
           className="relative col-span-1 flex rounded-md shadow-sm"
         >
           <div
             className={classNames(
-              project.bgColorClass,
+              'bg-pink-600',
               'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
             )}
           >
-            {project.initials}
+            INITIAL
           </div>
           <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-y border-r border-gray-200 bg-white">
             <div className="flex-1 truncate px-4 py-2 text-sm">
@@ -54,9 +40,11 @@ const PinnedInventories: FC<Props> = ({ inventories }) => {
                 href="#"
                 className="font-medium text-gray-900 hover:text-gray-600"
               >
-                {project.title}
+                {inventory.name}
               </a>
-              <p className="text-gray-500">{project.totalMembers} Members</p>
+              <p className="text-gray-500">
+                {inventory.totalCountPorduct} Product
+              </p>
             </div>
             <Menu as="div" className="shrink-0 pr-2">
               <Menu.Button className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">

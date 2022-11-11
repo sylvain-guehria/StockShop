@@ -8,7 +8,11 @@ const { EMAIL } = UserAttibutes;
 
 const addUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    // const usersRef = collection(firestore, USERS);
+    if (!req.body.user) {
+      res.status(400).end('Missing arg user to add user DB');
+      return;
+    }
+
     const { ...user } = req.body;
 
     const usersRef = firestoreAdmin.collection(USERS);

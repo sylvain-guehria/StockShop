@@ -9,6 +9,11 @@ const addCompany = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { userId } = req.body;
 
+    if (!userId) {
+      res.status(400).end('User uid is mandatory to add a company');
+      return;
+    }
+
     const userRef = await firestoreAdmin
       .collection(USERS)
       .doc(userId as string)
@@ -30,13 +35,13 @@ const addCompany = async (req: NextApiRequest, res: NextApiResponse) => {
       .collection(USERS)
       .doc(userId)
       .collection(COMPANIES)
-      .doc()
+      .doc(uid)
       .set(defaultCompany);
 
     res.status(200).json(defaultCompany);
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error('error when adding user', e);
+    console.error('error when adding company', e);
     res.status(400).end();
   }
 };

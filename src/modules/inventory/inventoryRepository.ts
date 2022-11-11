@@ -35,6 +35,24 @@ export abstract class InventoryRepository {
       `You tried to call an abstract methode, arg: ${{ inventory }}`
     );
   }
+
+  async getInventoriesByUserIdAndCompanyId(
+    userUid: string,
+    companyUid: string
+  ): Promise<InventoryEntity[]> {
+    throw new Error(
+      `You tried to call an abstract methode, arg: ${{ userUid, companyUid }}`
+    );
+  }
+
+  async createInventoryByUserIdAndCompanyId(
+    userUid: string,
+    companyUid: string
+  ): Promise<InventoryEntity> {
+    throw new Error(
+      `You tried to call an abstract methode, arg: ${{ userUid, companyUid }}`
+    );
+  }
 }
 
 export default InventoryRepository;

@@ -6,6 +6,8 @@ import InventoryEntity from './InventoryEntity';
 import { InventoryRepository } from './inventoryRepository';
 
 class FirebaseInventoryRepository extends InventoryRepository {
+  baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL;
+
   async getById(uid: string): Promise<InventoryEntity> {
     console.info('get inventory in db with uid: ', uid);
     const response = await axios.get(`/api/inventory/${uid}`);
@@ -58,6 +60,42 @@ class FirebaseInventoryRepository extends InventoryRepository {
       isPublic: inventory.getIsPublic(),
       isDefaultInventory: inventory.getIsDefaultInventory(),
     });
+  }
+
+  async getInventoriesByUserIdAndCompanyId(
+    userId: string,
+    companyId: string
+  ): Promise<InventoryEntity[]> {
+    console.info('get inventories by userId and companyId in db');
+    const response = await axios.get(
+      `${this.baseUrl}/api/inventory/getInventoriesByUserIdAndCompanyId`,
+      {
+        params: { userId, companyId },
+      }
+    );
+    return response.data
+      ? response.data.map(
+          (inventory: InventoryEntity) =>
+            new InventoryEntity({
+              uid: inventory.uid,
+              name: inventory.name,
+              isPublic: inventory.isPublic,
+              isDefaultInventory: inventory.isDefaultInventory,
+            })
+        )
+      : [];
+  }
+
+  async createInventoryByUserIdAndCompanyId(
+    userId: string,
+    companyId: string
+  ): Promise<InventoryEntity> {
+    console.info('create inventory by userId and companyId in db');
+    const response = await axios.post(`${this.baseUrl}/api/inventory/add`, {
+      userId,
+      companyId,
+    });
+    return response.data;
   }
 }
 
