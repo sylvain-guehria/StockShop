@@ -1,20 +1,30 @@
-import type { UserRepository } from '@/modules/user/userRepository';
+import type { CompanyRepository } from '@/modules/company/companyRepository';
+import type { InventoryRepository } from '@/modules/inventory/inventoryRepository';
 
 type GetUserInventoriesParamsType = {
   userUid: string;
 };
 
 export const getUserInventories =
-  (userRepository: UserRepository, companyRepository, inventoryRepository) =>
+  (
+    companyRepository: CompanyRepository,
+    inventoryRepository: InventoryRepository
+  ) =>
   async ({ userUid }: GetUserInventoriesParamsType) => {
     try {
-      let company = await getUserCompany(userUid);
+      let company = await getCompanyByUserId(userUid);
       if (!company) {
-        company = await createUserCompany(userUid);
+        company = await createCompanyByUserId(userUid);
       }
-      let inventories = await getCompanyInventories(userUid, company.uid);
+      let inventories = await getInventoriesByUserIdAndCompanyId(
+        userUid,
+        company.uid
+      );
       if (!inventories) {
-        const inventory = await createCompanyInventory(userUid, company.uid);
+        const inventory = await createInventoryByUserIdAndCompanyId(
+          userUid,
+          company.uid
+        );
         inventories = [inventory];
       }
       return inventories;

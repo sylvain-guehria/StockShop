@@ -1,4 +1,4 @@
-import { userRepository } from 'di';
+import { companyRepository, inventoryRepository, userRepository } from 'di';
 
 import { chooseSubRoleOnFirstConnection } from './chooseSubRoleOnFirstConnection';
 import { getUserInventories } from './getUserInventories';
@@ -14,4 +14,7 @@ export const loginWithGoogleUseCase = loginWithGoogle(userRepository);
 export const chooseSubRoleOnFirstConnectionUseCase =
   chooseSubRoleOnFirstConnection(userRepository);
 
-export const getUserInventoriesUseCase = getUserInventories(userRepository);
+export const getUserInventoriesUseCase = getUserInventories(
+  companyRepository,
+  inventoryRepository
+);

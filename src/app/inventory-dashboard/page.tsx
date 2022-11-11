@@ -1,8 +1,8 @@
 import { redirect } from 'next/navigation';
 
+import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 // import InventoryDashboardHome from '@/components/01-inventoryManagement/home/InventoryDashboardHome';
 import { mainRoutes } from '@/routes/mainRoutes';
-import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { validateUser } from '@/utils/validateUserServerSide';
 
 const InventoryDashboardPage = async () => {
