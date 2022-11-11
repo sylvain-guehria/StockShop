@@ -1,4 +1,4 @@
-export interface Item {
+export interface Product {
   uid?: string;
   label?: string;
   quantityInInventory?: number;

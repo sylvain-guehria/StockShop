@@ -12,19 +12,21 @@ export const getUserInventories =
   ) =>
   async ({ userUid }: GetUserInventoriesParamsType) => {
     try {
-      let company = await getCompanyByUserId(userUid);
+      let company = await companyRepository.getCompanyByUserId(userUid);
       if (!company) {
-        company = await createCompanyByUserId(userUid);
+        company = await companyRepository.createCompanyByUserId(userUid);
       }
-      let inventories = await getInventoriesByUserIdAndCompanyId(
-        userUid,
-        company.uid
-      );
-      if (!inventories) {
-        const inventory = await createInventoryByUserIdAndCompanyId(
+      let inventories =
+        await inventoryRepository.getInventoriesByUserIdAndCompanyId(
           userUid,
           company.uid
         );
+      if (!inventories) {
+        const inventory =
+          await inventoryRepository.createInventoryByUserIdAndCompanyId(
+            userUid,
+            company.uid
+          );
         inventories = [inventory];
       }
       return inventories;

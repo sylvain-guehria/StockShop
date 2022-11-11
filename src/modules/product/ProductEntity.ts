@@ -1,6 +1,6 @@
-import type { Item } from './itemType';
+import type { Product } from './productType';
 
-class ItemEntity implements Item {
+class ProductEntity implements Product {
   uid: string;
 
   label: string;
@@ -25,30 +25,30 @@ class ItemEntity implements Item {
 
   categoryUid: string;
 
-  static new(item?: Item): ItemEntity {
-    return new ItemEntity(item || {});
+  static new(product?: Product): ProductEntity {
+    return new ProductEntity(product || {});
   }
 
-  constructor(item: Item) {
-    this.uid = item.uid || '';
-    this.label = item.label || '';
-    this.quantityInInventory = item.quantityInInventory || 0;
-    this.optimumQuantity = item.optimumQuantity || 0;
-    this.buyingPrice = item.buyingPrice || 0;
-    this.sellingPrice = item.sellingPrice || 0;
-    this.description = item.description || '';
-    this.toBuy = item.toBuy || 0;
-    this.toSell = item.toSell || 0;
-    this.isPublic = item.isPublic || false;
-    this.tva = item.tva || 0;
-    this.categoryUid = item.categoryUid || '';
+  constructor(product: Product) {
+    this.uid = product.uid || '';
+    this.label = product.label || '';
+    this.quantityInInventory = product.quantityInInventory || 0;
+    this.optimumQuantity = product.optimumQuantity || 0;
+    this.buyingPrice = product.buyingPrice || 0;
+    this.sellingPrice = product.sellingPrice || 0;
+    this.description = product.description || '';
+    this.toBuy = product.toBuy || 0;
+    this.toSell = product.toSell || 0;
+    this.isPublic = product.isPublic || false;
+    this.tva = product.tva || 0;
+    this.categoryUid = product.categoryUid || '';
   }
 
   getUid(): string {
     return this.uid;
   }
 
-  setUid(uid: string): ItemEntity {
+  setUid(uid: string): ProductEntity {
     this.uid = uid;
     return this;
   }
@@ -57,7 +57,7 @@ class ItemEntity implements Item {
     return this.label;
   }
 
-  setLabel(label: string): ItemEntity {
+  setLabel(label: string): ProductEntity {
     this.label = label;
     return this;
   }
@@ -66,7 +66,7 @@ class ItemEntity implements Item {
     return this.quantityInInventory;
   }
 
-  setQuantityInInventory(quantityInInventory: number): ItemEntity {
+  setQuantityInInventory(quantityInInventory: number): ProductEntity {
     this.quantityInInventory = quantityInInventory;
     return this;
   }
@@ -75,7 +75,7 @@ class ItemEntity implements Item {
     return this.optimumQuantity;
   }
 
-  setOptimumQuantity(optimumQuantity: number): ItemEntity {
+  setOptimumQuantity(optimumQuantity: number): ProductEntity {
     this.optimumQuantity = optimumQuantity;
     return this;
   }
@@ -84,7 +84,7 @@ class ItemEntity implements Item {
     return this.buyingPrice;
   }
 
-  setBuyingPrice(buyingPrice: number): ItemEntity {
+  setBuyingPrice(buyingPrice: number): ProductEntity {
     this.buyingPrice = buyingPrice;
     return this;
   }
@@ -93,7 +93,7 @@ class ItemEntity implements Item {
     return this.sellingPrice;
   }
 
-  setSellingPrice(sellingPrice: number): ItemEntity {
+  setSellingPrice(sellingPrice: number): ProductEntity {
     this.sellingPrice = sellingPrice;
     return this;
   }
@@ -102,7 +102,7 @@ class ItemEntity implements Item {
     return this.description;
   }
 
-  setDescription(description: string): ItemEntity {
+  setDescription(description: string): ProductEntity {
     this.description = description;
     return this;
   }
@@ -111,7 +111,7 @@ class ItemEntity implements Item {
     return this.toBuy;
   }
 
-  setToBuy(toBuy: number): ItemEntity {
+  setToBuy(toBuy: number): ProductEntity {
     this.toBuy = toBuy;
     return this;
   }
@@ -120,7 +120,7 @@ class ItemEntity implements Item {
     return this.toSell;
   }
 
-  setToSell(toSell: number): ItemEntity {
+  setToSell(toSell: number): ProductEntity {
     this.toSell = toSell;
     return this;
   }
@@ -129,7 +129,7 @@ class ItemEntity implements Item {
     return this.isPublic;
   }
 
-  setIsPublic(isPublic: boolean): ItemEntity {
+  setIsPublic(isPublic: boolean): ProductEntity {
     this.isPublic = isPublic;
     return this;
   }
@@ -138,7 +138,7 @@ class ItemEntity implements Item {
     return this.tva;
   }
 
-  setTva(tva: number): ItemEntity {
+  setTva(tva: number): ProductEntity {
     this.tva = tva;
     return this;
   }
@@ -147,7 +147,7 @@ class ItemEntity implements Item {
     return this.categoryUid;
   }
 
-  setCategoryUid(categoryUid: string): ItemEntity {
+  setCategoryUid(categoryUid: string): ProductEntity {
     this.categoryUid = categoryUid;
     return this;
   }
@@ -169,4 +169,4 @@ class ItemEntity implements Item {
   }
 }
 
-export default ItemEntity;
+export default ProductEntity;
