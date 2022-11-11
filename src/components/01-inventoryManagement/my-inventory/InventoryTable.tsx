@@ -1,16 +1,16 @@
 import type { FC } from 'react';
 
-import type { Inventory } from './PinnedInventories';
+import type { Product } from '@/modules/product/productType';
 
 type Props = {
-  inventories: Inventory[];
+  products: Product[];
 };
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-const InventoryTable: FC<Props> = ({ inventories }) => {
+const InventoryTable: FC<Props> = ({ products }) => {
   return (
     <div className="mt-8 hidden sm:block">
       <div className="inline-block min-w-full border border-gray-200 align-middle">
@@ -42,13 +42,13 @@ const InventoryTable: FC<Props> = ({ inventories }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 bg-white">
-            {inventories.map((project) => (
-              <tr key={project.id}>
+            {products.map((project) => (
+              <tr key={project.uid}>
                 <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
                   <div className="flex items-center space-x-3 lg:pl-2">
                     <div
                       className={classNames(
-                        project.bgColorClass,
+                        'bg-pink-600',
                         'flex-shrink-0 w-2.5 h-2.5 rounded-full'
                       )}
                       aria-hidden="true"
@@ -65,21 +65,9 @@ const InventoryTable: FC<Props> = ({ inventories }) => {
                 </td>
                 <td className="px-6 py-3 text-sm font-medium text-gray-500">
                   <div className="flex items-center space-x-2">
-                    <div className="flex shrink-0 -space-x-1">
-                      {project.members.map((member) => (
-                        <img
-                          key={member.handle}
-                          className="h-6 w-6 max-w-none rounded-full ring-2 ring-white"
-                          src={member.imageUrl}
-                          alt={member.name}
-                        />
-                      ))}
-                    </div>
-                    {project.totalMembers > project.members.length ? (
-                      <span className="shrink-0 text-xs font-medium leading-5">
-                        +{project.totalMembers - project.members.length}
-                      </span>
-                    ) : null}
+                    <span className="shrink-0 text-xs font-medium leading-5">
+                      + 5
+                    </span>
                   </div>
                 </td>
                 <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-gray-500 md:table-cell">

@@ -1,17 +1,17 @@
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import type { FC } from 'react';
 
-import type { Inventory } from './PinnedInventories';
+import type { Product } from '@/modules/product/productType';
 
 type Props = {
-  inventories: Inventory[];
+  products: Product[];
 };
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-const MobileInventoryTable: FC<Props> = ({ inventories }) => {
+const MobileInventoryTable: FC<Props> = ({ products }) => {
   return (
     <div className="mt-10 sm:hidden">
       <div className="px-4 sm:px-6">
@@ -21,8 +21,8 @@ const MobileInventoryTable: FC<Props> = ({ inventories }) => {
         role="list"
         className="mt-3 divide-y divide-gray-100 border-t border-gray-200"
       >
-        {inventories.map((project) => (
-          <li key={project.id}>
+        {products.map((project) => (
+          <li key={project.uid}>
             <a
               href="#"
               className="group flex items-center justify-between p-4 hover:bg-gray-50 sm:px-6"

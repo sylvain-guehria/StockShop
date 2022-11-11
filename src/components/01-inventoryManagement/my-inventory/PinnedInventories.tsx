@@ -32,7 +32,7 @@ const PinnedInventories: FC<Props> = ({ inventories }) => {
               'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
             )}
           >
-            INITIAL
+            ID
           </div>
           <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-y border-r border-gray-200 bg-white">
             <div className="flex-1 truncate px-4 py-2 text-sm">
@@ -43,7 +43,7 @@ const PinnedInventories: FC<Props> = ({ inventories }) => {
                 {inventory.name}
               </a>
               <p className="text-gray-500">
-                {inventory.totalCountPorduct} Product
+                {inventory.totalCountProduct || 0} Produit
               </p>
             </div>
             <Menu as="div" className="shrink-0 pr-2">
