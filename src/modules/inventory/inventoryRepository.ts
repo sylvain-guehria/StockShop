@@ -36,7 +36,7 @@ export abstract class InventoryRepository {
     );
   }
 
-  async getInventoriesByUserIdAndCompanyId(
+  async getInventoriesByUserUidAndCompanyUid(
     userUid: string,
     companyUid: string
   ): Promise<InventoryEntity[]> {

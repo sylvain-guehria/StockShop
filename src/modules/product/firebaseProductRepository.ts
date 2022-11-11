@@ -6,6 +6,8 @@ import ProductEntity from './ProductEntity';
 import { ProductRepository } from './productRepository';
 
 class FirebaseProductRepository extends ProductRepository {
+  baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL;
+
   async getById(uid: string): Promise<ProductEntity> {
     console.info('get product in db with uid: ', uid);
     const response = await axios.get(`/api/product/${uid}`);
@@ -102,6 +104,36 @@ class FirebaseProductRepository extends ProductRepository {
       tva: product.getTva(),
       categoryUid: product.getCategoryUid(),
     });
+  }
+
+  async getProductsByUserUidAndInventoryUid(
+    userUid: string,
+    inventoryUid: string
+  ): Promise<ProductEntity[]> {
+    console.info('get all products by userUid and inventoryUid in db');
+    const response = await axios.get(
+      `${this.baseUrl}/api/product/getProductsByUserUidAndInventoryUid`,
+      {
+        params: { userUid, inventoryUid },
+      }
+    );
+    return response.data.map(
+      (product: ProductEntity) =>
+        new ProductEntity({
+          uid: product.uid,
+          label: product.label,
+          quantityInInventory: product.quantityInInventory,
+          optimumQuantity: product.optimumQuantity,
+          buyingPrice: product.buyingPrice,
+          sellingPrice: product.sellingPrice,
+          description: product.description,
+          toBuy: product.toBuy,
+          toSell: product.toSell,
+          isPublic: product.isPublic,
+          tva: product.tva,
+          categoryUid: product.categoryUid,
+        })
+    );
   }
 }
 

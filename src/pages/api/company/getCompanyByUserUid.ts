@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 const { USERS } = TableNames;
 
-const getCompanyByUserId = async (
+const getCompanyByUserUid = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
@@ -60,4 +60,4 @@ const getCompanyByUserId = async (
   }
 };
 
-export default getCompanyByUserId;
+export default getCompanyByUserUid;

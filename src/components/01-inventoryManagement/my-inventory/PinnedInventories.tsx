@@ -42,9 +42,7 @@ const PinnedInventories: FC<Props> = ({ inventories }) => {
               >
                 {inventory.name}
               </a>
-              <p className="text-gray-500">
-                {inventory.totalCountProduct || 0} Produit
-              </p>
+              <p className="text-gray-500">X Produit</p>
             </div>
             <Menu as="div" className="shrink-0 pr-2">
               <Menu.Button className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">

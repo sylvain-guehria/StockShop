@@ -62,28 +62,26 @@ class FirebaseInventoryRepository extends InventoryRepository {
     });
   }
 
-  async getInventoriesByUserIdAndCompanyId(
-    userId: string,
+  async getInventoriesByUserUidAndCompanyUid(
+    userUid: string,
     companyId: string
   ): Promise<InventoryEntity[]> {
     console.info('get inventories by userId and companyId in db');
     const response = await axios.get(
-      `${this.baseUrl}/api/inventory/getInventoriesByUserIdAndCompanyId`,
+      `${this.baseUrl}/api/inventory/getInventoriesByUserUidAndCompanyUid`,
       {
-        params: { userId, companyId },
+        params: { userUid, companyId },
       }
     );
-    return response.data
-      ? response.data.map(
-          (inventory: InventoryEntity) =>
-            new InventoryEntity({
-              uid: inventory.uid,
-              name: inventory.name,
-              isPublic: inventory.isPublic,
-              isDefaultInventory: inventory.isDefaultInventory,
-            })
-        )
-      : [];
+    return response.data.map(
+      (inventory: InventoryEntity) =>
+        new InventoryEntity({
+          uid: inventory.uid,
+          name: inventory.name,
+          isPublic: inventory.isPublic,
+          isDefaultInventory: inventory.isDefaultInventory,
+        })
+    );
   }
 
   async createInventoryByUserIdAndCompanyId(

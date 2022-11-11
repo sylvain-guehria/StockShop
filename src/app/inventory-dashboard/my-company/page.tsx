@@ -1,7 +1,5 @@
-import MyInventory from '@/components/01-inventoryManagement/my-inventory/MyInventory';
-
 const MyCompanyPage = async () => {
-  return <MyInventory />;
+  return <div>PAGE</div>;
 };
 
 export default MyCompanyPage;

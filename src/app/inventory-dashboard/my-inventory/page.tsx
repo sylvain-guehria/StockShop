@@ -1,3 +1,4 @@
+import { productRepository } from 'di';
 import { redirect } from 'next/navigation';
 
 import MyInventory from '@/components/01-inventoryManagement/my-inventory/MyInventory';
@@ -12,9 +13,16 @@ const MyInventoryPage = async () => {
     return null;
   }
   const inventories = await getUserInventoriesUseCase({ userUid });
+  const defaultInventoryUid = inventories.find(
+    (inventory) => inventory.isDefaultInventory
+  )?.uid;
+  const inventoryUid = defaultInventoryUid || (inventories[0]?.uid as string);
+  const products = await productRepository.getProductsByUserUidAndInventoryUid(
+    userUid,
+    inventoryUid
+  );
 
-  // const items = await getItemsByInventoryUid(defaultInventoryUid);
-  return <MyInventory inventories={inventories} items={[]} />;
+  return <MyInventory inventories={inventories} products={products} />;
 };
 
 export default MyInventoryPage;

@@ -21,8 +21,8 @@ const MobileInventoryTable: FC<Props> = ({ products }) => {
         role="list"
         className="mt-3 divide-y divide-gray-100 border-t border-gray-200"
       >
-        {products.map((project) => (
-          <li key={project.uid}>
+        {products.map((product) => (
+          <li key={product.uid}>
             <a
               href="#"
               className="group flex items-center justify-between p-4 hover:bg-gray-50 sm:px-6"
@@ -30,15 +30,14 @@ const MobileInventoryTable: FC<Props> = ({ products }) => {
               <span className="flex items-center space-x-3 truncate">
                 <span
                   className={classNames(
-                    project.bgColorClass,
                     'w-2.5 h-2.5 flex-shrink-0 rounded-full'
                   )}
                   aria-hidden="true"
                 />
                 <span className="truncate text-sm font-medium leading-6">
-                  {project.title}{' '}
+                  {product.label}{' '}
                   <span className="truncate font-normal text-gray-500">
-                    in {project.team}
+                    in {product.description}
                   </span>
                 </span>
               </span>

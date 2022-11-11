@@ -62,10 +62,10 @@ class FirebaseCompanyRepository extends CompanyRepository {
     });
   }
 
-  async getCompanyByUserId(userId: string): Promise<CompanyEntity | null> {
+  async getCompanyByUserUid(userId: string): Promise<CompanyEntity | null> {
     console.info('get company in db with userId: ', userId);
     const response = await axios.get(
-      `${this.baseUrl}/api/company/getCompanyByUserId`,
+      `${this.baseUrl}/api/company/getCompanyByUserUid`,
       {
         params: { userId },
       }

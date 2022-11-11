@@ -42,8 +42,8 @@ const InventoryTable: FC<Props> = ({ products }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 bg-white">
-            {products.map((project) => (
-              <tr key={project.uid}>
+            {products.map((product) => (
+              <tr key={product.uid}>
                 <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
                   <div className="flex items-center space-x-3 lg:pl-2">
                     <div
@@ -55,9 +55,9 @@ const InventoryTable: FC<Props> = ({ products }) => {
                     />
                     <a href="#" className="truncate hover:text-gray-600">
                       <span>
-                        {project.title}{' '}
+                        {product.label}{' '}
                         <span className="font-normal text-gray-500">
-                          in {project.team}
+                          in {product.description}
                         </span>
                       </span>
                     </a>
@@ -71,7 +71,7 @@ const InventoryTable: FC<Props> = ({ products }) => {
                   </div>
                 </td>
                 <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-gray-500 md:table-cell">
-                  {project.lastUpdated}
+                  {product.buyingPrice}
                 </td>
                 <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
                   <a href="#" className="text-indigo-600 hover:text-indigo-900">

@@ -4,16 +4,16 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 const { USERS, COMPANIES, INVENTORIES } = TableNames;
 
-const getInventoriesByUserIdAndCompanyId = async (
+const getInventoriesByUserUidAndCompanyUid = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
   const {
-    query: { userId, companyId },
+    query: { userUid, companyId },
     method,
   } = req;
 
-  if (!userId) {
+  if (!userUid) {
     res.status(400).end('User uid is mandatory to get inventories');
     return;
   }
@@ -25,29 +25,33 @@ const getInventoriesByUserIdAndCompanyId = async (
 
   const userRef = await firestoreAdmin
     .collection(USERS)
-    .doc(userId as string)
+    .doc(userUid as string)
     .get();
 
   if (!userRef.exists) {
-    res.status(404).end(`User with uid ${userId} not found`);
+    // eslint-disable-next-line no-console
+    console.log(`User with uid ${userUid} not found`);
+    res.status(200).end([]);
     return;
   }
 
   const companyRef = await firestoreAdmin
     .collection(USERS)
-    .doc(userId as string)
+    .doc(userUid as string)
     .collection(COMPANIES)
     .doc(companyId as string)
     .get();
 
   if (!companyRef.exists) {
-    res.status(404).end(`Company with uid ${companyId} not found`);
+    // eslint-disable-next-line no-console
+    console.log(`Company with uid ${companyId} not found`);
+    res.status(200).end('[]');
     return;
   }
 
   const inventoriesRef = await firestoreAdmin
     .collection(USERS)
-    .doc(userId as string)
+    .doc(userUid as string)
     .collection(COMPANIES)
     .doc(companyId as string)
     .collection(INVENTORIES);
@@ -57,9 +61,9 @@ const getInventoriesByUserIdAndCompanyId = async (
   if (snapshotInventoriesCount.data().count === 0) {
     // eslint-disable-next-line no-console
     console.log(
-      `Company uid ${companyId}, User uid ${userId} has  no inventory`
+      `Company uid ${companyId}, User uid ${userUid} has  no inventory`
     );
-    res.status(200).end();
+    res.status(200).end('[]');
     return;
   }
 
@@ -77,8 +81,8 @@ const getInventoriesByUserIdAndCompanyId = async (
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);
-    res.status(400).end();
+    res.status(400).end('[]');
   }
 };
 
-export default getInventoriesByUserIdAndCompanyId;
+export default getInventoriesByUserUidAndCompanyUid;

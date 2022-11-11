@@ -35,6 +35,15 @@ export abstract class ProductRepository {
       `You tried to call an abstract methode, arg: ${{ product }}`
     );
   }
+
+  async getProductsByUserUidAndInventoryUid(
+    userUid: string,
+    inventoryUid: string
+  ): Promise<ProductEntity[]> {
+    throw new Error(
+      `You tried to call an abstract methode, arg: ${{ userUid, inventoryUid }}`
+    );
+  }
 }
 
 export default ProductRepository;

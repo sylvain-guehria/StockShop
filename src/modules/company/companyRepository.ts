@@ -36,7 +36,7 @@ export abstract class CompanyRepository {
     );
   }
 
-  async getCompanyByUserId(userId: string): Promise<CompanyEntity | null> {
+  async getCompanyByUserUid(userId: string): Promise<CompanyEntity | null> {
     throw new Error(`You tried to call an abstract methode, arg: ${userId}`);
   }
 

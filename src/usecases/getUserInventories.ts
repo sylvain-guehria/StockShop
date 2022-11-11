@@ -13,12 +13,12 @@ export const getUserInventories =
   ) =>
   async ({ userUid }: GetUserInventoriesParamsType): Promise<Inventory[]> => {
     try {
-      let company = await companyRepository.getCompanyByUserId(userUid);
+      let company = await companyRepository.getCompanyByUserUid(userUid);
       if (!company) {
         company = await companyRepository.createCompanyByUserId(userUid);
       }
       let inventories =
-        await inventoryRepository.getInventoriesByUserIdAndCompanyId(
+        await inventoryRepository.getInventoriesByUserUidAndCompanyUid(
           userUid,
           company.uid
         );
