@@ -20,7 +20,7 @@ class FirebaseUserRepository extends UserRepository {
       locale,
       provider,
       history,
-      hasStockManagementServiceActivated,
+      hasInventoryManagementServiceActivated,
       hasSeenFirstConnectionModal,
     } = response.data;
 
@@ -36,7 +36,7 @@ class FirebaseUserRepository extends UserRepository {
       locale,
       provider,
       history,
-      hasStockManagementServiceActivated,
+      hasInventoryManagementServiceActivated,
       hasSeenFirstConnectionModal,
     });
   }
@@ -92,7 +92,7 @@ class FirebaseUserRepository extends UserRepository {
       language: user.getLanguage(),
       phoneNumber: user.getPhoneNumber(),
       role: user.getRole(),
-      hasStockManagementServiceActivated: user.isSeller(),
+      hasInventoryManagementServiceActivated: user.isSeller(),
       hasSeenFirstConnectionModal: user.hasSeenFirstConnectionModal,
     });
   }

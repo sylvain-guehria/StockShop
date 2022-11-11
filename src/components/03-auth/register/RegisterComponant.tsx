@@ -3,7 +3,7 @@ import Link from 'next/link';
 import NextImage from '@/components/04-lib/nextImage/NextImage';
 import { mainRoutes } from '@/routes/mainRoutes';
 
-import stockshopLogo from '../../../../public/assets/images/stockshop.png';
+import inventoryMarketLogo from '../../../../public/assets/images/inventoryMarket.png';
 import LoginOtherPlatformForm from '../login-platform/LoginOtherPlatformForm';
 import RegisterForm from './RegisterForm';
 
@@ -15,8 +15,8 @@ const RegisterComponant = () => {
           <Link href={mainRoutes.home.path}>
             <NextImage
               className="mx-auto h-12 w-auto cursor-pointer"
-              src={stockshopLogo}
-              alt="stock shop logo"
+              src={inventoryMarketLogo}
+              alt="inventory shop logo"
             />
           </Link>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">

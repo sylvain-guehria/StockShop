@@ -8,10 +8,10 @@ import { Background } from '../04-lib/background/Background';
 
 const incentives = [
   {
-    name: 'Gérez votre stock',
+    name: 'Gérez votre inventory',
     icon: CubeIcon,
     description:
-      'Vous gérez simplement et efficacement vos stocks de produits directement sur votre téléphone, tablette ou ordinateur.',
+      'Vous gérez simplement et efficacement votre inventaire directement sur votre téléphone, tablette ou ordinateur.',
   },
   {
     name: 'Page web auto générée',

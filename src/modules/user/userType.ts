@@ -11,7 +11,7 @@ export interface User {
   phoneNumber?: string;
   role?: RoleType;
   history?: History;
-  hasStockManagementServiceActivated?: boolean;
+  hasInventoryManagementServiceActivated?: boolean;
   hasSeenFirstConnectionModal?: boolean;
   locale?: LocaleType;
 }

@@ -5,7 +5,7 @@ class ItemEntity implements Item {
 
   label: string;
 
-  quantityInStock: number;
+  quantityInInventory: number;
 
   optimumQuantity: number;
 
@@ -32,7 +32,7 @@ class ItemEntity implements Item {
   constructor(item: Item) {
     this.uid = item.uid || '';
     this.label = item.label || '';
-    this.quantityInStock = item.quantityInStock || 0;
+    this.quantityInInventory = item.quantityInInventory || 0;
     this.optimumQuantity = item.optimumQuantity || 0;
     this.buyingPrice = item.buyingPrice || 0;
     this.sellingPrice = item.sellingPrice || 0;
@@ -62,12 +62,12 @@ class ItemEntity implements Item {
     return this;
   }
 
-  getQuantityInStock(): number {
-    return this.quantityInStock;
+  getQuantityInInventory(): number {
+    return this.quantityInInventory;
   }
 
-  setQuantityInStock(quantityInStock: number): ItemEntity {
-    this.quantityInStock = quantityInStock;
+  setQuantityInInventory(quantityInInventory: number): ItemEntity {
+    this.quantityInInventory = quantityInInventory;
     return this;
   }
 
@@ -161,11 +161,11 @@ class ItemEntity implements Item {
   }
 
   getBuyingPriceWithTvaAndQuantity(): number {
-    return this.getBuyingPriceWithTva() * this.quantityInStock;
+    return this.getBuyingPriceWithTva() * this.quantityInInventory;
   }
 
   getSellingPriceWithTvaAndQuantity(): number {
-    return this.getSellingPriceWithTva() * this.quantityInStock;
+    return this.getSellingPriceWithTva() * this.quantityInInventory;
   }
 }
 

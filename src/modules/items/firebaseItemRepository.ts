@@ -11,7 +11,7 @@ class FirebaseItemRepository extends ItemRepository {
     const response = await axios.get(`/api/item/${uid}`);
     const {
       label,
-      quantityInStock,
+      quantityInInventory,
       optimumQuantity,
       buyingPrice,
       sellingPrice,
@@ -26,7 +26,7 @@ class FirebaseItemRepository extends ItemRepository {
     return ItemEntity.new({
       uid,
       label,
-      quantityInStock,
+      quantityInInventory,
       optimumQuantity,
       buyingPrice,
       sellingPrice,
@@ -44,7 +44,7 @@ class FirebaseItemRepository extends ItemRepository {
     const res = await axios.post('/api/item/add', {
       uid: item.getUid(),
       label: item.getLabel(),
-      quantityInStock: item.getQuantityInStock(),
+      quantityInInventory: item.getQuantityInInventory(),
       optimumQuantity: item.getOptimumQuantity(),
       buyingPrice: item.getBuyingPrice(),
       sellingPrice: item.getSellingPrice(),
@@ -72,7 +72,7 @@ class FirebaseItemRepository extends ItemRepository {
         new ItemEntity({
           uid: item.uid,
           label: item.label,
-          quantityInStock: item.quantityInStock,
+          quantityInInventory: item.quantityInInventory,
           optimumQuantity: item.optimumQuantity,
           buyingPrice: item.buyingPrice,
           sellingPrice: item.sellingPrice,
@@ -91,7 +91,7 @@ class FirebaseItemRepository extends ItemRepository {
     await axios.put(`/api/item/${item.getUid()}`, {
       uid: item.getUid(),
       label: item.getLabel(),
-      quantityInStock: item.getQuantityInStock(),
+      quantityInInventory: item.getQuantityInInventory(),
       optimumQuantity: item.getOptimumQuantity(),
       buyingPrice: item.getBuyingPrice(),
       sellingPrice: item.getSellingPrice(),

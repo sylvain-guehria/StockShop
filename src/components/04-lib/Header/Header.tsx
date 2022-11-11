@@ -5,7 +5,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { auth, signOut } from 'firebaseFolder/clientApp';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import stockshopLogo from 'public/assets/images/stockshop.png';
+import inventoryMarketLogo from 'public/assets/images/inventoryMarket.png';
 import { Fragment } from 'react';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
@@ -48,8 +48,8 @@ const Header = () => {
                 <span className="sr-only">Your Company</span>
                 <NextImage
                   className="h-11 w-auto cursor-pointer"
-                  src={stockshopLogo}
-                  alt="stock shop logo"
+                  src={inventoryMarketLogo}
+                  alt="inventory shop logo"
                 />
               </div>
             </Link>
@@ -125,8 +125,8 @@ const Header = () => {
                 <div>
                   <NextImage
                     className="h-11 w-auto cursor-pointer"
-                    src={stockshopLogo}
-                    alt="stock shop logo"
+                    src={inventoryMarketLogo}
+                    alt="inventory shop logo"
                   />
                 </div>
                 <div className="-mr-2">

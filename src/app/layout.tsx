@@ -8,7 +8,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>Stock Shop</title>
+        <title>Inventory Market</title>
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
       <body>{children}</body>

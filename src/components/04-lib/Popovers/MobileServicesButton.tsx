@@ -12,7 +12,7 @@ import { services } from '../Header/services';
 export const callsToAction = [
   { name: 'Regarder une démo', href: '#', icon: PlayIcon },
   {
-    name: 'Commencer à utiliser Stock Shop',
+    name: 'Commencer à utiliser Inventory Market',
     href: mainRoutes.register.path,
     icon: CheckCircleIcon,
   },

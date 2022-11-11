@@ -13,7 +13,7 @@ import NextImage from '@/components/04-lib/nextImage/NextImage';
 import { useAuth } from '@/hooks/useAuth';
 import { mainRoutes } from '@/routes/mainRoutes';
 
-import stockshopLogo from '../../../../public/assets/images/stockshop.png';
+import inventoryMarketLogo from '../../../../public/assets/images/inventoryMarket.png';
 import ServicesButton from '../../04-lib/Popovers/ServicesButton';
 import ProfileDropdown from '../../07-profile/ProfileDropdown';
 
@@ -54,8 +54,8 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                       <span className="sr-only">Your Company</span>
                       <NextImage
                         className="h-11 w-auto cursor-pointer"
-                        src={stockshopLogo}
-                        alt="stock shop logo"
+                        src={inventoryMarketLogo}
+                        alt="inventory shop logo"
                       />
                     </div>
                   </Link>
@@ -94,8 +94,8 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                     <span className="sr-only">Your Company</span>
                     <NextImage
                       className="h-11 w-auto cursor-pointer"
-                      src={stockshopLogo}
-                      alt="stock shop logo"
+                      src={inventoryMarketLogo}
+                      alt="inventory shop logo"
                     />
                   </a>
                   <div className="flex flex-1 items-center justify-end">

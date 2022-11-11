@@ -1,7 +1,7 @@
 export interface Item {
   uid?: string;
   label?: string;
-  quantityInStock?: number;
+  quantityInInventory?: number;
   optimumQuantity?: number;
   buyingPrice?: number;
   sellingPrice?: number;

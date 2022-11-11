@@ -9,7 +9,7 @@ import {
 } from '@heroicons/react/24/outline';
 import type { SVGProps } from 'react';
 
-import stockshopLogo from '../../../../public/assets/images/stockshop.png';
+import inventoryMarketLogo from '../../../../public/assets/images/inventoryMarket.png';
 import NextImage from '../nextImage/NextImage';
 
 const links = [
@@ -105,8 +105,8 @@ export default function Page404Component() {
         <div className="shrink-0 pt-16">
           <NextImage
             className="h-11 w-auto cursor-pointer"
-            src={stockshopLogo}
-            alt="stock shop logo"
+            src={inventoryMarketLogo}
+            alt="inventory shop logo"
           />
         </div>
         <div className="mx-auto max-w-xl py-16 sm:py-24">

@@ -31,7 +31,7 @@ class UserEntity implements User {
 
   history;
 
-  hasStockManagementServiceActivated: boolean;
+  hasInventoryManagementServiceActivated: boolean;
 
   hasSeenFirstConnectionModal: boolean;
 
@@ -61,8 +61,8 @@ class UserEntity implements User {
     this.role = user.role || ROLES.USER;
     this.locale = user.locale || LOCALES.FR;
     this.history = user.history || defaultHistory;
-    this.hasStockManagementServiceActivated =
-      user.hasStockManagementServiceActivated || false;
+    this.hasInventoryManagementServiceActivated =
+      user.hasInventoryManagementServiceActivated || false;
     this.hasSeenFirstConnectionModal =
       user.hasSeenFirstConnectionModal || false;
   }
@@ -169,7 +169,7 @@ class UserEntity implements User {
   }
 
   isSeller(): boolean {
-    return this.hasStockManagementServiceActivated;
+    return this.hasInventoryManagementServiceActivated;
   }
 
   needToSeeFirstConnectionModal(): boolean {
@@ -177,12 +177,12 @@ class UserEntity implements User {
   }
 
   activateSockManagement(): UserEntity {
-    this.hasStockManagementServiceActivated = true;
+    this.hasInventoryManagementServiceActivated = true;
     return this;
   }
 
   desActivateSockManagement(): UserEntity {
-    this.hasStockManagementServiceActivated = false;
+    this.hasInventoryManagementServiceActivated = false;
     return this;
   }
 

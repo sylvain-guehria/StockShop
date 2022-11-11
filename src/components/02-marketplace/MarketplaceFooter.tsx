@@ -1,4 +1,4 @@
-import stockshopLogo from '../../../public/assets/images/stockshop.png';
+import inventoryMarketLogo from '../../../public/assets/images/inventoryMarket.png';
 import NextImage from '../04-lib/nextImage/NextImage';
 import { footerNavigation } from './fakeDatas';
 
@@ -14,8 +14,8 @@ const MarketplaceFooter = () => {
             <div className="md:flex md:justify-center">
               <NextImage
                 className="h-11 w-auto cursor-pointer"
-                src={stockshopLogo}
-                alt="stock shop logo"
+                src={inventoryMarketLogo}
+                alt="inventory shop logo"
               />
             </div>
             <div className="mx-auto mt-16 max-w-5xl xl:grid xl:grid-cols-2 xl:gap-8">

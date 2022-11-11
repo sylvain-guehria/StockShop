@@ -22,7 +22,7 @@ it('The user want to be a buyer only', async () => {
   const user = UserEntity.new({ email });
 
   const expectedUser = UserEntity.new({ email });
-  expectedUser.hasStockManagementServiceActivated = false;
+  expectedUser.hasInventoryManagementServiceActivated = false;
   expectedUser.hasSeenFirstConnectionModal = true;
 
   await chooseSubRoleOnFirstConnection(userRepository)(user, SUBROLES.BUYER);
@@ -36,7 +36,7 @@ it('The user want to become a seller', async () => {
   const user = UserEntity.new({ email });
   const expectedUser = UserEntity.new({ email });
 
-  expectedUser.hasStockManagementServiceActivated = true;
+  expectedUser.hasInventoryManagementServiceActivated = true;
   expectedUser.hasSeenFirstConnectionModal = true;
 
   await chooseSubRoleOnFirstConnection(userRepository)(user, SUBROLES.SELLER);

@@ -27,7 +27,7 @@ const SalesTestimonials = () => {
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-xl text-gray-600">
             Most of our products are limited releases that won&apos;t come back.
-            Get your favorite items while they&apos;re in stock.
+            Get your favorite items while they&apos;re in inventory.
           </p>
           <a
             href="#"
