@@ -4,20 +4,11 @@ import {
 } from '@heroicons/react/20/solid';
 import type { FC } from 'react';
 
-import type { Inventory } from '@/modules/inventory/inventoryType';
-import type { Product } from '@/modules/product/productType';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 
-import InventoryTable from './InventoryTable';
-import MobileInventoryTable from './MobileInventoryTable';
 import PinnedInventories from './PinnedInventories';
 
-type Props = {
-  inventories: Inventory[];
-  products: Product[];
-};
-
-const MyInventory: FC<Props> = ({ inventories, products = [] }) => {
+const MyInventory: FC = () => {
   return (
     <>
       <div className="min-h-full">
@@ -43,11 +34,11 @@ const MyInventory: FC<Props> = ({ inventories, products = [] }) => {
               </div>
             </div>
             <div className="mt-6 px-4 sm:px-6 lg:px-8">
-              <PinnedInventories inventories={inventories} />
+              <PinnedInventories />
             </div>
 
-            <MobileInventoryTable products={products} />
-            <InventoryTable products={products} />
+            {/* <MobileInventoryTable />
+            <InventoryTable /> */}
           </main>
         </div>
       </div>

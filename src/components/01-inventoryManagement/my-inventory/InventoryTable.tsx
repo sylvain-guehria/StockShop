@@ -1,16 +1,27 @@
 import type { FC } from 'react';
 
-import type { Product } from '@/modules/product/productType';
-
-type Props = {
-  products: Product[];
-};
-
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-const InventoryTable: FC<Props> = ({ products }) => {
+const InventoryTable: FC = () => {
+  // const inventories = await getUserInventoriesUseCase(userUid);
+
+  // if (inventories.length === 0) throw new Error('No inventories found');
+
+  // const defaultInventoryUid = inventories.find(
+  //   (inventory) => inventory.isDefaultInventory
+  // )?.uid;
+
+  // const inventoryUid = defaultInventoryUid || (inventories[0]?.uid as string);
+
+  // const products = await productRepository.getProductsByUserUidAndInventoryUid(
+  //   userUid,
+  //   inventoryUid
+  // );
+
+  const products: any = [];
+
   return (
     <div className="mt-8 hidden sm:block">
       <div className="inline-block min-w-full border border-gray-200 align-middle">
@@ -42,7 +53,7 @@ const InventoryTable: FC<Props> = ({ products }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 bg-white">
-            {products.map((product) => (
+            {products.map((product: any) => (
               <tr key={product.uid}>
                 <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
                   <div className="flex items-center space-x-3 lg:pl-2">

@@ -27,11 +27,11 @@ class InventoryService {
     return this.inventoryRepository.add(inventory, userUid, companyUid);
   }
 
-  async updateInventory(
-    inventory: Inventory,
-    userUid: string,
-    companyUid: string
-  ): Promise<void> {
+  async updateInventory({
+    inventory,
+    userUid,
+    companyUid,
+  }: UpdateInventoryParams): Promise<void> {
     return this.inventoryRepository.update(
       InventoryEntity.new({
         uid: inventory.uid,
@@ -47,3 +47,9 @@ class InventoryService {
 }
 
 export default InventoryService;
+
+export type UpdateInventoryParams = {
+  inventory: Inventory;
+  userUid: string;
+  companyUid: string;
+};

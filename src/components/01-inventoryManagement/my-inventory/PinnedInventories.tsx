@@ -7,12 +7,17 @@ import {
   PencilIcon,
   TrashIcon,
 } from '@heroicons/react/20/solid';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { inventoryServiceDi } from 'di';
 import dynamic from 'next/dynamic';
 import type { FC } from 'react';
 import { Fragment, useState } from 'react';
 
+import { useAuth } from '@/hooks/useAuth';
 import Providers from '@/layouts/Providers';
+import type { UpdateInventoryParams } from '@/modules/inventory/inventoryService';
 import type { Inventory } from '@/modules/inventory/inventoryType';
+import { getUserInventoriesUseCase } from '@/usecases/usecases';
 
 const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
   suspense: true,
@@ -25,20 +30,34 @@ const DynamicEditInventoryForm = dynamic(
   }
 );
 
-type Props = {
-  inventories: Inventory[];
-};
-
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-const PinnedInventories: FC<Props> = ({ inventories }) => {
+const PinnedInventories: FC = () => {
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   // const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const { data: inventories = [] } = useQuery({
+    queryKey: ['get-inventories'],
+    queryFn: () => getUserInventoriesUseCase(user.uid),
+    enabled: !!user.uid,
+  });
   const [selectedInventory, setSelectedInventory] = useState(inventories[0]);
 
-  const handleEditModalOpen = (inventory: Inventory) => {
+  const mutation = useMutation({
+    mutationFn: (params: UpdateInventoryParams) =>
+      inventoryServiceDi.updateInventory(params),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ['get-inventories'] });
+      setIsEditModalOpen(false);
+    },
+  });
+
+  const handleClickEditInventory = (inventory: Inventory) => {
     setSelectedInventory(inventory);
     setIsEditModalOpen(true);
   };
@@ -49,7 +68,7 @@ const PinnedInventories: FC<Props> = ({ inventories }) => {
         <DynamicModal open={isEditModalOpen} setOpen={setIsEditModalOpen}>
           <DynamicEditInventoryForm
             inventory={selectedInventory as Inventory}
-            onSuccess={() => setIsEditModalOpen(false)}
+            onSubmit={mutation.mutate}
           />
         </DynamicModal>
       )}
@@ -105,7 +124,7 @@ const PinnedInventories: FC<Props> = ({ inventories }) => {
                               : 'text-gray-700',
                             'flex px-4 py-3 text-sm cursor-pointer justify-between'
                           )}
-                          onClick={() => handleEditModalOpen(inventory)}
+                          onClick={() => handleClickEditInventory(inventory)}
                         >
                           Editer
                           <PencilIcon
@@ -162,10 +181,10 @@ const PinnedInventories: FC<Props> = ({ inventories }) => {
   );
 };
 
-const PinnedInventoriesWithProviders: FC<Props> = ({ inventories }) => {
+const PinnedInventoriesWithProviders: FC = () => {
   return (
     <Providers>
-      <PinnedInventories inventories={inventories} />
+      <PinnedInventories />
     </Providers>
   );
 };

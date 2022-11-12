@@ -1,7 +1,6 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { inventoryServiceDi } from 'di';
 import type { FC } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -9,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
+import type { UpdateInventoryParams } from '@/modules/inventory/inventoryService';
 import type { Inventory } from '@/modules/inventory/inventoryType';
 
 import { validationSchema } from './EditInventoryFormValidation';
@@ -26,10 +26,10 @@ const publicStates = [
 
 type Props = {
   inventory: Inventory;
-  onSuccess?: () => void;
+  onSubmit: ({ inventory, userUid, companyUid }: UpdateInventoryParams) => void;
 };
 
-const EditInventoryForm: FC<Props> = ({ inventory, onSuccess }) => {
+const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
   const toast = useToast(4000);
   const { user } = useAuth();
   const formOptions = {
@@ -55,21 +55,20 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSuccess }) => {
     setValue('color', color);
   };
 
-  const onSubmit: SubmitHandler<EditInventoryFormFormType> = async (
+  const onSubmitForm: SubmitHandler<EditInventoryFormFormType> = async (
     data: EditInventoryFormFormType
   ) => {
     try {
-      await inventoryServiceDi.updateInventory(
-        {
+      onSubmit({
+        inventory: {
           uid: inventory.uid,
           name: data.name,
           isPublic: data.isPublic as unknown as boolean,
           color: data.color,
         },
-        user.uid,
-        inventory.companyUid as string
-      );
-      if (onSuccess) onSuccess();
+        userUid: user.uid,
+        companyUid: inventory.companyUid as string,
+      });
     } catch (e) {
       toast(
         ToasterTypeEnum.ERROR,
@@ -79,7 +78,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSuccess }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 text-left">
+    <form onSubmit={handleSubmit(onSubmitForm)} className="space-y-6 text-left">
       <div>
         <label
           htmlFor="email"
