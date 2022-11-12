@@ -24,10 +24,10 @@ export const getUserInventories =
         );
       if (!inventories || inventories.length === 0) {
         const inventory =
-          await inventoryServiceDi.createInventoryByUserIdAndCompanyId(
+          await inventoryServiceDi.createInventoryByUserIdAndCompanyId({
             userUid,
-            company.uid
-          );
+            companyUid: company.uid,
+          });
         inventories = [inventory];
       }
       return inventories;

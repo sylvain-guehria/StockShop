@@ -3,9 +3,10 @@ import type { FC } from 'react';
 
 type Props = {
   href?: string;
-  children: string;
+  children: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
   style?: 'primary' | 'secondary';
+  onClick?: (params: any) => any;
 };
 
 const primaryStyle =
@@ -24,6 +25,7 @@ const LinkButton: FC<Props> = ({
   children,
   style = 'primary',
   type = 'submit',
+  onClick,
 }) => {
   return href ? (
     <Link href={href}>
@@ -37,7 +39,9 @@ const LinkButton: FC<Props> = ({
     <div
       className={`mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent ${styles[style]}`}
     >
-      <button type={type}>{children}</button>
+      <button type={type} onClick={onClick}>
+        {children}
+      </button>
     </div>
   );
 };

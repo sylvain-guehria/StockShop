@@ -74,17 +74,17 @@ const PinnedInventories: FC = () => {
       )}
       <ul
         role="list"
-        className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4"
+        className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 "
       >
         {inventories.map((inventory) => (
           <li
             key={inventory.uid}
-            className="relative col-span-1 flex rounded-md shadow-sm"
+            className="relative col-span-1 flex max-w-md rounded-md shadow-sm"
           >
             <div
               className={classNames(
                 `bg-${inventory.color ? inventory.color : 'primary-600'}`,
-                'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
+                'flex-shrink-0 flex items-center justify-center w-1/6 text-white text-sm font-medium rounded-l-md'
               )}
             ></div>
             <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-y border-r border-gray-200 bg-white">

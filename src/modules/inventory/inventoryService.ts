@@ -11,10 +11,10 @@ class InventoryService {
     this.inventoryRepository = inventoryRepository;
   }
 
-  async createInventoryByUserIdAndCompanyId(
-    userUid: string,
-    companyUid: string
-  ): Promise<InventoryEntity> {
+  async createInventoryByUserIdAndCompanyId({
+    userUid,
+    companyUid,
+  }: CreateInventoryParams): Promise<InventoryEntity> {
     const uid = uuidV4();
 
     const inventory = InventoryEntity.new({
@@ -50,6 +50,11 @@ export default InventoryService;
 
 export type UpdateInventoryParams = {
   inventory: Inventory;
+  userUid: string;
+  companyUid: string;
+};
+
+export type CreateInventoryParams = {
   userUid: string;
   companyUid: string;
 };
