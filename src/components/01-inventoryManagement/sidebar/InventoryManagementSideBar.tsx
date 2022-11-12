@@ -18,7 +18,10 @@ type Props = {
   setSidebarOpen: (bool: boolean) => void;
 };
 
-const InventoryManagementSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
+const InventoryManagementSideBar: FC<Props> = ({
+  sidebarOpen,
+  setSidebarOpen,
+}) => {
   const pathname = usePathname();
   return (
     <>

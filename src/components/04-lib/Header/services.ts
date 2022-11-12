@@ -3,8 +3,8 @@ import {
   CursorArrowRaysIcon,
 } from '@heroicons/react/24/outline';
 
-import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
+import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
 
 export type Service = {
   name: string;

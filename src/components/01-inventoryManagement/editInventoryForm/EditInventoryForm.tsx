@@ -13,8 +13,8 @@ interface EditInventoryFormFormType {
 }
 
 const publicStates = [
-  { id: 'isPublic', title: 'Public' },
-  { id: 'isPrivate', title: 'Privée' },
+  { id: 'isPublic', title: 'Public', value: 'true' },
+  { id: 'isPrivate', title: 'Privée', value: 'false' },
 ];
 
 const EditInventoryForm = () => {
@@ -128,10 +128,9 @@ const EditInventoryForm = () => {
           <div key={state.id} className="mr-3 flex items-center">
             <input
               id={state.id}
-              {...register(state.id)}
-              name="notification-method"
+              value={state.value}
+              {...register('isPublic')}
               type="radio"
-              defaultChecked={state.id === 'email'}
               className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
             />
             <label
