@@ -9,35 +9,35 @@ const getCompanyByUserUid = async (
   res: NextApiResponse
 ) => {
   const {
-    query: { userId },
+    query: { userUid },
     method,
   } = req;
 
-  if (!userId) {
+  if (!userUid) {
     res.status(400).end('User uid is mandatory');
     return;
   }
 
   const userRef = await firestoreAdmin
     .collection(USERS)
-    .doc(userId as string)
+    .doc(userUid as string)
     .get();
 
   if (!userRef.exists) {
-    res.status(404).end(`User with uid ${userId} not found`);
+    res.status(404).end(`User with uid ${userUid} not found`);
     return;
   }
 
   const userCompaniesRef = await firestoreAdmin
     .collection(USERS)
-    .doc(userId as string)
+    .doc(userUid as string)
     .collection(TableNames.COMPANIES);
 
   const snapshotUserCompaniesCount = await userCompaniesRef.count().get();
 
   if (snapshotUserCompaniesCount.data().count === 0) {
     // eslint-disable-next-line no-console
-    console.log(`User with uid ${userId} has no companies`);
+    console.log(`User with uid ${userUid} has no companies`);
     res.status(200).end();
     return;
   }

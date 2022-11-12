@@ -1,4 +1,10 @@
-import { companyRepository, inventoryRepository, userRepository } from 'di';
+import {
+  companyRepository,
+  companyServiceDi,
+  inventoryRepository,
+  inventoryServiceDi,
+  userRepository,
+} from 'di';
 
 import { chooseSubRoleOnFirstConnection } from './chooseSubRoleOnFirstConnection';
 import { getUserInventories } from './getUserInventories';
@@ -16,5 +22,7 @@ export const chooseSubRoleOnFirstConnectionUseCase =
 
 export const getUserInventoriesUseCase = getUserInventories(
   companyRepository,
-  inventoryRepository
+  inventoryRepository,
+  companyServiceDi,
+  inventoryServiceDi
 );

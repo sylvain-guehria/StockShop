@@ -6,9 +6,11 @@ import CategoryEntity from './CategoryEntity';
 import { CategoryRepository } from './categoryRepository';
 
 class FirebaseCategoryRepository extends CategoryRepository {
+  baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL;
+
   async getById(uid: string): Promise<CategoryEntity> {
     console.info('get category in db with uid: ', uid);
-    const response = await axios.get(`/api/category/${uid}`);
+    const response = await axios.get(`${this.baseUrl}/api/category/${uid}`);
     const { label, attributs } = response.data;
 
     return CategoryEntity.new({
@@ -20,7 +22,7 @@ class FirebaseCategoryRepository extends CategoryRepository {
 
   async add(category: CategoryEntity): Promise<string> {
     console.info('adding category in db...');
-    const res = await axios.post('/api/category/add', {
+    const res = await axios.post(`${this.baseUrl}/api/category/add`, {
       uid: category.getUid(),
       label: category.getLabel(),
       attributs: category.getAttributs(),
@@ -31,7 +33,7 @@ class FirebaseCategoryRepository extends CategoryRepository {
 
   async delete(uid: string): Promise<void> {
     console.info(`Deleting category with uid ${uid} in db...`);
-    return axios.post('/api/category/delete', { uid });
+    return axios.post(`${this.baseUrl}/api/category/delete`, { uid });
   }
 
   async getAll(): Promise<CategoryEntity[]> {
@@ -49,7 +51,7 @@ class FirebaseCategoryRepository extends CategoryRepository {
 
   async update(category: CategoryEntity): Promise<void> {
     console.info('update category uid: ', category.getUid());
-    await axios.put(`/api/category/${category.getUid()}`, {
+    await axios.put(`${this.baseUrl}/api/category/${category.getUid()}`, {
       uid: category.getUid(),
       label: category.getLabel(),
       attributs: category.getAttributs(),

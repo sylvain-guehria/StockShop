@@ -18,8 +18,14 @@ export abstract class InventoryRepository {
     throw new Error(`You tried to call an abstract methode, arg: ${uid}`);
   }
 
-  async add(inventory: InventoryEntity): Promise<string> {
-    throw new Error(`You tried to call an abstract methode, arg: ${inventory}`);
+  async add(
+    inventory: InventoryEntity,
+    userUid: string,
+    companyUid: string
+  ): Promise<InventoryEntity> {
+    throw new Error(
+      `You tried to call an abstract methode, inventory: ${inventory}, userUid: ${userUid}, companyUid: ${companyUid}`
+    );
   }
 
   async delete(uid: string): Promise<void> {
@@ -40,15 +46,6 @@ export abstract class InventoryRepository {
     userUid: string,
     companyUid: string
   ): Promise<InventoryEntity[]> {
-    throw new Error(
-      `You tried to call an abstract methode, arg: ${{ userUid, companyUid }}`
-    );
-  }
-
-  async createInventoryByUserIdAndCompanyId(
-    userUid: string,
-    companyUid: string
-  ): Promise<InventoryEntity> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{ userUid, companyUid }}`
     );

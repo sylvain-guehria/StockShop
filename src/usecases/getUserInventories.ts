@@ -1,21 +1,21 @@
 import type { CompanyRepository } from '@/modules/company/companyRepository';
+import type CompanyService from '@/modules/company/companyService';
 import type { InventoryRepository } from '@/modules/inventory/inventoryRepository';
+import type InventoryService from '@/modules/inventory/inventoryService';
 import type { Inventory } from '@/modules/inventory/inventoryType';
-
-type GetUserInventoriesParamsType = {
-  userUid: string;
-};
 
 export const getUserInventories =
   (
     companyRepository: CompanyRepository,
-    inventoryRepository: InventoryRepository
+    inventoryRepository: InventoryRepository,
+    companyServiceDi: CompanyService,
+    inventoryServiceDi: InventoryService
   ) =>
-  async ({ userUid }: GetUserInventoriesParamsType): Promise<Inventory[]> => {
+  async (userUid: string): Promise<Inventory[]> => {
     try {
       let company = await companyRepository.getCompanyByUserUid(userUid);
       if (!company) {
-        company = await companyRepository.createCompanyByUserId(userUid);
+        company = await companyServiceDi.createCompanyByUserId(userUid);
       }
       let inventories =
         await inventoryRepository.getInventoriesByUserUidAndCompanyUid(
@@ -24,7 +24,7 @@ export const getUserInventories =
         );
       if (!inventories || inventories.length === 0) {
         const inventory =
-          await inventoryRepository.createInventoryByUserIdAndCompanyId(
+          await inventoryServiceDi.createInventoryByUserIdAndCompanyId(
             userUid,
             company.uid
           );

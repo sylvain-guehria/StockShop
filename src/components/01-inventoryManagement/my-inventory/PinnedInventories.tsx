@@ -2,6 +2,7 @@
 
 import { Menu, Transition } from '@headlessui/react';
 import {
+  ArrowsPointingInIcon,
   EllipsisVerticalIcon,
   PencilIcon,
   TrashIcon,
@@ -116,6 +117,24 @@ const PinnedInventories: FC<Props> = ({ inventories }) => {
                         >
                           Supprimer
                           <TrashIcon
+                            className="ml-3 h-5 w-5 shrink-0 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        </div>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <div
+                          className={classNames(
+                            active
+                              ? 'bg-gray-100 text-gray-900'
+                              : 'text-gray-700',
+                            'px-4 py-3 text-sm cursor-pointer flex justify-between'
+                          )}
+                        >
+                          Inventaire par défaut
+                          <ArrowsPointingInIcon
                             className="ml-3 h-5 w-5 shrink-0 text-gray-400"
                             aria-hidden="true"
                           />

@@ -10,7 +10,7 @@ class FirebaseProductRepository extends ProductRepository {
 
   async getById(uid: string): Promise<ProductEntity> {
     console.info('get product in db with uid: ', uid);
-    const response = await axios.get(`/api/product/${uid}`);
+    const response = await axios.get(`${this.baseUrl}/api/product/${uid}`);
     const {
       label,
       quantityInInventory,
@@ -43,7 +43,7 @@ class FirebaseProductRepository extends ProductRepository {
 
   async add(product: ProductEntity): Promise<string> {
     console.info('adding product in db...');
-    const res = await axios.post('/api/product/add', {
+    const res = await axios.post(`${this.baseUrl}/api/product/add`, {
       uid: product.getUid(),
       label: product.getLabel(),
       quantityInInventory: product.getQuantityInInventory(),
@@ -63,7 +63,7 @@ class FirebaseProductRepository extends ProductRepository {
 
   async delete(uid: string): Promise<void> {
     console.info(`Deleting product with uid ${uid} in db...`);
-    return axios.post('/api/product/delete', { uid });
+    return axios.post(`${this.baseUrl}/api/product/delete`, { uid });
   }
 
   async getAll(): Promise<ProductEntity[]> {
@@ -90,7 +90,7 @@ class FirebaseProductRepository extends ProductRepository {
 
   async update(product: ProductEntity): Promise<void> {
     console.info('update product uid: ', product.getUid());
-    await axios.put(`/api/product/${product.getUid()}`, {
+    await axios.put(`${this.baseUrl}/api/product/${product.getUid()}`, {
       uid: product.getUid(),
       label: product.getLabel(),
       quantityInInventory: product.getQuantityInInventory(),

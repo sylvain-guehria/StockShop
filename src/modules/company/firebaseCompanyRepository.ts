@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 /* eslint-disable no-console */
 import axios from 'axios';
 
@@ -10,7 +9,7 @@ class FirebaseCompanyRepository extends CompanyRepository {
 
   async getById(uid: string): Promise<CompanyEntity> {
     console.info('get company in db with uid: ', uid);
-    const response = await axios.get(`/api/company/${uid}`);
+    const response = await axios.get(`${this.baseUrl}/api/company/${uid}`);
     const { name, vat, address } = response.data;
 
     return CompanyEntity.new({
@@ -21,21 +20,28 @@ class FirebaseCompanyRepository extends CompanyRepository {
     });
   }
 
-  async add(company: CompanyEntity): Promise<string> {
+  async add(company: CompanyEntity, userUid: string): Promise<CompanyEntity> {
     console.info('adding company in db...');
-    const res = await axios.post('/api/company/add', {
-      uid: company.getUid(),
-      name: company.getName(),
-      vat: company.getVat(),
-      address: company.getAddress(),
+    const res = await axios.post(`${this.baseUrl}/api/company/add`, {
+      userUid,
+      company: {
+        uid: company.getUid(),
+        name: company.getName(),
+        vat: company.getVat(),
+        address: company.getAddress(),
+      },
     });
+    const { uid, name } = res.data;
     console.info('Company added in DB, uid: ', company.getUid());
-    return res.data;
+    return CompanyEntity.new({
+      uid,
+      name,
+    });
   }
 
   async delete(uid: string): Promise<void> {
     console.info(`Deleting company with uid ${uid} in db...`);
-    return axios.post('/api/company/delete', { uid });
+    return axios.post(`${this.baseUrl}/api/company/delete`, { uid });
   }
 
   async getAll(): Promise<CompanyEntity[]> {
@@ -54,7 +60,7 @@ class FirebaseCompanyRepository extends CompanyRepository {
 
   async update(company: CompanyEntity): Promise<void> {
     console.info('update company uid: ', company.getUid());
-    await axios.put(`/api/company/${company.getUid()}`, {
+    await axios.put(`${this.baseUrl}/api/company/${company.getUid()}`, {
       uid: company.getUid(),
       name: company.getName(),
       vat: company.getVat(),
@@ -62,12 +68,12 @@ class FirebaseCompanyRepository extends CompanyRepository {
     });
   }
 
-  async getCompanyByUserUid(userId: string): Promise<CompanyEntity | null> {
-    console.info('get company in db with userId: ', userId);
+  async getCompanyByUserUid(userUid: string): Promise<CompanyEntity | null> {
+    console.info('get company in db with userUid: ', userUid);
     const response = await axios.get(
       `${this.baseUrl}/api/company/getCompanyByUserUid`,
       {
-        params: { userId },
+        params: { userUid },
       }
     );
     const { name, vat, address, uid } = response.data;
@@ -80,21 +86,6 @@ class FirebaseCompanyRepository extends CompanyRepository {
           address,
         })
       : null;
-  }
-
-  async createCompanyByUserId(userId: string): Promise<CompanyEntity> {
-    console.info('create company in db with userId: ', userId);
-    const response = await axios.post(`${this.baseUrl}/api/company/add`, {
-      userId,
-    });
-    const { name, vat, address, uid } = response.data;
-
-    return CompanyEntity.new({
-      uid,
-      name,
-      vat,
-      address,
-    });
   }
 }
 

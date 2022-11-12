@@ -9,7 +9,7 @@ const getInventoriesByUserUidAndCompanyUid = async (
   res: NextApiResponse
 ) => {
   const {
-    query: { userUid, companyId },
+    query: { userUid, companyUid },
     method,
   } = req;
 
@@ -18,7 +18,7 @@ const getInventoriesByUserUidAndCompanyUid = async (
     return;
   }
 
-  if (!companyId) {
+  if (!companyUid) {
     res.status(400).end('Company uid is mandatory to get inventories');
     return;
   }
@@ -39,12 +39,12 @@ const getInventoriesByUserUidAndCompanyUid = async (
     .collection(USERS)
     .doc(userUid as string)
     .collection(COMPANIES)
-    .doc(companyId as string)
+    .doc(companyUid as string)
     .get();
 
   if (!companyRef.exists) {
     // eslint-disable-next-line no-console
-    console.log(`Company with uid ${companyId} not found`);
+    console.log(`Company with uid ${companyUid} not found`);
     res.status(200).end('[]');
     return;
   }
@@ -53,7 +53,7 @@ const getInventoriesByUserUidAndCompanyUid = async (
     .collection(USERS)
     .doc(userUid as string)
     .collection(COMPANIES)
-    .doc(companyId as string)
+    .doc(companyUid as string)
     .collection(INVENTORIES);
 
   const snapshotInventoriesCount = await inventoriesRef.count().get();
@@ -61,7 +61,7 @@ const getInventoriesByUserUidAndCompanyUid = async (
   if (snapshotInventoriesCount.data().count === 0) {
     // eslint-disable-next-line no-console
     console.log(
-      `Company uid ${companyId}, User uid ${userUid} has  no inventory`
+      `Company uid ${companyUid}, User uid ${userUid} has  no inventory`
     );
     res.status(200).end('[]');
     return;

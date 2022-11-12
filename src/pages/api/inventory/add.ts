@@ -1,72 +1,55 @@
 import { firestoreAdmin } from 'firebaseFolder/serverApp';
 import { TableNames } from 'firebaseFolder/tableNames';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { v4 as uuidV4 } from 'uuid';
 
 const { USERS, COMPANIES, INVENTORIES } = TableNames;
 
 const addInventory = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { userId, companyId } = req.body;
+    const { inventory, userUid, companyUid } = req.body;
 
-    if (!userId) {
+    if (!userUid) {
       res.status(400).end('User uid is mandatory to add inventories');
       return;
     }
 
-    if (!companyId) {
+    if (!companyUid) {
       res.status(400).end('Company uid is mandatory to add inventories');
       return;
     }
 
     const userRef = await firestoreAdmin
       .collection(USERS)
-      .doc(userId as string)
+      .doc(userUid as string)
       .get();
 
     if (!userRef.exists) {
-      res.status(404).end(`User with uid ${userId} found`);
+      res.status(404).end(`User with uid ${userUid} found`);
       return;
     }
 
     const companyRef = await firestoreAdmin
       .collection(USERS)
-      .doc(userId as string)
+      .doc(userUid as string)
       .collection(COMPANIES)
-      .doc(companyId as string)
+      .doc(companyUid as string)
       .get();
 
     if (!companyRef.exists) {
-      res.status(404).end(`Company with uid ${companyId} not found`);
+      res.status(404).end(`Company with uid ${companyUid} not found`);
       return;
     }
 
-    const inventoriesRef = await firestoreAdmin
-      .collection(USERS)
-      .doc(userId as string)
-      .collection(COMPANIES)
-      .doc(companyId as string)
-      .collection(INVENTORIES);
-
-    const snapshotInventoriesCount = await inventoriesRef.count().get();
-
-    const uid = uuidV4();
-
-    const defaultInventory = {
-      uid,
-      name: `Inventaire N°${snapshotInventoriesCount.data().count + 1}`,
-    };
-
     await firestoreAdmin
       .collection(USERS)
-      .doc(userId)
+      .doc(userUid)
       .collection(COMPANIES)
-      .doc(companyId)
+      .doc(companyUid)
       .collection(INVENTORIES)
-      .doc(uid)
-      .set(defaultInventory);
+      .doc(inventory.uid)
+      .set(inventory);
 
-    res.status(200).json(defaultInventory);
+    res.status(200).json(inventory);
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error('error when adding inventory', e);

@@ -12,11 +12,16 @@ const MyInventoryPage = async () => {
     redirect(mainRoutes.login.path);
     return null;
   }
-  const inventories = await getUserInventoriesUseCase({ userUid });
+  const inventories = await getUserInventoriesUseCase(userUid);
+
+  if (inventories.length === 0) throw new Error('No inventories found');
+
   const defaultInventoryUid = inventories.find(
     (inventory) => inventory.isDefaultInventory
   )?.uid;
+
   const inventoryUid = defaultInventoryUid || (inventories[0]?.uid as string);
+
   const products = await productRepository.getProductsByUserUidAndInventoryUid(
     userUid,
     inventoryUid
