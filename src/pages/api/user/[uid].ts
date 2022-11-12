@@ -4,29 +4,29 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 const { USERS } = TableNames;
 
-const userById = async (req: NextApiRequest, res: NextApiResponse) => {
+const userByUid = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
-    query: { id },
+    query: { uid },
     method,
   } = req;
 
-  if (!id) {
+  if (!uid) {
     res.status(400).end('User uid is mandatory');
     return;
   }
 
   const userRef = await firestoreAdmin
     .collection(USERS)
-    .doc(id as string)
+    .doc(uid as string)
     .get();
 
-  const userDoc = await firestoreAdmin.collection(USERS).doc(id as string);
+  const userDoc = await firestoreAdmin.collection(USERS).doc(uid as string);
 
   try {
     switch (method) {
       case 'GET':
         if (!userRef.exists) {
-          res.status(400).end(`User with id ${id} does not exist`);
+          res.status(400).end(`User with uid ${uid} does not exist`);
           return;
         }
         res.status(200).json(userRef.data());
@@ -46,4 +46,4 @@ const userById = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default userById;
+export default userByUid;

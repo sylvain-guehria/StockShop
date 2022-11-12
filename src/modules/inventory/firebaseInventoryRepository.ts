@@ -67,9 +67,15 @@ class FirebaseInventoryRepository extends InventoryRepository {
     );
   }
 
-  async update(inventory: InventoryEntity): Promise<void> {
+  async update(
+    inventory: InventoryEntity,
+    userUid: string,
+    companyUid: string
+  ): Promise<void> {
     console.info('update inventory uid: ', inventory.getUid());
     await axios.put(`/api/inventory/${inventory.getUid()}`, {
+      userUid,
+      companyUid,
       uid: inventory.getUid(),
       name: inventory.getName(),
       isPublic: inventory.getIsPublic(),

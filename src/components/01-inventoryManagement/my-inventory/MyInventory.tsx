@@ -4,6 +4,7 @@ import {
 } from '@heroicons/react/20/solid';
 import type { FC } from 'react';
 
+import type { Inventory } from '@/modules/inventory/inventoryType';
 import type { Product } from '@/modules/product/productType';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 
@@ -12,7 +13,7 @@ import MobileInventoryTable from './MobileInventoryTable';
 import PinnedInventories from './PinnedInventories';
 
 type Props = {
-  inventories: any[];
+  inventories: Inventory[];
   products: Product[];
 };
 

@@ -2,6 +2,7 @@ import { v4 as uuidV4 } from 'uuid';
 
 import InventoryEntity from './InventoryEntity';
 import type { InventoryRepository } from './inventoryRepository';
+import type { Inventory } from './inventoryType';
 
 class InventoryService {
   inventoryRepository;
@@ -24,6 +25,23 @@ class InventoryService {
     });
 
     return this.inventoryRepository.add(inventory, userUid, companyUid);
+  }
+
+  async updateInventory(
+    inventory: Inventory,
+    userUid: string,
+    companyUid: string
+  ): Promise<void> {
+    return this.inventoryRepository.update(
+      InventoryEntity.new({
+        uid: inventory.uid,
+        name: inventory.name,
+        isPublic: inventory.isPublic,
+        isDefaultInventory: inventory.isDefaultInventory,
+      }),
+      userUid,
+      companyUid
+    );
   }
 }
 

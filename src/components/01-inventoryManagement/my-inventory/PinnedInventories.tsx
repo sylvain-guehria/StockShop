@@ -34,11 +34,20 @@ function classNames(...classes: string[]) {
 
 const PinnedInventories: FC<Props> = ({ inventories }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  // const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedInventory, setSelectedInventory] = useState(inventories[0]);
+
+  const handleEditModalOpen = (inventory: Inventory) => {
+    setSelectedInventory(inventory);
+    setIsEditModalOpen(true);
+  };
   return (
     <>
       {isEditModalOpen && (
         <DynamicModal open={isEditModalOpen} setOpen={setIsEditModalOpen}>
-          <DynamicEditInventoryForm />
+          <DynamicEditInventoryForm
+            inventory={selectedInventory as Inventory}
+          />
         </DynamicModal>
       )}
       <ul
@@ -95,7 +104,7 @@ const PinnedInventories: FC<Props> = ({ inventories }) => {
                               : 'text-gray-700',
                             'flex px-4 py-3 text-sm cursor-pointer justify-between'
                           )}
-                          onClick={() => setIsEditModalOpen(true)}
+                          onClick={() => handleEditModalOpen(inventory)}
                         >
                           Editer
                           <PencilIcon
