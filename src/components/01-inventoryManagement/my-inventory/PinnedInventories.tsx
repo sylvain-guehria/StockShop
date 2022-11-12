@@ -15,9 +15,13 @@ import { Fragment, useState } from 'react';
 
 import { useAuth } from '@/hooks/useAuth';
 import Providers from '@/layouts/Providers';
+import type { DeleteInventoryParams } from '@/modules/inventory/inventoryRepository';
 import type { UpdateInventoryParams } from '@/modules/inventory/inventoryService';
 import type { Inventory } from '@/modules/inventory/inventoryType';
-import { getUserInventoriesUseCase } from '@/usecases/usecases';
+import {
+  deleteInventoryUseCase,
+  getUserInventoriesUseCase,
+} from '@/usecases/usecases';
 
 const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
   suspense: true,
@@ -57,9 +61,26 @@ const PinnedInventories: FC = () => {
     },
   });
 
+  const deleteInventoryMutation = useMutation({
+    mutationFn: (params: DeleteInventoryParams) =>
+      deleteInventoryUseCase(params),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ['get-inventories'] });
+    },
+  });
+
   const handleClickEditInventory = (inventory: Inventory) => {
     setSelectedInventory(inventory);
     setIsEditModalOpen(true);
+  };
+
+  const handleClickDeleteInventory = (inventory: Inventory) => {
+    deleteInventoryMutation.mutate({
+      inventoryUid: inventory.uid as string,
+      userUid: user.uid as string,
+      companyUid: inventories[0]?.companyUid as string,
+    });
   };
 
   return (
@@ -143,6 +164,7 @@ const PinnedInventories: FC = () => {
                               : 'text-gray-700',
                             'px-4 py-3 text-sm cursor-pointer flex justify-between'
                           )}
+                          onClick={() => handleClickDeleteInventory(inventory)}
                         >
                           Supprimer
                           <TrashIcon

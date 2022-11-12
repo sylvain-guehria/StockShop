@@ -7,6 +7,7 @@ import {
 } from 'di';
 
 import { chooseSubRoleOnFirstConnection } from './chooseSubRoleOnFirstConnection';
+import { deleteInventory } from './deleteInventory';
 import { getUserInventories } from './getUserInventories';
 import { loginWithEmail } from './loginWithEmail';
 import { loginWithGoogle } from './loginWithGoogle';
@@ -26,3 +27,5 @@ export const getUserInventoriesUseCase = getUserInventories(
   companyServiceDi,
   inventoryServiceDi
 );
+
+export const deleteInventoryUseCase = deleteInventory(inventoryRepository);

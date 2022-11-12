@@ -4,34 +4,24 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 const { USERS, COMPANIES, INVENTORIES } = TableNames;
 
-const inventoryByUid = async (req: NextApiRequest, res: NextApiResponse) => {
+const deleteInventory = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
-    query: { uid },
+    query: { userUid, companyUid, inventoryUid },
     method,
   } = req;
 
-  const { userUid, companyUid } = req.body;
-
-  const inventory = {
-    uid: req.body.uid,
-    name: req.body.name,
-    isPublic: req.body.isPublic,
-    isDefaultInventory: req.body.isDefaultInventory,
-    color: req.body.color,
-  };
-
-  if (!uid) {
-    res.status(400).end('Inventory uid is mandatory to update an inventory');
+  if (!inventoryUid) {
+    res.status(400).end('Inventory uid is mandatory to delete an inventory');
     return;
   }
 
   if (!userUid) {
-    res.status(400).end('userUid is mandatory to update an inventory');
+    res.status(400).end('userUid is mandatory to delete an inventory');
     return;
   }
 
   if (!companyUid) {
-    res.status(400).end('companyUid is mandatory to update an inventory');
+    res.status(400).end('companyUid is mandatory to delete an inventory');
     return;
   }
 
@@ -41,7 +31,7 @@ const inventoryByUid = async (req: NextApiRequest, res: NextApiResponse) => {
     .collection(COMPANIES)
     .doc(companyUid as string)
     .collection(INVENTORIES)
-    .doc(uid as string)
+    .doc(inventoryUid as string)
     .get();
 
   const inventoryDoc = await firestoreAdmin
@@ -50,23 +40,18 @@ const inventoryByUid = async (req: NextApiRequest, res: NextApiResponse) => {
     .collection(COMPANIES)
     .doc(companyUid as string)
     .collection(INVENTORIES)
-    .doc(uid as string);
+    .doc(inventoryUid as string);
 
   try {
     switch (method) {
-      case 'GET':
+      case 'DELETE':
         if (!inventoryRef.exists) {
-          res.status(400).end(`Inventory with uid ${uid} does not exist`);
+          res
+            .status(400)
+            .end(`Inventory with uid ${inventoryUid} does not exist`);
           return;
         }
-        res.status(200).json(inventoryRef.data());
-        return;
-      case 'PUT':
-        if (!inventoryRef.exists) {
-          res.status(400).end(`Inventory with uid ${uid} does not exist`);
-          return;
-        }
-        inventoryDoc.update(inventory);
+        inventoryDoc.delete();
         res.status(200).end();
         return;
       default:
@@ -80,4 +65,4 @@ const inventoryByUid = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default inventoryByUid;
+export default deleteInventory;

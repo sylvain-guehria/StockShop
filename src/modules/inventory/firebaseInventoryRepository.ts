@@ -3,6 +3,7 @@
 import axios from 'axios';
 
 import InventoryEntity from './InventoryEntity';
+import type { DeleteInventoryParams } from './inventoryRepository';
 import { InventoryRepository } from './inventoryRepository';
 
 class FirebaseInventoryRepository extends InventoryRepository {
@@ -47,9 +48,15 @@ class FirebaseInventoryRepository extends InventoryRepository {
     });
   }
 
-  async delete(uid: string): Promise<void> {
-    console.info(`Deleting inventory with uid ${uid} in db...`);
-    return axios.post(`${this.baseUrl}/api/inventory/delete`, { uid });
+  async delete({
+    userUid,
+    companyUid,
+    inventoryUid,
+  }: DeleteInventoryParams): Promise<void> {
+    console.info(`Deleting inventory with uid ${inventoryUid} in db...`);
+    axios.delete(`${this.baseUrl}/api/inventory/delete`, {
+      params: { userUid, companyUid, inventoryUid },
+    });
   }
 
   async getAll(): Promise<InventoryEntity[]> {
