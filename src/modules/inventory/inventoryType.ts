@@ -4,4 +4,5 @@ export interface Inventory {
   isPublic?: boolean;
   isDefaultInventory?: boolean;
   color?: string;
+  companyUid?: string;
 }

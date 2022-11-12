@@ -38,6 +38,7 @@ class InventoryService {
         name: inventory.name,
         isPublic: inventory.isPublic,
         isDefaultInventory: inventory.isDefaultInventory,
+        color: inventory.color,
       }),
       userUid,
       companyUid

@@ -103,6 +103,7 @@ class FirebaseInventoryRepository extends InventoryRepository {
           isPublic: inventory.isPublic,
           isDefaultInventory: inventory.isDefaultInventory,
           color: inventory.color,
+          companyUid,
         })
     );
   }

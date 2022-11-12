@@ -26,9 +26,10 @@ const publicStates = [
 
 type Props = {
   inventory: Inventory;
+  onSuccess?: () => void;
 };
 
-const EditInventoryForm: FC<Props> = ({ inventory }) => {
+const EditInventoryForm: FC<Props> = ({ inventory, onSuccess }) => {
   const toast = useToast(4000);
   const { user } = useAuth();
   const formOptions = {
@@ -58,7 +59,7 @@ const EditInventoryForm: FC<Props> = ({ inventory }) => {
     data: EditInventoryFormFormType
   ) => {
     try {
-      inventoryServiceDi.updateInventory(
+      await inventoryServiceDi.updateInventory(
         {
           uid: inventory.uid,
           name: data.name,
@@ -66,8 +67,9 @@ const EditInventoryForm: FC<Props> = ({ inventory }) => {
           color: data.color,
         },
         user.uid,
-        user.currentCompanyId
+        inventory.companyUid as string
       );
+      if (onSuccess) onSuccess();
     } catch (e) {
       toast(
         ToasterTypeEnum.ERROR,

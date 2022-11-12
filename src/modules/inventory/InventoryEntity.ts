@@ -11,6 +11,8 @@ class InventoryEntity implements Inventory {
 
   color: string;
 
+  companyUid: string;
+
   static new(inventory?: Inventory): InventoryEntity {
     return new InventoryEntity(inventory || {});
   }
@@ -21,6 +23,7 @@ class InventoryEntity implements Inventory {
     this.isPublic = inventory.isPublic || false;
     this.isDefaultInventory = inventory.isDefaultInventory || false;
     this.color = inventory.color || '';
+    this.companyUid = inventory.companyUid || '';
   }
 
   getUid(): string {
@@ -65,6 +68,15 @@ class InventoryEntity implements Inventory {
 
   setIsDefaultInventory(isDefaultInventory: boolean): InventoryEntity {
     this.isDefaultInventory = isDefaultInventory;
+    return this;
+  }
+
+  getCompanyUid(): string {
+    return this.companyUid;
+  }
+
+  setCompanyUid(companyUid: string): InventoryEntity {
+    this.companyUid = companyUid;
     return this;
   }
 }

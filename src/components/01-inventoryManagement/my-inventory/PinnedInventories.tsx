@@ -11,6 +11,7 @@ import dynamic from 'next/dynamic';
 import type { FC } from 'react';
 import { Fragment, useState } from 'react';
 
+import Providers from '@/layouts/Providers';
 import type { Inventory } from '@/modules/inventory/inventoryType';
 
 const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
@@ -41,12 +42,14 @@ const PinnedInventories: FC<Props> = ({ inventories }) => {
     setSelectedInventory(inventory);
     setIsEditModalOpen(true);
   };
+
   return (
     <>
       {isEditModalOpen && (
         <DynamicModal open={isEditModalOpen} setOpen={setIsEditModalOpen}>
           <DynamicEditInventoryForm
             inventory={selectedInventory as Inventory}
+            onSuccess={() => setIsEditModalOpen(false)}
           />
         </DynamicModal>
       )}
@@ -61,12 +64,10 @@ const PinnedInventories: FC<Props> = ({ inventories }) => {
           >
             <div
               className={classNames(
-                'bg-primary-400',
+                `bg-${inventory.color ? inventory.color : 'primary-600'}`,
                 'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
               )}
-            >
-              ID
-            </div>
+            ></div>
             <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-y border-r border-gray-200 bg-white">
               <div className="flex-1 truncate px-4 py-2 text-sm">
                 <a
@@ -160,4 +161,13 @@ const PinnedInventories: FC<Props> = ({ inventories }) => {
     </>
   );
 };
-export default PinnedInventories;
+
+const PinnedInventoriesWithProviders: FC<Props> = ({ inventories }) => {
+  return (
+    <Providers>
+      <PinnedInventories inventories={inventories} />
+    </Providers>
+  );
+};
+
+export default PinnedInventoriesWithProviders;
