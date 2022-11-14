@@ -20,9 +20,11 @@ import Providers from '@/layouts/Providers';
 import type { DeleteInventoryParams } from '@/modules/inventory/inventoryRepository';
 import type { UpdateInventoryParams } from '@/modules/inventory/inventoryService';
 import type { Inventory } from '@/modules/inventory/inventoryType';
+import type { SetInventoryAsDefaultParams } from '@/usecases/setInventoryAsDefault';
 import {
   deleteInventoryUseCase,
   getUserInventoriesUseCase,
+  setInventoryAsDefaultUseCase,
 } from '@/usecases/usecases';
 
 import DeleteInventoryForm from '../deleteInventoryForm/DeleteInventoryForm';
@@ -54,9 +56,9 @@ const PinnedInventories: FC = () => {
     queryFn: () => getUserInventoriesUseCase(user.uid),
     enabled: !!user.uid,
   });
-  const [selectedInventory, setSelectedInventory] = useState(inventories[0]);
+  const [selectedInventory, setSelectedInventory] = useState<Inventory>();
 
-  const mutation = useMutation({
+  const updateInventoryMutation = useMutation({
     mutationFn: (params: UpdateInventoryParams) =>
       inventoryServiceDi.updateInventory(params),
     onSuccess: () => {
@@ -69,6 +71,15 @@ const PinnedInventories: FC = () => {
   const deleteInventoryMutation = useMutation({
     mutationFn: (params: DeleteInventoryParams) =>
       deleteInventoryUseCase(params),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ['get-inventories'] });
+    },
+  });
+
+  const setDaufltInventoryMutation = useMutation({
+    mutationFn: (params: SetInventoryAsDefaultParams) =>
+      setInventoryAsDefaultUseCase(params),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ['get-inventories'] });
@@ -89,6 +100,13 @@ const PinnedInventories: FC = () => {
     setIsEditModalOpen(false);
     setIsDeleteModalOpen(false);
     setSelectedInventory(undefined);
+  };
+
+  const handleClickSetDefaultInventory = (inventory: Inventory) => {
+    setDaufltInventoryMutation.mutate({
+      inventory,
+      userUid: user.uid,
+    });
   };
 
   const deleteInventory = (inventory: Inventory) => {
@@ -112,8 +130,8 @@ const PinnedInventories: FC = () => {
           handleCloseModal={handleCloseModal}
         >
           <DynamicEditInventoryForm
-            inventory={selectedInventory as Inventory}
-            onSubmit={mutation.mutate}
+            inventory={selectedInventory as unknown as Inventory}
+            onSubmit={updateInventoryMutation.mutate}
           />
         </DynamicModal>
       )}
@@ -123,7 +141,7 @@ const PinnedInventories: FC = () => {
           handleCloseModal={handleCloseModal}
         >
           <DeleteInventoryForm
-            inventory={selectedInventory as Inventory}
+            inventory={selectedInventory as unknown as Inventory}
             deleteInventory={(inventory) => deleteInventory(inventory)}
           />
         </DynamicModal>
@@ -218,6 +236,9 @@ const PinnedInventories: FC = () => {
                               : 'text-gray-700',
                             'px-4 py-3 text-sm cursor-pointer flex justify-between'
                           )}
+                          onClick={() =>
+                            handleClickSetDefaultInventory(inventory)
+                          }
                         >
                           Inventaire par défaut
                           <ArrowsPointingInIcon

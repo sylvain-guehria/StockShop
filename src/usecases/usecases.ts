@@ -13,6 +13,7 @@ import { loginWithEmail } from './loginWithEmail';
 import { loginWithGoogle } from './loginWithGoogle';
 import { logout } from './logout';
 import { registerWithEmail } from './registerWithEmail';
+import { setInventoryAsDefault } from './setInventoryAsDefault';
 
 export const registerWithEmailUseCase = registerWithEmail(userRepository);
 export const loginWithEmailUseCase = loginWithEmail();
@@ -29,3 +30,5 @@ export const getUserInventoriesUseCase = getUserInventories(
 );
 
 export const deleteInventoryUseCase = deleteInventory(inventoryRepository);
+export const setInventoryAsDefaultUseCase =
+  setInventoryAsDefault(inventoryRepository);

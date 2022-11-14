@@ -9,14 +9,21 @@ import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import type { UpdateInventoryParams } from '@/modules/inventory/inventoryService';
-import type { Inventory } from '@/modules/inventory/inventoryType';
+import type {
+  Inventory,
+  InventoryColor,
+} from '@/modules/inventory/inventoryType';
+import { InventoryColors } from '@/modules/inventory/inventoryType';
 
 import { validationSchema } from './EditInventoryFormValidation';
+
+const { BLACK, BLUE, GRAY, GREEN, ORANGE, PRIMARY, RED, YELLOW } =
+  InventoryColors;
 
 interface EditInventoryFormType {
   name: string;
   isPublic: string;
-  color: string;
+  color: InventoryColor;
 }
 
 const publicStates = [
@@ -37,7 +44,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
     defaultValues: {
       name: inventory.name,
       isPublic: inventory?.isPublic?.toString() || 'false',
-      color: inventory.color || 'primary-600',
+      color: inventory.color || PRIMARY,
     },
   };
 
@@ -51,7 +58,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
 
   register('color');
 
-  const handleColorChange = (color: string): void => {
+  const handleColorChange = (color: InventoryColor): void => {
     setValue('color', color);
   };
 
@@ -65,6 +72,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
           name: data.name,
           isPublic: data.isPublic as unknown as boolean,
           color: data.color,
+          isDefaultInventory: inventory.isDefaultInventory,
         },
         userUid: user.uid,
         companyUid: inventory.companyUid as string,
@@ -111,73 +119,89 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
         <div className="w-11">
           <div className="flex h-5 items-center">
             <input
-              checked={watch('color') === 'primary-600'}
-              id="primary-600"
-              value="primary-600"
-              onChange={(e) => handleColorChange(e.target.value)}
+              checked={watch('color') === PRIMARY}
+              id={PRIMARY}
+              value={PRIMARY}
+              onChange={(e) =>
+                handleColorChange(e.target.value as InventoryColor)
+              }
               aria-describedby="checkbox-color"
               type="checkbox"
               className="mr-3 h-6 w-6 rounded border-gray-300 bg-primary-600 text-primary-600 focus:ring-indigo-500"
             />
             <input
-              checked={watch('color') === 'green-500'}
-              id="green-500"
-              value="green-500"
-              onChange={(e) => handleColorChange(e.target.value)}
+              checked={watch('color') === GREEN}
+              id={GREEN}
+              value={GREEN}
+              onChange={(e) =>
+                handleColorChange(e.target.value as InventoryColor)
+              }
               aria-describedby="checkbox-color"
               type="checkbox"
               className="mr-3 h-6  w-6 rounded border-gray-300 bg-green-500 text-green-500 focus:ring-indigo-500"
             />
             <input
-              checked={watch('color') === 'yellow-500'}
-              id="yellow-500"
-              value="yellow-500"
-              onChange={(e) => handleColorChange(e.target.value)}
+              checked={watch('color') === YELLOW}
+              id={YELLOW}
+              value={YELLOW}
+              onChange={(e) =>
+                handleColorChange(e.target.value as InventoryColor)
+              }
               aria-describedby="checkbox-color"
               type="checkbox"
               className="mr-3 h-6 w-6 rounded border-gray-300 bg-yellow-500 text-yellow-400 focus:ring-indigo-500"
             />
             <input
-              checked={watch('color') === 'red-500'}
-              id="red-500"
-              value="red-500"
-              onChange={(e) => handleColorChange(e.target.value)}
+              checked={watch('color') === RED}
+              id={RED}
+              value={RED}
+              onChange={(e) =>
+                handleColorChange(e.target.value as InventoryColor)
+              }
               aria-describedby="checkbox-color"
               type="checkbox"
               className="mr-3 h-6  w-6 rounded border-gray-300 bg-red-500 text-red-500 focus:ring-indigo-500"
             />
             <input
-              checked={watch('color') === 'blue-400'}
-              id="blue-400"
-              value="blue-400"
-              onChange={(e) => handleColorChange(e.target.value)}
+              checked={watch('color') === BLUE}
+              id={BLUE}
+              value={BLUE}
+              onChange={(e) =>
+                handleColorChange(e.target.value as InventoryColor)
+              }
               aria-describedby="checkbox-color"
               type="checkbox"
               className="mr-3 h-6  w-6 rounded border-gray-300 bg-blue-400 text-blue-400 focus:ring-indigo-500"
             />
             <input
-              checked={watch('color') === 'orange-500'}
-              id="orange-500"
-              value="orange-500"
-              onChange={(e) => handleColorChange(e.target.value)}
+              checked={watch('color') === ORANGE}
+              id={ORANGE}
+              value={ORANGE}
+              onChange={(e) =>
+                handleColorChange(e.target.value as InventoryColor)
+              }
               aria-describedby="checkbox-color"
               type="checkbox"
               className="mr-3 h-6  w-6 rounded border-gray-300 bg-orange-500 text-orange-500 focus:ring-indigo-500"
             />
             <input
-              checked={watch('color') === 'gray-500'}
-              id="gray-500"
-              value="gray-500"
-              onChange={(e) => handleColorChange(e.target.value)}
+              checked={watch('color') === GRAY}
+              id={GRAY}
+              value={GRAY}
+              onChange={(e) =>
+                handleColorChange(e.target.value as InventoryColor)
+              }
               aria-describedby="checkbox-color"
               type="checkbox"
               className="mr-3 h-6  w-6 rounded border-gray-300 bg-gray-500 text-gray-500 focus:ring-indigo-500"
             />
             <input
-              checked={watch('color') === 'black'}
-              id="black"
-              value="black"
-              onChange={(e) => handleColorChange(e.target.value)}
+              checked={watch('color') === BLACK}
+              id={BLACK}
+              value={BLACK}
+              onChange={(e) =>
+                handleColorChange(e.target.value as InventoryColor)
+              }
               aria-describedby="checkbox-color"
               type="checkbox"
               className="mr-3 h-6  w-6 rounded border-gray-300 bg-black text-black focus:ring-indigo-500"

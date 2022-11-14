@@ -27,6 +27,7 @@ export const getUserInventories =
           await inventoryServiceDi.createInventoryByUserIdAndCompanyId({
             userUid,
             companyUid: company.uid,
+            isFirstInventory: true,
           });
         inventories = [inventory];
       }

@@ -1,4 +1,5 @@
-import type { Inventory } from './inventoryType';
+import type { Inventory, InventoryColor } from './inventoryType';
+import { arrayInventoryColors } from './inventoryType';
 
 class InventoryEntity implements Inventory {
   uid: string;
@@ -9,7 +10,7 @@ class InventoryEntity implements Inventory {
 
   isDefaultInventory: boolean;
 
-  color: string;
+  color: InventoryColor;
 
   companyUid: string;
 
@@ -22,7 +23,7 @@ class InventoryEntity implements Inventory {
     this.name = inventory.name || '';
     this.isPublic = inventory.isPublic || false;
     this.isDefaultInventory = inventory.isDefaultInventory || false;
-    this.color = inventory.color || '';
+    this.color = inventory.color || (arrayInventoryColors[0] as InventoryColor);
     this.companyUid = inventory.companyUid || '';
   }
 
@@ -35,11 +36,11 @@ class InventoryEntity implements Inventory {
     return this;
   }
 
-  getColor(): string {
+  getColor(): InventoryColor {
     return this.color;
   }
 
-  setColor(color: string): InventoryEntity {
+  setColor(color: InventoryColor): InventoryEntity {
     this.color = color;
     return this;
   }
@@ -66,17 +67,22 @@ class InventoryEntity implements Inventory {
     return this.isDefaultInventory;
   }
 
-  setIsDefaultInventory(isDefaultInventory: boolean): InventoryEntity {
-    this.isDefaultInventory = isDefaultInventory;
-    return this;
-  }
-
   getCompanyUid(): string {
     return this.companyUid;
   }
 
   setCompanyUid(companyUid: string): InventoryEntity {
     this.companyUid = companyUid;
+    return this;
+  }
+
+  setAsDefaultInventory(): InventoryEntity {
+    this.isDefaultInventory = true;
+    return this;
+  }
+
+  setAsNotDefaultInventory(): InventoryEntity {
+    this.isDefaultInventory = false;
     return this;
   }
 }
