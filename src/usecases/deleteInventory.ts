@@ -15,14 +15,6 @@ export const deleteInventory =
     if (!inventoryUid) throw new Error('inventoryUid is required');
 
     try {
-      const inventories =
-        await inventoryRepository.getInventoriesByUserUidAndCompanyUid(
-          userUid,
-          companyUid
-        );
-      if (!inventories || inventories.length <= 1) {
-        throw new Error('You can not delete the last inventory');
-      }
       await inventoryRepository.delete({
         userUid,
         companyUid,
@@ -30,6 +22,7 @@ export const deleteInventory =
       });
     } catch (error: any) {
       // eslint-disable-next-line no-console
-      console.log('error------------', error);
+      console.log('error', error);
+      throw new Error(error);
     }
   };

@@ -13,7 +13,9 @@ import dynamic from 'next/dynamic';
 import type { FC } from 'react';
 import { Fragment, useState } from 'react';
 
+import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
 import Providers from '@/layouts/Providers';
 import type { DeleteInventoryParams } from '@/modules/inventory/inventoryRepository';
 import type { UpdateInventoryParams } from '@/modules/inventory/inventoryService';
@@ -22,6 +24,8 @@ import {
   deleteInventoryUseCase,
   getUserInventoriesUseCase,
 } from '@/usecases/usecases';
+
+import DeleteInventoryForm from '../deleteInventoryForm/DeleteInventoryForm';
 
 const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
   suspense: true,
@@ -40,9 +44,10 @@ function classNames(...classes: string[]) {
 
 const PinnedInventories: FC = () => {
   const queryClient = useQueryClient();
+  const toast = useToast(4000);
   const { user } = useAuth();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  // const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const { data: inventories = [] } = useQuery({
     queryKey: ['get-inventories'],
@@ -76,20 +81,50 @@ const PinnedInventories: FC = () => {
   };
 
   const handleClickDeleteInventory = (inventory: Inventory) => {
-    deleteInventoryMutation.mutate({
-      inventoryUid: inventory.uid as string,
-      userUid: user.uid as string,
-      companyUid: inventories[0]?.companyUid as string,
-    });
+    setSelectedInventory(inventory);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsEditModalOpen(false);
+    setIsDeleteModalOpen(false);
+    setSelectedInventory(undefined);
+  };
+
+  const deleteInventory = (inventory: Inventory) => {
+    try {
+      deleteInventoryMutation.mutate({
+        inventoryUid: inventory.uid as string,
+        userUid: user.uid as string,
+        companyUid: inventories[0]?.companyUid as string,
+      });
+      handleCloseModal();
+    } catch (error: any) {
+      toast(ToasterTypeEnum.ERROR, error.message);
+    }
   };
 
   return (
     <>
       {isEditModalOpen && (
-        <DynamicModal open={isEditModalOpen} setOpen={setIsEditModalOpen}>
+        <DynamicModal
+          open={isEditModalOpen}
+          handleCloseModal={handleCloseModal}
+        >
           <DynamicEditInventoryForm
             inventory={selectedInventory as Inventory}
             onSubmit={mutation.mutate}
+          />
+        </DynamicModal>
+      )}
+      {isDeleteModalOpen && (
+        <DynamicModal
+          open={isDeleteModalOpen}
+          handleCloseModal={handleCloseModal}
+        >
+          <DeleteInventoryForm
+            inventory={selectedInventory as Inventory}
+            deleteInventory={(inventory) => deleteInventory(inventory)}
           />
         </DynamicModal>
       )}

@@ -1,14 +1,15 @@
 import { Dialog, Transition } from '@headlessui/react';
+import { XMarkIcon } from '@heroicons/react/20/solid';
 import type { FC, ReactNode } from 'react';
 import { Fragment, useRef } from 'react';
 
 type Props = {
   open: boolean;
   children: ReactNode;
-  setOpen: (open: boolean) => void;
+  handleCloseModal: () => void;
 };
 
-const Modal: FC<Props> = ({ children, open, setOpen }) => {
+const Modal: FC<Props> = ({ children, open, handleCloseModal }) => {
   const cancelButtonRef = useRef(null);
 
   return (
@@ -17,7 +18,7 @@ const Modal: FC<Props> = ({ children, open, setOpen }) => {
         as="div"
         className="relative z-10"
         initialFocus={cancelButtonRef}
-        onClose={() => setOpen(false)}
+        onClose={() => handleCloseModal()}
       >
         <Transition.Child
           as={Fragment}
@@ -42,7 +43,17 @@ const Modal: FC<Props> = ({ children, open, setOpen }) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative justify-center overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-10">
+              <Dialog.Panel className="relative justify-center overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-4">
+                <div className="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
+                  <button
+                    type="button"
+                    className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-red-100 focus:ring-offset-2"
+                    onClick={() => handleCloseModal()}
+                  >
+                    <span className="sr-only">Close</span>
+                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                  </button>
+                </div>
                 <div className="text-center">{children}</div>
               </Dialog.Panel>
             </Transition.Child>

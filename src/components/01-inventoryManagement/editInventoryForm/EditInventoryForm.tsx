@@ -13,7 +13,7 @@ import type { Inventory } from '@/modules/inventory/inventoryType';
 
 import { validationSchema } from './EditInventoryFormValidation';
 
-interface EditInventoryFormFormType {
+interface EditInventoryFormType {
   name: string;
   isPublic: string;
   color: string;
@@ -47,7 +47,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
     setValue,
     watch,
     formState: { errors },
-  } = useForm<EditInventoryFormFormType>(formOptions);
+  } = useForm<EditInventoryFormType>(formOptions);
 
   register('color');
 
@@ -55,8 +55,8 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
     setValue('color', color);
   };
 
-  const onSubmitForm: SubmitHandler<EditInventoryFormFormType> = async (
-    data: EditInventoryFormFormType
+  const onSubmitForm: SubmitHandler<EditInventoryFormType> = async (
+    data: EditInventoryFormType
   ) => {
     try {
       onSubmit({
@@ -78,7 +78,10 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmitForm)} className="space-y-6 text-left">
+    <form
+      onSubmit={handleSubmit(onSubmitForm)}
+      className="space-y-6 p-6 text-left"
+    >
       <div>
         <label
           htmlFor="email"
