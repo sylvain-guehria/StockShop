@@ -20,7 +20,7 @@ import Providers from '@/layouts/Providers';
 import type { DeleteInventoryParams } from '@/modules/inventory/inventoryRepository';
 import type { UpdateInventoryParams } from '@/modules/inventory/inventoryService';
 import type { Inventory } from '@/modules/inventory/inventoryType';
-import type { SetInventoryAsDefaultParams } from '@/usecases/setInventoryAsDefault';
+import type { SetInventoryAsDefaultParams } from '@/usecases/inventoy/setInventoryAsDefault';
 import {
   deleteInventoryUseCase,
   getUserInventoriesUseCase,

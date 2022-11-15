@@ -6,14 +6,14 @@ import {
   userRepository,
 } from 'di';
 
-import { chooseSubRoleOnFirstConnection } from './chooseSubRoleOnFirstConnection';
-import { deleteInventory } from './deleteInventory';
-import { getUserInventories } from './getUserInventories';
-import { loginWithEmail } from './loginWithEmail';
-import { loginWithGoogle } from './loginWithGoogle';
-import { logout } from './logout';
-import { registerWithEmail } from './registerWithEmail';
-import { setInventoryAsDefault } from './setInventoryAsDefault';
+import { chooseSubRoleOnFirstConnection } from './auth/chooseSubRoleOnFirstConnection';
+import { loginWithEmail } from './auth/loginWithEmail';
+import { loginWithGoogle } from './auth/loginWithGoogle';
+import { logout } from './auth/logout';
+import { registerWithEmail } from './auth/registerWithEmail';
+import { deleteInventory } from './inventoy/deleteInventory';
+import { getUserInventories } from './inventoy/getUserInventories';
+import { setInventoryAsDefault } from './inventoy/setInventoryAsDefault';
 
 export const registerWithEmailUseCase = registerWithEmail(userRepository);
 export const loginWithEmailUseCase = loginWithEmail();

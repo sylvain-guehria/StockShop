@@ -1,8 +1,8 @@
 import type { Auth } from 'firebase/auth';
+import { sessionCookieName } from 'firebaseFolder/constant';
+import { FirebaseAuthenticationError } from 'firebaseFolder/errorCodes';
 import Cookie from 'js-cookie';
 
-import { sessionCookieName } from '../../firebaseFolder/constant';
-import { FirebaseAuthenticationError } from '../../firebaseFolder/errorCodes';
 import { logout } from './logout';
 
 Cookie.get = jest.fn();

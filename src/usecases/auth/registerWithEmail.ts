@@ -5,14 +5,13 @@ import type {
   User,
   UserCredential,
 } from 'firebase/auth';
+import { FirebaseAuthenticationError } from 'firebaseFolder/errorCodes';
 import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 
 import UserEntity from '@/modules/user/UserEntity';
+import type { UserRepository } from '@/modules/user/userRepository';
+import { PROVIDERS, ROLES } from '@/modules/user/userType';
 import { mainRoutes } from '@/routes/mainRoutes';
-
-import { FirebaseAuthenticationError } from '../../firebaseFolder/errorCodes';
-import type { UserRepository } from '../modules/user/userRepository';
-import { PROVIDERS, ROLES } from '../modules/user/userType';
 
 type RegisterWithEmailParams = {
   email: string;
