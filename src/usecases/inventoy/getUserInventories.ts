@@ -13,6 +13,10 @@ export const getUserInventories =
   ) =>
   async (userUid: string): Promise<Inventory[]> => {
     try {
+      if (!userUid) {
+        throw new Error('userUid is required to get user inventories');
+      }
+
       let company = await companyRepository.getCompanyByUserUid(userUid);
       if (!company) {
         company = await companyServiceDi.createCompanyByUserId(userUid);

@@ -10,11 +10,13 @@ export const deleteInventory =
     companyUid,
     inventoryUid,
   }: DeleteInventoryParams): Promise<void> => {
-    if (!userUid) throw new Error('userUid is required');
-    if (!companyUid) throw new Error('companyUid is required');
-    if (!inventoryUid) throw new Error('inventoryUid is required');
-
     try {
+      if (!userUid) throw new Error('userUid is required to delete inventory');
+      if (!companyUid)
+        throw new Error('companyUid is required to delete inventory');
+      if (!inventoryUid)
+        throw new Error('inventoryUid is required to delete inventory');
+
       await inventoryRepository.delete({
         userUid,
         companyUid,
