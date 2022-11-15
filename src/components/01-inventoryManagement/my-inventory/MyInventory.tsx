@@ -4,6 +4,7 @@ import type { FC } from 'react';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 
 import CreateInventoryButton from './CreateInventoryButton';
+import InventoryTable from './InventoryTable';
 import PinnedInventories from './PinnedInventories';
 
 const MyInventory: FC = () => {
@@ -32,8 +33,8 @@ const MyInventory: FC = () => {
               <PinnedInventories />
             </div>
 
-            {/* <MobileInventoryTable />
-            <InventoryTable /> */}
+            {/* <MobileInventoryTable /> */}
+            <InventoryTable />
           </main>
         </div>
       </div>

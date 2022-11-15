@@ -1,14 +1,7 @@
 'use client';
 
 import { Disclosure, Switch } from '@headlessui/react';
-import {
-  BellIcon,
-  CogIcon,
-  CreditCardIcon,
-  KeyIcon,
-  SquaresPlusIcon,
-  UserCircleIcon,
-} from '@heroicons/react/24/outline';
+import { BellIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 
 const user = {
@@ -26,11 +19,11 @@ const navigation = [
 ];
 const subNavigation = [
   { name: 'Profile', href: '#', icon: UserCircleIcon, current: true },
-  { name: 'Account', href: '#', icon: CogIcon, current: false },
-  { name: 'Password', href: '#', icon: KeyIcon, current: false },
-  { name: 'Notifications', href: '#', icon: BellIcon, current: false },
-  { name: 'Billing', href: '#', icon: CreditCardIcon, current: false },
-  { name: 'Integrations', href: '#', icon: SquaresPlusIcon, current: false },
+  // { name: 'Account', href: '#', icon: CogIcon, current: false },
+  // { name: 'Password', href: '#', icon: KeyIcon, current: false },
+  // { name: 'Notifications', href: '#', icon: BellIcon, current: false },
+  // { name: 'Billing', href: '#', icon: CreditCardIcon, current: false },
+  // { name: 'Integrations', href: '#', icon: SquaresPlusIcon, current: false },
 ];
 const userNavigation = [
   { name: 'Your Profile', href: '#' },

@@ -3,9 +3,8 @@
 import { AppConfig } from '../../utils/AppConfig';
 import { Meta } from '../04-lib/layout/Meta';
 import { Banner } from './Banner';
-import { Customer } from './Customer';
 import { FAQ } from './FAQ';
-import { Features } from './Features';
+import GetEarlyAccessIncentive from './GetEarlyAccessIncentive';
 import Hero from './Hero';
 import { Pricing } from './Pricing';
 import { Testimonial } from './Testimonial';
@@ -15,8 +14,9 @@ const Base = () => (
   <div className="text-gray-600 antialiased">
     <Meta title={AppConfig.title} description={AppConfig.description} />
     <Hero />
-    <Customer />
-    <Features />
+    <GetEarlyAccessIncentive />
+    {/* <Customer /> */}
+    {/* <Features /> */}
     <VerticalFeatures />
     <Testimonial />
     <Pricing />
