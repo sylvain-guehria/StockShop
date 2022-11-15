@@ -12,18 +12,22 @@ import type { UserRepository } from '@/modules/user/userRepository';
 import type { LocaleType } from '@/modules/user/userType';
 import { PROVIDERS } from '@/modules/user/userType';
 
-type LoginWithGoogleParamsType = {
-  signInWithPopup: (
-    auth: Auth,
-    provider: AuthProvider
-  ) => Promise<UserCredential>;
-  getAdditionalUserInfo: (
-    userCredential: UserCredential
-  ) => AdditionalUserInfo | null;
+export type LoginWithGoogleParamsType = {
+  signInWithPopup: SignInWithPopupType;
+  getAdditionalUserInfo: GetAdditionalUserInfoType;
   provider: AuthProvider;
   auth: Auth;
   axios: AxiosStatic;
 };
+
+export type SignInWithPopupType = (
+  auth: Auth,
+  provider: AuthProvider
+) => Promise<UserCredential>;
+
+export type GetAdditionalUserInfoType = (
+  userCredential: UserCredential
+) => AdditionalUserInfo | null;
 
 export const loginWithGoogle =
   (userRepository: UserRepository) =>
@@ -60,6 +64,10 @@ export const loginWithGoogle =
         idToken,
       });
     } catch (error: any) {
-      throw new FirebaseAuthenticationError(error.response?.data || error.code);
+      // eslint-disable-next-line no-console
+      throw new FirebaseAuthenticationError({
+        message: error.response?.data || error.message,
+        errorCode: error.code,
+      });
     }
   };

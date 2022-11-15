@@ -35,6 +35,9 @@ export const loginWithEmail =
         idToken,
       });
     } catch (error: any) {
-      throw new FirebaseAuthenticationError(error.code);
+      throw new FirebaseAuthenticationError({
+        errorCode: error.code,
+        message: error.message,
+      });
     }
   };

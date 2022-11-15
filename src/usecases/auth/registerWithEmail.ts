@@ -55,8 +55,11 @@ export const registerWithEmail =
       await axios.post('/api/sessionInit', {
         idToken,
       });
-    } catch (e: any) {
-      throw new FirebaseAuthenticationError(e.code);
+    } catch (error: any) {
+      throw new FirebaseAuthenticationError({
+        errorCode: error.code,
+        message: error.message,
+      });
     }
     try {
       if (userCredentialFromFirebase?.user?.uid) {
@@ -71,7 +74,10 @@ export const registerWithEmail =
       }
     } catch (error: any) {
       deleteUser(auth.currentUser as User);
-      throw new FirebaseAuthenticationError(error.response?.data || error.code);
+      throw new FirebaseAuthenticationError({
+        errorCode: error.code,
+        message: error.message,
+      });
     }
 
     if (

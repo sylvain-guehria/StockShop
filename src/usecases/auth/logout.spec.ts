@@ -99,7 +99,12 @@ it('Do not logout the session if it failed to logout from firebase client', asyn
       auth,
     });
   } catch (e: any) {
-    expect(e).toEqual(new FirebaseAuthenticationError('auth/unknown'));
+    expect(e).toEqual(
+      new FirebaseAuthenticationError({
+        errorCode: error.code,
+        message: error.message,
+      })
+    );
     expect(e.errorCode).toEqual('auth/unknown');
   }
   expect(fetch).toHaveBeenCalledTimes(0);
