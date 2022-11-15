@@ -13,13 +13,18 @@ export const setInventoryAsDefault =
     userUid,
     inventory,
   }: SetInventoryAsDefaultParams): Promise<void> => {
-    if (!userUid) throw new Error('userUid is required');
-    if (!inventory) throw new Error('inventory is required');
+    if (!userUid)
+      throw new Error('userUid is required to set inventory as default');
+    if (!inventory)
+      throw new Error('inventory is required to set inventory as default');
 
     const inventoryEntity = InventoryEntity.new(inventory);
     const companyUid = inventoryEntity.getCompanyUid();
 
-    if (!companyUid) throw new Error('companyUid is required');
+    if (!companyUid)
+      throw new Error(
+        'companyUid is required in the inventory to set inventory as default'
+      );
 
     if (inventoryEntity.getIsDefaultInventory()) return;
 
