@@ -25,6 +25,6 @@ export const deleteInventory =
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log('error', error);
-      throw new Error(error);
+      throw new Error(error.message);
     }
   };
