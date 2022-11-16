@@ -12,6 +12,8 @@ import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { logoutUseCase } from '@/usecases/usecases';
 
+import avatarImg from '../../../public/assets/images/defaultAvatar.png';
+import NextImage from '../04-lib/nextImage/NextImage';
 import { ToasterTypeEnum } from '../08-toaster/toasterEnum';
 
 type Props = {
@@ -37,9 +39,9 @@ const ProfileDropdown: FC<Props> = ({ logo }) => {
         <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 lg:rounded-md lg:p-2 lg:hover:bg-gray-50">
           <>
             {logo || (
-              <img
+              <NextImage
                 className="h-8 w-8 rounded-full"
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                src={avatarImg}
                 alt=""
               />
             )}
