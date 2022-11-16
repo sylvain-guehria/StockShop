@@ -9,6 +9,9 @@ type Props = {
   className?: string;
   width?: number;
   height?: number;
+  fill?: boolean;
+  style?: React.CSSProperties;
+  sizes?: string;
 };
 
 const NextImage: FC<Props> = ({
@@ -18,6 +21,9 @@ const NextImage: FC<Props> = ({
   className,
   width,
   height,
+  fill = false,
+  style,
+  sizes,
 }) => {
   return (
     <Image
@@ -27,6 +33,9 @@ const NextImage: FC<Props> = ({
       className={className}
       width={width}
       height={height}
+      fill={fill}
+      style={style}
+      sizes={sizes}
     />
   );
 };

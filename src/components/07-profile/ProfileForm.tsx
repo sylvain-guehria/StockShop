@@ -1,9 +1,11 @@
+import defaultAvatar from '../../../public/assets/images/defaultAvatar.png';
+import NextImage from '../04-lib/nextImage/NextImage';
+
 const user = {
   name: 'Debbie Lewis',
   handle: 'deblewis',
   email: 'debbielewis@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=320&h=320&q=80',
+  imageUrl: '',
 };
 const ProfileForm = () => {
   return (
@@ -75,9 +77,9 @@ const ProfileForm = () => {
                   className="inline-block h-12 w-12 shrink-0 overflow-hidden rounded-full"
                   aria-hidden="true"
                 >
-                  <img
+                  <NextImage
                     className="h-full w-full rounded-full"
-                    src={user.imageUrl}
+                    src={user.imageUrl || defaultAvatar}
                     alt=""
                   />
                 </div>
@@ -102,9 +104,9 @@ const ProfileForm = () => {
             </div>
 
             <div className="relative hidden overflow-hidden rounded-full lg:block">
-              <img
+              <NextImage
                 className="relative h-40 w-40 rounded-full"
-                src={user.imageUrl}
+                src={user.imageUrl || defaultAvatar}
                 alt=""
               />
               <label
