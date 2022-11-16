@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 import { Fragment } from 'react';
 
+import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { logoutUseCase } from '@/usecases/usecases';
@@ -19,6 +20,7 @@ type Props = {
 
 const ProfileDropdown: FC<Props> = ({ logo }) => {
   const router = useRouter();
+  const { user } = useAuth();
   const toast = useToast(4000);
 
   const handleSingOut = async () => {
@@ -43,7 +45,7 @@ const ProfileDropdown: FC<Props> = ({ logo }) => {
             )}
             <span className="ml-3 hidden text-sm font-medium text-gray-700 lg:block">
               <span className="sr-only">Open user menu for </span>
-              User
+              {user.getUsername()}
             </span>
             <ChevronDownIcon
               className="ml-1 hidden h-5 w-5 shrink-0 text-gray-400 lg:block"

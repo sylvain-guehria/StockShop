@@ -1,5 +1,3 @@
-'use client';
-
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { FC } from 'react';
 import { useState } from 'react';
@@ -9,23 +7,24 @@ import { useForm } from 'react-hook-form';
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import NextImage from '@/components/04-lib/nextImage/NextImage';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
-import Providers from '@/layouts/Providers';
+import type UserEntity from '@/modules/user/UserEntity';
 import { updateUserUseCase } from '@/usecases/usecases';
 
 import defaultAvatar from '../../../../public/assets/images/defaultAvatar.png';
 import { validationSchema } from './ProfileFormValidation';
 
-type Props = {};
+type Props = {
+  user: UserEntity;
+};
+
 type ProfileFormType = {
   username: string;
   firstName: string;
   lastName: string;
 };
 
-const ProfileForm: FC<Props> = () => {
-  const { user } = useAuth();
+const ProfileForm: FC<Props> = ({ user }) => {
   const [errorUserNameExist, setErrorUserNameExist] = useState(false);
   const toast = useToast(4000);
 
@@ -48,13 +47,12 @@ const ProfileForm: FC<Props> = () => {
     data: ProfileFormType
   ) => {
     const { username, firstName, lastName } = data;
-
     user.setLastName(lastName);
     user.setFirstName(firstName);
     user.setUserName(username);
 
     try {
-      updateUserUseCase(user);
+      await updateUserUseCase(user);
     } catch (error: any) {
       if (error.message === 'UserName already exists') {
         setErrorUserNameExist(true);
@@ -62,6 +60,7 @@ const ProfileForm: FC<Props> = () => {
         toast(ToasterTypeEnum.ERROR, error.message);
       }
     }
+    toast(ToasterTypeEnum.SUCCESS, 'Vos informations ont été mises à jour');
   };
 
   return (
@@ -95,6 +94,7 @@ const ProfileForm: FC<Props> = () => {
                 </span>
                 <input
                   type="text"
+                  maxLength={20}
                   {...register('username')}
                   id="username"
                   autoComplete="username"
@@ -121,9 +121,10 @@ const ProfileForm: FC<Props> = () => {
                 </label>
                 <input
                   type="text"
+                  maxLength={30}
                   {...register('firstName')}
                   id="firstName"
-                  autoComplete="given-name"
+                  autoComplete="firstName"
                   className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
                 />
                 <p className="text-sm text-red-600">
@@ -140,9 +141,10 @@ const ProfileForm: FC<Props> = () => {
                 </label>
                 <input
                   type="text"
+                  maxLength={30}
                   {...register('lastName')}
                   id="lastName"
-                  autoComplete="family-name"
+                  autoComplete="lastName"
                   className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
                 />
                 <p className="text-sm text-red-600">
@@ -219,13 +221,4 @@ const ProfileForm: FC<Props> = () => {
     </form>
   );
 };
-
-const ProfileFormWithProviders = () => {
-  return (
-    <Providers>
-      <ProfileForm />
-    </Providers>
-  );
-};
-
-export default ProfileFormWithProviders;
+export default ProfileForm;
