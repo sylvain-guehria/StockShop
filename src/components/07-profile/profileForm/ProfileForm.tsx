@@ -11,6 +11,7 @@ import NextImage from '@/components/04-lib/nextImage/NextImage';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
+import Providers from '@/layouts/Providers';
 import { updateUserUseCase } from '@/usecases/usecases';
 
 import defaultAvatar from '../../../../public/assets/images/defaultAvatar.png';
@@ -219,4 +220,12 @@ const ProfileForm: FC<Props> = () => {
   );
 };
 
-export default ProfileForm;
+const ProfileFormWithProviders = () => {
+  return (
+    <Providers>
+      <ProfileForm />
+    </Providers>
+  );
+};
+
+export default ProfileFormWithProviders;
