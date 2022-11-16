@@ -13,9 +13,12 @@ export enum AuthFirebaseErrorCodes {
 export class FirebaseAuthenticationError extends Error {
   errorCode;
 
-  constructor(errorCode: string) {
-    super(errorCode);
+  message;
+
+  constructor({ errorCode, message }: { errorCode: string; message: string }) {
+    super(message);
     this.errorCode = errorCode;
+    this.message = message;
 
     switch (errorCode) {
       case AuthFirebaseErrorCodes.EmailAlreadyInUse:
@@ -31,7 +34,7 @@ export class FirebaseAuthenticationError extends Error {
         this.message = 'wrong-password';
         break;
       default:
-        this.message = 'Error';
+        this.message = message;
         break;
     }
   }

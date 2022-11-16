@@ -5,13 +5,13 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { auth, signOut } from 'firebaseFolder/clientApp';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import logo from 'public/assets/images/stockshop.png';
+import inventoryMarketLogo from 'public/assets/images/inventoryMarket.png';
 import { Fragment } from 'react';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
-import Providers from '@/hooks/Providers';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
+import Providers from '@/layouts/Providers';
 import { headerRoutes, mainRoutes } from '@/routes/mainRoutes';
 import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
 import { logoutUseCase } from '@/usecases/usecases';
@@ -48,8 +48,8 @@ const Header = () => {
                 <span className="sr-only">Your Company</span>
                 <NextImage
                   className="h-11 w-auto cursor-pointer"
-                  src={logo}
-                  alt="stock shop logo"
+                  src={inventoryMarketLogo}
+                  alt="inventory shop logo"
                 />
               </div>
             </Link>
@@ -123,10 +123,10 @@ const Header = () => {
             <div className="px-5 pt-5 pb-6 sm:pb-8">
               <div className="flex items-center justify-between">
                 <div>
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
-                    alt="Your Company"
+                  <NextImage
+                    className="h-11 w-auto cursor-pointer"
+                    src={inventoryMarketLogo}
+                    alt="inventory shop logo"
                   />
                 </div>
                 <div className="-mr-2">

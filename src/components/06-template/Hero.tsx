@@ -1,33 +1,38 @@
-import Link from 'next/link';
+import { mainRoutes } from '@/routes/mainRoutes';
 
 import { Background } from '../04-lib/background/Background';
-import { Button } from '../04-lib/button/Button';
-import { HeroOneButton } from '../04-lib/hero/HeroOneButton';
 import { Section } from '../04-lib/layout/Section';
+import LinkButton from '../04-lib/LinkButton/LinkButton';
+import Incentive from './Incentive';
 
 const Hero = () => (
   <Background color="bg-gray-200">
-    <Section yPadding="pt-20 pb-3">
-      <HeroOneButton
-        title={
-          <>
-            {'Votre application de gestion de stock\n'}
-            <span className="text-primary-500">Et de vente en ligne</span>
-          </>
-        }
-        description="Gérer votre inventaire et vendre vos produits en ligne n'a jamais été aussi facile."
-        button={
-          <Link href="/">
-            <div className="cursor-pointer">
-              <Button xl>Créé votre compte gratuitement</Button>
-            </div>
-          </Link>
-        }
-        image={{
-          src: '/assets/images/hero-image.png',
-          alt: 'Hero screenshot',
-        }}
-      />
+    <Section>
+      <header className="text-center">
+        <div className="whitespace-pre-line text-2xl font-bold  text-gray-900 md:text-4xl">
+          {'Gérez efficacement votre inventaire &\n'}
+          <span className="text-primary-500">
+            Vendez en ligne en click & collect
+          </span>
+        </div>
+        <div className="mt-4 text-sm md:text-lg">
+          Gérer votre inventaire et vendre vos produits en ligne n&apos;a jamais
+          été aussi facile.
+        </div>
+        <div className="mt-8 text-center">
+          <LinkButton href={mainRoutes.register.path} style="secondary">
+            Créé votre compte gratuitement
+          </LinkButton>
+        </div>
+        <div className=" mb-8 text-center">
+          <Incentive />
+        </div>
+        <img
+          className="mx-auto mt-12 rounded-md text-center"
+          src="/assets/images/hero-image.png"
+          alt="Hero screenshot"
+        />
+      </header>
     </Section>
   </Background>
 );

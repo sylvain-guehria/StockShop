@@ -1,9 +1,7 @@
 import { CheckIcon as CheckIconMini } from '@heroicons/react/20/solid';
 import { CheckIcon as CheckIconOutline } from '@heroicons/react/24/outline';
 
-import { Background } from '../04-lib/background/Background';
 import { Section } from '../04-lib/layout/Section';
-import Footer from './Footer';
 
 const tiers = [
   {
@@ -149,7 +147,7 @@ const faqs = [
 export default function Example() {
   return (
     <div className="bg-white">
-      <Background color="bg-gray-200">
+      <div className="bg-gray-100">
         <Section yPadding="pt-10 pb-5">
           <div className="sm:flex sm:flex-col">
             <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-center">
@@ -175,7 +173,7 @@ export default function Example() {
             </div>
           </div>
         </Section>
-      </Background>
+      </div>
       {/* Pricing with four tiers and toggle */}
       <div className="bg-gradient-to-b from-white to-gray-50">
         <div className="mx-auto max-w-7xl px-4 pt-24 sm:px-6 lg:px-8">
@@ -316,7 +314,6 @@ export default function Example() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

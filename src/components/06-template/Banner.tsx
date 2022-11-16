@@ -1,20 +1,25 @@
-import Link from 'next/link';
+import { mainRoutes } from '@/routes/mainRoutes';
 
-import { Button } from '../04-lib/button/Button';
-import { CTABanner } from '../04-lib/cta/CTABanner';
 import { Section } from '../04-lib/layout/Section';
+import LinkButton from '../04-lib/LinkButton/LinkButton';
 
 const Banner = () => (
   <Section yPadding="pb-16">
-    <CTABanner
-      title="Lorem ipsum dolor sit amet consectetur adipisicing elit."
-      subtitle="Start your Free Trial."
-      button={
-        <Link href="/">
-          <Button>Get Started</Button>
-        </Link>
-      }
-    />
+    <div className="flex flex-col rounded-md bg-primary-100 p-4 text-center sm:flex-row sm:items-center sm:justify-between sm:p-12 sm:text-left">
+      <div className="text-2xl font-semibold">
+        <div className="mb-2 text-gray-900">
+          Gérer votre inventaire et vendre vos produits en ligne n&apos;a jamais
+          été aussi facile.
+        </div>
+        <div className="text-primary-500">Commencez dès maintenant</div>
+      </div>
+
+      <div className="mt-3 sm:mt-0 sm:ml-2">
+        <LinkButton href={mainRoutes.register.path} style="secondary">
+          Créé votre compte gratuitement
+        </LinkButton>
+      </div>
+    </div>
   </Section>
 );
 

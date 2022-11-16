@@ -4,7 +4,7 @@ import type { FC } from 'react';
 import { useState } from 'react';
 
 import MarketplaceHeader from '@/components/02-marketplace/Header/MarketplaceHeader';
-import Providers from '@/hooks/Providers';
+import Providers from '@/layouts/Providers';
 
 import MarketplaceDrawer from './MarketplaceDrawer';
 

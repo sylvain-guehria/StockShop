@@ -6,9 +6,11 @@ import UserEntity from './UserEntity';
 import { UserRepository } from './userRepository';
 
 class FirebaseUserRepository extends UserRepository {
+  baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL;
+
   async getById(uid: string): Promise<UserEntity> {
     console.info('get user in db with uid: ', uid);
-    const response = await axios.get(`/api/user/${uid}`);
+    const response = await axios.get(`${this.baseUrl}/api/user/${uid}`);
     const {
       email,
       pseudo,
@@ -20,7 +22,7 @@ class FirebaseUserRepository extends UserRepository {
       locale,
       provider,
       history,
-      hasStockManagementServiceActivated,
+      hasInventoryManagementServiceActivated,
       hasSeenFirstConnectionModal,
     } = response.data;
 
@@ -36,14 +38,14 @@ class FirebaseUserRepository extends UserRepository {
       locale,
       provider,
       history,
-      hasStockManagementServiceActivated,
+      hasInventoryManagementServiceActivated,
       hasSeenFirstConnectionModal,
     });
   }
 
   async add(user: UserEntity): Promise<string> {
     console.info('adding user in db...');
-    const res = await axios.post('/api/user/add', {
+    const res = await axios.post(`${this.baseUrl}/api/user/add`, {
       uid: user.getUid(),
       email: user.getEmail(),
       provider: user.getProvider(),
@@ -56,12 +58,12 @@ class FirebaseUserRepository extends UserRepository {
 
   async delete(uid: string): Promise<void> {
     console.info(`Deleting user with uid ${uid} in db...`);
-    return axios.post('/api/user/delete', { uid });
+    return axios.post(`${this.baseUrl}/api/user/delete`, { uid });
   }
 
   async getAll(): Promise<UserEntity[]> {
     console.info('get all users in db');
-    const response = await axios.get('/api/user/getAll');
+    const response = await axios.get(`${this.baseUrl}/api/user/getAll`);
     return response.data.map(
       (user: UserEntity) =>
         new UserEntity({
@@ -82,7 +84,7 @@ class FirebaseUserRepository extends UserRepository {
 
   async update(user: UserEntity): Promise<void> {
     console.info('update user uid: ', user.getUid());
-    await axios.put(`/api/user/${user.getUid()}`, {
+    await axios.put(`${this.baseUrl}/api/user/${user.getUid()}`, {
       uid: user.getUid(),
       email: user.getEmail(),
       provider: user.getProvider(),
@@ -92,7 +94,7 @@ class FirebaseUserRepository extends UserRepository {
       language: user.getLanguage(),
       phoneNumber: user.getPhoneNumber(),
       role: user.getRole(),
-      hasStockManagementServiceActivated: user.isSeller(),
+      hasInventoryManagementServiceActivated: user.isSeller(),
       hasSeenFirstConnectionModal: user.hasSeenFirstConnectionModal,
     });
   }

@@ -9,6 +9,9 @@ import {
 } from '@heroicons/react/24/outline';
 import type { SVGProps } from 'react';
 
+import inventoryMarketLogo from '../../../../public/assets/images/inventoryMarket.png';
+import NextImage from '../nextImage/NextImage';
+
 const links = [
   {
     title: 'Documentation',
@@ -100,10 +103,10 @@ export default function Page404Component() {
     <div className="bg-white">
       <main className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="shrink-0 pt-16">
-          <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
+          <NextImage
+            className="h-11 w-auto cursor-pointer"
+            src={inventoryMarketLogo}
+            alt="inventory shop logo"
           />
         </div>
         <div className="mx-auto max-w-xl py-16 sm:py-24">
