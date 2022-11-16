@@ -2,7 +2,7 @@
 
 import DisclosureSection from './DisclosureSection';
 import ProfileContainerSideBar from './ProfileContainerSideBar';
-import ProfileForm from './ProfileForm';
+import ProfileForm from './profileForm/ProfileForm';
 
 const Profile = () => {
   return (

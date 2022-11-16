@@ -1,17 +1,13 @@
 /* eslint-disable complexity */
 import type { LocaleType, ProviderType, RoleType, User } from './userType';
-import { HISTORYTYPE, LOCALES, PROVIDERS, ROLES } from './userType';
-
-export const defaultHistory = {
-  [HISTORYTYPE.SUBSCRIBTIONS]: [],
-};
+import { LOCALES, PROVIDERS, ROLES } from './userType';
 
 class UserEntity implements User {
   loggedIn: boolean;
 
   email: string;
 
-  pseudo: string;
+  username: string;
 
   uid: string;
 
@@ -21,15 +17,11 @@ class UserEntity implements User {
 
   lastName: string;
 
-  language: string;
-
   phoneNumber: string;
 
   role: RoleType;
 
   provider: ProviderType;
-
-  history;
 
   hasInventoryManagementServiceActivated: boolean;
 
@@ -51,16 +43,14 @@ class UserEntity implements User {
     this.loggedIn = user.loggedIn || false;
     this.email = user.email || '';
     this.provider = user.provider || PROVIDERS.NOTKNOWN;
-    this.pseudo = user.pseudo || '';
+    this.username = user.username || '';
     this.uid = user.uid || '';
     this.password = user.password || '';
     this.firstName = user.firstName || '';
     this.lastName = user.lastName || '';
-    this.language = user.language || '';
     this.phoneNumber = user.phoneNumber || '';
     this.role = user.role || ROLES.USER;
     this.locale = user.locale || LOCALES.FR;
-    this.history = user.history || defaultHistory;
     this.hasInventoryManagementServiceActivated =
       user.hasInventoryManagementServiceActivated || false;
     this.hasSeenFirstConnectionModal =
@@ -110,10 +100,6 @@ class UserEntity implements User {
     return `${this.firstName} ${this.lastName}`;
   }
 
-  getLanguage(): string {
-    return this.language;
-  }
-
   setEmail(email: string): UserEntity {
     this.email = this.sanitizeEmail(email);
     return this;
@@ -134,8 +120,13 @@ class UserEntity implements User {
     return this.email;
   }
 
-  getPseudo(): string {
-    return this.pseudo;
+  getUsername(): string {
+    return this.username;
+  }
+
+  setUserName(username: string): UserEntity {
+    this.username = username;
+    return this;
   }
 
   setPhoneNumber(phoneNumber: string): UserEntity {

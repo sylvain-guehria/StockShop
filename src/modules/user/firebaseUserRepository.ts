@@ -13,15 +13,13 @@ class FirebaseUserRepository extends UserRepository {
     const response = await axios.get(`${this.baseUrl}/api/user/${uid}`);
     const {
       email,
-      pseudo,
+      username,
       firstName,
       lastName,
-      language,
       phoneNumber,
       role,
       locale,
       provider,
-      history,
       hasInventoryManagementServiceActivated,
       hasSeenFirstConnectionModal,
     } = response.data;
@@ -29,15 +27,13 @@ class FirebaseUserRepository extends UserRepository {
     return UserEntity.new({
       uid,
       email,
-      pseudo,
+      username,
       firstName,
       lastName,
-      language,
       phoneNumber,
       role,
       locale,
       provider,
-      history,
       hasInventoryManagementServiceActivated,
       hasSeenFirstConnectionModal,
     });
@@ -70,14 +66,12 @@ class FirebaseUserRepository extends UserRepository {
           uid: user.uid,
           email: user.email,
           provider: user.provider,
-          pseudo: user.pseudo,
+          username: user.username,
           firstName: user.firstName,
           lastName: user.lastName,
-          language: user.language,
           phoneNumber: user.phoneNumber,
           role: user.role,
           locale: user.locale,
-          history: user.history,
         })
     );
   }
@@ -85,17 +79,15 @@ class FirebaseUserRepository extends UserRepository {
   async update(user: UserEntity): Promise<void> {
     console.info('update user uid: ', user.getUid());
     await axios.put(`${this.baseUrl}/api/user/${user.getUid()}`, {
-      uid: user.getUid(),
       email: user.getEmail(),
-      provider: user.getProvider(),
-      pseudo: user.getPseudo(),
+      username: user.getUsername(),
       firstName: user.getFirstName(),
       lastName: user.getLastName(),
-      language: user.getLanguage(),
       phoneNumber: user.getPhoneNumber(),
       role: user.getRole(),
       hasInventoryManagementServiceActivated: user.isSeller(),
       hasSeenFirstConnectionModal: user.hasSeenFirstConnectionModal,
+      locale: user.getLocale(),
     });
   }
 }

@@ -14,6 +14,7 @@ import { registerWithEmail } from './auth/registerWithEmail';
 import { deleteInventory } from './inventoy/deleteInventory';
 import { getUserInventories } from './inventoy/getUserInventories';
 import { setInventoryAsDefault } from './inventoy/setInventoryAsDefault';
+import { updateUser } from './user/updateUser';
 
 export const registerWithEmailUseCase = registerWithEmail(userRepository);
 export const loginWithEmailUseCase = loginWithEmail();
@@ -32,3 +33,5 @@ export const getUserInventoriesUseCase = getUserInventories(
 export const deleteInventoryUseCase = deleteInventory(inventoryRepository);
 export const setInventoryAsDefaultUseCase =
   setInventoryAsDefault(inventoryRepository);
+
+export const updateUserUseCase = updateUser(userRepository);
