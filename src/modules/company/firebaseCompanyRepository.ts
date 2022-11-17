@@ -5,7 +5,7 @@ import CompanyEntity from './CompanyEntity';
 import { CompanyRepository } from './companyRepository';
 
 class FirebaseCompanyRepository extends CompanyRepository {
-  baseUrl = process.env.VERCEL_URL;
+  baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 
   async getById(uid: string): Promise<CompanyEntity> {
     console.info('get company in db with uid: ', uid);

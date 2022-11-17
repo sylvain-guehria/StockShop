@@ -16,7 +16,7 @@ export const logout =
       const cookies = Cookies.get();
       const sessionCookie = cookies ? cookies[sessionCookieName] : '';
 
-      await fetch(`${process.env.VERCEL_URL}/api/sessionLogout`, {
+      await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/sessionLogout`, {
         method: 'GET',
         credentials: 'include',
         headers: {
