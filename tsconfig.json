@@ -41,6 +41,11 @@
       }
     ]
   },
-  "exclude": ["./out/**/*", "./node_modules/**/*", "**/*.cy.ts"],
+  "exclude": [
+    "./out/**/*",
+    "./node_modules/**/*",
+    "**/*.cy.ts",
+    "./.next/**/*"
+  ],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"]
 }
