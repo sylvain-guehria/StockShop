@@ -6,7 +6,7 @@ import UserEntity from './UserEntity';
 import { UserRepository } from './userRepository';
 
 class FirebaseUserRepository extends UserRepository {
-  baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL;
+  baseUrl = process.env.VERCEL_URL;
 
   async getById(uid: string): Promise<UserEntity> {
     console.info('get user in db with uid: ', uid);

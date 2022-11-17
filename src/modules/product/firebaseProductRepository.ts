@@ -6,7 +6,7 @@ import ProductEntity from './ProductEntity';
 import { ProductRepository } from './productRepository';
 
 class FirebaseProductRepository extends ProductRepository {
-  baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL;
+  baseUrl = process.env.VERCEL_URL;
 
   async getById(uid: string): Promise<ProductEntity> {
     console.info('get product in db with uid: ', uid);

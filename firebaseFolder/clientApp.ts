@@ -63,7 +63,7 @@ const storage = getStorage(app);
 //   }
 // }
 
-// if (process.env.ENV === 'local') {
+// if (process.env.VERCEL_ENV === 'development') {
 //   startEmulators();
 // }
 

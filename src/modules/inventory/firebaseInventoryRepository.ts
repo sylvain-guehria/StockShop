@@ -7,7 +7,7 @@ import type { DeleteInventoryParams } from './inventoryRepository';
 import { InventoryRepository } from './inventoryRepository';
 
 class FirebaseInventoryRepository extends InventoryRepository {
-  baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL;
+  baseUrl = process.env.VERCEL_URL;
 
   async getById(uid: string): Promise<InventoryEntity> {
     console.info('get inventory in db with uid: ', uid);
