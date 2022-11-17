@@ -22,12 +22,6 @@ const nextConfig = {
       'firebasestorage.googleapis.com',
     ],
   },
-  typescript: {
-    // TODO Dangerously allow production builds to successfully complete even if
-    // your project has type errors. DELETE ME WHEN PRODUCTION BUILD WORKS
-    // !! WARN !!
-    ignoreBuildErrors: true,
-  },
 };
 
 module.exports = withBundleAnalyzer(nextConfig);
