@@ -6,7 +6,7 @@ import CategoryEntity from './CategoryEntity';
 import { CategoryRepository } from './categoryRepository';
 
 class FirebaseCategoryRepository extends CategoryRepository {
-  baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL;
+  baseUrl = process.env.VERCEL_URL;
 
   async getById(uid: string): Promise<CategoryEntity> {
     console.info('get category in db with uid: ', uid);
