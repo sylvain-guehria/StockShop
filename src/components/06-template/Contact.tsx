@@ -7,7 +7,7 @@ import Providers from '@/layouts/Providers';
 import { addressEmails } from '@/sendinblue/emailConfig';
 
 import { Section } from '../04-lib/layout/Section';
-import ContactForm from '../09-forms/contact/ContactForm';
+import ContactForm from '../09-contact/ContactForm';
 
 const Contact = () => {
   return (

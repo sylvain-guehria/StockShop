@@ -1,38 +1,38 @@
 export const inventoryManagementRoutes = {
   inventoryDashboard: {
-    path: '/inventory-dashboard',
+    path: '/dashboard',
     label: 'Inventory Dashboard',
   },
   myInventory: {
-    path: '/inventory-dashboard/my-inventory/',
+    path: '/dashboard/inventories/',
     label: 'Mes inventaires',
   },
   sells: {
-    path: '/inventory-dashboard/sells/',
+    path: '/dashboard/sells/',
     label: 'Ventes',
   },
   toPurchase: {
-    path: '/inventory-dashboard/to-purchase/',
+    path: '/dashboard/to-purchase/',
     label: 'À acheter',
   },
   clients: {
-    path: '/inventory-dashboard/clients/',
+    path: '/dashboard/clients/',
     label: 'Clients',
   },
   myMarketPlace: {
-    path: '/inventory-dashboard/my-marketplace/',
+    path: '/dashboard/my-marketplace/',
     label: 'Mon marketplace',
   },
   setting: {
-    path: '/inventory-dashboard/setting/',
+    path: '/dashboard/setting/',
     label: 'Paramètres',
   },
   myCompany: {
-    path: '/inventory-dashboard/my-company/',
+    path: '/dashboard/my-company/',
     label: 'Mon entreprise',
   },
   help: {
-    path: '/inventory-dashboard/help/',
+    path: '/dashboard/help/',
     label: 'Aide',
   },
 };

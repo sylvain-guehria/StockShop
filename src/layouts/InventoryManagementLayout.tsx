@@ -3,8 +3,8 @@
 import type { FC, ReactNode } from 'react';
 import { useState } from 'react';
 
-import InventoryManagementHeader from '@/components/01-inventoryManagement/header/InventoryManagementHeader';
-import InventoryManagementSideBar from '@/components/01-inventoryManagement/sidebar/InventoryManagementSideBar';
+import InventoryManagementHeader from '@/components/01-dashboard/header/InventoryManagementHeader';
+import InventoryManagementSideBar from '@/components/01-dashboard/sidebar/InventoryManagementSideBar';
 
 import Providers from './Providers';
 

@@ -17,12 +17,9 @@ import inventoryMarketLogo from '../../../../public/assets/images/inventoryMarke
 import ServicesButton from '../../04-lib/Popovers/ServicesButton';
 import ProfileDropdown from '../../07-profile/ProfileDropdown';
 
-const SearchBarModal = dynamic(
-  () => import('../../05-modals/searchBar/SearchBarModal'),
-  {
-    suspense: true,
-  }
-);
+const SearchBarModal = dynamic(() => import('../../05-modals/SearchBarModal'), {
+  suspense: true,
+});
 
 type Props = {
   setMobileMenuOpen: (value: boolean) => void;
