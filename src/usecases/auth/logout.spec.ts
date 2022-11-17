@@ -17,7 +17,7 @@ beforeEach(() => {
   jest.resetModules();
   process.env = {
     ...originalEnv,
-    VERCEL_URL: 'http://localhost:3000',
+    NEXT_PUBLIC_APP_URL: 'http://localhost:3000',
   };
 });
 
