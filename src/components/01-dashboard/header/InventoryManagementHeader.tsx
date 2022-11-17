@@ -46,6 +46,7 @@ const InventoryManagementHeader: FC<Props> = ({ setSidebarOpen }) => {
             </div>
           </form>
         </div>
+
         <div className="ml-4 flex items-center md:ml-6">
           <button
             type="button"
