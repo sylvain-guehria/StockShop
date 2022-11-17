@@ -1,3 +1,5 @@
+'use client';
+
 import { Disclosure } from '@headlessui/react';
 import { BellIcon } from '@heroicons/react/24/outline';
 
@@ -23,6 +25,10 @@ const userNavigation = [
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
+
+const color1 = '#583FD3';
+const color2 = '#3B2A8C';
+const color3 = '#2C2069';
 
 const DisclosureSection = () => {
   return (
@@ -103,11 +109,11 @@ const DisclosureSection = () => {
             <div className="absolute inset-0 flex">
               <div
                 className="h-full w-1/2"
-                style={{ backgroundColor: '#0a527b' }}
+                style={{ backgroundColor: color2 }}
               />
               <div
                 className="h-full w-1/2"
-                style={{ backgroundColor: '#065d8c' }}
+                style={{ backgroundColor: color2 }}
               />
             </div>
             <div className="relative flex justify-center">
@@ -120,16 +126,16 @@ const DisclosureSection = () => {
               >
                 <path
                   d="M284.161 308H1465.84L875.001 182.413 284.161 308z"
-                  fill="#0369a1"
+                  fill={color1}
                 />
                 <path
                   d="M1465.84 308L16.816 0H1750v308h-284.16z"
-                  fill="#065d8c"
+                  fill={color2}
                 />
-                <path d="M1733.19 0L284.161 308H0V0h1733.19z" fill="#0a527b" />
+                <path d="M1733.19 0L284.161 308H0V0h1733.19z" fill={color2} />
                 <path
                   d="M875.001 182.413L1733.19 0H16.816l858.185 182.413z"
-                  fill="#0a4f76"
+                  fill={color3}
                 />
               </svg>
             </div>

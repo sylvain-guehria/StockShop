@@ -7,10 +7,13 @@ import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 import { Fragment } from 'react';
 
+import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { logoutUseCase } from '@/usecases/usecases';
 
+import avatarImg from '../../../public/assets/images/defaultAvatar.png';
+import NextImage from '../04-lib/nextImage/NextImage';
 import { ToasterTypeEnum } from '../08-toaster/toasterEnum';
 
 type Props = {
@@ -19,6 +22,7 @@ type Props = {
 
 const ProfileDropdown: FC<Props> = ({ logo }) => {
   const router = useRouter();
+  const { user } = useAuth();
   const toast = useToast(4000);
 
   const handleSingOut = async () => {
@@ -35,15 +39,15 @@ const ProfileDropdown: FC<Props> = ({ logo }) => {
         <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 lg:rounded-md lg:p-2 lg:hover:bg-gray-50">
           <>
             {logo || (
-              <img
+              <NextImage
                 className="h-8 w-8 rounded-full"
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                src={avatarImg}
                 alt=""
               />
             )}
             <span className="ml-3 hidden text-sm font-medium text-gray-700 lg:block">
               <span className="sr-only">Open user menu for </span>
-              User
+              {user.getUsername()}
             </span>
             <ChevronDownIcon
               className="ml-1 hidden h-5 w-5 shrink-0 text-gray-400 lg:block"

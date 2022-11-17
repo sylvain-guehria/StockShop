@@ -1,16 +1,16 @@
 import { redirect } from 'next/navigation';
 
-import MyInventory from '@/components/01-inventoryManagement/my-inventory/MyInventory';
+import Inventories from '@/components/01-dashboard/inventories/MyInventory';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { validateUser } from '@/utils/validateUserServerSide';
 
-const MyInventoryPage = async () => {
+const InventoriesPages = async () => {
   const userUid = await validateUser();
   if (!userUid) {
     redirect(mainRoutes.login.path);
     return null;
   }
-  return <MyInventory />;
+  return <Inventories />;
 };
 
-export default MyInventoryPage;
+export default InventoriesPages;

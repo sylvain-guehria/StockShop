@@ -3,6 +3,7 @@ import {
   BellIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid';
+import { UserIcon } from '@heroicons/react/24/outline';
 import type { FC } from 'react';
 
 import ProfileDropdown from '@/components/07-profile/ProfileDropdown';
@@ -54,7 +55,12 @@ const InventoryManagementHeader: FC<Props> = ({ setSidebarOpen }) => {
             <BellIcon className="h-6 w-6" aria-hidden="true" />
           </button>
 
-          <ProfileDropdown />
+          <div className="flex text-gray-400 hover:text-gray-500">
+            <span className="sr-only">Account</span>
+            <ProfileDropdown
+              logo={<UserIcon className="h-6 w-6" aria-hidden="true" />}
+            />
+          </div>
         </div>
       </div>
     </div>

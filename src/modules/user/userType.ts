@@ -1,16 +1,14 @@
 export interface User {
   loggedIn?: boolean;
   email?: string;
-  pseudo?: string;
+  username?: string;
   provider?: ProviderType;
   uid?: string;
   password?: string;
   firstName?: string;
   lastName?: string;
-  language?: string;
   phoneNumber?: string;
   role?: RoleType;
-  history?: History;
   hasInventoryManagementServiceActivated?: boolean;
   hasSeenFirstConnectionModal?: boolean;
   locale?: LocaleType;
@@ -25,7 +23,7 @@ export enum UserEnum {
   LOGGEDIN = 'loggedIn',
   EMAIL = 'email',
   MESSAGE = 'messages',
-  PSEUDO = 'pseudo',
+  USERNAME = 'username',
   ROLES = 'roles',
   UID = 'uid',
   PASSWORD = 'password',
@@ -62,32 +60,3 @@ export type ProviderType =
   | PROVIDERS.FACEBOOK
   | PROVIDERS.GOOGLE
   | PROVIDERS.NOTKNOWN;
-
-export enum HISTORYTYPE {
-  ITEMS = 'items',
-  TICKETS = 'tickets',
-  SUBSCRIBTIONS = 'subscriptions',
-}
-
-export type History = {
-  [HISTORYTYPE.ITEMS]?: ItemHistory[];
-  [HISTORYTYPE.TICKETS]?: TicketHistory[];
-  [HISTORYTYPE.SUBSCRIBTIONS]?: SubscriptionHistory[];
-};
-
-type ItemHistory = {
-  itemId: string;
-  date: number;
-  quantity: number;
-};
-
-type TicketHistory = {
-  ticketId: string;
-  date: number;
-  quantity: number;
-};
-
-type SubscriptionHistory = {
-  subscriptionId: string;
-  date: number;
-};

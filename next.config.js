@@ -15,6 +15,13 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  images: {
+    domains: [
+      'assets.vercel.com',
+      'images.unsplash.com',
+      'firebasestorage.googleapis.com',
+    ],
+  },
 };
 
 module.exports = withBundleAnalyzer(nextConfig);

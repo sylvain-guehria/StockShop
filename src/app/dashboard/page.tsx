@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
-// import InventoryDashboardHome from '@/components/01-inventoryManagement/home/InventoryDashboardHome';
+// import InventoryDashboardHome from '@/components/01-dashboard/home/InventoryDashboardHome';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { validateUser } from '@/utils/validateUserServerSide';
 

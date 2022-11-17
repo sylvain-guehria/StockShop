@@ -27,14 +27,14 @@ import {
   setInventoryAsDefaultUseCase,
 } from '@/usecases/usecases';
 
-import DeleteInventoryForm from '../deleteInventoryForm/DeleteInventoryForm';
+import DeleteInventoryForm from './deleteInventoryForm/DeleteInventoryForm';
 
 const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
   suspense: true,
 });
 
 const DynamicEditInventoryForm = dynamic(
-  () => import('../editInventoryForm/EditInventoryForm'),
+  () => import('./editInventoryForm/EditInventoryForm'),
   {
     suspense: true,
   }

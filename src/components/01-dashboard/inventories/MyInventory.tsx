@@ -4,10 +4,11 @@ import type { FC } from 'react';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 
 import CreateInventoryButton from './CreateInventoryButton';
+import CreateProductButton from './CreateProductButton';
 import InventoryTable from './InventoryTable';
 import PinnedInventories from './PinnedInventories';
 
-const MyInventory: FC = () => {
+const Inventories: FC = () => {
   return (
     <>
       <div className="min-h-full">
@@ -32,7 +33,20 @@ const MyInventory: FC = () => {
             <div className="mt-6 px-4 sm:px-6 lg:px-8">
               <PinnedInventories />
             </div>
-
+            <div className="mt-10 px-8 sm:flex sm:items-center">
+              <div className="sm:flex-auto">
+                <h1 className="flex text-lg font-medium leading-6 text-gray-900 sm:truncate">
+                  Produits
+                </h1>
+                <p className="mt-2 text-sm text-gray-700">
+                  Les inventaires sont gérés séparément. Les produits de la
+                  liste ci-dessous sont ceux de l&apos;inventaire selectionné.
+                </p>
+              </div>
+              <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                <CreateProductButton />
+              </div>
+            </div>
             {/* <MobileInventoryTable /> */}
             <InventoryTable />
           </main>
@@ -42,4 +56,4 @@ const MyInventory: FC = () => {
   );
 };
 
-export default MyInventory;
+export default Inventories;

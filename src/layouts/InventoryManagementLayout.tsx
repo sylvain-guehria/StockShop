@@ -3,8 +3,10 @@
 import type { FC, ReactNode } from 'react';
 import { useState } from 'react';
 
-import InventoryManagementHeader from '@/components/01-inventoryManagement/header/InventoryManagementHeader';
-import InventoryManagementSideBar from '@/components/01-inventoryManagement/sidebar/InventoryManagementSideBar';
+import InventoryManagementHeader from '@/components/01-dashboard/header/InventoryManagementHeader';
+import InventoryManagementSideBar from '@/components/01-dashboard/sidebar/InventoryManagementSideBar';
+
+import Providers from './Providers';
 
 type Props = {
   children: ReactNode;
@@ -29,4 +31,12 @@ const InventoryManagementLayout: FC<Props> = ({ children }) => {
   );
 };
 
-export default InventoryManagementLayout;
+const InventoryManagementLayoutWithProviders: FC<Props> = ({ children }) => {
+  return (
+    <Providers>
+      <InventoryManagementLayout>{children}</InventoryManagementLayout>
+    </Providers>
+  );
+};
+
+export default InventoryManagementLayoutWithProviders;
