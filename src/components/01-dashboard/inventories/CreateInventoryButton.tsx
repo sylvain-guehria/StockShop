@@ -7,7 +7,6 @@ import type { FC } from 'react';
 
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import { useAuth } from '@/hooks/useAuth';
-import Providers from '@/layouts/Providers';
 import type { CreateInventoryParams } from '@/modules/inventory/inventoryService';
 import { getUserInventoriesUseCase } from '@/usecases/usecases';
 
@@ -54,12 +53,4 @@ const CreateInventoryButton: FC = () => {
   );
 };
 
-const CreateInventoryButtonWithProviders: FC = () => {
-  return (
-    <Providers>
-      <CreateInventoryButton />
-    </Providers>
-  );
-};
-
-export default CreateInventoryButtonWithProviders;
+export default CreateInventoryButton;

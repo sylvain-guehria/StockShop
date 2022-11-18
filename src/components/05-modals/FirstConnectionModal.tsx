@@ -1,26 +1,37 @@
+'use client';
+
 import { Dialog, Transition } from '@headlessui/react';
-import { CheckIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import SettingsImg from 'public/assets/images/settings.png';
 import { Fragment, useRef, useState } from 'react';
 
 import { useAuth } from '@/hooks/useAuth';
+import Providers from '@/layouts/Providers';
 import { SUBROLES } from '@/modules/user/userType';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
 import { chooseSubRoleOnFirstConnectionUseCase } from '@/usecases/usecases';
 
+import NextImage from '../04-lib/nextImage/NextImage';
+
 const FirstConnectionModal = () => {
   const [open, setOpen] = useState(true);
   const { user } = useAuth();
+  const router = useRouter();
 
   const cancelButtonRef = useRef(null);
 
   const onChooseRoleFirstConnection = async (
     subrole: SUBROLES.BUYER | SUBROLES.SELLER
   ) => {
-    chooseSubRoleOnFirstConnectionUseCase(user, subrole).then(() =>
-      setOpen(false)
-    );
+    chooseSubRoleOnFirstConnectionUseCase(user, subrole).then(() => {
+      if (subrole === SUBROLES.BUYER)
+        router.push(marketpalceRoutes.marketplace.path);
+      if (subrole === SUBROLES.SELLER)
+        router.push(inventoryManagementRoutes.myInventory.path);
+      setOpen(false);
+    });
   };
 
   return (
@@ -44,7 +55,7 @@ const FirstConnectionModal = () => {
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <div className="flex min-h-full  items-center justify-center p-4 text-center sm:p-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -56,24 +67,31 @@ const FirstConnectionModal = () => {
             >
               <Dialog.Panel className="relative overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
                 <div>
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                    <CheckIcon
-                      className="h-6 w-6 text-green-600"
-                      aria-hidden="true"
+                  <Dialog.Title
+                    as="h3"
+                    className="mb-3 text-lg font-medium leading-6 text-gray-900"
+                  >
+                    C&apos;est votre première visite sur ce site ! Bienvenue !
+                    🥳
+                  </Dialog.Title>
+                  <div className="mx-auto flex  items-center justify-center bg-green-100">
+                    <NextImage
+                      src={SettingsImg}
+                      alt="Settings Zanzi illustrations from getillustrations.com"
                     />
                   </div>
                   <div className="mt-3 text-center sm:mt-5">
                     <Dialog.Title
                       as="h3"
-                      className="text-lg font-medium leading-6 text-gray-900"
+                      className="text-justify text-lg font-medium leading-6 text-gray-900"
                     >
-                      C&apos;est votre première visite sur ce site ! Bienvenue.
-                      Dite nous si vous venez gérer votre inventaire ou
-                      seulement acheter des produits dans les inventaires de vos
+                      Souhaitez vous accéder à l&apos;application de gestion des
+                      inventaires ou souhaitez vous seulement acheter ou
+                      consulter des produits dans les inventaires de vos
                       commerçant préféfés ?
                     </Dialog.Title>
                     <div className="mt-2">
-                      <p className="text-sm text-gray-500">
+                      <p className="text-justify text-sm text-gray-500">
                         Si vous choisissez de gérer votre inventaire vous aurez
                         en plus accès à l&apos;application de gestion. Ne vous
                         en fait pas, à tout moment vous pouvez activer ou
@@ -95,9 +113,7 @@ const FirstConnectionModal = () => {
                       Je veux gérer mon inventaire
                     </button>
                   </Link>
-                  <Link
-                    href={inventoryManagementRoutes.inventoryDashboard.path}
-                  >
+                  <Link href={inventoryManagementRoutes.dashboard.path}>
                     <button
                       type="button"
                       className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
@@ -118,4 +134,12 @@ const FirstConnectionModal = () => {
   );
 };
 
-export default FirstConnectionModal;
+const FirstConnectionModalWithProviders = () => {
+  return (
+    <Providers>
+      <FirstConnectionModal />
+    </Providers>
+  );
+};
+
+export default FirstConnectionModalWithProviders;

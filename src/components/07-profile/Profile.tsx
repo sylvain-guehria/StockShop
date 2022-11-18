@@ -1,7 +1,6 @@
 'use client';
 
 import { useAuth } from '@/hooks/useAuth';
-import Providers from '@/layouts/Providers';
 
 import Spinner from '../04-lib/spinner/Spinner';
 import DisclosureSection from './DisclosureSection';
@@ -35,11 +34,7 @@ const Profile = () => {
 };
 
 const ProfileFormWith = () => {
-  return (
-    <Providers>
-      <Profile />
-    </Providers>
-  );
+  return <Profile />;
 };
 
 export default ProfileFormWith;

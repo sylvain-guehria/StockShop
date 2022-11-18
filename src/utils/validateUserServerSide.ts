@@ -3,6 +3,9 @@ import { cookies } from 'next/headers';
 
 export const validateUser = async () => {
   const sessionCookie = cookies().get(sessionCookieName);
+  if (!sessionCookie) {
+    return false;
+  }
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/checkUserSession`,

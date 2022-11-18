@@ -1,6 +1,6 @@
 export const inventoryManagementRoutes = {
-  inventoryDashboard: {
-    path: '/dashboard',
+  dashboard: {
+    path: '/dashboard/',
     label: 'Inventory Dashboard',
   },
   myInventory: {
