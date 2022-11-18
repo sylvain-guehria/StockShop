@@ -1,5 +1,8 @@
+'use client';
+
 import { InformationCircleIcon } from '@heroicons/react/20/solid';
 import type { FC } from 'react';
+import { useState } from 'react';
 
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 
@@ -9,6 +12,10 @@ import InventoryTable from './InventoryTable';
 import PinnedInventories from './PinnedInventories';
 
 const Inventories: FC = () => {
+  const [currentInventoryUid] = useState(
+    'd55d6fa6-b913-4ffe-af12-231a560fe471'
+  );
+  // getDefaultInventoryAndProdcut (add endpoint) and setCurrentInventoryUid
   return (
     <>
       <div className="min-h-full">
@@ -31,7 +38,7 @@ const Inventories: FC = () => {
               </div>
             </div>
             <div className="mt-6 px-4 sm:px-6 lg:px-8">
-              <PinnedInventories />
+              <PinnedInventories currentInventoryUid={currentInventoryUid} />
             </div>
             <div className="mt-10 px-8 sm:flex sm:items-center">
               <div className="sm:flex-auto">
