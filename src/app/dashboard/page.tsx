@@ -1,5 +1,5 @@
 const InventoryDashboardPage = async () => {
-  return <div>hoho</div>;
+  return null;
 };
 
 export default InventoryDashboardPage;
