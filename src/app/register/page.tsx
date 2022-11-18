@@ -1,9 +1,8 @@
 import { redirect } from 'next/navigation';
 
+import RegisterComponant from '@/components/03-auth/register/RegisterComponant';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { validateUser } from '@/utils/validateUserServerSide';
-
-import RegisterClientPage from './RegisterClientPage';
 
 const Register = async () => {
   const uid = await validateUser();
@@ -11,7 +10,7 @@ const Register = async () => {
     redirect(mainRoutes.home.path);
     return null;
   }
-  return <RegisterClientPage />;
+  return <RegisterComponant />;
 };
 
 export default Register;

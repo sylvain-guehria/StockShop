@@ -16,27 +16,21 @@ const InventoryManagementLayout: FC<Props> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="h-screen bg-gray-100">
-      <div className="min-h-full">
-        <InventoryManagementSideBar
-          sidebarOpen={sidebarOpen}
-          setSidebarOpen={setSidebarOpen}
-        />
-        <div className="flex flex-1 flex-col lg:pl-64">
-          <InventoryManagementHeader setSidebarOpen={setSidebarOpen} />
-          {children}
+    <Providers>
+      <div className="h-screen bg-gray-100">
+        <div className="min-h-full">
+          <InventoryManagementSideBar
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+          />
+          <div className="flex flex-1 flex-col lg:pl-64">
+            <InventoryManagementHeader setSidebarOpen={setSidebarOpen} />
+            {children}
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-const InventoryManagementLayoutWithProviders: FC<Props> = ({ children }) => {
-  return (
-    <Providers>
-      <InventoryManagementLayout>{children}</InventoryManagementLayout>
     </Providers>
   );
 };
 
-export default InventoryManagementLayoutWithProviders;
+export default InventoryManagementLayout;

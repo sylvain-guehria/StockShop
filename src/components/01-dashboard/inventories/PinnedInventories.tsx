@@ -16,7 +16,6 @@ import { Fragment, useState } from 'react';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
-import Providers from '@/layouts/Providers';
 import type { DeleteInventoryParams } from '@/modules/inventory/inventoryRepository';
 import type { UpdateInventoryParams } from '@/modules/inventory/inventoryService';
 import type { Inventory } from '@/modules/inventory/inventoryType';
@@ -260,11 +259,7 @@ const PinnedInventories: FC = () => {
 };
 
 const PinnedInventoriesWithProviders: FC = () => {
-  return (
-    <Providers>
-      <PinnedInventories />
-    </Providers>
-  );
+  return <PinnedInventories />;
 };
 
 export default PinnedInventoriesWithProviders;

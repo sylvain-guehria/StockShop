@@ -11,7 +11,6 @@ import { Fragment } from 'react';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
-import Providers from '@/layouts/Providers';
 import { headerRoutes, mainRoutes } from '@/routes/mainRoutes';
 import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
 import { logoutUseCase } from '@/usecases/usecases';
@@ -205,11 +204,7 @@ const Header = () => {
 };
 
 const HeaderWithProviders = () => {
-  return (
-    <Providers>
-      <Header />
-    </Providers>
-  );
+  return <Header />;
 };
 
 export default HeaderWithProviders;
