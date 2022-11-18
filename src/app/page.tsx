@@ -1,6 +1,7 @@
 import { userRepository } from 'di';
 import { redirect } from 'next/navigation';
 
+import FirstConnectionModal from '@/components/05-modals/FirstConnectionModal';
 import PublicLayout from '@/layouts/PublicLayout';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
@@ -13,6 +14,9 @@ const HomePage = async () => {
 
   if (uid) {
     const user = await userRepository.getById(uid);
+    if (user.needToSeeFirstConnectionModal()) {
+      return <FirstConnectionModal></FirstConnectionModal>;
+    }
     if (user.isSeller()) {
       redirect(inventoryManagementRoutes.myInventory.path);
     }
