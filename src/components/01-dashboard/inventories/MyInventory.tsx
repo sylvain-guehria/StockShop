@@ -36,7 +36,7 @@ const Inventories: FC = () => {
   });
 
   const { data: products = [], isLoading: isLoadingProducts } = useQuery({
-    queryKey: ['get-products'],
+    queryKey: ['get-products', { inventoryUid: currentInventoryUid }],
     queryFn: () =>
       getInventoryProductsUseCase({
         userUid: user.uid,
@@ -45,8 +45,6 @@ const Inventories: FC = () => {
       }),
     enabled: !!(user.uid && currentInventoryUid && user.companyUid),
   });
-
-  console.log('products', products);
 
   const onSelectInventory = (inventoryUid: string) => {
     setCurrentInventoryUid(inventoryUid);
@@ -92,7 +90,9 @@ const Inventories: FC = () => {
                 </p>
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                <CreateProductButton />
+                <CreateProductButton
+                  currentInventoryUid={currentInventoryUid}
+                />
               </div>
             </div>
             {/* <MobileInventoryTable /> */}

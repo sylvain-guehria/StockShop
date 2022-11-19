@@ -18,8 +18,20 @@ export abstract class ProductRepository {
     throw new Error(`You tried to call an abstract methode, arg: ${uid}`);
   }
 
-  async add(product: ProductEntity): Promise<string> {
-    throw new Error(`You tried to call an abstract methode, arg: ${product}`);
+  async add({
+    product,
+    userUid,
+    companyUid,
+    inventoryUid,
+  }: AddProductParams): Promise<ProductEntity> {
+    throw new Error(
+      `You tried to call an abstract methode, arg: ${{
+        product,
+        userUid,
+        companyUid,
+        inventoryUid,
+      }}`
+    );
   }
 
   async delete(uid: string): Promise<void> {
@@ -56,3 +68,10 @@ export abstract class ProductRepository {
 }
 
 export default ProductRepository;
+
+export type AddProductParams = {
+  product: ProductEntity;
+  userUid: string;
+  companyUid: string;
+  inventoryUid: string;
+};

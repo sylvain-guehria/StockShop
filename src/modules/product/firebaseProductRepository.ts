@@ -3,6 +3,7 @@
 import axios from 'axios';
 
 import ProductEntity from './ProductEntity';
+import type { AddProductParams } from './productRepository';
 import { ProductRepository } from './productRepository';
 
 class FirebaseProductRepository extends ProductRepository {
@@ -41,24 +42,28 @@ class FirebaseProductRepository extends ProductRepository {
     });
   }
 
-  async add(product: ProductEntity): Promise<string> {
+  async add({
+    product,
+    userUid,
+    companyUid,
+    inventoryUid,
+  }: AddProductParams): Promise<ProductEntity> {
     console.info('adding product in db...');
     const res = await axios.post(`${this.baseUrl}/api/product/add`, {
-      uid: product.getUid(),
-      label: product.getLabel(),
-      quantityInInventory: product.getQuantityInInventory(),
-      optimumQuantity: product.getOptimumQuantity(),
-      buyingPrice: product.getBuyingPrice(),
-      sellingPrice: product.getSellingPrice(),
-      description: product.getDescription(),
-      toBuy: product.getToBuy(),
-      toSell: product.getToSell(),
-      isPublic: product.getIsPublic(),
-      tva: product.getTva(),
-      categoryUid: product.getCategoryUid(),
+      userUid,
+      companyUid,
+      inventoryUid,
+      product: {
+        uid: product.getUid(),
+        label: product.getLabel(),
+      },
     });
     console.info('Product added in DB, uid: ', product.getUid());
-    return res.data;
+    const { uid, label } = res.data;
+    return ProductEntity.new({
+      uid,
+      label,
+    });
   }
 
   async delete(uid: string): Promise<void> {
