@@ -36,12 +36,21 @@ export abstract class ProductRepository {
     );
   }
 
-  async getProductsByUserUidAndInventoryUid(
-    userUid: string,
-    inventoryUid: string
-  ): Promise<ProductEntity[]> {
+  async getProductsByUserUidCompanyUidInventoryUid({
+    userUid,
+    inventoryUid,
+    companyUid,
+  }: {
+    userUid: string;
+    inventoryUid: string;
+    companyUid: string;
+  }): Promise<ProductEntity[]> {
     throw new Error(
-      `You tried to call an abstract methode, arg: ${{ userUid, inventoryUid }}`
+      `You tried to call an abstract methode, arg: ${{
+        userUid,
+        inventoryUid,
+        companyUid,
+      }}`
     );
   }
 }

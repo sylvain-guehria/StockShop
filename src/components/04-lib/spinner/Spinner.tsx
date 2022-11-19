@@ -2,10 +2,10 @@ import type { FC } from 'react';
 
 const Spinner: FC = () => {
   return (
-    <div className="mt-10 h-full text-center">
-      <div role="status">
+    <div className="flex items-center justify-center">
+      <div className="m-auto">
         <svg
-          className="mr-2 inline h-8 w-8 animate-spin fill-primary-600 text-gray-200 dark:text-gray-600"
+          className="h-8 w-8 animate-spin fill-primary-600 text-gray-200 dark:text-gray-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

@@ -4,6 +4,21 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 const { USERS } = TableNames;
 
+const findUserCompanyUid = async (userUid: string) => {
+  const userCompaniesRef = await firestoreAdmin
+    .collection(USERS)
+    .doc(userUid as string)
+    .collection(TableNames.COMPANIES);
+
+  const snapshotUserCompaniesCount = await userCompaniesRef.count().get();
+
+  if (snapshotUserCompaniesCount.data().count) {
+    const snapshotUserCompanies = await userCompaniesRef.get();
+    return snapshotUserCompanies.docs[0]?.data()?.uid || '';
+  }
+  return '';
+};
+
 const userByUid = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
     query: { uid },
@@ -21,6 +36,7 @@ const userByUid = async (req: NextApiRequest, res: NextApiResponse) => {
     .get();
 
   const userDoc = await firestoreAdmin.collection(USERS).doc(uid as string);
+  const companyUid = await findUserCompanyUid(uid as string);
 
   try {
     switch (method) {
@@ -29,7 +45,7 @@ const userByUid = async (req: NextApiRequest, res: NextApiResponse) => {
           res.status(400).end(`User with uid ${uid} does not exist`);
           return;
         }
-        res.status(200).json(userRef.data());
+        res.status(200).json({ ...userRef.data(), companyUid });
         return;
       case 'PUT':
         userDoc.update({ ...req.body });

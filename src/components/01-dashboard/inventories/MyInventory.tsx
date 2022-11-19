@@ -41,9 +41,12 @@ const Inventories: FC = () => {
       getInventoryProductsUseCase({
         userUid: user.uid,
         inventoryUid: currentInventoryUid,
+        companyUid: user.companyUid,
       }),
-    enabled: !!(user.uid && currentInventoryUid),
+    enabled: !!(user.uid && currentInventoryUid && user.companyUid),
   });
+
+  console.log('products', products);
 
   const onSelectInventory = (inventoryUid: string) => {
     setCurrentInventoryUid(inventoryUid);
@@ -93,7 +96,10 @@ const Inventories: FC = () => {
               </div>
             </div>
             {/* <MobileInventoryTable /> */}
-            <InventoryTable />
+            <InventoryTable
+              isLoadingProducts={isLoadingProducts}
+              products={products}
+            />
           </main>
         </div>
       </div>

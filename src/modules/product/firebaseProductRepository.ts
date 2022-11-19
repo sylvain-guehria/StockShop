@@ -106,15 +106,22 @@ class FirebaseProductRepository extends ProductRepository {
     });
   }
 
-  async getProductsByUserUidAndInventoryUid(
-    userUid: string,
-    inventoryUid: string
-  ): Promise<ProductEntity[]> {
-    console.info('get all products by userUid and inventoryUid in db');
+  async getProductsByUserUidCompanyUidInventoryUid({
+    userUid,
+    inventoryUid,
+    companyUid,
+  }: {
+    userUid: string;
+    inventoryUid: string;
+    companyUid: string;
+  }): Promise<ProductEntity[]> {
+    console.info(
+      'get all products by userUid, companyUid and inventoryUid in db'
+    );
     const response = await axios.get(
-      `${this.baseUrl}/api/product/getProductsByUserUidAndInventoryUid`,
+      `${this.baseUrl}/api/product/getProductsByUserUidCompanyUidInventoryUid`,
       {
-        params: { userUid, inventoryUid },
+        params: { userUid, companyUid, inventoryUid },
       }
     );
     return response.data.map(

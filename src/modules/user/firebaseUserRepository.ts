@@ -22,6 +22,7 @@ class FirebaseUserRepository extends UserRepository {
       provider,
       hasInventoryManagementServiceActivated,
       hasSeenFirstConnectionModal,
+      companyUid,
     } = response.data;
 
     return UserEntity.new({
@@ -36,6 +37,7 @@ class FirebaseUserRepository extends UserRepository {
       provider,
       hasInventoryManagementServiceActivated,
       hasSeenFirstConnectionModal,
+      companyUid,
     });
   }
 

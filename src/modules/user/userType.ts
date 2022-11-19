@@ -12,6 +12,7 @@ export interface User {
   hasInventoryManagementServiceActivated?: boolean;
   hasSeenFirstConnectionModal?: boolean;
   locale?: LocaleType;
+  companyUid?: string;
 }
 
 export interface Users {

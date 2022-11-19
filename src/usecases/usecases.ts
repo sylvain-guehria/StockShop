@@ -32,11 +32,8 @@ export const getUserInventoriesUseCase = getUserInventories(
   inventoryServiceDi
 );
 
-export const getInventoryProductsUseCase = getInventoryProducts(
-  companyRepository,
-  companyServiceDi,
-  productRepository
-);
+export const getInventoryProductsUseCase =
+  getInventoryProducts(productRepository);
 
 export const deleteInventoryUseCase = deleteInventory(inventoryRepository);
 export const setInventoryAsDefaultUseCase =
