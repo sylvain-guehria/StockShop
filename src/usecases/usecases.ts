@@ -3,6 +3,7 @@ import {
   companyServiceDi,
   inventoryRepository,
   inventoryServiceDi,
+  productRepository,
   userRepository,
 } from 'di';
 
@@ -14,6 +15,7 @@ import { registerWithEmail } from './auth/registerWithEmail';
 import { deleteInventory } from './inventoy/deleteInventory';
 import { getUserInventories } from './inventoy/getUserInventories';
 import { setInventoryAsDefault } from './inventoy/setInventoryAsDefault';
+import { getInventoryProducts } from './product/getInventoryProducts';
 import { updateUser } from './user/updateUser';
 
 export const registerWithEmailUseCase = registerWithEmail(userRepository);
@@ -28,6 +30,12 @@ export const getUserInventoriesUseCase = getUserInventories(
   inventoryRepository,
   companyServiceDi,
   inventoryServiceDi
+);
+
+export const getInventoryProductsUseCase = getInventoryProducts(
+  companyRepository,
+  companyServiceDi,
+  productRepository
 );
 
 export const deleteInventoryUseCase = deleteInventory(inventoryRepository);

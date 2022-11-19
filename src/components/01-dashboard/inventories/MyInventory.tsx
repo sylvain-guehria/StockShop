@@ -1,10 +1,16 @@
 'use client';
 
 import { InformationCircleIcon } from '@heroicons/react/20/solid';
+import { useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
 import { useState } from 'react';
 
+import { useAuth } from '@/hooks/useAuth';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
+import {
+  getInventoryProductsUseCase,
+  getUserInventoriesUseCase,
+} from '@/usecases/usecases';
 
 import CreateInventoryButton from './CreateInventoryButton';
 import CreateProductButton from './CreateProductButton';
@@ -12,10 +18,37 @@ import InventoryTable from './InventoryTable';
 import PinnedInventories from './PinnedInventories';
 
 const Inventories: FC = () => {
-  const [currentInventoryUid] = useState(
-    'd55d6fa6-b913-4ffe-af12-231a560fe471'
-  );
-  // getDefaultInventoryAndProdcut (add endpoint) and setCurrentInventoryUid
+  const { user } = useAuth();
+  const [currentInventoryUid, setCurrentInventoryUid] = useState('');
+
+  const { data: inventories = [], isLoading: isLoadingInventory } = useQuery({
+    queryKey: ['get-inventories'],
+    queryFn: () => getUserInventoriesUseCase(user.uid),
+    enabled: !!user.uid,
+    onSuccess: (data) => {
+      if (!currentInventoryUid && data.length > 0) {
+        const defaultInventoryUid = data.find((inventory) =>
+          inventory.getIsDefaultInventory()
+        )?.uid;
+        setCurrentInventoryUid(defaultInventoryUid || '');
+      }
+    },
+  });
+
+  const { data: products = [], isLoading: isLoadingProducts } = useQuery({
+    queryKey: ['get-products'],
+    queryFn: () =>
+      getInventoryProductsUseCase({
+        userUid: user.uid,
+        inventoryUid: currentInventoryUid,
+      }),
+    enabled: !!(user.uid && currentInventoryUid),
+  });
+
+  const onSelectInventory = (inventoryUid: string) => {
+    setCurrentInventoryUid(inventoryUid);
+  };
+
   return (
     <>
       <div className="min-h-full">
@@ -38,7 +71,12 @@ const Inventories: FC = () => {
               </div>
             </div>
             <div className="mt-6 px-4 sm:px-6 lg:px-8">
-              <PinnedInventories currentInventoryUid={currentInventoryUid} />
+              <PinnedInventories
+                currentInventoryUid={currentInventoryUid}
+                onSelectInventory={onSelectInventory}
+                inventories={inventories}
+                isLoadingInventory={isLoadingInventory}
+              />
             </div>
             <div className="mt-10 px-8 sm:flex sm:items-center">
               <div className="sm:flex-auto">

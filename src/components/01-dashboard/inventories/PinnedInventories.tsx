@@ -1,6 +1,6 @@
 'use client';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { inventoryServiceDi } from 'di';
 import dynamic from 'next/dynamic';
 import type { FC } from 'react';
@@ -10,13 +10,13 @@ import Spinner from '@/components/04-lib/spinner/Spinner';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
+import type InventoryEntity from '@/modules/inventory/InventoryEntity';
 import type { DeleteInventoryParams } from '@/modules/inventory/inventoryRepository';
 import type { UpdateInventoryParams } from '@/modules/inventory/inventoryService';
 import type { Inventory } from '@/modules/inventory/inventoryType';
 import type { SetInventoryAsDefaultParams } from '@/usecases/inventoy/setInventoryAsDefault';
 import {
   deleteInventoryUseCase,
-  getUserInventoriesUseCase,
   setInventoryAsDefaultUseCase,
 } from '@/usecases/usecases';
 
@@ -36,21 +36,23 @@ const DynamicEditInventoryForm = dynamic(
 
 type Props = {
   currentInventoryUid: string;
+  inventories: InventoryEntity[];
+  isLoadingInventory: boolean;
+  onSelectInventory: (inventoryUid: string) => void;
 };
 
-const PinnedInventories: FC<Props> = ({ currentInventoryUid }) => {
+const PinnedInventories: FC<Props> = ({
+  currentInventoryUid,
+  inventories,
+  isLoadingInventory,
+  onSelectInventory,
+}) => {
   const queryClient = useQueryClient();
   const toast = useToast(4000);
   const { user } = useAuth();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedInventory, setSelectedInventory] = useState<Inventory>();
-
-  const { data: inventories = [], isLoading } = useQuery({
-    queryKey: ['get-inventories'],
-    queryFn: () => getUserInventoriesUseCase(user.uid),
-    enabled: !!user.uid,
-  });
 
   const updateInventoryMutation = useMutation({
     mutationFn: (params: UpdateInventoryParams) =>
@@ -144,12 +146,13 @@ const PinnedInventories: FC<Props> = ({ currentInventoryUid }) => {
         role="list"
         className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4"
       >
-        {isLoading ? (
+        {isLoadingInventory ? (
           <Spinner />
         ) : (
           inventories.map((inventory) => (
             <CardInventory
               key={inventory.uid}
+              onSelectInventory={onSelectInventory}
               inventory={inventory}
               handleClickEditInventory={handleClickEditInventory}
               handleClickDeleteInventory={handleClickDeleteInventory}

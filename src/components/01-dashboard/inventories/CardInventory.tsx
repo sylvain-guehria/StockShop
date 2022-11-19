@@ -10,6 +10,7 @@ import {
 import type { FC } from 'react';
 import { Fragment } from 'react';
 
+import type InventoryEntity from '@/modules/inventory/InventoryEntity';
 import type { Inventory } from '@/modules/inventory/inventoryType';
 import { borderColors } from '@/modules/inventory/inventoryType';
 
@@ -18,11 +19,12 @@ function classNames(...classes: string[]) {
 }
 
 type Props = {
-  inventory: Inventory;
+  inventory: InventoryEntity;
   handleClickEditInventory: (inventory: Inventory) => void;
   handleClickDeleteInventory: (inventory: Inventory) => void;
   handleClickSetDefaultInventory: (inventory: Inventory) => void;
   isCurrentInventory: boolean;
+  onSelectInventory: (inventoryUid: string) => void;
 };
 
 const CardInventory: FC<Props> = ({
@@ -31,10 +33,12 @@ const CardInventory: FC<Props> = ({
   handleClickDeleteInventory,
   handleClickSetDefaultInventory,
   isCurrentInventory,
+  onSelectInventory,
 }) => {
   const currentInventoryClassName = isCurrentInventory
     ? borderColors[inventory.color || 'primary-600']
     : '';
+
   return (
     <li
       key={inventory.uid}
@@ -44,13 +48,17 @@ const CardInventory: FC<Props> = ({
       )}
     >
       <div
+        onClick={() => onSelectInventory(inventory.uid)}
         className={classNames(
           `bg-${inventory.color ? inventory.color : 'primary-600'}`,
           'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
         )}
       ></div>
       <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-y border-r border-gray-200 bg-white">
-        <div className="flex-1 truncate px-4 py-2 text-sm">
+        <div
+          className="flex-1 truncate px-4 py-2 text-sm"
+          onClick={() => onSelectInventory(inventory.uid)}
+        >
           <div className="font-medium text-gray-900">{inventory.name}</div>
           <p className="text-gray-500">X Produit</p>
         </div>
