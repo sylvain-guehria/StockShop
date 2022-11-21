@@ -1,139 +1,112 @@
+import { EyeIcon } from '@heroicons/react/20/solid';
+import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import type { FC } from 'react';
 
 import Spinner from '@/components/04-lib/spinner/Spinner';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { Product } from '@/modules/product/productType';
+import { classNames } from '@/utils/tailwindUtils';
 
 type Props = {
   isLoadingProducts: boolean;
   products: ProductEntity[];
 };
 
+const Column = ({
+  label,
+  className,
+}: {
+  label: string;
+  className?: string;
+}) => (
+  <th
+    className={classNames(
+      className || '',
+      'text-left text-sm font-semibold text-gray-900'
+    )}
+    scope="col"
+  >
+    {label}
+  </th>
+);
+
 const ProductTable: FC<Props> = ({ products, isLoadingProducts }) => {
   return (
-    <div className="mt-8 hidden sm:block">
-      <div className="inline-block min-w-full border border-gray-200 align-middle">
-        <table className="min-w-full">
+    <div className="mt-8 flex flex-col">
+      <div className="overflow-x-auto rounded-lg shadow ring-1 ring-black/5">
+        <table className="min-w-full divide-y divide-gray-300">
           <thead>
             <tr className="border-t border-gray-200">
-              <th
-                className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
-                scope="col"
-              >
-                <span className="lg:pl-2">Label</span>
-              </th>
-              <th
-                className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
-                scope="col"
-              >
-                Catégorie
-              </th>
-              <th
-                className="border-b border-gray-200 bg-gray-50 py-3 pr-6 text-right text-sm font-semibold text-gray-900"
-                scope="col"
-              >
-                Prix d&apos;achat HT
-              </th>
-              <th
-                className="border-b border-gray-200 bg-gray-50 py-3 pr-6 text-right text-sm font-semibold text-gray-900"
-                scope="col"
-              >
-                Prix de vente HT
-              </th>
-              <th
-                className="border-b border-gray-200 bg-gray-50 py-3 pr-6 text-right text-sm font-semibold text-gray-900"
-                scope="col"
-              >
-                TVA
-              </th>
-              <th
-                className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
-                scope="col"
-              >
-                Quantité en stock
-              </th>
-              <th
-                className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900"
-                scope="col"
-              >
-                Quantité optimal
-              </th>
-              <th
-                className="border-b border-gray-200 bg-gray-50 py-3 pr-6 text-right text-sm font-semibold text-gray-900"
-                scope="col"
-              >
-                Manquant / En trop
-              </th>
-              <th
-                className="border-b border-gray-200 bg-gray-50 py-3 pr-6 text-right text-sm font-semibold text-gray-900"
-                scope="col"
-              >
-                A acheter
-              </th>
-              <th
-                className="border-b border-gray-200 bg-gray-50 py-3 pr-6 text-right text-sm font-semibold text-gray-900"
-                scope="col"
-              >
-                Visibilité
-              </th>
-              <th
-                className="border-b border-gray-200 bg-gray-50 py-3 pr-6 text-right text-sm font-semibold text-gray-900"
-                scope="col"
-              ></th>
+              <Column label="Label" className="py-3.5 pl-4 pr-3 sm:pl-6" />
+              <Column label="Catégorie" className="px-3 py-3.5" />
+              <Column label="Prix d'achat HT" className="px-3 py-3.5" />
+              <Column label="Prix de vente HT" className="px-3 py-3.5" />
+              <Column
+                label="TVA"
+                className="hidden px-3 py-3.5 sm:table-cell"
+              />
+              <Column label="Quantité en stock" className="px-3 py-3.5" />
+              <Column
+                label="Quantité optimal"
+                className="hidden px-3 py-3.5 sm:table-cell"
+              />
+              <Column label="Manquant / En trop" className="px-3 py-3.5" />
+              <Column
+                label="A acheter"
+                className="hidden px-3 py-3.5 sm:table-cell"
+              />
+              <Column label="Visibilité" className="px-3 py-3.5" />
+              <Column label="" className="px-3 py-3.5" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100 bg-white">
+          <tbody className="divide-y divide-gray-200 bg-white">
             {products.map((product: Product) => (
               <tr key={product.uid}>
-                <td className="px-6 py-3 text-sm font-medium text-gray-900">
-                  <div className="flex items-center space-x-2">
-                    <div className="truncate hover:text-gray-600">
-                      {product.label}
-                    </div>
-                  </div>
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                  {product.label}
                 </td>
-                <td className="px-6 py-3 text-sm font-medium text-gray-500">
-                  <div className="flex items-center space-x-2">
-                    <span className="shrink-0 text-xs font-medium leading-5">
-                      + 5
-                    </span>
-                  </div>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  {product.categoryUid}
                 </td>
-                <td className="whitespace-nowrap px-6 py-3 text-right text-sm text-gray-500 md:table-cell">
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                   {product.buyingPrice} €
                 </td>
-                <td className="whitespace-nowrap px-6 py-3 text-right text-sm text-gray-500 md:table-cell">
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                   {product.sellingPrice} €
                 </td>
-                <td className="px-6 py-3 text-sm font-medium text-gray-500">
-                  <div className="flex items-center space-x-2">
-                    {product.buyingPrice}
-                  </div>
+                <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                  {product.tva}
                 </td>
-                <td className="px-6 py-3 text-sm font-medium text-gray-500">
-                  <div className="flex items-center space-x-2">
-                    {product.quantityInInventory}
-                  </div>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  {product.quantityInInventory}
                 </td>
-                <td className="px-6 py-3 text-sm font-medium text-gray-500">
-                  <div className="flex items-center space-x-2">
-                    {product.optimumQuantity}
-                  </div>
+                <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                  {product.optimumQuantity}
                 </td>
-                <td className="px-6 py-3 text-sm font-medium text-gray-500">
-                  <div className="flex items-center space-x-2">
-                    {(product.optimumQuantity || 0) -
-                      (product.quantityInInventory || 0)}
-                  </div>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  {(product.optimumQuantity || 0) -
+                    (product.quantityInInventory || 0)}
                 </td>
-                <td className="px-6 py-3 text-sm font-medium text-gray-500">
-                  <div className="flex items-center space-x-2">
-                    {product.toBuy || 0}
-                  </div>
+                <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                  {product.toBuy || 0}
                 </td>
-                <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
-                  <div className="text-primary-600 hover:text-primary-900">
-                    Editer
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  {product.isPublic ? 'Public' : 'Privé'}
+                </td>
+                <td className="relative flex whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                  <div className="cursor-pointer">
+                    <PencilSquareIcon
+                      className="ml-3 h-5 w-5 shrink-0 text-primary-600"
+                      aria-hidden="true"
+                    />
+                    <span className="sr-only">, Modifier {product.label}</span>
+                  </div>
+                  <div className="cursor-pointer">
+                    <EyeIcon
+                      className="ml-3 h-5 w-5 shrink-0 text-primary-600"
+                      aria-hidden="true"
+                    />
+                    <span className="sr-only">, Voir {product.label}</span>
                   </div>
                 </td>
               </tr>
