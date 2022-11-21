@@ -12,9 +12,9 @@ import {
   getUserInventoriesUseCase,
 } from '@/usecases/usecases';
 
+import ProductTable from '../products/ProductTable';
 import CreateInventoryButton from './CreateInventoryButton';
 import CreateProductButton from './CreateProductButton';
-import InventoryTable from './InventoryTable';
 import PinnedInventories from './PinnedInventories';
 
 const Inventories: FC = () => {
@@ -81,13 +81,18 @@ const Inventories: FC = () => {
             </div>
             <div className="mt-10 px-8 sm:flex sm:items-center">
               <div className="sm:flex-auto">
-                <h1 className="flex text-lg font-medium leading-6 text-gray-900 sm:truncate">
-                  Produits
-                </h1>
-                <p className="mt-2 text-sm text-gray-700">
-                  Les inventaires sont gérés séparément. Les produits de la
-                  liste ci-dessous sont ceux de l&apos;inventaire selectionné.
-                </p>
+                <div className="flex">
+                  <h1 className="flex text-lg font-medium leading-6 text-gray-900 sm:truncate">
+                    Produits
+                  </h1>
+                  <div
+                    className="tooltip"
+                    data-tip="Les inventaires sont gérés séparément. Les produits de la
+                  liste ci-dessous sont ceux de l'inventaire selectionné."
+                  >
+                    <InformationCircleIcon className="ml-3 h-6 w-6 shrink-0 text-primary-400" />
+                  </div>
+                </div>
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                 <CreateProductButton
@@ -96,7 +101,7 @@ const Inventories: FC = () => {
               </div>
             </div>
             {/* <MobileInventoryTable /> */}
-            <InventoryTable
+            <ProductTable
               isLoadingProducts={isLoadingProducts}
               products={products}
             />
