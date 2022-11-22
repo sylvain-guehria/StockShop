@@ -13,7 +13,7 @@ const MarketplaceFooter = () => {
           <div className="pt-16 pb-20">
             <div className="md:flex md:justify-center">
               <NextImage
-                className="h-11 w-auto cursor-pointer"
+                className="h-10 w-auto cursor-pointer"
                 src={inventoryMarketLogo}
                 alt="inventory shop logo"
               />

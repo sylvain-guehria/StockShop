@@ -104,7 +104,7 @@ export default function Page404Component() {
       <main className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="shrink-0 pt-16">
           <NextImage
-            className="h-11 w-auto cursor-pointer"
+            className="h-10 w-auto cursor-pointer"
             src={inventoryMarketLogo}
             alt="inventory shop logo"
           />

@@ -50,7 +50,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                     <div className="hidden cursor-pointer lg:flex lg:items-center">
                       <span className="sr-only">Your Company</span>
                       <NextImage
-                        className="h-11 w-auto cursor-pointer"
+                        className="h-10 w-auto cursor-pointer"
                         src={inventoryMarketLogo}
                         alt="inventory shop logo"
                       />
@@ -90,7 +90,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                   <a href="#" className="lg:hidden">
                     <span className="sr-only">Your Company</span>
                     <NextImage
-                      className="h-11 w-auto cursor-pointer"
+                      className="h-10 w-auto cursor-pointer"
                       src={inventoryMarketLogo}
                       alt="inventory shop logo"
                     />

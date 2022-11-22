@@ -14,6 +14,7 @@ type Props = {
 
 const InventoryManagementLayout: FC<Props> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sideBarMini, setSideBarMini] = useState(false);
 
   return (
     <Providers>
@@ -22,9 +23,21 @@ const InventoryManagementLayout: FC<Props> = ({ children }) => {
           <InventoryManagementSideBar
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
+            setSideBarMini={setSideBarMini}
+            sideBarMini={sideBarMini}
           />
-          <div className="flex flex-1 flex-col lg:pl-64">
-            <InventoryManagementHeader setSidebarOpen={setSidebarOpen} />
+          <div
+            className={
+              sideBarMini
+                ? 'flex flex-1 flex-col'
+                : 'flex flex-1 flex-col lg:pl-64'
+            }
+          >
+            <InventoryManagementHeader
+              setSidebarOpen={setSidebarOpen}
+              setSideBarMini={setSideBarMini}
+              sideBarMini={sideBarMini}
+            />
             {children}
           </div>
         </div>
