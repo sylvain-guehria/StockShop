@@ -5,6 +5,7 @@ import type { FC } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
+import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
@@ -231,12 +232,13 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
       </div>
 
       <div>
-        <button
+        <LinkButton
           type="submit"
-          className="flex w-full justify-center rounded-md border border-transparent bg-primary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+          style="secondary"
+          className="flex w-full justify-center"
         >
           Valider
-        </button>
+        </LinkButton>
       </div>
     </form>
   );

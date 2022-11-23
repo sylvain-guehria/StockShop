@@ -11,4 +11,5 @@ export interface Product {
   isPublic?: boolean;
   tva?: number;
   categoryUid?: string;
+  publicDisponibility?: string;
 }

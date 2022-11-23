@@ -3,13 +3,27 @@ import { XMarkIcon } from '@heroicons/react/20/solid';
 import type { FC, ReactNode } from 'react';
 import { Fragment, useRef } from 'react';
 
+import { classNames } from '@/utils/tailwindUtils';
+
 type Props = {
   open: boolean;
   children: ReactNode;
   handleCloseModal: () => void;
+  mawWidth?: string;
+  width?: string;
+  margin?: string;
+  padding?: string;
 };
 
-const Modal: FC<Props> = ({ children, open, handleCloseModal }) => {
+const Modal: FC<Props> = ({
+  children,
+  open,
+  handleCloseModal,
+  mawWidth,
+  width,
+  margin,
+  padding,
+}) => {
   const cancelButtonRef = useRef(null);
 
   return (
@@ -43,8 +57,17 @@ const Modal: FC<Props> = ({ children, open, handleCloseModal }) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative justify-center overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-4">
-                <div className="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
+              <Dialog.Panel
+                className={classNames(
+                  mawWidth || 'sm:max-w-lg',
+                  width || 'sm:w-full',
+                  margin || 'lg:m-2',
+                  padding || 'sm:p-10 px-4 pt-5 pb-4',
+                  'relative justify-center overflow-hidden rounded-lg bg-white',
+                  'shadow-xl transition-all'
+                )}
+              >
+                <div className="absolute top-0 right-0 pt-4 pr-4 sm:block">
                   <button
                     type="button"
                     className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-red-100 focus:ring-offset-2"

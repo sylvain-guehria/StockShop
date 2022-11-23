@@ -22,7 +22,7 @@ interface ContactFormType {
 }
 
 const ContactForm = () => {
-  const toast = useToast(4000);
+  const toast = useToast(10000);
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   const {

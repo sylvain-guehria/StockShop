@@ -25,6 +25,8 @@ class ProductEntity implements Product {
 
   categoryUid: string;
 
+  publicDisponibility: string;
+
   static new(product?: Product): ProductEntity {
     return new ProductEntity(product || {});
   }
@@ -42,6 +44,7 @@ class ProductEntity implements Product {
     this.isPublic = product.isPublic || false;
     this.tva = product.tva || 0;
     this.categoryUid = product.categoryUid || '';
+    this.publicDisponibility = product.publicDisponibility || '';
   }
 
   getUid(): string {
@@ -166,6 +169,15 @@ class ProductEntity implements Product {
 
   getSellingPriceWithTvaAndQuantity(): number {
     return this.getSellingPriceWithTva() * this.quantityInInventory;
+  }
+
+  getPublicDisponibility(): string {
+    return this.publicDisponibility;
+  }
+
+  setPublicDisponibility(publicDisponibility: string): ProductEntity {
+    this.publicDisponibility = publicDisponibility;
+    return this;
   }
 }
 

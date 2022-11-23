@@ -6,6 +6,12 @@ import tailwindConfig from '../../tailwind.config';
 
 const fullConfig = resolveConfig(tailwindConfig);
 
+// default tailwind breakpoints
+// 'sm': '640px',
+// 'md': '768px',
+// 'lg': '1024px',
+// 'xl': '1280px',
+
 export const getBreakpointValue = (value: string): number =>
   +fullConfig.theme.screens[value].slice(
     0,

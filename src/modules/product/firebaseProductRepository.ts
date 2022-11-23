@@ -24,6 +24,7 @@ class FirebaseProductRepository extends ProductRepository {
       isPublic,
       tva,
       categoryUid,
+      publicDisponibility,
     } = response.data;
 
     return ProductEntity.new({
@@ -39,6 +40,7 @@ class FirebaseProductRepository extends ProductRepository {
       isPublic,
       tva,
       categoryUid,
+      publicDisponibility,
     });
   }
 
@@ -89,6 +91,7 @@ class FirebaseProductRepository extends ProductRepository {
           isPublic: product.isPublic,
           tva: product.tva,
           categoryUid: product.categoryUid,
+          publicDisponibility: product.publicDisponibility,
         })
     );
   }
@@ -108,6 +111,7 @@ class FirebaseProductRepository extends ProductRepository {
       isPublic: product.getIsPublic(),
       tva: product.getTva(),
       categoryUid: product.getCategoryUid(),
+      publicDisponibility: product.getPublicDisponibility(),
     });
   }
 
@@ -144,6 +148,7 @@ class FirebaseProductRepository extends ProductRepository {
           isPublic: product.isPublic,
           tva: product.tva,
           categoryUid: product.categoryUid,
+          publicDisponibility: product.publicDisponibility,
         })
     );
   }
