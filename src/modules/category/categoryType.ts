@@ -1,5 +1,11 @@
+export enum CategoryEnum {
+  UID = 'uid',
+  LABEL = 'label',
+  ATTRIBUTS = 'attributs',
+}
+
 export interface Category {
-  uid?: string;
-  label?: string;
-  attributs?: Record<string, unknown>;
+  [CategoryEnum.UID]?: string;
+  [CategoryEnum.LABEL]?: string;
+  [CategoryEnum.ATTRIBUTS]?: Record<string, unknown>;
 }
