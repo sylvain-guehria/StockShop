@@ -68,6 +68,7 @@ const ProductTable: FC<Props> = ({ products, isLoadingProducts }) => {
         >
           <DynamicEditInventoryForm
             product={productToEdit as unknown as ProductEntity}
+            handleCloseModal={handleCloseModal}
           />
         </DynamicModal>
       )}

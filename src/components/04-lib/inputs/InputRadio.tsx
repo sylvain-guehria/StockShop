@@ -8,6 +8,7 @@ type Props = {
   margin?: string;
   inputClassName?: string;
   options: { value: string; label: string }[];
+  name: string;
 };
 
 const InputRadio: FC<Props> = ({
@@ -15,9 +16,11 @@ const InputRadio: FC<Props> = ({
   margin,
   inputClassName,
   options,
+  name,
+  register,
   ...rest
 }) => {
-  const { name }: { name: string } = rest.register || { name: '' };
+  const localRegister = register || { name };
 
   return (
     <div className={classNames('text-left', margin || 'mt-1')}>
@@ -28,6 +31,7 @@ const InputRadio: FC<Props> = ({
               id={name}
               type="radio"
               {...rest}
+              {...localRegister}
               className={classNames(
                 inputClassName || '',
                 'h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500'

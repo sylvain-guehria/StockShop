@@ -14,7 +14,6 @@ import type ProductEntity from '@/modules/product/ProductEntity';
 import { ProductAttributes } from '@/modules/product/productType';
 
 import { validationSchema } from './EditProductFormValidation';
-import SubFormVisibility from './SubFormVisibility';
 
 interface EditProductFormType {
   [ProductAttributes.LABEL]: string;
@@ -31,9 +30,10 @@ interface EditProductFormType {
 
 type Props = {
   product: ProductEntity;
+  handleCloseModal: () => void;
 };
 
-const EditProductForm: FC<Props> = ({ product }) => {
+const EditProductForm: FC<Props> = ({ product, handleCloseModal }) => {
   const toast = useToast(10000);
   const formOptions = {
     resolver: yupResolver(validationSchema),
@@ -61,6 +61,7 @@ const EditProductForm: FC<Props> = ({ product }) => {
     data: EditProductFormType
   ) => {
     try {
+      // eslint-disable-next-line no-console
       console.log('data onSubmitEditProductForm', data);
     } catch (e: any) {
       toast(ToasterTypeEnum.ERROR, e.message);
@@ -71,7 +72,7 @@ const EditProductForm: FC<Props> = ({ product }) => {
     <form onSubmit={handleSubmit(onSubmitEditProductForm)}>
       <div className="lg:flex">
         {/* PARTIE 1 */}
-        <div className="lg:w-1/3">
+        <div className="lg:w-1/2">
           <div>
             <h3 className="text-lg font-medium leading-6 text-gray-900">
               Informations générales
@@ -82,8 +83,9 @@ const EditProductForm: FC<Props> = ({ product }) => {
             <Input
               type="text"
               label="label"
-              {...register(ProductAttributes.LABEL)}
-              error={errors.label?.message}
+              name={ProductAttributes.LABEL}
+              register={register(ProductAttributes.LABEL)}
+              error={errors[ProductAttributes.LABEL]?.message}
             />
           </div>
           <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
@@ -91,8 +93,9 @@ const EditProductForm: FC<Props> = ({ product }) => {
               <Input
                 type="number"
                 label="Quantité en stock"
-                {...register(ProductAttributes.QUANTITY_IN_INVENTORY)}
-                error={errors.quantityInInventory?.message}
+                name={ProductAttributes.QUANTITY_IN_INVENTORY}
+                register={register(ProductAttributes.QUANTITY_IN_INVENTORY)}
+                error={errors[ProductAttributes.QUANTITY_IN_INVENTORY]?.message}
               />
             </div>
 
@@ -100,8 +103,9 @@ const EditProductForm: FC<Props> = ({ product }) => {
               <Input
                 type="number"
                 label="Quantité optimal en stock"
-                {...register(ProductAttributes.OPTIMUM_QUANTITY)}
-                error={errors.optimumQuantity?.message}
+                name={ProductAttributes.OPTIMUM_QUANTITY}
+                register={register(ProductAttributes.OPTIMUM_QUANTITY)}
+                error={errors[ProductAttributes.OPTIMUM_QUANTITY]?.message}
               />
             </div>
 
@@ -109,9 +113,10 @@ const EditProductForm: FC<Props> = ({ product }) => {
               <Input
                 type="number"
                 label="Prix d'achat HT"
-                {...register(ProductAttributes.BUYING_PRICE)}
+                name={ProductAttributes.BUYING_PRICE}
+                register={register(ProductAttributes.BUYING_PRICE)}
                 placeholder="€"
-                error={errors.buyingPrice?.message}
+                error={errors[ProductAttributes.BUYING_PRICE]?.message}
                 inputClassName="placeholder:text-right"
               />
             </div>
@@ -120,9 +125,10 @@ const EditProductForm: FC<Props> = ({ product }) => {
               <Input
                 type="number"
                 label="Prix de vente HT"
-                {...register(ProductAttributes.SELLING_PRICE)}
+                name={ProductAttributes.SELLING_PRICE}
+                register={register(ProductAttributes.SELLING_PRICE)}
                 placeholder="€"
-                error={errors.sellingPrice?.message}
+                error={errors[ProductAttributes.SELLING_PRICE]?.message}
                 inputClassName="placeholder:text-right"
               />
             </div>
@@ -131,9 +137,10 @@ const EditProductForm: FC<Props> = ({ product }) => {
               <Input
                 type="number"
                 label="TVA"
-                {...register(ProductAttributes.TVA)}
+                name={ProductAttributes.TVA}
+                register={register(ProductAttributes.TVA)}
                 placeholder="%"
-                error={errors.tva?.message}
+                error={errors[ProductAttributes.TVA]?.message}
                 inputClassName="placeholder:text-right"
               />
             </div>
@@ -151,8 +158,9 @@ const EditProductForm: FC<Props> = ({ product }) => {
                   { label: 'Vetement', value: 'vetement' },
                   { label: 'Epicerie', value: 'epicerie' },
                 ]}
-                {...register(ProductAttributes.CATEGORY_UID)}
-                error={errors.tva?.message}
+                name={ProductAttributes.CATEGORY_UID}
+                register={register(ProductAttributes.CATEGORY_UID)}
+                error={errors[ProductAttributes.CATEGORY_UID]?.message}
                 inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
@@ -160,7 +168,7 @@ const EditProductForm: FC<Props> = ({ product }) => {
         </div>
 
         {/* PARTIE 2 */}
-        <div className="mt-5 lg:mt-0 lg:w-1/3">
+        <div className="mt-5 lg:mt-0 lg:w-1/2">
           <div>
             <h3 className="text-lg font-medium leading-6 text-gray-900">
               Information spécifique à la catégorie
@@ -169,16 +177,20 @@ const EditProductForm: FC<Props> = ({ product }) => {
         </div>
 
         {/* PARTIE 3 */}
-        <SubFormVisibility
-          product={product}
-          register={register}
-          errors={errors}
-        />
+
+        {/* <div className="mt-5 lg:mt-0 lg:w-1/3">
+          <SubFormVisibility
+            product={product}
+            register={register}
+            errors={errors}
+          />{' '}
+        </div> */}
       </div>
 
       <div className="pt-6">
         <div className="flex justify-end">
           <LinkButton
+            onClick={handleCloseModal}
             type="button"
             style="primary"
             className="flex justify-center"

@@ -5,10 +5,11 @@ import { classNames } from '@/utils/tailwindUtils';
 type Props = {
   label?: string;
   error?: string;
-  register?: any;
   margin?: string;
   inputClassName?: string;
   options: { value: string; label: string }[];
+  name: string;
+  register?: any;
 };
 
 const InputSelect: FC<Props> = ({
@@ -17,9 +18,11 @@ const InputSelect: FC<Props> = ({
   margin,
   inputClassName,
   options,
+  name,
+  register,
   ...rest
 }) => {
-  const { name }: { name: string } = rest.register || { name: '' };
+  const localRegister = register || { name };
 
   return (
     <div className={classNames('text-left', margin || 'mt-1')}>
@@ -32,6 +35,7 @@ const InputSelect: FC<Props> = ({
       <select
         id={name}
         autoComplete={name}
+        {...localRegister}
         {...rest}
         className={classNames(
           inputClassName || '',

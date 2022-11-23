@@ -18,7 +18,7 @@ const SubFormVisibility: FC<Props> = ({ product, register, errors }) => {
   // eslint-disable-next-line no-console
   console.log('SubFormVisibility product', product);
   return (
-    <div className="mt-5 lg:mt-0 lg:w-1/3">
+    <>
       <div className="flex justify-center">
         <h3 className="text-lg font-medium leading-6 text-gray-900">
           Visibilité
@@ -38,15 +38,17 @@ const SubFormVisibility: FC<Props> = ({ product, register, errors }) => {
             { label: 'Public', value: 'public' },
             { label: 'Privé', value: 'private' },
           ]}
-          {...register(ProductAttributes.IS_PUBLIC)}
-          error={errors.isPublic?.message}
+          register={register(ProductAttributes.IS_PUBLIC)}
+          name={ProductAttributes.IS_PUBLIC}
+          error={errors[ProductAttributes.IS_PUBLIC].message}
         />
       </div>
       <div className="mt-6 sm:col-span-6">
         <InputTextArea
           label="Description"
-          {...register(ProductAttributes.DESCRIPTION)}
-          error={errors.description?.message}
+          register={register(ProductAttributes.DESCRIPTION)}
+          name={ProductAttributes.DESCRIPTION}
+          error={errors[ProductAttributes.DESCRIPTION]?.message}
           inputClassName="placeholder:text-right"
         />
       </div>
@@ -93,7 +95,7 @@ const SubFormVisibility: FC<Props> = ({ product, register, errors }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 export default SubFormVisibility;

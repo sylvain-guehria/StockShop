@@ -6,10 +6,11 @@ type Props = {
   type: string;
   label?: string;
   error?: string;
-  register?: any;
   margin?: string;
   placeholder?: string;
   inputClassName?: string;
+  register?: any;
+  name: string;
 };
 
 const Input: FC<Props> = ({
@@ -19,9 +20,11 @@ const Input: FC<Props> = ({
   error,
   margin,
   inputClassName,
+  register,
+  name,
   ...rest
 }) => {
-  const { name }: { name: string } = rest.register || { name: '' };
+  const localRegister = register || { name };
   return (
     <div className={classNames('text-left', margin || 'mt-1')}>
       <label
@@ -35,6 +38,7 @@ const Input: FC<Props> = ({
         id={name}
         placeholder={placeholder}
         autoComplete={name}
+        {...localRegister}
         {...rest}
         className={classNames(
           inputClassName || '',

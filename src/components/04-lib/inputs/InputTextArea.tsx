@@ -9,6 +9,7 @@ type Props = {
   margin?: string;
   placeholder?: string;
   inputClassName?: string;
+  name: string;
 };
 
 const InputTextArea: FC<Props> = ({
@@ -17,9 +18,11 @@ const InputTextArea: FC<Props> = ({
   error,
   margin,
   inputClassName,
+  register,
+  name,
   ...rest
 }) => {
-  const { name }: { name: string } = rest.register || { name: '' };
+  const localRegister = register || { name };
   return (
     <div className={classNames('text-left', margin || 'mt-1')}>
       <label
@@ -32,6 +35,7 @@ const InputTextArea: FC<Props> = ({
         id={name}
         placeholder={placeholder}
         autoComplete={name}
+        {...localRegister}
         {...rest}
         className={classNames(
           inputClassName || '',
