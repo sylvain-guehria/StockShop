@@ -17,8 +17,6 @@ class ProductEntity implements Product {
 
   toBuy: number;
 
-  toSell: number;
-
   isPublic: boolean;
 
   tva: number;
@@ -28,7 +26,7 @@ class ProductEntity implements Product {
   publicDisponibility: string;
 
   static new(product?: Product): ProductEntity {
-    return new ProductEntity(product || {});
+    return new ProductEntity(product || ({} as Product));
   }
 
   constructor(product: Product) {
@@ -40,7 +38,6 @@ class ProductEntity implements Product {
     this.sellingPrice = product.sellingPrice || 0;
     this.description = product.description || '';
     this.toBuy = product.toBuy || 0;
-    this.toSell = product.toSell || 0;
     this.isPublic = product.isPublic || false;
     this.tva = product.tva || 0;
     this.categoryUid = product.categoryUid || '';
@@ -116,15 +113,6 @@ class ProductEntity implements Product {
 
   setToBuy(toBuy: number): ProductEntity {
     this.toBuy = toBuy;
-    return this;
-  }
-
-  getToSell(): number {
-    return this.toSell;
-  }
-
-  setToSell(toSell: number): ProductEntity {
-    this.toSell = toSell;
     return this;
   }
 
