@@ -11,7 +11,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-const MobileInventoryTable: FC<Props> = ({ products }) => {
+const MobileProductTable: FC<Props> = ({ products }) => {
   return (
     <div className="mt-10 sm:hidden">
       <div className="px-4 sm:px-6">
@@ -53,4 +53,4 @@ const MobileInventoryTable: FC<Props> = ({ products }) => {
   );
 };
 
-export default MobileInventoryTable;
+export default MobileProductTable;

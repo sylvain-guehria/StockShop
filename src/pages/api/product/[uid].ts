@@ -15,6 +15,16 @@ const productByUid = async (req: NextApiRequest, res: NextApiResponse) => {
   const product = {
     uid: req.body.uid,
     label: req.body.label,
+    description: req.body.description,
+    quantityInInventory: req.body.quantityInInventory,
+    optimumQuantity: req.body.optimumQuantity,
+    buyingPrice: req.body.buyingPrice,
+    sellingPrice: req.body.sellingPrice,
+    tva: req.body.tva,
+    categoryUid: req.body.categoryUid,
+    publicDisponibility: req.body.publicDisponibility,
+    isPublic: req.body.isPublic,
+    toBuy: req.body.toBuy,
   };
 
   if (!uid) {

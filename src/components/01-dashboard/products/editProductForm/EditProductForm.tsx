@@ -9,8 +9,10 @@ import Input from '@/components/04-lib/inputs/Input';
 import InputSelect from '@/components/04-lib/inputs/InputSelect';
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import type ProductEntity from '@/modules/product/ProductEntity';
+import type { UpdateProductParams } from '@/modules/product/productService';
 import { ProductAttributes } from '@/modules/product/productType';
 
 import { validationSchema } from './EditProductFormValidation';
@@ -31,10 +33,16 @@ interface EditProductFormType {
 type Props = {
   product: ProductEntity;
   handleCloseModal: () => void;
+  onSubmitEditForm: (params: UpdateProductParams) => void;
 };
 
-const EditProductForm: FC<Props> = ({ product, handleCloseModal }) => {
+const EditProductForm: FC<Props> = ({
+  product,
+  handleCloseModal,
+  onSubmitEditForm,
+}) => {
   const toast = useToast(10000);
+  const { user } = useAuth();
   const formOptions = {
     resolver: yupResolver(validationSchema),
     defaultValues: {
@@ -61,8 +69,14 @@ const EditProductForm: FC<Props> = ({ product, handleCloseModal }) => {
     data: EditProductFormType
   ) => {
     try {
-      // eslint-disable-next-line no-console
-      console.log('data onSubmitEditProductForm', data);
+      onSubmitEditForm({
+        product: {
+          ...product,
+          ...data,
+        },
+        userUid: user.getUid(),
+        companyUid: user.getCompanyUid(),
+      });
     } catch (e: any) {
       toast(ToasterTypeEnum.ERROR, e.message);
     }

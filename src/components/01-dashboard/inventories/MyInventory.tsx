@@ -7,10 +7,7 @@ import { useState } from 'react';
 
 import { useAuth } from '@/hooks/useAuth';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
-import {
-  getInventoryProductsUseCase,
-  getUserInventoriesUseCase,
-} from '@/usecases/usecases';
+import { getUserInventoriesUseCase } from '@/usecases/usecases';
 
 import ProductTable from '../products/ProductTable';
 import CreateInventoryButton from './CreateInventoryButton';
@@ -33,17 +30,6 @@ const Inventories: FC = () => {
         setCurrentInventoryUid(defaultInventoryUid || '');
       }
     },
-  });
-
-  const { data: products = [], isLoading: isLoadingProducts } = useQuery({
-    queryKey: ['get-products', { inventoryUid: currentInventoryUid }],
-    queryFn: () =>
-      getInventoryProductsUseCase({
-        userUid: user.uid,
-        inventoryUid: currentInventoryUid,
-        companyUid: user.companyUid,
-      }),
-    enabled: !!(user.uid && currentInventoryUid && user.companyUid),
   });
 
   const onSelectInventory = (inventoryUid: string) => {
@@ -100,11 +86,8 @@ const Inventories: FC = () => {
                 />
               </div>
             </div>
-            {/* <MobileInventoryTable /> */}
-            <ProductTable
-              isLoadingProducts={isLoadingProducts}
-              products={products}
-            />
+            {/* <MobileProductTable /> */}
+            <ProductTable currentInventoryUid={currentInventoryUid} />
           </main>
         </div>
       </div>

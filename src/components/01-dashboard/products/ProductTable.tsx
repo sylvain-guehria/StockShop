@@ -1,12 +1,18 @@
 import { EyeIcon } from '@heroicons/react/20/solid';
 import { PencilSquareIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { productServiceDi } from 'di';
 import dynamic from 'next/dynamic';
 import type { FC } from 'react';
 import { useState } from 'react';
 
 import Spinner from '@/components/04-lib/spinner/Spinner';
+import { useAuth } from '@/hooks/useAuth';
 import type ProductEntity from '@/modules/product/ProductEntity';
-import { classNames } from '@/utils/tailwindUtils';
+import type { UpdateProductParams } from '@/modules/product/productService';
+import { getInventoryProductsUseCase } from '@/usecases/usecases';
+
+import Column from './ColumnProduct';
 
 const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
   suspense: true,
@@ -20,33 +26,37 @@ const DynamicEditInventoryForm = dynamic(
 );
 
 type Props = {
-  isLoadingProducts: boolean;
-  products: ProductEntity[];
+  currentInventoryUid: string;
 };
 
-const Column = ({
-  label,
-  className,
-}: {
-  label: string;
-  className?: string;
-}) => (
-  <th
-    className={classNames(
-      className || '',
-      'text-left text-sm font-semibold text-gray-900'
-    )}
-    scope="col"
-  >
-    {label}
-  </th>
-);
-
-const ProductTable: FC<Props> = ({ products, isLoadingProducts }) => {
+const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
   const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState<ProductEntity | null>(
     null
   );
+
+  const { data: products = [], isLoading: isLoadingProducts } = useQuery({
+    queryKey: ['get-products', { inventoryUid: currentInventoryUid }],
+    queryFn: () =>
+      getInventoryProductsUseCase({
+        userUid: user.uid,
+        inventoryUid: currentInventoryUid,
+        companyUid: user.companyUid,
+      }),
+    enabled: !!(user.uid && currentInventoryUid && user.companyUid),
+  });
+
+  const updateProductMutation = useMutation({
+    mutationFn: (params: UpdateProductParams) =>
+      productServiceDi.updateProduct(params),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ['get-products'] });
+      setIsEditProductModalOpen(false);
+    },
+  });
 
   const editProduct = (product: ProductEntity) => {
     setProductToEdit(product);
@@ -69,6 +79,7 @@ const ProductTable: FC<Props> = ({ products, isLoadingProducts }) => {
           <DynamicEditInventoryForm
             product={productToEdit as unknown as ProductEntity}
             handleCloseModal={handleCloseModal}
+            onSubmitEditForm={updateProductMutation.mutate}
           />
         </DynamicModal>
       )}

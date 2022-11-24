@@ -6,7 +6,8 @@ const { USERS, COMPANIES, INVENTORIES, PRODUCTS } = TableNames;
 
 const addProduct = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { product, userUid, companyUid, inventoryUid } = req.body;
+    const { product, userUid, companyUid } = req.body;
+    const { inventoryUid } = product;
 
     if (!userUid) {
       res.status(400).end('User uid is mandatory to add a product');

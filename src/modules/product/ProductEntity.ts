@@ -25,6 +25,8 @@ class ProductEntity implements Product {
 
   publicDisponibility: string;
 
+  inventoryUid: string;
+
   static new(product?: Product): ProductEntity {
     return new ProductEntity(product || ({} as Product));
   }
@@ -42,6 +44,16 @@ class ProductEntity implements Product {
     this.tva = product.tva || 0;
     this.categoryUid = product.categoryUid || '';
     this.publicDisponibility = product.publicDisponibility || '';
+    this.inventoryUid = product.inventoryUid || '';
+  }
+
+  getInventoryUid(): string {
+    return this.inventoryUid;
+  }
+
+  setInventoryUid(inventoryUid: string): ProductEntity {
+    this.inventoryUid = inventoryUid;
+    return this;
   }
 
   getUid(): string {

@@ -11,6 +11,7 @@ export enum ProductAttributes {
   TVA = 'tva',
   CATEGORY_UID = 'categoryUid',
   PUBLIC_DISPONIBILITY = 'publicDisponibility',
+  INVENTORY_UID = 'inventoryUid',
 }
 
 export interface Product {
@@ -26,4 +27,5 @@ export interface Product {
   [ProductAttributes.TVA]?: number;
   [ProductAttributes.CATEGORY_UID]?: string;
   [ProductAttributes.PUBLIC_DISPONIBILITY]?: string;
+  [ProductAttributes.INVENTORY_UID]?: string;
 }

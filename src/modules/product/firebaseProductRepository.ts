@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 import ProductEntity from './ProductEntity';
-import type { AddProductParams } from './productRepository';
+import type { AddProduct, UpdateProduct } from './productRepository';
 import { ProductRepository } from './productRepository';
 
 class FirebaseProductRepository extends ProductRepository {
@@ -24,6 +24,7 @@ class FirebaseProductRepository extends ProductRepository {
       tva,
       categoryUid,
       publicDisponibility,
+      inventoryUid,
     } = response.data;
 
     return ProductEntity.new({
@@ -39,6 +40,7 @@ class FirebaseProductRepository extends ProductRepository {
       tva,
       categoryUid,
       publicDisponibility,
+      inventoryUid,
     });
   }
 
@@ -46,23 +48,23 @@ class FirebaseProductRepository extends ProductRepository {
     product,
     userUid,
     companyUid,
-    inventoryUid,
-  }: AddProductParams): Promise<ProductEntity> {
+  }: AddProduct): Promise<ProductEntity> {
     console.info('adding product in db...');
     const res = await axios.post(`${this.baseUrl}/api/product/add`, {
       userUid,
       companyUid,
-      inventoryUid,
       product: {
         uid: product.getUid(),
         label: product.getLabel(),
+        inventoryUid: product.getInventoryUid(),
       },
     });
     console.info('Product added in DB, uid: ', product.getUid());
-    const { uid, label } = res.data;
+    const { uid, label, inventoryUid } = res.data;
     return ProductEntity.new({
       uid,
       label,
+      inventoryUid,
     });
   }
 
@@ -89,25 +91,51 @@ class FirebaseProductRepository extends ProductRepository {
           tva: product.tva,
           categoryUid: product.categoryUid,
           publicDisponibility: product.publicDisponibility,
+          inventoryUid: product.inventoryUid,
         })
     );
   }
 
-  async update(product: ProductEntity): Promise<void> {
+  async update({
+    product,
+    userUid,
+    companyUid,
+  }: UpdateProduct): Promise<ProductEntity> {
     console.info('update product uid: ', product.getUid());
-    await axios.put(`${this.baseUrl}/api/product/${product.getUid()}`, {
-      uid: product.getUid(),
-      label: product.getLabel(),
-      quantityInInventory: product.getQuantityInInventory(),
-      optimumQuantity: product.getOptimumQuantity(),
-      buyingPrice: product.getBuyingPrice(),
-      sellingPrice: product.getSellingPrice(),
-      description: product.getDescription(),
-      toBuy: product.getToBuy(),
-      isPublic: product.getIsPublic(),
-      tva: product.getTva(),
-      categoryUid: product.getCategoryUid(),
-      publicDisponibility: product.getPublicDisponibility(),
+    const { data } = await axios.put(
+      `${this.baseUrl}/api/product/${product.getUid()}`,
+      {
+        userUid,
+        companyUid,
+        inventoryUid: product.getInventoryUid(),
+        uid: product.getUid(),
+        label: product.getLabel(),
+        quantityInInventory: product.getQuantityInInventory(),
+        optimumQuantity: product.getOptimumQuantity(),
+        buyingPrice: product.getBuyingPrice(),
+        sellingPrice: product.getSellingPrice(),
+        description: product.getDescription(),
+        toBuy: product.getToBuy(),
+        isPublic: product.getIsPublic(),
+        tva: product.getTva(),
+        categoryUid: product.getCategoryUid(),
+        publicDisponibility: product.getPublicDisponibility(),
+      }
+    );
+    return ProductEntity.new({
+      uid: data.uid,
+      label: data.label,
+      quantityInInventory: data.quantityInInventory,
+      optimumQuantity: data.optimumQuantity,
+      buyingPrice: data.buyingPrice,
+      sellingPrice: data.sellingPrice,
+      description: data.description,
+      toBuy: data.toBuy,
+      isPublic: data.isPublic,
+      tva: data.tva,
+      categoryUid: data.categoryUid,
+      publicDisponibility: data.publicDisponibility,
+      inventoryUid: data.inventoryUid,
     });
   }
 
@@ -144,6 +172,7 @@ class FirebaseProductRepository extends ProductRepository {
           tva: product.tva,
           categoryUid: product.categoryUid,
           publicDisponibility: product.publicDisponibility,
+          inventoryUid: product.inventoryUid,
         })
     );
   }
