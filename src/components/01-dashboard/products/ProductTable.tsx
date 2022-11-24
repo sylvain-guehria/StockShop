@@ -180,7 +180,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                           aria-hidden="true"
                         />
                         <span className="sr-only">
-                          , Modifier {product.label}
+                          Modifier {product.label}
                         </span>
                       </div>
                       <div
@@ -195,7 +195,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                       </div>
                       <div
                         className="tooltip tooltip-left cursor-pointer"
-                        data-tip="Ajouter à la liste d'achat"
+                        data-tip='Ajouter à la liste : "À acheter"'
                       >
                         <ShoppingBagIcon
                           className="ml-3 h-5 w-5 shrink-0 text-primary-600"
