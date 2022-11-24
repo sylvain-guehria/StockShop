@@ -1,11 +1,15 @@
+import type { ReactNode } from 'react';
+
 import { classNames } from '@/utils/tailwindUtils';
 
 const ColumnProduct = ({
   label,
   className,
+  children,
 }: {
   label: string;
   className?: string;
+  children?: ReactNode;
 }) => (
   <th
     className={classNames(
@@ -15,6 +19,7 @@ const ColumnProduct = ({
     scope="col"
   >
     {label}
+    {children}
   </th>
 );
 

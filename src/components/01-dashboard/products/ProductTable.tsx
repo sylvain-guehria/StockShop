@@ -7,6 +7,7 @@ import type { FC } from 'react';
 import { useState } from 'react';
 
 import Spinner from '@/components/04-lib/spinner/Spinner';
+import Tag from '@/components/04-lib/tag/Tag';
 import { useAuth } from '@/hooks/useAuth';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { UpdateProductParams } from '@/modules/product/productService';
@@ -101,7 +102,18 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                   label="Quantité optimal"
                   className="hidden px-3 py-3.5 sm:table-cell"
                 />
-                <Column label="Manquant / En trop" className="px-3 py-3.5" />
+                <Column label="" className="px-3 py-1">
+                  <Tag
+                    label="Manquant"
+                    bgColor="bg-red-200"
+                    textColor="text-red-800"
+                  />
+                  <Tag
+                    label="En trop"
+                    bgColor="bg-green-200"
+                    textColor="text-green-800"
+                  />
+                </Column>
                 <Column
                   label="A acheter"
                   className="hidden px-3 py-3.5 sm:table-cell"
@@ -111,78 +123,92 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
-              {products.map((product: ProductEntity) => (
-                <tr key={product.uid}>
-                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                    {product.label}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {product.categoryUid}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {product.buyingPrice} €
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {product.sellingPrice} €
-                  </td>
-                  <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                    {product.tva}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {product.quantityInInventory}
-                  </td>
-                  <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                    {product.optimumQuantity}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {(product.optimumQuantity || 0) -
-                      (product.quantityInInventory || 0)}
-                  </td>
-                  <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                    {product.toBuy || 0}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {product.isPublic ? 'Public' : 'Privé'}
-                  </td>
-                  <td className="relative flex whitespace-nowrap py-4 pl-3 pr-1 text-right text-sm font-medium">
-                    <div
-                      className="tooltip tooltip-left cursor-pointer"
-                      data-tip="Modifier le produit"
-                      onClick={() => editProduct(product)}
-                    >
-                      <PencilSquareIcon
-                        className="ml-3 h-5 w-5 shrink-0 text-primary-600"
-                        aria-hidden="true"
+              {products.map((product: ProductEntity) => {
+                const quantityMissing =
+                  (product.quantityInInventory || 0) -
+                  (product.optimumQuantity || 0);
+                return (
+                  <tr key={product.uid}>
+                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                      {product.label}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {product.categoryUid}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {product.buyingPrice} €
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {product.sellingPrice} €
+                    </td>
+                    <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                      {product.tva} %
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {product.quantityInInventory}
+                    </td>
+                    <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                      {product.optimumQuantity}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <Tag
+                        label={`${quantityMissing}`}
+                        bgColor={
+                          quantityMissing < 0 ? 'bg-red-200' : 'bg-green-200'
+                        }
+                        textColor={
+                          quantityMissing < 0
+                            ? 'text-red-800'
+                            : 'text-green-800'
+                        }
                       />
-                      <span className="sr-only">
-                        , Modifier {product.label}
-                      </span>
-                    </div>
-                    <div
-                      className="tooltip tooltip-left cursor-pointer"
-                      data-tip="Voir le produit"
-                    >
-                      <EyeIcon
-                        className="ml-3 h-5 w-5 shrink-0 text-primary-600"
-                        aria-hidden="true"
-                      />
-                      <span className="sr-only">, Voir {product.label}</span>
-                    </div>
-                    <div
-                      className="tooltip tooltip-left cursor-pointer"
-                      data-tip="Ajouter à la liste d'achat"
-                    >
-                      <ShoppingBagIcon
-                        className="ml-3 h-5 w-5 shrink-0 text-primary-600"
-                        aria-hidden="true"
-                      />
-                      <span className="sr-only">
-                        Ajouter à la liste produit à acheter {product.label}
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                    <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                      {product.toBuy || 0}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {product.isPublic ? 'Public' : 'Privé'}
+                    </td>
+                    <td className="relative flex whitespace-nowrap py-4 pl-3 pr-1 text-right text-sm font-medium">
+                      <div
+                        className="tooltip tooltip-left cursor-pointer"
+                        data-tip="Modifier le produit"
+                        onClick={() => editProduct(product)}
+                      >
+                        <PencilSquareIcon
+                          className="ml-3 h-5 w-5 shrink-0 text-primary-600"
+                          aria-hidden="true"
+                        />
+                        <span className="sr-only">
+                          , Modifier {product.label}
+                        </span>
+                      </div>
+                      <div
+                        className="tooltip tooltip-left cursor-pointer"
+                        data-tip="Voir le produit"
+                      >
+                        <EyeIcon
+                          className="ml-3 h-5 w-5 shrink-0 text-primary-600"
+                          aria-hidden="true"
+                        />
+                        <span className="sr-only">, Voir {product.label}</span>
+                      </div>
+                      <div
+                        className="tooltip tooltip-left cursor-pointer"
+                        data-tip="Ajouter à la liste d'achat"
+                      >
+                        <ShoppingBagIcon
+                          className="ml-3 h-5 w-5 shrink-0 text-primary-600"
+                          aria-hidden="true"
+                        />
+                        <span className="sr-only">
+                          Ajouter à la liste produit à acheter {product.label}
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
           {isLoadingProducts && (
