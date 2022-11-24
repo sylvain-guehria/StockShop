@@ -1,12 +1,15 @@
 import Link from 'next/link';
 import type { FC } from 'react';
 
+import { classNames } from '@/utils/tailwindUtils';
+
 type Props = {
   href?: string;
   children: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
   style?: 'primary' | 'secondary';
   onClick?: (params: any) => any;
+  className?: string;
 };
 
 const primaryStyle =
@@ -26,18 +29,25 @@ const LinkButton: FC<Props> = ({
   style = 'primary',
   type = 'submit',
   onClick,
+  className,
 }) => {
   return href ? (
     <Link href={href}>
       <div
-        className={`mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent ${styles[style]}`}
+        className={classNames(
+          `mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent ${styles[style]}`,
+          className || ''
+        )}
       >
         {children}
       </div>
     </Link>
   ) : (
     <div
-      className={`mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent ${styles[style]}`}
+      className={classNames(
+        `mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent ${styles[style]}`,
+        className || ''
+      )}
     >
       <button type={type} onClick={onClick}>
         {children}

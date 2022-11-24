@@ -1,21 +1,41 @@
 'use client';
 
 import { InformationCircleIcon } from '@heroicons/react/20/solid';
+import { useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
 import { useState } from 'react';
 
+import { useAuth } from '@/hooks/useAuth';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
+import { getUserInventoriesUseCase } from '@/usecases/usecases';
 
+import ProductTable from '../products/ProductTable';
 import CreateInventoryButton from './CreateInventoryButton';
 import CreateProductButton from './CreateProductButton';
-import InventoryTable from './InventoryTable';
 import PinnedInventories from './PinnedInventories';
 
 const Inventories: FC = () => {
-  const [currentInventoryUid] = useState(
-    'd55d6fa6-b913-4ffe-af12-231a560fe471'
-  );
-  // getDefaultInventoryAndProdcut (add endpoint) and setCurrentInventoryUid
+  const { user } = useAuth();
+  const [currentInventoryUid, setCurrentInventoryUid] = useState('');
+
+  const { data: inventories = [], isLoading: isLoadingInventory } = useQuery({
+    queryKey: ['get-inventories'],
+    queryFn: () => getUserInventoriesUseCase(user.uid),
+    enabled: !!user.uid,
+    onSuccess: (data) => {
+      if (!currentInventoryUid && data.length > 0) {
+        const defaultInventoryUid = data.find((inventory) =>
+          inventory.getIsDefaultInventory()
+        )?.uid;
+        setCurrentInventoryUid(defaultInventoryUid || '');
+      }
+    },
+  });
+
+  const onSelectInventory = (inventoryUid: string) => {
+    setCurrentInventoryUid(inventoryUid);
+  };
+
   return (
     <>
       <div className="min-h-full">
@@ -38,24 +58,36 @@ const Inventories: FC = () => {
               </div>
             </div>
             <div className="mt-6 px-4 sm:px-6 lg:px-8">
-              <PinnedInventories currentInventoryUid={currentInventoryUid} />
+              <PinnedInventories
+                currentInventoryUid={currentInventoryUid}
+                onSelectInventory={onSelectInventory}
+                inventories={inventories}
+                isLoadingInventory={isLoadingInventory}
+              />
             </div>
             <div className="mt-10 px-8 sm:flex sm:items-center">
               <div className="sm:flex-auto">
-                <h1 className="flex text-lg font-medium leading-6 text-gray-900 sm:truncate">
-                  Produits
-                </h1>
-                <p className="mt-2 text-sm text-gray-700">
-                  Les inventaires sont gérés séparément. Les produits de la
-                  liste ci-dessous sont ceux de l&apos;inventaire selectionné.
-                </p>
+                <div className="flex">
+                  <h1 className="flex text-lg font-medium leading-6 text-gray-900 sm:truncate">
+                    Produits
+                  </h1>
+                  <div
+                    className="tooltip"
+                    data-tip="Les inventaires sont gérés séparément. Les produits de la
+                  liste ci-dessous sont ceux de l'inventaire selectionné."
+                  >
+                    <InformationCircleIcon className="ml-3 h-6 w-6 shrink-0 text-primary-400" />
+                  </div>
+                </div>
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                <CreateProductButton />
+                <CreateProductButton
+                  currentInventoryUid={currentInventoryUid}
+                />
               </div>
             </div>
-            {/* <MobileInventoryTable /> */}
-            <InventoryTable />
+            {/* <MobileProductTable /> */}
+            <ProductTable currentInventoryUid={currentInventoryUid} />
           </main>
         </div>
       </div>

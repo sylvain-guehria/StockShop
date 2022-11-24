@@ -7,24 +7,47 @@ import {
 } from '@heroicons/react/20/solid';
 import { UserIcon } from '@heroicons/react/24/outline';
 import type { FC } from 'react';
+import { useWindowSize } from 'usehooks-ts';
 
 import ProfileDropdown from '@/components/07-profile/ProfileDropdown';
+import { getBreakpointValue } from '@/utils/tailwindUtils';
 
 type Props = {
   setSidebarOpen: (value: boolean) => void;
+  setSideBarMini: (value: boolean) => void;
+  sideBarMini: boolean;
 };
 
-const InventoryManagementHeader: FC<Props> = ({ setSidebarOpen }) => {
+const InventoryManagementHeader: FC<Props> = ({
+  setSidebarOpen,
+  setSideBarMini,
+  sideBarMini,
+}) => {
+  const { width } = useWindowSize();
+  const lgBreakpointValue = getBreakpointValue('lg');
+  const isLgOrBigger = width >= lgBreakpointValue;
+  const displaySideBarMini = isLgOrBigger && sideBarMini;
+
   return (
     <div className="flex h-16 shrink-0 border-b border-gray-200 bg-white lg:border-none">
       <button
         type="button"
-        className="border-r border-gray-200 px-4 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500 lg:hidden"
+        className="border-r border-gray-200 px-4 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 lg:hidden"
         onClick={() => setSidebarOpen(true)}
       >
         <span className="sr-only">Open sidebar</span>
         <Bars3CenterLeftIcon className="h-6 w-6" aria-hidden="true" />
       </button>
+      {displaySideBarMini && (
+        <button
+          type="button"
+          className="border-r border-gray-200 px-4 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
+          onClick={() => setSideBarMini(false)}
+        >
+          <span className="sr-only">Open sidebar</span>
+          <Bars3CenterLeftIcon className="h-6 w-6" aria-hidden="true" />
+        </button>
+      )}
       <div className="flex flex-1 justify-between px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
         <div className="flex flex-1">
           <form className="flex w-full md:ml-0" action="#" method="GET">

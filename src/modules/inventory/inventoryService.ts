@@ -54,14 +54,14 @@ class InventoryService {
 
 export default InventoryService;
 
-export type UpdateInventoryParams = {
+export interface UpdateInventoryParams {
   inventory: Inventory;
   userUid: string;
   companyUid: string;
-};
+}
 
-export type CreateInventoryParams = {
+export interface CreateInventoryParams {
   userUid: string;
   companyUid: string;
   isFirstInventory?: boolean;
-};
+}

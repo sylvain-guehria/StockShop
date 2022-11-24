@@ -1,32 +1,35 @@
-export interface User {
-  loggedIn?: boolean;
-  email?: string;
-  username?: string;
-  provider?: ProviderType;
-  uid?: string;
-  password?: string;
-  firstName?: string;
-  lastName?: string;
-  phoneNumber?: string;
-  role?: RoleType;
-  hasInventoryManagementServiceActivated?: boolean;
-  hasSeenFirstConnectionModal?: boolean;
-  locale?: LocaleType;
-}
-
-export interface Users {
-  user?: User;
-  users?: User[];
-}
-
 export enum UserEnum {
-  LOGGEDIN = 'loggedIn',
-  EMAIL = 'email',
-  MESSAGE = 'messages',
-  USERNAME = 'username',
-  ROLES = 'roles',
   UID = 'uid',
+  EMAIL = 'email',
+  USERNAME = 'username',
+  PROVIDER = 'provider',
   PASSWORD = 'password',
+  FIRST_NAME = 'firstName',
+  LAST_NAME = 'lastName',
+  PHONE_NUMBER = 'phoneNumber',
+  ROLE = 'role',
+  HAS_INVENTORY_MANAGEMENT_SERVICE_ACTIVATED = 'hasInventoryManagementServiceActivated',
+  HAS_SEEN_FIRST_CONNECTION_MODAL = 'hasSeenFirstConnectionModal',
+  LOCALE = 'locale',
+  COMPANY_UID = 'companyUid',
+  LOGGED_IN = 'loggedIn',
+}
+
+export interface User {
+  [UserEnum.UID]?: string;
+  [UserEnum.EMAIL]?: string;
+  [UserEnum.USERNAME]?: string;
+  [UserEnum.PROVIDER]?: ProviderType;
+  [UserEnum.PASSWORD]?: string;
+  [UserEnum.FIRST_NAME]?: string;
+  [UserEnum.LAST_NAME]?: string;
+  [UserEnum.PHONE_NUMBER]?: string;
+  [UserEnum.ROLE]?: RoleType;
+  [UserEnum.HAS_INVENTORY_MANAGEMENT_SERVICE_ACTIVATED]?: boolean;
+  [UserEnum.HAS_SEEN_FIRST_CONNECTION_MODAL]?: boolean;
+  [UserEnum.LOCALE]?: LocaleType;
+  [UserEnum.COMPANY_UID]?: string;
+  [UserEnum.LOGGED_IN]?: boolean;
 }
 
 export enum ROLES {

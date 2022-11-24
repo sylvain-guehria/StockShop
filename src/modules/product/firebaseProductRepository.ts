@@ -3,6 +3,7 @@
 import axios from 'axios';
 
 import ProductEntity from './ProductEntity';
+import type { AddProduct, UpdateProduct } from './productRepository';
 import { ProductRepository } from './productRepository';
 
 class FirebaseProductRepository extends ProductRepository {
@@ -19,10 +20,11 @@ class FirebaseProductRepository extends ProductRepository {
       sellingPrice,
       description,
       toBuy,
-      toSell,
       isPublic,
       tva,
       categoryUid,
+      publicDisponibility,
+      inventoryUid,
     } = response.data;
 
     return ProductEntity.new({
@@ -34,31 +36,36 @@ class FirebaseProductRepository extends ProductRepository {
       sellingPrice,
       description,
       toBuy,
-      toSell,
       isPublic,
       tva,
       categoryUid,
+      publicDisponibility,
+      inventoryUid,
     });
   }
 
-  async add(product: ProductEntity): Promise<string> {
+  async add({
+    product,
+    userUid,
+    companyUid,
+  }: AddProduct): Promise<ProductEntity> {
     console.info('adding product in db...');
     const res = await axios.post(`${this.baseUrl}/api/product/add`, {
-      uid: product.getUid(),
-      label: product.getLabel(),
-      quantityInInventory: product.getQuantityInInventory(),
-      optimumQuantity: product.getOptimumQuantity(),
-      buyingPrice: product.getBuyingPrice(),
-      sellingPrice: product.getSellingPrice(),
-      description: product.getDescription(),
-      toBuy: product.getToBuy(),
-      toSell: product.getToSell(),
-      isPublic: product.getIsPublic(),
-      tva: product.getTva(),
-      categoryUid: product.getCategoryUid(),
+      userUid,
+      companyUid,
+      product: {
+        uid: product.getUid(),
+        label: product.getLabel(),
+        inventoryUid: product.getInventoryUid(),
+      },
     });
     console.info('Product added in DB, uid: ', product.getUid());
-    return res.data;
+    const { uid, label, inventoryUid } = res.data;
+    return ProductEntity.new({
+      uid,
+      label,
+      inventoryUid,
+    });
   }
 
   async delete(uid: string): Promise<void> {
@@ -80,41 +87,74 @@ class FirebaseProductRepository extends ProductRepository {
           sellingPrice: product.sellingPrice,
           description: product.description,
           toBuy: product.toBuy,
-          toSell: product.toSell,
           isPublic: product.isPublic,
           tva: product.tva,
           categoryUid: product.categoryUid,
+          publicDisponibility: product.publicDisponibility,
+          inventoryUid: product.inventoryUid,
         })
     );
   }
 
-  async update(product: ProductEntity): Promise<void> {
+  async update({
+    product,
+    userUid,
+    companyUid,
+  }: UpdateProduct): Promise<ProductEntity> {
     console.info('update product uid: ', product.getUid());
-    await axios.put(`${this.baseUrl}/api/product/${product.getUid()}`, {
-      uid: product.getUid(),
-      label: product.getLabel(),
-      quantityInInventory: product.getQuantityInInventory(),
-      optimumQuantity: product.getOptimumQuantity(),
-      buyingPrice: product.getBuyingPrice(),
-      sellingPrice: product.getSellingPrice(),
-      description: product.getDescription(),
-      toBuy: product.getToBuy(),
-      toSell: product.getToSell(),
-      isPublic: product.getIsPublic(),
-      tva: product.getTva(),
-      categoryUid: product.getCategoryUid(),
+    const { data } = await axios.put(
+      `${this.baseUrl}/api/product/${product.getUid()}`,
+      {
+        userUid,
+        companyUid,
+        inventoryUid: product.getInventoryUid(),
+        uid: product.getUid(),
+        label: product.getLabel(),
+        quantityInInventory: product.getQuantityInInventory(),
+        optimumQuantity: product.getOptimumQuantity(),
+        buyingPrice: product.getBuyingPrice(),
+        sellingPrice: product.getSellingPrice(),
+        description: product.getDescription(),
+        toBuy: product.getToBuy(),
+        isPublic: product.getIsPublic(),
+        tva: product.getTva(),
+        categoryUid: product.getCategoryUid(),
+        publicDisponibility: product.getPublicDisponibility(),
+      }
+    );
+    return ProductEntity.new({
+      uid: data.uid,
+      label: data.label,
+      quantityInInventory: data.quantityInInventory,
+      optimumQuantity: data.optimumQuantity,
+      buyingPrice: data.buyingPrice,
+      sellingPrice: data.sellingPrice,
+      description: data.description,
+      toBuy: data.toBuy,
+      isPublic: data.isPublic,
+      tva: data.tva,
+      categoryUid: data.categoryUid,
+      publicDisponibility: data.publicDisponibility,
+      inventoryUid: data.inventoryUid,
     });
   }
 
-  async getProductsByUserUidAndInventoryUid(
-    userUid: string,
-    inventoryUid: string
-  ): Promise<ProductEntity[]> {
-    console.info('get all products by userUid and inventoryUid in db');
+  async getProductsByUserUidCompanyUidInventoryUid({
+    userUid,
+    inventoryUid,
+    companyUid,
+  }: {
+    userUid: string;
+    inventoryUid: string;
+    companyUid: string;
+  }): Promise<ProductEntity[]> {
+    console.info(
+      'get all products by userUid, companyUid and inventoryUid in db'
+    );
     const response = await axios.get(
-      `${this.baseUrl}/api/product/getProductsByUserUidAndInventoryUid`,
+      `${this.baseUrl}/api/product/getProductsByUserUidCompanyUidInventoryUid`,
       {
-        params: { userUid, inventoryUid },
+        params: { userUid, companyUid, inventoryUid },
       }
     );
     return response.data.map(
@@ -128,10 +168,11 @@ class FirebaseProductRepository extends ProductRepository {
           sellingPrice: product.sellingPrice,
           description: product.description,
           toBuy: product.toBuy,
-          toSell: product.toSell,
           isPublic: product.isPublic,
           tva: product.tva,
           categoryUid: product.categoryUid,
+          publicDisponibility: product.publicDisponibility,
+          inventoryUid: product.inventoryUid,
         })
     );
   }

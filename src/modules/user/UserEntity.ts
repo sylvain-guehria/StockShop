@@ -29,6 +29,8 @@ class UserEntity implements User {
 
   locale: LocaleType;
 
+  companyUid: string;
+
   static new(user?: User): UserEntity {
     return user
       ? new UserEntity({
@@ -55,6 +57,7 @@ class UserEntity implements User {
       user.hasInventoryManagementServiceActivated || false;
     this.hasSeenFirstConnectionModal =
       user.hasSeenFirstConnectionModal || false;
+    this.companyUid = user.companyUid || '';
   }
 
   getUid(): string {
@@ -180,6 +183,15 @@ class UserEntity implements User {
   markFirstConnectionModalAsSeen(): UserEntity {
     this.hasSeenFirstConnectionModal = true;
     return this;
+  }
+
+  setCompanyUid(companyUid: string): UserEntity {
+    this.companyUid = companyUid;
+    return this;
+  }
+
+  getCompanyUid(): string {
+    return this.companyUid;
   }
 }
 

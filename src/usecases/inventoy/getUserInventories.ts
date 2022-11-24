@@ -1,8 +1,8 @@
 import type { CompanyRepository } from '@/modules/company/companyRepository';
 import type CompanyService from '@/modules/company/companyService';
+import type InventoryEntity from '@/modules/inventory/InventoryEntity';
 import type { InventoryRepository } from '@/modules/inventory/inventoryRepository';
 import type InventoryService from '@/modules/inventory/inventoryService';
-import type { Inventory } from '@/modules/inventory/inventoryType';
 
 export const getUserInventories =
   (
@@ -11,7 +11,7 @@ export const getUserInventories =
     companyServiceDi: CompanyService,
     inventoryServiceDi: InventoryService
   ) =>
-  async (userUid: string): Promise<Inventory[]> => {
+  async (userUid: string): Promise<InventoryEntity[]> => {
     try {
       if (!userUid) {
         throw new Error('userUid is required to get user inventories');

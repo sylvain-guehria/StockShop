@@ -87,7 +87,7 @@ const MobileSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
                 </Transition.Child>
                 <div className="flex shrink-0 items-center px-4">
                   <NextImage
-                    className="h-11 w-auto cursor-pointer"
+                    className="h-10 w-auto cursor-pointer"
                     src={inventoryMarketLogo}
                     alt="inventory shop logo"
                   />

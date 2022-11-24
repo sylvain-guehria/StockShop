@@ -17,16 +17,18 @@ class ProductEntity implements Product {
 
   toBuy: number;
 
-  toSell: number;
-
   isPublic: boolean;
 
   tva: number;
 
   categoryUid: string;
 
+  publicDisponibility: string;
+
+  inventoryUid: string;
+
   static new(product?: Product): ProductEntity {
-    return new ProductEntity(product || {});
+    return new ProductEntity(product || ({} as Product));
   }
 
   constructor(product: Product) {
@@ -38,10 +40,20 @@ class ProductEntity implements Product {
     this.sellingPrice = product.sellingPrice || 0;
     this.description = product.description || '';
     this.toBuy = product.toBuy || 0;
-    this.toSell = product.toSell || 0;
     this.isPublic = product.isPublic || false;
     this.tva = product.tva || 0;
     this.categoryUid = product.categoryUid || '';
+    this.publicDisponibility = product.publicDisponibility || '';
+    this.inventoryUid = product.inventoryUid || '';
+  }
+
+  getInventoryUid(): string {
+    return this.inventoryUid;
+  }
+
+  setInventoryUid(inventoryUid: string): ProductEntity {
+    this.inventoryUid = inventoryUid;
+    return this;
   }
 
   getUid(): string {
@@ -116,15 +128,6 @@ class ProductEntity implements Product {
     return this;
   }
 
-  getToSell(): number {
-    return this.toSell;
-  }
-
-  setToSell(toSell: number): ProductEntity {
-    this.toSell = toSell;
-    return this;
-  }
-
   getIsPublic(): boolean {
     return this.isPublic;
   }
@@ -166,6 +169,15 @@ class ProductEntity implements Product {
 
   getSellingPriceWithTvaAndQuantity(): number {
     return this.getSellingPriceWithTva() * this.quantityInInventory;
+  }
+
+  getPublicDisponibility(): string {
+    return this.publicDisponibility;
+  }
+
+  setPublicDisponibility(publicDisponibility: string): ProductEntity {
+    this.publicDisponibility = publicDisponibility;
+    return this;
   }
 }
 
