@@ -1,16 +1,10 @@
 import { AttributeInputTypes } from '../categoriesTypes';
-import { colorOptions, seasonOptions, sexOptions } from '../reusableOptions';
+import { seasonOptions } from '../reusableOptions';
 
 export const subcategorieClothes = {
   id: 'clothes',
   label: 'Vêtements',
   inputs: [
-    {
-      id: 'sex',
-      label: 'Sexe',
-      inputType: AttributeInputTypes.SELECT,
-      options: sexOptions,
-    },
     {
       id: 'europeanSize',
       label: 'Taille européenne',
@@ -20,12 +14,6 @@ export const subcategorieClothes = {
       id: 'americanSize',
       label: 'Taille américaine',
       inputType: AttributeInputTypes.TEXT,
-    },
-    {
-      id: 'color',
-      label: 'Couleur',
-      inputType: AttributeInputTypes.SELECT,
-      options: [...colorOptions],
     },
     {
       id: 'brand',
@@ -75,12 +63,6 @@ export const subcategorieShoes = {
   label: 'Chaussures',
   inputs: [
     {
-      id: 'sex',
-      label: 'Sexe',
-      inputType: AttributeInputTypes.SELECT,
-      options: sexOptions,
-    },
-    {
       id: 'europeanSize',
       label: 'Taille européenne',
       inputType: AttributeInputTypes.TEXT,
@@ -89,12 +71,6 @@ export const subcategorieShoes = {
       id: 'americanSize',
       label: 'Taille américaine',
       inputType: AttributeInputTypes.TEXT,
-    },
-    {
-      id: 'color',
-      label: 'Couleur',
-      inputType: AttributeInputTypes.SELECT,
-      options: [...colorOptions],
     },
     {
       id: 'brand',
@@ -132,12 +108,6 @@ export const subcategorieAccessories = {
   id: 'accessories',
   label: 'Accessoires',
   inputs: [
-    {
-      id: 'color',
-      label: 'Couleur',
-      inputType: AttributeInputTypes.SELECT,
-      options: [...colorOptions],
-    },
     {
       id: 'brand',
       label: 'Marque',
