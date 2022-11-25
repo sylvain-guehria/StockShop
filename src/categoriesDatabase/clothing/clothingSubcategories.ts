@@ -1,4 +1,5 @@
 import { AttributeInputTypes } from '../categoriesTypes';
+import { seasonOptions, sexOptions } from '../reusableOptions';
 
 export const subcategorieClothes = {
   id: 'clothes',
@@ -8,11 +9,7 @@ export const subcategorieClothes = {
       id: 'sex',
       label: 'Sexe',
       inputType: AttributeInputTypes.SELECT,
-      options: [
-        { label: 'Homme', value: 'men' },
-        { label: 'Homme', value: 'men' },
-        { label: 'Unisex', value: 'unisex' },
-      ],
+      options: sexOptions,
     },
     {
       id: 'europeanSize',
@@ -67,13 +64,7 @@ export const subcategorieClothes = {
       id: 'season',
       label: 'Saison',
       inputType: AttributeInputTypes.SELECT,
-      options: [
-        { label: 'Printemps', value: 'spring' },
-        { label: 'Été', value: 'summer' },
-        { label: 'Automne', value: 'autumn' },
-        { label: 'Hiver', value: 'winter' },
-        { label: 'Toutes saisons', value: 'allSeasons' },
-      ],
+      options: seasonOptions,
     },
   ],
 };
@@ -86,11 +77,7 @@ export const subcategorieShoes = {
       id: 'sex',
       label: 'Sexe',
       inputType: AttributeInputTypes.SELECT,
-      options: [
-        { label: 'Homme', value: 'men' },
-        { label: 'Homme', value: 'men' },
-        { label: 'Unisex', value: 'unisex' },
-      ],
+      options: sexOptions,
     },
     {
       id: 'europeanSize',
