@@ -3,6 +3,7 @@ export enum AttributeInputTypes {
   TEXT = 'text',
   DATE = 'date',
   SELECT = 'select',
+  SELECT_WITH_CATEGORY = 'selectWithCategory',
   MULTISELECT = 'multiselect',
   RADIO = 'radio',
   CHECKBOX = 'checkbox',
