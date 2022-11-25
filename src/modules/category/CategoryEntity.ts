@@ -1,11 +1,11 @@
-import type { Category } from './categoryType';
+import type { Category, CategoryInput } from './categoryType';
 
 class CategoryEntity implements Category {
   uid: string;
 
   label: string;
 
-  attributs: Record<string, unknown>;
+  inputs?: CategoryInput;
 
   static new(category?: Category): CategoryEntity {
     return new CategoryEntity(category || {});
@@ -14,7 +14,7 @@ class CategoryEntity implements Category {
   constructor(category: Category) {
     this.uid = category.uid || '';
     this.label = category.label || '';
-    this.attributs = category.attributs || {};
+    this.inputs = category.inputs || {};
   }
 
   getUid(): string {
@@ -35,31 +35,13 @@ class CategoryEntity implements Category {
     return this;
   }
 
-  getAttributs(): Record<string, unknown> {
-    return this.attributs;
+  getAttributs(): CategoryInput {
+    return this.inputs;
   }
 
-  setAttributs(attributs: Record<string, unknown>): CategoryEntity {
-    this.attributs = attributs;
+  setAttributs(inputs: CategoryInput): CategoryEntity {
+    this.inputs = inputs;
     return this;
-  }
-
-  getAttribut(key: string): unknown {
-    return this.attributs[key];
-  }
-
-  setAttribut(key: string, value: unknown): CategoryEntity {
-    this.attributs[key] = value;
-    return this;
-  }
-
-  removeAttribut(key: string): CategoryEntity {
-    delete this.attributs[key];
-    return this;
-  }
-
-  hasAttribut(key: string): boolean {
-    return this.attributs[key] !== undefined;
   }
 }
 

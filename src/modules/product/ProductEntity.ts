@@ -23,6 +23,8 @@ class ProductEntity implements Product {
 
   categoryUid: string;
 
+  subCategoryUid: string;
+
   publicDisponibility: string;
 
   inventoryUid: string;
@@ -43,6 +45,7 @@ class ProductEntity implements Product {
     this.isPublic = product.isPublic || false;
     this.tva = product.tva || 0;
     this.categoryUid = product.categoryUid || '';
+    this.subCategoryUid = product.subCategoryUid || '';
     this.publicDisponibility = product.publicDisponibility || '';
     this.inventoryUid = product.inventoryUid || '';
   }
@@ -152,6 +155,15 @@ class ProductEntity implements Product {
 
   setCategoryUid(categoryUid: string): ProductEntity {
     this.categoryUid = categoryUid;
+    return this;
+  }
+
+  getSubCategoryUid(): string {
+    return this.subCategoryUid;
+  }
+
+  setSubCategoryUid(subCategoryUid: string): ProductEntity {
+    this.subCategoryUid = subCategoryUid;
     return this;
   }
 

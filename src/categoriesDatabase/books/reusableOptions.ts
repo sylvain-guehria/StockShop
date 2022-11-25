@@ -1,73 +1,73 @@
 export const bookCategories = [
   {
     label: 'Littrature',
-    id: 'littrature',
+    uid: 'littrature',
     subCategories: [
       {
         label: 'Romans',
-        id: 'romans',
+        uid: 'romans',
       },
       {
         label: 'Polars et Romans Policiers',
-        id: 'polarsEtRomansPoliciers',
+        uid: 'polarsEtRomansPoliciers',
       },
       {
         label: 'Littérature érotique & sentimentale',
-        id: 'erotiqueEtSentimental',
+        uid: 'erotiqueEtSentimental',
       },
       {
         label: 'Fantasy & SF',
-        id: 'fantasyEtSF',
+        uid: 'fantasyEtSF',
       },
       {
         label: 'Pléiades',
-        id: 'pleiades',
+        uid: 'pleiades',
       },
       {
         label: 'Théatre, poésie & critique littéraire',
-        id: 'theatrePoésieEtCritiqueLittéraire',
+        uid: 'theatrePoésieEtCritiqueLittéraire',
       },
     ],
   },
   {
     label: 'Bien-être & vie pratique',
-    id: 'bienEtreEtViePratique',
+    uid: 'bienEtreEtViePratique',
     subCategories: [
       {
         label: 'Cuisine & vins',
-        id: 'cuisineEtVins',
+        uid: 'cuisineEtVins',
       },
       {
         label: 'Régimes & minceur',
-        id: 'regimesEtMinceur',
+        uid: 'regimesEtMinceur',
       },
       {
         label: 'Santé & bien-être',
-        id: 'santéEtBienEtre',
+        uid: 'santéEtBienEtre',
       },
       {
         label: 'Couple, enfant & famille',
-        id: 'coupleEnfantEtFamille',
+        uid: 'coupleEnfantEtFamille',
       },
       {
         label: 'Erotisme & sexualité',
-        id: 'erotismeAndSexuality',
+        uid: 'erotismeAndSexuality',
       },
       {
         label: 'Développement personnel',
-        id: 'developpementPersonnel',
+        uid: 'developpementPersonnel',
       },
       {
         label: 'Décoration, jardinage & bricolage',
-        id: 'decorationJardinageAndBricolage',
+        uid: 'decorationJardinageAndBricolage',
       },
       {
         label: 'Esotérisme',
-        id: 'esoterisme',
+        uid: 'esoterisme',
       },
       {
         label: 'Mode de vie durable',
-        id: 'modeDeVieDurable',
+        uid: 'modeDeVieDurable',
       },
     ],
   },

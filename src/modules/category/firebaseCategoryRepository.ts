@@ -11,12 +11,12 @@ class FirebaseCategoryRepository extends CategoryRepository {
   async getById(uid: string): Promise<CategoryEntity> {
     console.info('get category in db with uid: ', uid);
     const response = await axios.get(`${this.baseUrl}/api/category/${uid}`);
-    const { label, attributs } = response.data;
+    const { label, inputs } = response.data;
 
     return CategoryEntity.new({
       uid,
       label,
-      attributs,
+      inputs,
     });
   }
 
@@ -25,7 +25,7 @@ class FirebaseCategoryRepository extends CategoryRepository {
     const res = await axios.post(`${this.baseUrl}/api/category/add`, {
       uid: category.getUid(),
       label: category.getLabel(),
-      attributs: category.getAttributs(),
+      inputs: category.getAttributs(),
     });
     console.info('Category added in DB, uid: ', category.getUid());
     return res.data;
@@ -44,7 +44,7 @@ class FirebaseCategoryRepository extends CategoryRepository {
         new CategoryEntity({
           uid: category.uid,
           label: category.label,
-          attributs: category.attributs,
+          inputs: category.inputs,
         })
     );
   }
@@ -54,7 +54,7 @@ class FirebaseCategoryRepository extends CategoryRepository {
     await axios.put(`${this.baseUrl}/api/category/${category.getUid()}`, {
       uid: category.getUid(),
       label: category.getLabel(),
-      attributs: category.getAttributs(),
+      inputs: category.getAttributs(),
     });
   }
 }

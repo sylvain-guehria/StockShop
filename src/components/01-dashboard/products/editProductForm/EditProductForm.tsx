@@ -5,6 +5,10 @@ import type { FC } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
+import {
+  categories,
+  getSubCategoriesByCategoryUid,
+} from '@/categoriesDatabase/categories';
 import Input from '@/components/04-lib/inputs/Input';
 import InputSelect from '@/components/04-lib/inputs/InputSelect';
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
@@ -25,6 +29,7 @@ interface EditProductFormType {
   [ProductAttributes.SELLING_PRICE]?: number;
   [ProductAttributes.DESCRIPTION]?: string;
   [ProductAttributes.CATEGORY_UID]?: string;
+  [ProductAttributes.SUB_CATEGORY_UID]?: string;
   [ProductAttributes.IS_PUBLIC]?: boolean;
   [ProductAttributes.TVA]?: number;
   [ProductAttributes.PUBLIC_DISPONIBILITY]?: string;
@@ -53,6 +58,7 @@ const EditProductForm: FC<Props> = ({
       [ProductAttributes.SELLING_PRICE]: product.sellingPrice,
       [ProductAttributes.DESCRIPTION]: product.description,
       [ProductAttributes.CATEGORY_UID]: product.categoryUid,
+      [ProductAttributes.SUB_CATEGORY_UID]: product.subCategoryUid,
       [ProductAttributes.IS_PUBLIC]: product.isPublic,
       [ProductAttributes.TVA]: product.tva,
       [ProductAttributes.PUBLIC_DISPONIBILITY]: product.publicDisponibility,
@@ -62,6 +68,7 @@ const EditProductForm: FC<Props> = ({
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<EditProductFormType>(formOptions);
 
@@ -69,6 +76,8 @@ const EditProductForm: FC<Props> = ({
     data: EditProductFormType
   ) => {
     try {
+      console.log('data', data);
+      return;
       onSubmitEditForm({
         product: {
           ...product,
@@ -81,6 +90,8 @@ const EditProductForm: FC<Props> = ({
       toast(ToasterTypeEnum.ERROR, e.message);
     }
   };
+
+  const watchCategoryUid = watch(ProductAttributes.CATEGORY_UID);
 
   return (
     <form onSubmit={handleSubmit(onSubmitEditProductForm)}>
@@ -159,24 +170,52 @@ const EditProductForm: FC<Props> = ({
               />
             </div>
           </div>
-          <div className="mt-6 sm:col-span-3">
-            <label
-              htmlFor="country"
-              className="block text-start text-sm font-medium text-gray-700"
-            >
-              Category
-            </label>
-            <div className="mt-1">
-              <InputSelect
-                options={[
-                  { label: 'Vetement', value: 'vetement' },
-                  { label: 'Epicerie', value: 'epicerie' },
-                ]}
-                name={ProductAttributes.CATEGORY_UID}
-                register={register(ProductAttributes.CATEGORY_UID)}
-                error={errors[ProductAttributes.CATEGORY_UID]?.message}
-                inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              />
+          <div className="mt-6 grid gap-y-6 gap-x-4 sm:grid-cols-2">
+            <div>
+              <label
+                htmlFor="country"
+                className="block text-start text-sm font-medium text-gray-700"
+              >
+                Category
+              </label>
+              <div className="mt-1">
+                <InputSelect
+                  options={[
+                    { label: '', value: '' },
+                    ...categories.map((category) => ({
+                      label: category.label,
+                      value: category.uid,
+                    })),
+                  ]}
+                  name={ProductAttributes.CATEGORY_UID}
+                  register={register(ProductAttributes.CATEGORY_UID)}
+                  error={errors[ProductAttributes.CATEGORY_UID]?.message}
+                  inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="country"
+                className="block text-start text-sm font-medium text-gray-700"
+              >
+                Sous catégorie
+              </label>
+              <div className="mt-1">
+                <InputSelect
+                  options={[
+                    { label: '', value: '' },
+                    ...categories.map((category) =>
+                      getSubCategoriesByCategoryUid(category.uid)
+                    ),
+                  ]}
+                  disabled={!watchCategoryUid}
+                  name={ProductAttributes.SUB_CATEGORY_UID}
+                  register={register(ProductAttributes.SUB_CATEGORY_UID)}
+                  error={errors[ProductAttributes.SUB_CATEGORY_UID]?.message}
+                  inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
             </div>
           </div>
         </div>

@@ -1,4 +1,6 @@
-import { CategoryId, CategoryLabel } from '../categoriesTypes';
+import type { Category } from '@/modules/category/categoryType';
+
+import { CategoryId, CategoryLabel } from '../categoriesEnums';
 import {
   subcategorieAccessories,
   subcategorieClothes,
@@ -6,15 +8,13 @@ import {
   subcategorieShoes,
 } from './sportSubcategories';
 
-export const sportCategory = [
-  {
-    id: CategoryId.SPORTS_AND_OUTDOORS,
-    label: CategoryLabel.SPORTS_AND_OUTDOORS,
-    subCatgories: [
-      subcategorieClothes,
-      subcategorieAccessories,
-      subcategorieShoes,
-      subcategorieFoodAndDietsupplements,
-    ],
-  },
-];
+export const sportCategory: Category = {
+  uid: CategoryId.SPORTS_AND_OUTDOORS,
+  label: CategoryLabel.SPORTS_AND_OUTDOORS,
+  subCatgories: [
+    subcategorieClothes,
+    subcategorieAccessories,
+    subcategorieShoes,
+    subcategorieFoodAndDietsupplements,
+  ],
+};

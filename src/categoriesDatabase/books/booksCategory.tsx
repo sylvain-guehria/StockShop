@@ -1,9 +1,9 @@
-import { CategoryId, CategoryLabel } from '../categoriesTypes';
+import type { Category } from '@/modules/category/categoryType';
 
-export const booksCategory = [
-  {
-    id: CategoryId.BOOKS,
-    label: CategoryLabel.BOOKS,
-    subCatgories: [],
-  },
-];
+import { CategoryId, CategoryLabel } from '../categoriesEnums';
+
+export const booksCategory: Category = {
+  uid: CategoryId.BOOKS,
+  label: CategoryLabel.BOOKS,
+  subCatgories: [],
+};
