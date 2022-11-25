@@ -1,10 +1,18 @@
 import { CategoryId, CategoryLabel } from '../categoriesTypes';
-import { subcategorieClothes } from './subcategories';
+import {
+  subcategorieAccessories,
+  subcategorieClothes,
+  subcategorieShoes,
+} from './clothingSubcategories';
 
 export const clothingCategory = [
   {
     id: CategoryId.CLOTHING,
     label: CategoryLabel.CLOTHING,
-    clothes: subcategorieClothes,
+    subCatgories: [
+      subcategorieClothes,
+      subcategorieShoes,
+      subcategorieAccessories,
+    ],
   },
 ];

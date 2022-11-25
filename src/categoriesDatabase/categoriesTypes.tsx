@@ -1,6 +1,11 @@
 export enum AttributeInputTypes {
   NUMBER = 'number',
-  STRING = 'string',
+  TEXT = 'text',
+  DATE = 'date',
+  SELECT = 'select',
+  MULTISELECT = 'multiselect',
+  RADIO = 'radio',
+  CHECKBOX = 'checkbox',
 }
 
 export enum CategoryLabel {
