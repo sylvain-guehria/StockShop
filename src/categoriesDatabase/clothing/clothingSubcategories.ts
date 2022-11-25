@@ -1,5 +1,5 @@
 import { AttributeInputTypes } from '../categoriesTypes';
-import { seasonOptions, sexOptions } from '../reusableOptions';
+import { colorOptions, seasonOptions, sexOptions } from '../reusableOptions';
 
 export const subcategorieClothes = {
   id: 'clothes',
@@ -24,7 +24,8 @@ export const subcategorieClothes = {
     {
       id: 'color',
       label: 'Couleur',
-      inputType: AttributeInputTypes.TEXT,
+      inputType: AttributeInputTypes.SELECT,
+      options: [...colorOptions],
     },
     {
       id: 'brand',
@@ -92,7 +93,8 @@ export const subcategorieShoes = {
     {
       id: 'color',
       label: 'Couleur',
-      inputType: AttributeInputTypes.TEXT,
+      inputType: AttributeInputTypes.SELECT,
+      options: [...colorOptions],
     },
     {
       id: 'brand',
@@ -133,7 +135,8 @@ export const subcategorieAccessories = {
     {
       id: 'color',
       label: 'Couleur',
-      inputType: AttributeInputTypes.TEXT,
+      inputType: AttributeInputTypes.SELECT,
+      options: [...colorOptions],
     },
     {
       id: 'brand',

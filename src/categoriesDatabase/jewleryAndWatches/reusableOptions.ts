@@ -63,3 +63,25 @@ export const stoneMaterial = [
   { label: 'Quartz', value: 'quartz' },
   { label: 'Autre', value: 'other' },
 ];
+
+export const watchMaterial = [
+  { label: 'Acier', value: 'acier' },
+  { label: 'Acier inoxydable', value: 'acierInoxydable' },
+  { label: 'Argent', value: 'argent' },
+  { label: 'Or', value: 'or' },
+  { label: 'Or rose', value: 'orRose' },
+  { label: 'Or jaune', value: 'orJaune' },
+  { label: 'Or blanc', value: 'orBlanc' },
+  { label: 'Plaqué or', value: 'plaqueOr' },
+  { label: 'Plaqué argent', value: 'plaqueArgent' },
+  { label: 'Plaqué or rose', value: 'plaqueOrRose' },
+  { label: 'Plaqué or jaune', value: 'plaqueOrJaune' },
+  { label: 'Plaqué or blanc', value: 'plaqueOrBlanc' },
+  { label: 'Laiton', value: 'laiton' },
+  { label: 'Cuivre', value: 'cuivre' },
+  { label: 'Aluminium', value: 'aluminium' },
+  { label: 'Titane', value: 'titane' },
+  { label: 'Alliage', value: 'alliage' },
+  { label: 'Plastique', value: 'plastique' },
+  { label: 'Autre', value: 'autre' },
+];
