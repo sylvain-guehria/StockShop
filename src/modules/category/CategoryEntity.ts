@@ -1,20 +1,23 @@
-import type { Category, CategoryInput } from './categoryType';
+import type { Category, CategoryInput, SubCategory } from './categoryType';
 
 class CategoryEntity implements Category {
   uid: string;
 
   label: string;
 
-  inputs?: CategoryInput;
+  inputs?: CategoryInput[];
 
-  static new(category?: Category): CategoryEntity {
-    return new CategoryEntity(category || {});
+  subCatgories?: SubCategory[];
+
+  static new(category: Category): CategoryEntity {
+    return new CategoryEntity(category);
   }
 
   constructor(category: Category) {
     this.uid = category.uid || '';
     this.label = category.label || '';
-    this.inputs = category.inputs || {};
+    this.inputs = category.inputs || [];
+    this.subCatgories = category.subCatgories || [];
   }
 
   getUid(): string {
@@ -35,12 +38,21 @@ class CategoryEntity implements Category {
     return this;
   }
 
-  getAttributs(): CategoryInput {
-    return this.inputs;
+  getInputs(): CategoryInput[] {
+    return this.inputs || [];
   }
 
-  setAttributs(inputs: CategoryInput): CategoryEntity {
+  setInputs(inputs: CategoryInput[]): CategoryEntity {
     this.inputs = inputs;
+    return this;
+  }
+
+  getSubCatgories(): SubCategory[] {
+    return this.subCatgories || [];
+  }
+
+  setSubCatgories(subCatgories: SubCategory[]): CategoryEntity {
+    this.subCatgories = subCatgories;
     return this;
   }
 }

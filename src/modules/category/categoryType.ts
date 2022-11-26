@@ -2,34 +2,38 @@ export enum CategoryEnum {
   UID = 'uid',
   LABEL = 'label',
   INPUTS = 'inputs',
+  SUB_CATEGORIES = 'subCatgories',
+  OPTIONS = 'options',
+  INPUT_TYPE = 'inputType',
+  VALUE = 'value',
 }
 
 export interface Category {
   [CategoryEnum.UID]: string;
   [CategoryEnum.LABEL]: string;
   [CategoryEnum.INPUTS]?: CategoryInput[];
-  subCatgories?: SubCategory[];
+  [CategoryEnum.SUB_CATEGORIES]?: SubCategory[];
 }
 
 export type SubCategory = {
-  uid: string;
-  label: string;
-  inputs: CategoryInput[];
+  [CategoryEnum.UID]: string;
+  [CategoryEnum.LABEL]: string;
+  [CategoryEnum.INPUTS]?: CategoryInput[];
 };
 
 export type CategoryInput = {
-  uid: string;
-  label: string;
-  inputType: AttributeInputTypes;
-  options: {
-    label: string;
-    value: string;
+  [CategoryEnum.UID]: string;
+  [CategoryEnum.LABEL]: string;
+  [CategoryEnum.INPUT_TYPE]: AttributeInputTypes;
+  [CategoryEnum.OPTIONS]?: {
+    [CategoryEnum.LABEL]: string;
+    [CategoryEnum.VALUE]: string;
   }[];
 };
 
 export type CategoryInputOption = {
-  label: string;
-  value: string;
+  [CategoryEnum.LABEL]: string;
+  [CategoryEnum.VALUE]: string;
 };
 
 export enum AttributeInputTypes {

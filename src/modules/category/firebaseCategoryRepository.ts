@@ -25,7 +25,7 @@ class FirebaseCategoryRepository extends CategoryRepository {
     const res = await axios.post(`${this.baseUrl}/api/category/add`, {
       uid: category.getUid(),
       label: category.getLabel(),
-      inputs: category.getAttributs(),
+      inputs: category.getInputs(),
     });
     console.info('Category added in DB, uid: ', category.getUid());
     return res.data;
@@ -54,7 +54,7 @@ class FirebaseCategoryRepository extends CategoryRepository {
     await axios.put(`${this.baseUrl}/api/category/${category.getUid()}`, {
       uid: category.getUid(),
       label: category.getLabel(),
-      inputs: category.getAttributs(),
+      inputs: category.getInputs(),
     });
   }
 }

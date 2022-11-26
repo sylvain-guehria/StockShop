@@ -5,16 +5,14 @@ import type { FC } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
-import {
-  categories,
-  getSubCategoriesByCategoryUid,
-} from '@/categoriesDatabase/categories';
+import { categories } from '@/categoriesDatabase/categories';
 import Input from '@/components/04-lib/inputs/Input';
 import InputSelect from '@/components/04-lib/inputs/InputSelect';
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
+import { getSubCategoriesByCategoryUidFromDatabase } from '@/modules/category/categoryUtils';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { UpdateProductParams } from '@/modules/product/productService';
 import { ProductAttributes } from '@/modules/product/productType';
@@ -76,8 +74,6 @@ const EditProductForm: FC<Props> = ({
     data: EditProductFormType
   ) => {
     try {
-      console.log('data', data);
-      return;
       onSubmitEditForm({
         product: {
           ...product,
@@ -205,9 +201,12 @@ const EditProductForm: FC<Props> = ({
                 <InputSelect
                   options={[
                     { label: '', value: '' },
-                    ...categories.map((category) =>
-                      getSubCategoriesByCategoryUid(category.uid)
-                    ),
+                    ...getSubCategoriesByCategoryUidFromDatabase(
+                      watchCategoryUid as string
+                    ).map((subcategory) => ({
+                      label: subcategory.label,
+                      value: subcategory.uid,
+                    })),
                   ]}
                   disabled={!watchCategoryUid}
                   name={ProductAttributes.SUB_CATEGORY_UID}

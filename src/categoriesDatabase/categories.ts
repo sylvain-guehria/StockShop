@@ -11,8 +11,3 @@ export const categories: Category[] = [
   jewleryAndWatchesCategory,
   booksCategory,
 ];
-
-export const getSubCategoriesByCategoryUid = (categoryUid: string) => {
-  const category = categories.find((cat) => cat.uid === categoryUid);
-  return category?.subCatgories;
-};

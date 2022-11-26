@@ -218,7 +218,7 @@ export const subcategorieEaring = {
 };
 
 export const subcategorieBracelet = {
-  uid: 'neckless',
+  uid: 'bracelet',
   label: 'Colliers',
   inputs: [
     {
