@@ -1,5 +1,6 @@
 import { EyeIcon } from '@heroicons/react/20/solid';
 import {
+  CheckCircleIcon,
   PencilSquareIcon,
   PlusCircleIcon,
   TrashIcon,
@@ -231,7 +232,10 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                     </td>
                     <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
                       {product.toBuy > 0 ? (
-                        product.toBuy
+                        <CheckCircleIcon
+                          className="ml-3 h-5 w-5 shrink-0 text-green-600"
+                          aria-hidden="true"
+                        />
                       ) : (
                         <div className="flex">
                           0
@@ -242,6 +246,13 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                             <PlusCircleIcon
                               className="ml-3 h-5 w-5 shrink-0 text-primary-600"
                               aria-hidden="true"
+                              onClick={() =>
+                                updateProductMutation.mutate({
+                                  product: { ...product, toBuy: 1 },
+                                  userUid: user.getUid(),
+                                  companyUid: user.getCompanyUid(),
+                                })
+                              }
                             />
                             <span className="sr-only">
                               Ajouter à la liste produit à acheter{' '}
