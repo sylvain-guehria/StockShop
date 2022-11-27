@@ -9,15 +9,15 @@ export const bookCategories = [
       },
       {
         label: 'Polars et Romans Policiers',
-        value: 'polarsEtRomansPoliciers',
+        value: 'thrillers-and-detective-novels',
       },
       {
         label: 'Littérature érotique & sentimentale',
-        value: 'erotiqueEtSentimental',
+        value: 'erotic-and-sentimental-literature',
       },
       {
         label: 'Fantasy & SF',
-        value: 'fantasyEtSF',
+        value: 'fantasy-and-SF',
       },
       {
         label: 'Pléiades',
@@ -25,132 +25,358 @@ export const bookCategories = [
       },
       {
         label: 'Théatre, poésie & critique littéraire',
-        value: 'theatrePoésieEtCritiqueLittéraire',
+        value: 'theatre-poetry-and-literary-criticism',
       },
     ],
   },
   {
     label: 'Bien-être & vie pratique',
-    value: 'bienEtreEtViePratique',
+    value: 'well-being-and-practical-life',
     subOptions: [
       {
         label: 'Cuisine & vins',
-        value: 'cuisineEtVins',
+        value: 'cooking-and-wines',
       },
       {
         label: 'Régimes & minceur',
-        value: 'regimesEtMinceur',
+        value: 'diets-and-weight-loss',
       },
       {
         label: 'Santé & bien-être',
-        value: 'santéEtBienEtre',
+        value: 'health-and-well-being',
       },
       {
         label: 'Couple, enfant & famille',
-        value: 'coupleEnfantEtFamille',
+        value: 'couple-child-and-family',
       },
       {
         label: 'Erotisme & sexualité',
-        value: 'erotismeAndSexuality',
+        value: 'eroticism-and-sexuality',
       },
       {
         label: 'Développement personnel',
-        value: 'developpementPersonnel',
+        value: 'personal-development',
       },
       {
         label: 'Décoration, jardinage & bricolage',
-        value: 'decorationJardinageAndBricolage',
+        value: 'decoration-gardening-and-diy',
       },
       {
         label: 'Esotérisme',
-        value: 'esoterisme',
+        value: 'esoterism',
       },
       {
         label: 'Mode de vie durable',
-        value: 'modeDeVieDurable',
+        value: 'sustainable-lifestyle',
+      },
+    ],
+  },
+  {
+    label: 'Loisirs, nature & voyages',
+    value: 'leisure-nature-and-travel',
+    subOptions: [
+      {
+        label: 'Nature & animaux',
+        value: 'nature-and-animals',
+      },
+      {
+        label: 'Développement durable',
+        value: 'sustainable-development',
+      },
+      {
+        label: 'Brico-déco & jardin',
+        value: 'diy-and-garden',
+      },
+      {
+        label: 'Sports & jeux',
+        value: 'sport-and-games',
+      },
+      {
+        label: 'Guides de voyage',
+        value: 'travel-guides',
+      },
+      {
+        label: 'Beaux livres pays',
+        value: 'beautiful-country-books',
+      },
+      {
+        label: 'Cartes, atlas & plans',
+        value: 'maps-atlases-and-plans',
+      },
+      {
+        label: 'Récits de voyage',
+        value: 'travel-stories',
+      },
+    ],
+  },
+  {
+    label: 'Arts, société & sciences humaines',
+    value: 'arts-society-and-human-sciences',
+    subOptions: [
+      {
+        label: 'Arts, cinéma & musique',
+        value: 'arts-cinema-and-music',
+      },
+      {
+        label: 'Histoire',
+        value: 'history',
+      },
+      {
+        label: 'Actualité, politique & faits de société',
+        value: 'current-affairs-politics-and-society',
+      },
+      {
+        label: 'Philosophie, sociologie & ethnologie',
+        value: 'philosophy-sociology-and-ethnology',
+      },
+      {
+        label: 'Religion & spiritualité',
+        value: 'religion-and-spirituality',
+      },
+    ],
+  },
+  {
+    label: 'Jeunesse',
+    value: 'youth',
+    subOptions: [
+      {
+        label: 'Livres 0-3 ans',
+        value: 'books-0-3-years-old',
+      },
+      {
+        label: 'Livres 3-6 ans',
+        value: 'books-3-6-years-old',
+      },
+      {
+        label: 'Livres 6-9 ans',
+        value: 'books-6-9-years-old',
+      },
+      {
+        label: 'Livres 9-12 ans',
+        value: 'books-9-12-years-old',
+      },
+      {
+        label: 'Romans ados',
+        value: 'teenage-novels',
+      },
+      {
+        label: 'Documentaires',
+        value: 'documentaries',
+      },
+      {
+        label: 'Loisirs créatifs et jeux',
+        value: 'creative-hobbies-and-games',
+      },
+      {
+        label: 'Religion jeunesse',
+        value: 'youth-religion',
+      },
+      {
+        label: 'BD jeunesse',
+        value: 'youth-comics',
+      },
+    ],
+  },
+  {
+    label: 'Bandes dessinées & humour',
+    value: 'comics-and-humor',
+    subOptions: [
+      {
+        label: 'BD',
+        value: 'comics',
+      },
+      {
+        label: 'BD jeunesse',
+        value: 'youth-comics',
+      },
+      {
+        label: 'Comics',
+        value: 'comics',
+      },
+      {
+        label: 'Mangas',
+        value: 'mangas',
+      },
+      {
+        label: 'Autour de la BD',
+        value: 'around-comics',
+      },
+      {
+        label: 'Humour',
+        value: 'humor',
+      },
+    ],
+  },
+  {
+    label: 'Scolaire & pédagogie',
+    value: 'school-and-pedagogy',
+    subOptions: [
+      {
+        label: 'Manuels scolaires',
+        value: 'school-books',
+      },
+      {
+        label: 'Soutien scolaire',
+        value: 'school-support',
+      },
+      {
+        label: 'Pédagogie & formation',
+        value: 'pedagogy-and-training',
+      },
+      {
+        label: 'Orientation',
+        value: 'orientation',
+      },
+      {
+        label: 'Dictionnaires',
+        value: 'dictionaries',
+      },
+      {
+        label: 'Cahiers de vacances',
+        value: 'holiday-workbooks',
+      },
+    ],
+  },
+  {
+    label: 'Entreprise, emploi, droit & économie',
+    value: 'business-employment-law-and-economy',
+    subOptions: [
+      {
+        label: 'Droit',
+        value: 'law',
+      },
+      {
+        label: 'Economie & finances',
+        value: 'economy-and-finance',
+      },
+      {
+        label: 'Management & marketing',
+        value: 'management-and-marketing',
+      },
+      {
+        label: 'Comptabilité & gestion',
+        value: 'accounting-and-management',
+      },
+      {
+        label: 'Carrière, emploi & concours',
+        value: 'career-employment-and-competitions',
+      },
+      {
+        label: 'Orientation & métiers',
+        value: 'orientation-and-careers',
+      },
+      {
+        label: 'Entreprise & management',
+        value: 'business-and-management',
+      },
+    ],
+  },
+  {
+    label: 'Médecine, sciences, techniques',
+    value: 'medicine-sciences-and-techniques',
+    subOptions: [
+      {
+        label: 'Médecine & paramédical',
+        value: 'medicine-and-paramedical',
+      },
+      {
+        label: 'Médecine & paramédical',
+        value: 'medicine-and-paramedical',
+      },
+      {
+        label: 'Psychologie & psychanalyse',
+        value: 'psychology-and-psychanalysis',
+      },
+      {
+        label: 'Physique, chimie & biologie',
+        value: 'physics-chemistry-and-biology',
+      },
+      {
+        label: 'Mathématiques',
+        value: 'mathematics',
+      },
+      {
+        label: 'Informatique',
+        value: 'computer-science',
+      },
+      {
+        label: 'Bâtiment',
+        value: 'building',
+      },
+      {
+        label: 'Sciences de la terre',
+        value: 'earth-sciences',
+      },
+      {
+        label: 'Agriculture',
+        value: 'agriculture',
+      },
+      {
+        label: 'Ecologie',
+        value: 'ecology',
+      },
+    ],
+  },
+  {
+    label: 'Langues et livres en VO',
+    value: 'languages-and-books-in-foreign-language',
+    subOptions: [
+      {
+        label: 'Français Langue étrangère',
+        value: 'french-as-a-foreign-language',
+      },
+      {
+        label: 'Anglais',
+        value: 'english',
+      },
+      {
+        label: 'Allemand',
+        value: 'german',
+      },
+      {
+        label: 'Espagnol',
+        value: 'spanish',
+      },
+      {
+        label: 'Italien',
+        value: 'italian',
+      },
+      {
+        label: 'Chinois',
+        value: 'chinese',
+      },
+      {
+        label: 'Japonais',
+        value: 'japanese',
+      },
+      {
+        label: 'Arabe',
+        value: 'arabic',
+      },
+      {
+        label: 'Russe',
+        value: 'russian',
+      },
+      {
+        label: 'Portugais',
+        value: 'portuguese',
+      },
+      {
+        label: 'Hébreu',
+        value: 'hebrew',
+      },
+      {
+        label: 'Grec',
+        value: 'greek',
+      },
+      {
+        label: 'Latin',
+        value: 'latin',
+      },
+      {
+        label: 'Autres langues',
+        value: 'other-languages',
       },
     ],
   },
 ];
-
-// Loisirs, nature & voyages
-
-// Nature & animaux
-// Développement durable
-// Brico-déco & jardin
-// Sports & jeux
-// Guides de voyage
-// Beaux livres pays
-// Cartes, atlas & plans
-// Récits de voyage
-
-// Arts, société & sciences humaines
-
-// Arts, cinéma & musique
-// Histoire
-// Actualité, politique & faits de société
-// Philosophie, sociologie & ethnologie
-// Religions
-
-// Jeunesse
-
-// Livres 0-3 ans
-// Livres 3-6 ans
-// Livres 6-12 ans
-// Romans ados
-// Documentaires
-// Loisirs créatifs et jeux
-// Religion jeunesse
-// BD jeunesse
-
-// Bandes dessinées & humour
-
-// BD
-// BD jeunesse
-// Comics
-// Mangas
-// Autour de la BD
-// Humour
-// Guide BD 2022
-
-// Scolaire & pédagogie
-
-// Manuels scolaires
-// Soutien scolaire
-// Pédagogie & formation
-// Orientation
-// Dictionnaires
-// Cahiers de vacances
-
-// Entreprise, emploi, droit & économie
-
-// Droit
-// Economie & finances
-// Comptabilité & gestion
-// Management & marketing
-// Carrière, emploi & concours
-// Orientation & métiers
-
-// Médecine, sciences, techniques
-
-// Médecine & paramédical
-// Psychologie & psychanalyse
-// Physique, chimie & biologie
-// Mathématiques
-// Informatique
-// Bâtiment
-// Ecologie
-
-// Langues et livres en VO
-
-// Français Langue étrangère
-// Anglais
-// Espagnol
-// Allemand
-// Italien
-// Portugais
-// Arabe
-// Chinois
-// Japonais
-// Russe
-// Autres langues
