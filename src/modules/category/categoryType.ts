@@ -4,6 +4,8 @@ export enum CategoryEnum {
   INPUTS = 'inputs',
   SUB_CATEGORIES = 'subCatgories',
   OPTIONS = 'options',
+  SUB_OPTIONS = 'subOptions',
+  OPTIONS_WITH_SUB_OPTIONS = 'optionsWithSubOptions',
   INPUT_TYPE = 'inputType',
   VALUE = 'value',
 }
@@ -21,14 +23,21 @@ export type SubCategory = {
   [CategoryEnum.INPUTS]?: CategoryInput[];
 };
 
+export type Option = {
+  [CategoryEnum.VALUE]: string;
+  [CategoryEnum.LABEL]: string;
+};
+
+export type OptionWithSubOptions = Option & {
+  [CategoryEnum.SUB_OPTIONS]?: Option[];
+};
+
 export type CategoryInput = {
   [CategoryEnum.UID]: string;
   [CategoryEnum.LABEL]: string;
   [CategoryEnum.INPUT_TYPE]: AttributeInputTypes;
-  [CategoryEnum.OPTIONS]?: {
-    [CategoryEnum.LABEL]: string;
-    [CategoryEnum.VALUE]: string;
-  }[];
+  [CategoryEnum.OPTIONS]?: Option[];
+  [CategoryEnum.OPTIONS_WITH_SUB_OPTIONS]?: OptionWithSubOptions[];
 };
 
 export type CategoryInputOption = {
@@ -41,7 +50,7 @@ export enum AttributeInputTypes {
   TEXT = 'text',
   DATE = 'date',
   SELECT = 'select',
-  SELECT_WITH_CATEGORY = 'selectWithCategory',
+  SELECT_WITH_SUB_OPTIONS = 'selectWithSubOptions',
   MULTISELECT = 'multiselect',
   RADIO = 'radio',
   CHECKBOX = 'checkbox',

@@ -1,73 +1,73 @@
 export const bookCategories = [
   {
     label: 'Littrature',
-    uid: 'littrature',
-    subCategories: [
+    value: 'littrature',
+    subOptions: [
       {
         label: 'Romans',
-        uid: 'romans',
+        value: 'romans',
       },
       {
         label: 'Polars et Romans Policiers',
-        uid: 'polarsEtRomansPoliciers',
+        value: 'polarsEtRomansPoliciers',
       },
       {
         label: 'Littérature érotique & sentimentale',
-        uid: 'erotiqueEtSentimental',
+        value: 'erotiqueEtSentimental',
       },
       {
         label: 'Fantasy & SF',
-        uid: 'fantasyEtSF',
+        value: 'fantasyEtSF',
       },
       {
         label: 'Pléiades',
-        uid: 'pleiades',
+        value: 'pleiades',
       },
       {
         label: 'Théatre, poésie & critique littéraire',
-        uid: 'theatrePoésieEtCritiqueLittéraire',
+        value: 'theatrePoésieEtCritiqueLittéraire',
       },
     ],
   },
   {
     label: 'Bien-être & vie pratique',
-    uid: 'bienEtreEtViePratique',
-    subCategories: [
+    value: 'bienEtreEtViePratique',
+    subOptions: [
       {
         label: 'Cuisine & vins',
-        uid: 'cuisineEtVins',
+        value: 'cuisineEtVins',
       },
       {
         label: 'Régimes & minceur',
-        uid: 'regimesEtMinceur',
+        value: 'regimesEtMinceur',
       },
       {
         label: 'Santé & bien-être',
-        uid: 'santéEtBienEtre',
+        value: 'santéEtBienEtre',
       },
       {
         label: 'Couple, enfant & famille',
-        uid: 'coupleEnfantEtFamille',
+        value: 'coupleEnfantEtFamille',
       },
       {
         label: 'Erotisme & sexualité',
-        uid: 'erotismeAndSexuality',
+        value: 'erotismeAndSexuality',
       },
       {
         label: 'Développement personnel',
-        uid: 'developpementPersonnel',
+        value: 'developpementPersonnel',
       },
       {
         label: 'Décoration, jardinage & bricolage',
-        uid: 'decorationJardinageAndBricolage',
+        value: 'decorationJardinageAndBricolage',
       },
       {
         label: 'Esotérisme',
-        uid: 'esoterisme',
+        value: 'esoterisme',
       },
       {
         label: 'Mode de vie durable',
-        uid: 'modeDeVieDurable',
+        value: 'modeDeVieDurable',
       },
     ],
   },

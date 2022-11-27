@@ -1,8 +1,9 @@
+import type { SubCategory } from '@/modules/category/categoryType';
 import { AttributeInputTypes } from '@/modules/category/categoryType';
 
 import { bookCategories } from './reusableOptions';
 
-export const subcategoriePaperbackBook = {
+export const subcategoriePaperbackBook: SubCategory = {
   uid: 'paperbackBook',
   label: 'Livres brochés',
   inputs: [
@@ -31,15 +32,16 @@ export const subcategoriePaperbackBook = {
       label: 'Format',
       inputType: AttributeInputTypes.SELECT,
       options: [
-        { uid: 'pocket', label: 'Poche' },
-        { uid: 'standard', label: 'Standard' },
+        { value: 'pocket', label: 'Poche' },
+        { value: 'standard', label: 'Standard' },
+        { value: 'ebook', label: 'Ebook' },
       ],
     },
     {
       uid: 'category',
       label: 'Catégorie',
-      inputType: AttributeInputTypes.SELECT_WITH_CATEGORY,
-      options: bookCategories,
+      inputType: AttributeInputTypes.SELECT_WITH_SUB_OPTIONS,
+      optionsWithSubOptions: bookCategories,
     },
   ],
 };
