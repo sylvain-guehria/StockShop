@@ -36,10 +36,6 @@ export abstract class ProductRepository {
     throw new Error(`You tried to call an abstract methode, arg: ${uid}`);
   }
 
-  async getAll(): Promise<ProductEntity[]> {
-    throw new Error(`You tried to call an abstract methode, arg`);
-  }
-
   async update({
     product,
     userUid,

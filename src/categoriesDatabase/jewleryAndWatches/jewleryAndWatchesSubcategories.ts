@@ -219,7 +219,7 @@ export const subcategorieEaring = {
 
 export const subcategorieBracelet = {
   uid: 'bracelet',
-  label: 'Colliers',
+  label: 'Bracelets',
   inputs: [
     {
       uid: 'sex',

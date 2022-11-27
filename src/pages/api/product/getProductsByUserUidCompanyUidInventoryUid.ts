@@ -93,7 +93,11 @@ const getProductsByUserUidAndInventoryUid = async (
 
     switch (method) {
       case 'GET':
-        res.status(200).json(productsRef.docs.map((doc) => doc.data()));
+        res
+          .status(200)
+          .json(
+            productsRef.docs.map((doc) => ({ ...doc.data(), inventoryUid }))
+          );
         return;
       default:
         res.setHeader('Allow', ['GET']);

@@ -134,6 +134,7 @@ const EditProductForm: FC<Props> = ({
               <Input
                 type="number"
                 label="Prix d'achat HT"
+                step="0.01"
                 name={ProductAttributes.BUYING_PRICE}
                 register={register(ProductAttributes.BUYING_PRICE)}
                 placeholder="€"
@@ -145,6 +146,7 @@ const EditProductForm: FC<Props> = ({
             <div className="sm:col-span-2">
               <Input
                 type="number"
+                step="0.01"
                 label="Prix de vente HT"
                 name={ProductAttributes.SELLING_PRICE}
                 register={register(ProductAttributes.SELLING_PRICE)}
@@ -158,6 +160,7 @@ const EditProductForm: FC<Props> = ({
               <Input
                 type="number"
                 label="TVA"
+                step="0.1"
                 name={ProductAttributes.TVA}
                 register={register(ProductAttributes.TVA)}
                 placeholder="%"

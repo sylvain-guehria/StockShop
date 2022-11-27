@@ -75,30 +75,6 @@ class FirebaseProductRepository extends ProductRepository {
     return axios.post(`${this.baseUrl}/api/product/delete`, { uid });
   }
 
-  async getAll(): Promise<ProductEntity[]> {
-    console.info('get all  in db');
-    const response = await axios.get('/api/product/getAll');
-    return response.data.map(
-      (product: ProductEntity) =>
-        new ProductEntity({
-          uid: product.uid,
-          label: product.label,
-          quantityInInventory: product.quantityInInventory,
-          optimumQuantity: product.optimumQuantity,
-          buyingPrice: product.buyingPrice,
-          sellingPrice: product.sellingPrice,
-          description: product.description,
-          toBuy: product.toBuy,
-          isPublic: product.isPublic,
-          tva: product.tva,
-          categoryUid: product.categoryUid,
-          subCategoryUid: product.subCategoryUid,
-          publicDisponibility: product.publicDisponibility,
-          inventoryUid: product.inventoryUid,
-        })
-    );
-  }
-
   async update({
     product,
     userUid,
