@@ -3,14 +3,15 @@
 import type { FC } from 'react';
 import type { FieldErrorsImpl, UseFormRegister } from 'react-hook-form';
 
-import InputRadio from '@/components/04-lib/inputs/InputRadio';
-import InputTextArea from '@/components/04-lib/inputs/InputTextArea';
+import Input from '@/components/04-lib/inputs/Input';
+import InputSelect from '@/components/04-lib/inputs/InputSelect';
+import type { CategoryInput } from '@/modules/category/categoryType';
+import { AttributeInputTypes } from '@/modules/category/categoryType';
 import {
   getCategoryInputFromDatabase,
   getSubCategoryInputsFromDatabase,
 } from '@/modules/category/categoryUtils';
 import type ProductEntity from '@/modules/product/ProductEntity';
-import { ProductAttributes } from '@/modules/product/productType';
 
 import type { EditProductFormType } from './EditProductForm';
 
@@ -27,12 +28,7 @@ const SubFormCategory: FC<Props> = ({ product, register, errors }) => {
     product.getSubCategoryUid()
   );
 
-  // eslint-disable-next-line no-console
-  console.log(
-    'catesubCategory InputsgoryInputs',
-    categoryInputs,
-    subCategoryInputs
-  );
+  const allCategoryInputs = [...categoryInputs, ...subCategoryInputs];
 
   return (
     <>
@@ -42,25 +38,39 @@ const SubFormCategory: FC<Props> = ({ product, register, errors }) => {
         </h3>
       </div>
 
-      <div className="mt-6">
-        <InputRadio
-          options={[
-            { label: 'Public', value: 'public' },
-            { label: 'Privé', value: 'private' },
-          ]}
-          register={register(ProductAttributes.IS_PUBLIC)}
-          name={ProductAttributes.IS_PUBLIC}
-          error={errors[ProductAttributes.IS_PUBLIC]?.message}
-        />
-      </div>
-      <div className="mt-6 sm:col-span-6">
-        <InputTextArea
-          label="Description"
-          register={register(ProductAttributes.DESCRIPTION)}
-          name={ProductAttributes.DESCRIPTION}
-          error={errors[ProductAttributes.DESCRIPTION]?.message}
-          inputClassName="placeholder:text-right"
-        />
+      <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+        {allCategoryInputs.map((input: CategoryInput) => {
+          const isNumber = input.inputType === AttributeInputTypes.NUMBER;
+          const isText = input.inputType === AttributeInputTypes.TEXT;
+          const isSelect = input.inputType === AttributeInputTypes.SELECT;
+
+          const isInput = isNumber || isText;
+          const isSelectInput = isSelect;
+
+          return (
+            <div className="sm:col-span-2" key={input.uid}>
+              {isInput && (
+                <Input
+                  type={input.inputType as 'text' | 'number'}
+                  label={input.label}
+                  name={input.uid}
+                  register={register(input.uid)}
+                  error={errors[input.uid]?.message}
+                />
+              )}
+              {isSelectInput && (
+                <InputSelect
+                  label={input.label}
+                  options={[{ label: '', value: '' }, ...(input.options || [])]}
+                  name={input.uid}
+                  register={register(input.uid)}
+                  error={errors[input.uid]?.message}
+                  inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
     </>
   );
