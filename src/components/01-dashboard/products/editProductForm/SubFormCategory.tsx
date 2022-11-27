@@ -18,10 +18,10 @@ import type { EditProductFormType } from './EditProductForm';
 type Props = {
   product: ProductEntity;
   register: UseFormRegister<EditProductFormType>;
-  errors: Partial<FieldErrorsImpl<EditProductFormType>>;
+  errors?: Partial<FieldErrorsImpl<EditProductFormType>>;
 };
 
-const SubFormCategory: FC<Props> = ({ product, register, errors }) => {
+const SubFormCategory: FC<Props> = ({ product, register }) => {
   const categoryInputs = getCategoryInputFromDatabase(product.getCategoryUid());
   const subCategoryInputs = getSubCategoryInputsFromDatabase(
     product.getCategoryUid(),
@@ -54,8 +54,7 @@ const SubFormCategory: FC<Props> = ({ product, register, errors }) => {
                   type={input.inputType as 'text' | 'number'}
                   label={input.label}
                   name={input.uid}
-                  register={register(input.uid)}
-                  error={errors[input.uid]?.message}
+                  register={register(input.uid as any)}
                 />
               )}
               {isSelectInput && (
@@ -63,8 +62,7 @@ const SubFormCategory: FC<Props> = ({ product, register, errors }) => {
                   label={input.label}
                   options={[{ label: '', value: '' }, ...(input.options || [])]}
                   name={input.uid}
-                  register={register(input.uid)}
-                  error={errors[input.uid]?.message}
+                  register={register(input.uid as any)}
                   inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               )}
