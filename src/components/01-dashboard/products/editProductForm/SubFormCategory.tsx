@@ -1,21 +1,39 @@
 'use client';
 
 import type { FC } from 'react';
+import type { FieldErrorsImpl, UseFormRegister } from 'react-hook-form';
 
 import InputRadio from '@/components/04-lib/inputs/InputRadio';
 import InputTextArea from '@/components/04-lib/inputs/InputTextArea';
+import {
+  getCategoryInputFromDatabase,
+  getSubCategoryInputsFromDatabase,
+} from '@/modules/category/categoryUtils';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import { ProductAttributes } from '@/modules/product/productType';
 
+import type { EditProductFormType } from './EditProductForm';
+
 type Props = {
   product: ProductEntity;
-  register: any;
-  errors: any;
+  register: UseFormRegister<EditProductFormType>;
+  errors: Partial<FieldErrorsImpl<EditProductFormType>>;
 };
 
 const SubFormCategory: FC<Props> = ({ product, register, errors }) => {
+  const categoryInputs = getCategoryInputFromDatabase(product.getCategoryUid());
+  const subCategoryInputs = getSubCategoryInputsFromDatabase(
+    product.getCategoryUid(),
+    product.getSubCategoryUid()
+  );
+
   // eslint-disable-next-line no-console
-  console.log('SubFormVisibility product', product);
+  console.log(
+    'catesubCategory InputsgoryInputs',
+    categoryInputs,
+    subCategoryInputs
+  );
+
   return (
     <>
       <div>

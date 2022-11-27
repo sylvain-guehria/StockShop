@@ -14,6 +14,7 @@ import type { UpdateProductParams } from '@/modules/product/productService';
 import { ProductAttributes } from '@/modules/product/productType';
 
 import { validationSchema } from './EditProductFormValidation';
+import SubFormCategory from './SubFormCategory';
 import SubFormGeneral from './SubFormGeneral';
 
 export interface EditProductFormType {
@@ -87,19 +88,17 @@ const EditProductForm: FC<Props> = ({
   return (
     <form onSubmit={handleSubmit(onSubmitEditProductForm)}>
       <div className="lg:flex">
-        {/* PARTIE 1 */}
-        <div className="lg:w-1/2">
+        <div className="lg:w-1/2 lg:pr-4">
           <SubFormGeneral register={register} errors={errors} watch={watch} />
         </div>
 
-        {/* PARTIE 2 */}
-        {/* <div className="mt-5 lg:mt-0 lg:w-1/2">
+        <div className="mt-5 lg:mt-0 lg:w-1/2 lg:pl-4">
           <SubFormCategory
             product={product}
             register={register}
             errors={errors}
           />
-        </div> */}
+        </div>
 
         {/* PARTIE 3 */}
 

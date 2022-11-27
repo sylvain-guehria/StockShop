@@ -1,6 +1,6 @@
-import { categories as categoryFromDB } from '@/categoriesDatabase/categories';
+import { categories as categorieFromDB } from '@/categoriesDatabase/categories';
 
-import type { Category, SubCategory } from './categoryType';
+import type { Category, CategoryInput, SubCategory } from './categoryType';
 
 export const getSubCategoriesByCategoryUid = (
   categories: Category[],
@@ -15,5 +15,52 @@ export const getSubCategoriesByCategoryUid = (
 export const getSubCategoriesByCategoryUidFromDatabase = (
   categoryUid: string
 ): SubCategory[] => {
-  return getSubCategoriesByCategoryUid(categoryFromDB, categoryUid);
+  if (!categoryUid) return [];
+  return getSubCategoriesByCategoryUid(categorieFromDB, categoryUid);
+};
+
+export const getCategoryInput = (
+  categories: Category[],
+  categoryUid: string
+): CategoryInput[] => {
+  if (!categories || !categories.length) return [];
+  if (!categoryUid) return [];
+  return (
+    categories.find((category) => category.uid === categoryUid)?.inputs || []
+  );
+};
+
+export const getSubCategoryInputs = (
+  categories: Category[],
+  categoryUid: string,
+  subCategoryUid: string
+) => {
+  if (!categories || !categories.length) return [];
+  if (!categoryUid || !subCategoryUid) return [];
+  const category: Category = categories.find(
+    (cat) => cat.uid === categoryUid
+  ) as Category;
+
+  if (!category) return [];
+
+  const subCategory = category.subCatgories?.find(
+    (subCat) => subCat.uid === subCategoryUid
+  );
+
+  return subCategory?.inputs || [];
+};
+
+export const getCategoryInputFromDatabase = (
+  categoryUid: string
+): CategoryInput[] => {
+  if (!categoryUid) return [];
+  return getCategoryInput(categorieFromDB, categoryUid);
+};
+
+export const getSubCategoryInputsFromDatabase = (
+  categoryUid: string,
+  subCategoryUid: string
+) => {
+  if (!categoryUid || !subCategoryUid) return [];
+  return getSubCategoryInputs(categorieFromDB, categoryUid, subCategoryUid);
 };
