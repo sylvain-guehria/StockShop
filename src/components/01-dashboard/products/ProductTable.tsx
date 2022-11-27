@@ -1,5 +1,9 @@
 import { EyeIcon } from '@heroicons/react/20/solid';
-import { PencilSquareIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
+import {
+  PencilSquareIcon,
+  ShoppingBagIcon,
+  TrashIcon,
+} from '@heroicons/react/24/outline';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { productServiceDi } from 'di';
 import dynamic from 'next/dynamic';
@@ -10,14 +14,25 @@ import Spinner from '@/components/04-lib/spinner/Spinner';
 import Tag from '@/components/04-lib/tag/Tag';
 import { useAuth } from '@/hooks/useAuth';
 import type ProductEntity from '@/modules/product/ProductEntity';
+import type { DeleteProduct } from '@/modules/product/productRepository';
 import type { UpdateProductParams } from '@/modules/product/productService';
-import { getInventoryProductsUseCase } from '@/usecases/usecases';
+import {
+  deleteProductUseCase,
+  getInventoryProductsUseCase,
+} from '@/usecases/usecases';
 
 import Column from './ColumnProduct';
 
 const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
   suspense: true,
 });
+
+const DynamicDeleteModal = dynamic(
+  () => import('../../04-lib/modal/DeleteModal'),
+  {
+    suspense: true,
+  }
+);
 
 const DynamicEditInventoryForm = dynamic(
   () => import('./editProductForm/EditProductForm'),
@@ -34,6 +49,8 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
+  const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] =
+    useState(false);
   const [productToEdit, setProductToEdit] = useState<ProductEntity | null>(
     null
   );
@@ -56,16 +73,34 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ['get-products'] });
       setIsEditProductModalOpen(false);
+      setProductToEdit(null);
     },
   });
 
-  const editProduct = (product: ProductEntity) => {
+  const deleteProductMutation = useMutation({
+    mutationFn: (params: DeleteProduct) => deleteProductUseCase(params),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ['get-products'] });
+      setIsDeleteProductModalOpen(false);
+      setProductToEdit(null);
+    },
+  });
+
+  const handleEditProductClick = (product: ProductEntity) => {
     setProductToEdit(product);
     setIsEditProductModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsEditProductModalOpen(false);
+    setIsDeleteProductModalOpen(false);
+    setProductToEdit(null);
+  };
+
+  const handleDeleteProductClick = (product: ProductEntity) => {
+    setProductToEdit(product);
+    setIsDeleteProductModalOpen(true);
   };
 
   return (
@@ -83,6 +118,25 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
             onSubmitEditForm={updateProductMutation.mutate}
           />
         </DynamicModal>
+      )}
+      {isDeleteProductModalOpen && (
+        <DynamicDeleteModal
+          open={isDeleteProductModalOpen}
+          handleCloseModal={handleCloseModal}
+          cancelLabel="Annuler"
+          confirmLabel="Supprimer"
+          title="Supprimer le produit"
+          description={`Êtes-vous sûr de vouloir supprimer le produit : ${productToEdit?.getLabel()} ?`}
+          isLoading={true}
+          onConfirm={() =>
+            deleteProductMutation.mutate({
+              productUid: productToEdit?.getUid() as string,
+              userUid: user.getUid(),
+              companyUid: user.getCompanyUid(),
+              inventoryUid: productToEdit?.getInventoryUid() as string,
+            }) as unknown as () => void
+          }
+        />
       )}
       <div className="mt-8 flex flex-col">
         <div className="overflow-x-auto rounded-lg shadow ring-1 ring-black/5">
@@ -173,7 +227,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                       <div
                         className="tooltip tooltip-left cursor-pointer"
                         data-tip="Modifier le produit"
-                        onClick={() => editProduct(product)}
+                        onClick={() => handleEditProductClick(product)}
                       >
                         <PencilSquareIcon
                           className="ml-3 h-5 w-5 shrink-0 text-primary-600"
@@ -191,7 +245,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                           className="ml-3 h-5 w-5 shrink-0 text-primary-600"
                           aria-hidden="true"
                         />
-                        <span className="sr-only">, Voir {product.label}</span>
+                        <span className="sr-only">Voir {product.label}</span>
                       </div>
                       <div
                         className="tooltip tooltip-left cursor-pointer"
@@ -203,6 +257,19 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                         />
                         <span className="sr-only">
                           Ajouter à la liste produit à acheter {product.label}
+                        </span>
+                      </div>
+                      <div
+                        className="tooltip tooltip-left cursor-pointer"
+                        data-tip="Supprimer le produit"
+                        onClick={() => handleDeleteProductClick(product)}
+                      >
+                        <TrashIcon
+                          className="ml-3 h-5 w-5 shrink-0 text-primary-600"
+                          aria-hidden="true"
+                        />
+                        <span className="sr-only">
+                          Supprimer {product.label}
                         </span>
                       </div>
                     </td>

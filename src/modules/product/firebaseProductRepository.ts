@@ -3,7 +3,11 @@
 import axios from 'axios';
 
 import ProductEntity from './ProductEntity';
-import type { AddProduct, UpdateProduct } from './productRepository';
+import type {
+  AddProduct,
+  DeleteProduct,
+  UpdateProduct,
+} from './productRepository';
 import { ProductRepository } from './productRepository';
 
 class FirebaseProductRepository extends ProductRepository {
@@ -70,9 +74,21 @@ class FirebaseProductRepository extends ProductRepository {
     });
   }
 
-  async delete(uid: string): Promise<void> {
-    console.info(`Deleting product with uid ${uid} in db...`);
-    return axios.post(`${this.baseUrl}/api/product/delete`, { uid });
+  async delete({
+    productUid,
+    userUid,
+    companyUid,
+    inventoryUid,
+  }: DeleteProduct): Promise<void> {
+    console.info(`Deleting product with uid ${productUid} in db...`);
+    return axios.delete(`${this.baseUrl}/api/product/delete`, {
+      params: {
+        productUid,
+        userUid,
+        companyUid,
+        inventoryUid,
+      },
+    });
   }
 
   async update({
