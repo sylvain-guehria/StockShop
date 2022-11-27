@@ -1,7 +1,7 @@
 import { EyeIcon } from '@heroicons/react/20/solid';
 import {
   PencilSquareIcon,
-  ShoppingBagIcon,
+  PlusCircleIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -127,7 +127,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
           confirmLabel="Supprimer"
           title="Supprimer le produit"
           description={`Êtes-vous sûr de vouloir supprimer le produit : ${productToEdit?.getLabel()} ?`}
-          isLoading={true}
+          isLoading={deleteProductMutation.isLoading}
           onConfirm={() =>
             deleteProductMutation.mutate({
               productUid: productToEdit?.getUid() as string,
@@ -183,8 +183,20 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                   (product.optimumQuantity || 0);
                 return (
                   <tr key={product.uid}>
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                      {product.label}
+                    <td className="whitespace-nowrap pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                      <div className="flex">
+                        <div
+                          className="tooltip tooltip-right mr-3 cursor-pointer"
+                          data-tip="Voir le produit"
+                        >
+                          <EyeIcon
+                            className="h-5 w-5 shrink-0 text-primary-600"
+                            aria-hidden="true"
+                          />
+                          <span className="sr-only">Voir {product.label}</span>
+                        </div>
+                        {product.label}
+                      </div>
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {product.categoryUid}
@@ -218,7 +230,26 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                       />
                     </td>
                     <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                      {product.toBuy || 0}
+                      {product.toBuy > 0 ? (
+                        product.toBuy
+                      ) : (
+                        <div className="flex">
+                          0
+                          <div
+                            className="tooltip tooltip-left cursor-pointer"
+                            data-tip='Ajouter à la liste : "À acheter"'
+                          >
+                            <PlusCircleIcon
+                              className="ml-3 h-5 w-5 shrink-0 text-primary-600"
+                              aria-hidden="true"
+                            />
+                            <span className="sr-only">
+                              Ajouter à la liste produit à acheter{' '}
+                              {product.label}
+                            </span>
+                          </div>
+                        </div>
+                      )}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {product.isPublic ? 'Public' : 'Privé'}
@@ -235,28 +266,6 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                         />
                         <span className="sr-only">
                           Modifier {product.label}
-                        </span>
-                      </div>
-                      <div
-                        className="tooltip tooltip-left cursor-pointer"
-                        data-tip="Voir le produit"
-                      >
-                        <EyeIcon
-                          className="ml-3 h-5 w-5 shrink-0 text-primary-600"
-                          aria-hidden="true"
-                        />
-                        <span className="sr-only">Voir {product.label}</span>
-                      </div>
-                      <div
-                        className="tooltip tooltip-left cursor-pointer"
-                        data-tip='Ajouter à la liste : "À acheter"'
-                      >
-                        <ShoppingBagIcon
-                          className="ml-3 h-5 w-5 shrink-0 text-primary-600"
-                          aria-hidden="true"
-                        />
-                        <span className="sr-only">
-                          Ajouter à la liste produit à acheter {product.label}
                         </span>
                       </div>
                       <div
