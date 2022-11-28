@@ -1,6 +1,5 @@
 import { AttributeInputTypes } from '@/modules/category/categoryType';
 
-import { colorOptions, sexOptions } from '../reusableOptions';
 import {
   jewleryMaterial,
   meshType,
@@ -14,33 +13,11 @@ export const subcategorieNeckless = {
   label: 'Colliers',
   inputs: [
     {
-      uid: 'sex',
-      label: 'Sexe',
-      inputType: AttributeInputTypes.SELECT,
-      options: sexOptions,
-    },
-    {
-      uid: 'color',
-      label: 'Couleur',
-      inputType: AttributeInputTypes.SELECT,
-      options: [...colorOptions],
-    },
-    {
-      uid: 'brand',
-      label: 'Marque',
-      inputType: AttributeInputTypes.TEXT,
-    },
-    {
       uid: 'manufacturer',
       label: 'Fabricant',
       inputType: AttributeInputTypes.TEXT,
     },
-    {
-      uid: 'material',
-      label: 'Matière principale',
-      inputType: AttributeInputTypes.SELECT,
-      options: jewleryMaterial,
-    },
+
     {
       uid: 'titration',
       label: 'Titrage matière',
@@ -82,33 +59,11 @@ export const subcategorieRing = {
   label: 'Bagues',
   inputs: [
     {
-      uid: 'sex',
-      label: 'Sexe',
-      inputType: AttributeInputTypes.SELECT,
-      options: sexOptions,
-    },
-    {
-      uid: 'color',
-      label: 'Couleur',
-      inputType: AttributeInputTypes.SELECT,
-      options: [...colorOptions],
-    },
-    {
-      uid: 'brand',
-      label: 'Marque',
-      inputType: AttributeInputTypes.TEXT,
-    },
-    {
       uid: 'manufacturer',
       label: 'Fabricant',
       inputType: AttributeInputTypes.TEXT,
     },
-    {
-      uid: 'material',
-      label: 'Matière principale',
-      inputType: AttributeInputTypes.SELECT,
-      options: jewleryMaterial,
-    },
+
     {
       uid: 'titration',
       label: 'Titrage matière',
@@ -150,33 +105,11 @@ export const subcategorieEaring = {
   label: "Boucles d'oreilles",
   inputs: [
     {
-      uid: 'sex',
-      label: 'Sexe',
-      inputType: AttributeInputTypes.SELECT,
-      options: sexOptions,
-    },
-    {
-      uid: 'color',
-      label: 'Couleur',
-      inputType: AttributeInputTypes.SELECT,
-      options: [...colorOptions],
-    },
-    {
-      uid: 'brand',
-      label: 'Marque',
-      inputType: AttributeInputTypes.TEXT,
-    },
-    {
       uid: 'manufacturer',
       label: 'Fabricant',
       inputType: AttributeInputTypes.TEXT,
     },
-    {
-      uid: 'material',
-      label: 'Matière principale',
-      inputType: AttributeInputTypes.SELECT,
-      options: jewleryMaterial,
-    },
+
     {
       uid: 'titration',
       label: 'Titrage matière',
@@ -222,33 +155,11 @@ export const subcategorieBracelet = {
   label: 'Bracelets',
   inputs: [
     {
-      uid: 'sex',
-      label: 'Sexe',
-      inputType: AttributeInputTypes.SELECT,
-      options: sexOptions,
-    },
-    {
-      uid: 'color',
-      label: 'Couleur',
-      inputType: AttributeInputTypes.SELECT,
-      options: [...colorOptions],
-    },
-    {
-      uid: 'brand',
-      label: 'Marque',
-      inputType: AttributeInputTypes.TEXT,
-    },
-    {
       uid: 'manufacturer',
       label: 'Fabricant',
       inputType: AttributeInputTypes.TEXT,
     },
-    {
-      uid: 'material',
-      label: 'Matière principale',
-      inputType: AttributeInputTypes.SELECT,
-      options: jewleryMaterial,
-    },
+
     {
       uid: 'titration',
       label: 'Titrage matière',
@@ -289,23 +200,6 @@ export const subcategorieWatches = {
   uid: 'watches',
   label: 'Montres',
   inputs: [
-    {
-      uid: 'sex',
-      label: 'Sexe',
-      inputType: AttributeInputTypes.SELECT,
-      options: sexOptions,
-    },
-    {
-      uid: 'color',
-      label: 'Couleur',
-      inputType: AttributeInputTypes.SELECT,
-      options: [...colorOptions],
-    },
-    {
-      uid: 'brand',
-      label: 'Marque',
-      inputType: AttributeInputTypes.TEXT,
-    },
     {
       uid: 'mecanisme',
       label: 'Mécanisme',
