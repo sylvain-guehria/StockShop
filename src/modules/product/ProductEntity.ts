@@ -54,6 +54,11 @@ class ProductEntity implements Product {
   }
 
   getCatSubcatAttributes(): Record<string, any> {
+    Object.keys(this.catSubcatAttributes).forEach((attribute) => {
+      if (!this.catSubcatAttributes[attribute]) {
+        this.catSubcatAttributes[attribute] = undefined;
+      }
+    });
     return this.catSubcatAttributes;
   }
 
@@ -204,6 +209,14 @@ class ProductEntity implements Product {
   setPublicDisponibility(publicDisponibility: string): ProductEntity {
     this.publicDisponibility = publicDisponibility;
     return this;
+  }
+
+  isSameCategory(categoryUid: string): boolean {
+    return this.categoryUid === categoryUid;
+  }
+
+  isSameSubCategory(subCategoryUid: string): boolean {
+    return this.subCategoryUid === subCategoryUid;
   }
 }
 

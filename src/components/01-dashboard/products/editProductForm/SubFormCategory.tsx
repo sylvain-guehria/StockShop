@@ -1,7 +1,13 @@
 'use client';
 
 import type { FC } from 'react';
-import type { FieldErrorsImpl, UseFormRegister } from 'react-hook-form';
+import { useEffect } from 'react';
+import type {
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from 'react-hook-form';
 
 import Input from '@/components/04-lib/inputs/Input';
 import InputSelect from '@/components/04-lib/inputs/InputSelect';
@@ -11,22 +17,29 @@ import {
   getCategoryInputFromDatabase,
   getSubCategoryInputsFromDatabase,
 } from '@/modules/category/categoryUtils';
+import type ProductEntity from '@/modules/product/ProductEntity';
 import { ProductAttributes } from '@/modules/product/productType';
 
 import type { EditProductFormType } from './EditProductForm';
 
 type Props = {
   register: UseFormRegister<EditProductFormType>;
-  errors?: Partial<FieldErrorsImpl<EditProductFormType>>;
-  currentCategoryUid: string;
-  currentSubCategoryUid: string;
+  watch: UseFormWatch<EditProductFormType>;
+  product: ProductEntity;
+  setValue: UseFormSetValue<EditProductFormType>;
+  getValues: UseFormGetValues<EditProductFormType>;
 };
 
 const SubFormCategory: FC<Props> = ({
   register,
-  currentCategoryUid,
-  currentSubCategoryUid,
+  watch,
+  setValue,
+  product,
+  getValues,
 }) => {
+  const currentCategoryUid = watch(ProductAttributes.CATEGORY_UID);
+  const currentSubCategoryUid = watch(ProductAttributes.SUB_CATEGORY_UID);
+
   const categoryInputs = getCategoryInputFromDatabase(
     currentCategoryUid as string
   );
@@ -36,6 +49,23 @@ const SubFormCategory: FC<Props> = ({
   );
 
   const allCategoryInputs = [...categoryInputs, ...subCategoryInputs];
+
+  useEffect(() => {
+    const fieldNames = Object.keys(
+      getValues(ProductAttributes.CAT_SUBCAT_ATTRIBUTES) || {}
+    );
+    if (
+      !product.isSameCategory(currentCategoryUid || '') ||
+      !product.isSameSubCategory(currentSubCategoryUid || '')
+    ) {
+      fieldNames.forEach((fieldName) =>
+        setValue(
+          `${ProductAttributes.CAT_SUBCAT_ATTRIBUTES}.${fieldName}`,
+          '' as never
+        )
+      );
+    }
+  }, [currentCategoryUid, currentSubCategoryUid]);
 
   return (
     <>

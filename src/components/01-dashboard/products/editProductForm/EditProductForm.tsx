@@ -67,6 +67,8 @@ const EditProductForm: FC<Props> = ({
     register,
     handleSubmit,
     watch,
+    setValue,
+    getValues,
     formState: { errors },
   } = useForm<EditProductFormType>(formOptions);
 
@@ -87,9 +89,6 @@ const EditProductForm: FC<Props> = ({
     }
   };
 
-  const currentCategoryUid = watch(ProductAttributes.CATEGORY_UID);
-  const currentSubCategoryUid = watch(ProductAttributes.SUB_CATEGORY_UID);
-
   return (
     <form onSubmit={handleSubmit(onSubmitEditProductForm)}>
       <div className="lg:flex">
@@ -100,9 +99,10 @@ const EditProductForm: FC<Props> = ({
         <div className="mt-5 lg:mt-0 lg:w-1/2 lg:pl-4">
           <SubFormCategory
             register={register}
-            errors={errors}
-            currentCategoryUid={currentCategoryUid || ''}
-            currentSubCategoryUid={currentSubCategoryUid || ''}
+            watch={watch}
+            product={product}
+            setValue={setValue}
+            getValues={getValues}
           />
         </div>
 

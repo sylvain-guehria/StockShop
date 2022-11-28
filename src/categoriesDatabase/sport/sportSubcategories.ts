@@ -1,6 +1,6 @@
 import { AttributeInputTypes } from '@/modules/category/categoryType';
 
-import { colorOptions } from '../reusableOptions';
+import { colorOptions, sexOptions } from '../reusableOptions';
 
 export const subcategorieClothes = {
   uid: 'clothes',
@@ -10,11 +10,7 @@ export const subcategorieClothes = {
       uid: 'sex',
       label: 'Sexe',
       inputType: AttributeInputTypes.SELECT,
-      options: [
-        { label: 'Homme', value: 'men' },
-        { label: 'Homme', value: 'men' },
-        { label: 'Unisex', value: 'unisex' },
-      ],
+      options: sexOptions,
     },
     {
       uid: 'europeanSize',
@@ -119,11 +115,7 @@ export const subcategorieShoes = {
       uid: 'sex',
       label: 'Sexe',
       inputType: AttributeInputTypes.SELECT,
-      options: [
-        { label: 'Homme', value: 'men' },
-        { label: 'Homme', value: 'men' },
-        { label: 'Unisex', value: 'unisex' },
-      ],
+      options: sexOptions,
     },
     {
       uid: 'europeanSize',
