@@ -13,6 +13,6 @@ export const validationSchema = object().shape({
   [ProductAttributes.DESCRIPTION]: string(),
   [ProductAttributes.CATEGORY_UID]: string(),
   [ProductAttributes.IS_PUBLIC]: string(),
-  [ProductAttributes.TVA]: number(),
+  [ProductAttributes.TVA]: number().min(0).max(100),
   [ProductAttributes.PUBLIC_DISPONIBILITY]: string(),
 });

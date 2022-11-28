@@ -40,7 +40,7 @@ const SubFormVisibility: FC<Props> = ({ product, register, errors }) => {
           ]}
           register={register(ProductAttributes.IS_PUBLIC)}
           name={ProductAttributes.IS_PUBLIC}
-          error={errors[ProductAttributes.IS_PUBLIC].message}
+          error={errors[ProductAttributes.IS_PUBLIC]?.message}
         />
       </div>
       <div className="mt-6 sm:col-span-6">

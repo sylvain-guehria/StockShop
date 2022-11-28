@@ -10,6 +10,7 @@ type Props = {
   options: { value: string; label: string }[];
   name: string;
   register?: any;
+  disabled?: boolean;
 };
 
 const InputSelect: FC<Props> = ({
@@ -20,6 +21,7 @@ const InputSelect: FC<Props> = ({
   options,
   name,
   register,
+  disabled,
   ...rest
 }) => {
   const localRegister = register || { name };
@@ -35,6 +37,7 @@ const InputSelect: FC<Props> = ({
       <select
         id={name}
         autoComplete={name}
+        disabled={disabled}
         {...localRegister}
         {...rest}
         className={classNames(

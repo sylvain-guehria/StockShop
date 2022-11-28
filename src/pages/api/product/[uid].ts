@@ -22,6 +22,7 @@ const productByUid = async (req: NextApiRequest, res: NextApiResponse) => {
     sellingPrice: req.body.sellingPrice,
     tva: req.body.tva,
     categoryUid: req.body.categoryUid,
+    subCategoryUid: req.body.subCategoryUid,
     publicDisponibility: req.body.publicDisponibility,
     isPublic: req.body.isPublic,
     toBuy: req.body.toBuy,
@@ -75,7 +76,7 @@ const productByUid = async (req: NextApiRequest, res: NextApiResponse) => {
           res.status(400).end(`Product with uid ${uid} does not exist`);
           return;
         }
-        res.status(200).json(productRef.data());
+        res.status(200).json({ ...productRef.data(), inventoryUid });
         return;
       case 'PUT':
         if (!productRef.exists) {

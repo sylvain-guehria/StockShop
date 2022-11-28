@@ -3,7 +3,11 @@
 import axios from 'axios';
 
 import ProductEntity from './ProductEntity';
-import type { AddProduct, UpdateProduct } from './productRepository';
+import type {
+  AddProduct,
+  DeleteProduct,
+  UpdateProduct,
+} from './productRepository';
 import { ProductRepository } from './productRepository';
 
 class FirebaseProductRepository extends ProductRepository {
@@ -23,6 +27,7 @@ class FirebaseProductRepository extends ProductRepository {
       isPublic,
       tva,
       categoryUid,
+      subCategoryUid,
       publicDisponibility,
       inventoryUid,
     } = response.data;
@@ -39,6 +44,7 @@ class FirebaseProductRepository extends ProductRepository {
       isPublic,
       tva,
       categoryUid,
+      subCategoryUid,
       publicDisponibility,
       inventoryUid,
     });
@@ -68,32 +74,21 @@ class FirebaseProductRepository extends ProductRepository {
     });
   }
 
-  async delete(uid: string): Promise<void> {
-    console.info(`Deleting product with uid ${uid} in db...`);
-    return axios.post(`${this.baseUrl}/api/product/delete`, { uid });
-  }
-
-  async getAll(): Promise<ProductEntity[]> {
-    console.info('get all  in db');
-    const response = await axios.get('/api/product/getAll');
-    return response.data.map(
-      (product: ProductEntity) =>
-        new ProductEntity({
-          uid: product.uid,
-          label: product.label,
-          quantityInInventory: product.quantityInInventory,
-          optimumQuantity: product.optimumQuantity,
-          buyingPrice: product.buyingPrice,
-          sellingPrice: product.sellingPrice,
-          description: product.description,
-          toBuy: product.toBuy,
-          isPublic: product.isPublic,
-          tva: product.tva,
-          categoryUid: product.categoryUid,
-          publicDisponibility: product.publicDisponibility,
-          inventoryUid: product.inventoryUid,
-        })
-    );
+  async delete({
+    productUid,
+    userUid,
+    companyUid,
+    inventoryUid,
+  }: DeleteProduct): Promise<void> {
+    console.info(`Deleting product with uid ${productUid} in db...`);
+    return axios.delete(`${this.baseUrl}/api/product/delete`, {
+      params: {
+        productUid,
+        userUid,
+        companyUid,
+        inventoryUid,
+      },
+    });
   }
 
   async update({
@@ -119,6 +114,7 @@ class FirebaseProductRepository extends ProductRepository {
         isPublic: product.getIsPublic(),
         tva: product.getTva(),
         categoryUid: product.getCategoryUid(),
+        subCategoryUid: product.getSubCategoryUid(),
         publicDisponibility: product.getPublicDisponibility(),
       }
     );
@@ -134,6 +130,7 @@ class FirebaseProductRepository extends ProductRepository {
       isPublic: data.isPublic,
       tva: data.tva,
       categoryUid: data.categoryUid,
+      subCategoryUid: data.subCategoryUid,
       publicDisponibility: data.publicDisponibility,
       inventoryUid: data.inventoryUid,
     });
@@ -171,6 +168,7 @@ class FirebaseProductRepository extends ProductRepository {
           isPublic: product.isPublic,
           tva: product.tva,
           categoryUid: product.categoryUid,
+          subCategoryUid: product.subCategoryUid,
           publicDisponibility: product.publicDisponibility,
           inventoryUid: product.inventoryUid,
         })

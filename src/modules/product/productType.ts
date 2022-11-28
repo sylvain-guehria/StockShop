@@ -10,6 +10,7 @@ export enum ProductAttributes {
   IS_PUBLIC = 'isPublic',
   TVA = 'tva',
   CATEGORY_UID = 'categoryUid',
+  SUB_CATEGORY_UID = 'subCategoryUid',
   PUBLIC_DISPONIBILITY = 'publicDisponibility',
   INVENTORY_UID = 'inventoryUid',
 }
@@ -26,6 +27,7 @@ export interface Product {
   [ProductAttributes.IS_PUBLIC]?: boolean;
   [ProductAttributes.TVA]?: number;
   [ProductAttributes.CATEGORY_UID]?: string;
+  [ProductAttributes.SUB_CATEGORY_UID]?: string;
   [ProductAttributes.PUBLIC_DISPONIBILITY]?: string;
   [ProductAttributes.INVENTORY_UID]?: string;
 }

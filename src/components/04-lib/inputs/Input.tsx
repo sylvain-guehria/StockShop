@@ -3,7 +3,7 @@ import type { FC } from 'react';
 import { classNames } from '@/utils/tailwindUtils';
 
 type Props = {
-  type: string;
+  type: 'text' | 'number' | 'email' | 'password';
   label?: string;
   error?: string;
   margin?: string;
@@ -11,6 +11,7 @@ type Props = {
   inputClassName?: string;
   register?: any;
   name: string;
+  step?: string;
 };
 
 const Input: FC<Props> = ({
@@ -22,6 +23,7 @@ const Input: FC<Props> = ({
   inputClassName,
   register,
   name,
+  step,
   ...rest
 }) => {
   const localRegister = register || { name };
@@ -36,6 +38,7 @@ const Input: FC<Props> = ({
       <input
         type={type}
         id={name}
+        step={step}
         placeholder={placeholder}
         autoComplete={name}
         {...localRegister}
