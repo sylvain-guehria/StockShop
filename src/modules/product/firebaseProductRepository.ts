@@ -30,6 +30,7 @@ class FirebaseProductRepository extends ProductRepository {
       subCategoryUid,
       publicDisponibility,
       inventoryUid,
+      catSubcatAttributes,
     } = response.data;
 
     return ProductEntity.new({
@@ -47,6 +48,7 @@ class FirebaseProductRepository extends ProductRepository {
       subCategoryUid,
       publicDisponibility,
       inventoryUid,
+      catSubcatAttributes,
     });
   }
 
@@ -103,19 +105,22 @@ class FirebaseProductRepository extends ProductRepository {
         userUid,
         companyUid,
         inventoryUid: product.getInventoryUid(),
-        uid: product.getUid(),
-        label: product.getLabel(),
-        quantityInInventory: product.getQuantityInInventory(),
-        optimumQuantity: product.getOptimumQuantity(),
-        buyingPrice: product.getBuyingPrice(),
-        sellingPrice: product.getSellingPrice(),
-        description: product.getDescription(),
-        toBuy: product.getToBuy(),
-        isPublic: product.getIsPublic(),
-        tva: product.getTva(),
-        categoryUid: product.getCategoryUid(),
-        subCategoryUid: product.getSubCategoryUid(),
-        publicDisponibility: product.getPublicDisponibility(),
+        product: {
+          uid: product.getUid(),
+          label: product.getLabel(),
+          quantityInInventory: product.getQuantityInInventory(),
+          optimumQuantity: product.getOptimumQuantity(),
+          buyingPrice: product.getBuyingPrice(),
+          sellingPrice: product.getSellingPrice(),
+          description: product.getDescription(),
+          toBuy: product.getToBuy(),
+          isPublic: product.getIsPublic(),
+          tva: product.getTva(),
+          categoryUid: product.getCategoryUid(),
+          subCategoryUid: product.getSubCategoryUid(),
+          publicDisponibility: product.getPublicDisponibility(),
+          catSubcatAttributes: product.getCatSubcatAttributes(),
+        },
       }
     );
     return ProductEntity.new({
@@ -133,6 +138,7 @@ class FirebaseProductRepository extends ProductRepository {
       subCategoryUid: data.subCategoryUid,
       publicDisponibility: data.publicDisponibility,
       inventoryUid: data.inventoryUid,
+      catSubcatAttributes: data.catSubcatAttributes,
     });
   }
 
@@ -171,6 +177,7 @@ class FirebaseProductRepository extends ProductRepository {
           subCategoryUid: product.subCategoryUid,
           publicDisponibility: product.publicDisponibility,
           inventoryUid: product.inventoryUid,
+          catSubcatAttributes: product.catSubcatAttributes,
         })
     );
   }

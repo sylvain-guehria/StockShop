@@ -29,6 +29,8 @@ class ProductEntity implements Product {
 
   inventoryUid: string;
 
+  catSubcatAttributes: Record<string, any>;
+
   static new(product?: Product): ProductEntity {
     return new ProductEntity(product || ({} as Product));
   }
@@ -48,6 +50,18 @@ class ProductEntity implements Product {
     this.subCategoryUid = product.subCategoryUid || '';
     this.publicDisponibility = product.publicDisponibility || '';
     this.inventoryUid = product.inventoryUid || '';
+    this.catSubcatAttributes = product.catSubcatAttributes || {};
+  }
+
+  getCatSubcatAttributes(): Record<string, any> {
+    return this.catSubcatAttributes;
+  }
+
+  setCatSubcatAttributes(
+    catSubcatAttributes: Record<string, any>
+  ): ProductEntity {
+    this.catSubcatAttributes = catSubcatAttributes;
+    return this;
   }
 
   getInventoryUid(): string {

@@ -11,21 +11,28 @@ import {
   getCategoryInputFromDatabase,
   getSubCategoryInputsFromDatabase,
 } from '@/modules/category/categoryUtils';
-import type ProductEntity from '@/modules/product/ProductEntity';
+import { ProductAttributes } from '@/modules/product/productType';
 
 import type { EditProductFormType } from './EditProductForm';
 
 type Props = {
-  product: ProductEntity;
   register: UseFormRegister<EditProductFormType>;
   errors?: Partial<FieldErrorsImpl<EditProductFormType>>;
+  currentCategoryUid: string;
+  currentSubCategoryUid: string;
 };
 
-const SubFormCategory: FC<Props> = ({ product, register }) => {
-  const categoryInputs = getCategoryInputFromDatabase(product.getCategoryUid());
+const SubFormCategory: FC<Props> = ({
+  register,
+  currentCategoryUid,
+  currentSubCategoryUid,
+}) => {
+  const categoryInputs = getCategoryInputFromDatabase(
+    currentCategoryUid as string
+  );
   const subCategoryInputs = getSubCategoryInputsFromDatabase(
-    product.getCategoryUid(),
-    product.getSubCategoryUid()
+    currentCategoryUid as string,
+    currentSubCategoryUid as string
   );
 
   const allCategoryInputs = [...categoryInputs, ...subCategoryInputs];
@@ -54,7 +61,9 @@ const SubFormCategory: FC<Props> = ({ product, register }) => {
                   type={input.inputType as 'text' | 'number'}
                   label={input.label}
                   name={input.uid}
-                  register={register(input.uid as any)}
+                  register={register(
+                    `${ProductAttributes.CAT_SUBCAT_ATTRIBUTES}.${input.uid}`
+                  )}
                 />
               )}
               {isSelectInput && (
@@ -62,7 +71,9 @@ const SubFormCategory: FC<Props> = ({ product, register }) => {
                   label={input.label}
                   options={[{ label: '', value: '' }, ...(input.options || [])]}
                   name={input.uid}
-                  register={register(input.uid as any)}
+                  register={register(
+                    `${ProductAttributes.CAT_SUBCAT_ATTRIBUTES}.${input.uid}`
+                  )}
                   inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               )}

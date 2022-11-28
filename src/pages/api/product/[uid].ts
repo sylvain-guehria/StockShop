@@ -10,23 +10,7 @@ const productByUid = async (req: NextApiRequest, res: NextApiResponse) => {
     method,
   } = req;
 
-  const { userUid, companyUid, inventoryUid } = req.body;
-
-  const product = {
-    uid: req.body.uid,
-    label: req.body.label,
-    description: req.body.description,
-    quantityInInventory: req.body.quantityInInventory,
-    optimumQuantity: req.body.optimumQuantity,
-    buyingPrice: req.body.buyingPrice,
-    sellingPrice: req.body.sellingPrice,
-    tva: req.body.tva,
-    categoryUid: req.body.categoryUid,
-    subCategoryUid: req.body.subCategoryUid,
-    publicDisponibility: req.body.publicDisponibility,
-    isPublic: req.body.isPublic,
-    toBuy: req.body.toBuy,
-  };
+  const { userUid, companyUid, inventoryUid, product } = req.body;
 
   if (!uid) {
     res.status(400).end('Product uid is mandatory to update a product');

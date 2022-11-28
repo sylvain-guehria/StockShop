@@ -29,6 +29,7 @@ export interface EditProductFormType {
   [ProductAttributes.IS_PUBLIC]?: boolean;
   [ProductAttributes.TVA]?: number;
   [ProductAttributes.PUBLIC_DISPONIBILITY]?: string;
+  [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]?: Record<string, any>;
 }
 
 type Props = {
@@ -52,12 +53,13 @@ const EditProductForm: FC<Props> = ({
       [ProductAttributes.OPTIMUM_QUANTITY]: product.optimumQuantity,
       [ProductAttributes.BUYING_PRICE]: product.buyingPrice,
       [ProductAttributes.SELLING_PRICE]: product.sellingPrice,
-      [ProductAttributes.DESCRIPTION]: product.description,
+      [ProductAttributes.TVA]: product.tva,
       [ProductAttributes.CATEGORY_UID]: product.categoryUid,
       [ProductAttributes.SUB_CATEGORY_UID]: product.subCategoryUid,
       [ProductAttributes.IS_PUBLIC]: product.isPublic,
-      [ProductAttributes.TVA]: product.tva,
+      [ProductAttributes.DESCRIPTION]: product.description,
       [ProductAttributes.PUBLIC_DISPONIBILITY]: product.publicDisponibility,
+      [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]: product.catSubcatAttributes,
     },
   };
 
@@ -85,6 +87,9 @@ const EditProductForm: FC<Props> = ({
     }
   };
 
+  const currentCategoryUid = watch(ProductAttributes.CATEGORY_UID);
+  const currentSubCategoryUid = watch(ProductAttributes.SUB_CATEGORY_UID);
+
   return (
     <form onSubmit={handleSubmit(onSubmitEditProductForm)}>
       <div className="lg:flex">
@@ -94,9 +99,10 @@ const EditProductForm: FC<Props> = ({
 
         <div className="mt-5 lg:mt-0 lg:w-1/2 lg:pl-4">
           <SubFormCategory
-            product={product}
             register={register}
             errors={errors}
+            currentCategoryUid={currentCategoryUid || ''}
+            currentSubCategoryUid={currentSubCategoryUid || ''}
           />
         </div>
 

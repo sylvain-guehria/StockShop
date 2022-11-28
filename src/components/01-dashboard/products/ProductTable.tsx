@@ -232,10 +232,15 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                     </td>
                     <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
                       {product.toBuy > 0 ? (
-                        <CheckCircleIcon
-                          className="ml-3 h-5 w-5 shrink-0 text-green-600"
-                          aria-hidden="true"
-                        />
+                        <div
+                          className="tooltip tooltip-left"
+                          data-tip="Présent dans votre liste des produits à acheter."
+                        >
+                          <CheckCircleIcon
+                            className="ml-3 h-5 w-5 shrink-0 text-green-600"
+                            aria-hidden="true"
+                          />
+                        </div>
                       ) : (
                         <div className="flex">
                           0

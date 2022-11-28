@@ -13,6 +13,7 @@ export enum ProductAttributes {
   SUB_CATEGORY_UID = 'subCategoryUid',
   PUBLIC_DISPONIBILITY = 'publicDisponibility',
   INVENTORY_UID = 'inventoryUid',
+  CAT_SUBCAT_ATTRIBUTES = 'catSubcatAttributes',
 }
 
 export interface Product {
@@ -30,4 +31,5 @@ export interface Product {
   [ProductAttributes.SUB_CATEGORY_UID]?: string;
   [ProductAttributes.PUBLIC_DISPONIBILITY]?: string;
   [ProductAttributes.INVENTORY_UID]?: string;
+  [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]?: Record<string, any>;
 }
