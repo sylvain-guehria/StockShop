@@ -2,17 +2,22 @@ import type { SubCategory } from '@/modules/category/categoryType';
 import { AttributeInputTypes } from '@/modules/category/categoryType';
 
 import {
+  computerComponantManufacturerOptions,
+  computerDeviceOptions,
   graphicsCardOptions,
   laptopManufacturerOptions,
   monitorManufacturerOptions,
+  opticalZoomOptions,
   osOptions,
   phoneBrands,
+  photoAndVideoManufacturerOptions,
   printerAndScannerManufacturerOptions,
   processorOptions,
   ramOptions,
   refreshRate,
   resolutionOptions,
   screenType,
+  sensorResolutionOptions,
   soundManufacturerOptions,
   storageManufacturerOptions,
   storageOptions,
@@ -604,6 +609,7 @@ export const subcategorieTelevision: SubCategory = {
         { value: 'lcd', label: 'LCD' },
         { value: 'qled', label: 'QLED' },
         { value: 'plasma', label: 'Plasma' },
+        { value: 'projector', label: 'Projecteur' },
       ],
     },
     {
@@ -708,6 +714,125 @@ export const subcategorieSound: SubCategory = {
       options: [
         { value: 'yes', label: 'Oui' },
         { value: 'no', label: 'Non' },
+      ],
+    },
+  ],
+};
+
+export const subcategoriePhotoAndVideo: SubCategory = {
+  label: 'Photo & Caméra',
+  uid: 'photo-video',
+  inputs: [
+    {
+      uid: 'brand',
+      label: 'Marque',
+      inputType: AttributeInputTypes.SELECT,
+      options: photoAndVideoManufacturerOptions,
+    },
+    {
+      uid: 'model',
+      label: 'Modèle',
+      inputType: AttributeInputTypes.TEXT,
+    },
+    {
+      uid: 'type',
+      label: 'Type',
+      inputType: AttributeInputTypes.SELECT,
+      options: [
+        { value: 'camera', label: 'Appareil photo' },
+        { value: 'camera-reflex', label: 'Appareil photo reflex' },
+        { value: 'camera-Hybride', label: 'Appareil photo hybride' },
+        { value: 'camera-compact', label: 'Appareil photo compact' },
+        { value: 'camera-bridge', label: 'Appareil photo bridge' },
+        { value: 'video-camera', label: 'Caméra' },
+        { value: 'tripod', label: 'Trépied' },
+        { value: 'lens', label: 'Objectif' },
+        { value: 'flash', label: 'Flash' },
+        { value: 'accessory', label: 'Accessoire' },
+      ],
+    },
+    {
+      label: 'Résolution du capteur',
+      uid: 'sensor-resolution',
+      inputType: AttributeInputTypes.SELECT,
+      options: sensorResolutionOptions,
+    },
+    {
+      uid: 'zoom',
+      label: 'Zoom',
+      inputType: AttributeInputTypes.SELECT,
+      options: opticalZoomOptions,
+    },
+  ],
+};
+
+export const subcategorieComputerDevices: SubCategory = {
+  label: 'Périphérique',
+  uid: 'computer-device',
+  inputs: [
+    {
+      uid: 'brand',
+      label: 'Marque',
+      inputType: AttributeInputTypes.SELECT,
+      options: computerDeviceOptions,
+    },
+    {
+      uid: 'model',
+      label: 'Modèle',
+      inputType: AttributeInputTypes.TEXT,
+    },
+    {
+      uid: 'type',
+      label: 'Type',
+      inputType: AttributeInputTypes.SELECT,
+      options: [
+        { value: 'mouse', label: 'Souris' },
+        { value: 'keyboard', label: 'Clavier' },
+        { value: 'headphone', label: 'Casque' },
+        { value: 'earphone', label: 'Ecouteur' },
+        { value: 'microphone', label: 'Microphone' },
+        { value: 'webcam', label: 'Webcam' },
+        { value: 'accessory', label: 'Accessoire' },
+      ],
+    },
+  ],
+};
+
+export const subcategorieComputerComponants: SubCategory = {
+  label: 'Composant',
+  uid: 'computer-componant',
+  inputs: [
+    {
+      uid: 'brand',
+      label: 'Marque',
+      inputType: AttributeInputTypes.SELECT,
+      options: computerComponantManufacturerOptions,
+    },
+    {
+      uid: 'model',
+      label: 'Modèle',
+      inputType: AttributeInputTypes.TEXT,
+    },
+    {
+      uid: 'type',
+      label: 'Type',
+      inputType: AttributeInputTypes.SELECT,
+      options: [
+        { value: 'motherboard', label: 'Carte mère' },
+        { value: 'processor', label: 'Processeur' },
+        { value: 'graphic-card', label: 'Carte graphique' },
+        { value: 'memory', label: 'Mémoire' },
+        { value: 'hard-drive', label: 'Disque dur' },
+        { value: 'ssd', label: 'SSD' },
+        { value: 'power-supply', label: 'Alimentation' },
+        { value: 'case', label: 'Boitier' },
+        { value: 'accessory', label: 'Accessoire' },
+        { value: 'raspberry-pi', label: 'Raspberry Pi' },
+        { value: 'arduino', label: 'Arduino' },
+        { value: 'ventilator', label: 'Ventilateur' },
+        { value: 'water-cooling', label: 'Refroidissement liquide' },
+        { value: 'song-card', label: 'Carte son' },
+        { value: 'other', label: 'Autre' },
       ],
     },
   ],

@@ -5,16 +5,19 @@ import { CategoryId, CategoryLabel } from '../categoriesEnums';
 import { colorOptions } from '../reusableOptions';
 import {
   subcategorieComputer,
+  subcategorieComputerComponants,
+  subcategorieComputerDevices,
   subcategorieLaptop,
   subcategorieMobileAndTablets,
   subcategorieMonitor,
+  subcategoriePhotoAndVideo,
   subcategoriePrinterAndScanner,
   subcategorieSound,
   subcategorieStorage,
   subcategorieTelevision,
 } from './electronicsSubcategories';
 
-export const jewleryAndWatchesCategory: Category = {
+export const electronicsCategory: Category = {
   uid: CategoryId.ELECTRONICS,
   label: CategoryLabel.ELECTRONICS,
   inputs: [
@@ -34,5 +37,8 @@ export const jewleryAndWatchesCategory: Category = {
     subcategorieMonitor,
     subcategorieTelevision,
     subcategorieSound,
+    subcategorieComputerComponants,
+    subcategorieComputerDevices,
+    subcategoriePhotoAndVideo,
   ],
 };

@@ -64,6 +64,9 @@ export const laptopManufacturerOptions = [
   { value: 'toshiba', label: 'Toshiba' },
   { value: 'xiaomi', label: 'Xiaomi' },
   { value: 'alienware', label: 'Alienware' },
+  { value: 'razor', label: 'Razor' },
+  { value: 'msi', label: 'MSI' },
+  { value: 'gigabyte', label: 'Gigabyte' },
   { value: 'other', label: 'Other' },
 ];
 
@@ -198,4 +201,62 @@ export const soundManufacturerOptions = [
   { value: 'Plantronics', label: 'Plantronics' },
   { value: 'Philips', label: 'Philips' },
   { value: 'other', label: 'Autre' },
+];
+
+export const photoAndVideoManufacturerOptions = [
+  { value: 'canon', label: 'Canon' },
+  { value: 'nikon', label: 'Nikon' },
+  { value: 'olympus', label: 'Olympus' },
+  { value: 'panasonic', label: 'Panasonic' },
+  { value: 'sony', label: 'Sony' },
+  { value: 'goPro', label: 'GoPro' },
+  { value: 'fujifilm', label: 'Fujifilm' },
+  { value: 'Kodak', label: 'Kodak' },
+  { value: 'other', label: 'Autre' },
+];
+
+export const sensorResolutionOptions = [
+  { value: '8mp-', label: '< 8 MP' },
+  { value: '8-12mp', label: '8 - 12 MP' },
+  { value: '12-16mp', label: '12 - 16 MP' },
+  { value: '16-20mp', label: '16 - 20 MP' },
+  { value: '20-24mp', label: '20 - 24 MP' },
+  { value: '24-28mp', label: '24 - 28 MP' },
+  { value: '28-32mp', label: '28 - 32 MP' },
+  { value: '32-36mp', label: '32 - 36 MP' },
+  { value: '36mp+', label: '> 36 MP' },
+];
+
+export const opticalZoomOptions = [
+  { value: '3x-', label: '< 3x' },
+  { value: '3-5x', label: '3 - 5x' },
+  { value: '5-8x', label: '5 - 8x' },
+  { value: '8-16x', label: '8 - 16x' },
+  { value: '16-24x', label: '16 - 24x' },
+  { value: '24-32x', label: '24 - 32x' },
+  { value: '32x+', label: '> 32x' },
+];
+export const computerDeviceOptions = [
+  { value: 'corsair', label: 'Corsair' },
+  { value: 'logitech', label: 'Logitech' },
+  { value: 'razer', label: 'Razer' },
+  { value: 'steelseries', label: 'Steelseries' },
+  { value: 'other', label: 'Autre' },
+];
+
+export const computerComponantManufacturerOptions = [
+  ...laptopManufacturerOptions,
+  ...computerDeviceOptions,
+  { value: 'nvidia', label: 'Nvidia' },
+  { value: 'amd', label: 'AMD' },
+  { value: 'intel', label: 'Intel' },
+  { value: 'atx', label: 'ATX' },
+  { value: 'nzxt', label: 'NZXT' },
+  { value: 'aerocool', label: 'Aerocool' },
+  { value: 'bequiet', label: 'BeQuiet' },
+  { value: 'coolermaster', label: 'CoolerMaster' },
+  { value: 'seasonic', label: 'Seasonic' },
+  { value: 'gskill', label: 'G.Skill' },
+  { value: 'klingston', label: 'Klingston' },
+  { value: 'Lian-Li', label: 'Lian-Li' },
 ];
