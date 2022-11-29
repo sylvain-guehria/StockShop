@@ -31,6 +31,8 @@ class FirebaseProductRepository extends ProductRepository {
       publicDisponibility,
       inventoryUid,
       catSubcatAttributes,
+      condition,
+      photoLink,
     } = response.data;
 
     return ProductEntity.new({
@@ -49,6 +51,8 @@ class FirebaseProductRepository extends ProductRepository {
       publicDisponibility,
       inventoryUid,
       catSubcatAttributes,
+      condition,
+      photoLink,
     });
   }
 
@@ -120,6 +124,8 @@ class FirebaseProductRepository extends ProductRepository {
           subCategoryUid: product.getSubCategoryUid(),
           publicDisponibility: product.getPublicDisponibility(),
           catSubcatAttributes: product.getCatSubcatAttributes(),
+          condition: product.getCondition(),
+          photoLink: product.getPhotoLink(),
         },
       }
     );
@@ -139,6 +145,8 @@ class FirebaseProductRepository extends ProductRepository {
       publicDisponibility: data.publicDisponibility,
       inventoryUid: data.inventoryUid,
       catSubcatAttributes: data.catSubcatAttributes,
+      condition: data.condition,
+      photoLink: data.photoLink,
     });
   }
 
@@ -178,6 +186,8 @@ class FirebaseProductRepository extends ProductRepository {
           publicDisponibility: product.publicDisponibility,
           inventoryUid: product.inventoryUid,
           catSubcatAttributes: product.catSubcatAttributes,
+          condition: product.condition,
+          photoLink: product.photoLink,
         })
     );
   }

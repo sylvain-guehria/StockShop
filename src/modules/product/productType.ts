@@ -14,6 +14,14 @@ export enum ProductAttributes {
   PUBLIC_DISPONIBILITY = 'publicDisponibility',
   INVENTORY_UID = 'inventoryUid',
   CAT_SUBCAT_ATTRIBUTES = 'catSubcatAttributes',
+  CONDITION = 'condition',
+  PHOTO_LINK = 'photoLink',
+}
+
+export enum ConditionTypeEnum {
+  NEW = 'new',
+  USED = 'used',
+  REFURBISHED = 'refurbished',
 }
 
 export interface Product {
@@ -32,4 +40,6 @@ export interface Product {
   [ProductAttributes.PUBLIC_DISPONIBILITY]?: string;
   [ProductAttributes.INVENTORY_UID]?: string;
   [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]?: Record<string, any>;
+  [ProductAttributes.CONDITION]?: ConditionTypeEnum;
+  [ProductAttributes.PHOTO_LINK]?: string;
 }

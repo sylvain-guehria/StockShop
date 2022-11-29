@@ -11,6 +11,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { UpdateProductParams } from '@/modules/product/productService';
+import type { ConditionTypeEnum } from '@/modules/product/productType';
 import { ProductAttributes } from '@/modules/product/productType';
 
 import { validationSchema } from './EditProductFormValidation';
@@ -30,6 +31,7 @@ export interface EditProductFormType {
   [ProductAttributes.TVA]?: number;
   [ProductAttributes.PUBLIC_DISPONIBILITY]?: string;
   [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]?: Record<string, any>;
+  [ProductAttributes.CONDITION]?: ConditionTypeEnum;
 }
 
 type Props = {
@@ -60,6 +62,7 @@ const EditProductForm: FC<Props> = ({
       [ProductAttributes.DESCRIPTION]: product.description,
       [ProductAttributes.PUBLIC_DISPONIBILITY]: product.publicDisponibility,
       [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]: product.catSubcatAttributes,
+      [ProductAttributes.CONDITION]: product.condition,
     },
   };
 

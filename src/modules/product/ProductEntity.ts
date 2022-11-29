@@ -1,4 +1,5 @@
 import type { Product } from './productType';
+import { ConditionTypeEnum } from './productType';
 
 class ProductEntity implements Product {
   uid: string;
@@ -31,6 +32,10 @@ class ProductEntity implements Product {
 
   catSubcatAttributes: Record<string, any>;
 
+  condition: ConditionTypeEnum;
+
+  photoLink: string;
+
   static new(product?: Product): ProductEntity {
     return new ProductEntity(product || ({} as Product));
   }
@@ -51,6 +56,8 @@ class ProductEntity implements Product {
     this.publicDisponibility = product.publicDisponibility || '';
     this.inventoryUid = product.inventoryUid || '';
     this.catSubcatAttributes = product.catSubcatAttributes || {};
+    this.condition = product.condition || ConditionTypeEnum.NEW;
+    this.photoLink = product.photoLink || '';
   }
 
   getCatSubcatAttributes(): Record<string, any> {
@@ -217,6 +224,24 @@ class ProductEntity implements Product {
 
   isSameSubCategory(subCategoryUid: string): boolean {
     return this.subCategoryUid === subCategoryUid;
+  }
+
+  getCondition(): ConditionTypeEnum {
+    return this.condition;
+  }
+
+  setCondition(condition: ConditionTypeEnum): ProductEntity {
+    this.condition = condition;
+    return this;
+  }
+
+  getPhotoLink(): string {
+    return this.photoLink;
+  }
+
+  setPhotoLink(photoLink: string): ProductEntity {
+    this.photoLink = photoLink;
+    return this;
   }
 }
 

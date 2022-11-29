@@ -11,7 +11,10 @@ import { categories } from '@/categoriesDatabase/categories';
 import Input from '@/components/04-lib/inputs/Input';
 import InputSelect from '@/components/04-lib/inputs/InputSelect';
 import { getSubCategoriesByCategoryUidFromDatabase } from '@/modules/category/categoryUtils';
-import { ProductAttributes } from '@/modules/product/productType';
+import {
+  ConditionTypeEnum,
+  ProductAttributes,
+} from '@/modules/product/productType';
 
 import type { EditProductFormType } from './EditProductForm';
 
@@ -101,10 +104,34 @@ const SubFormGeneral: FC<Props> = ({ watch, register, errors }) => {
           />
         </div>
       </div>
-      <div className="mt-6 grid gap-y-6 gap-x-4 sm:grid-cols-2">
+      <div className="mt-6 grid gap-y-6 gap-x-4 sm:grid-cols-3">
         <div>
           <label
-            htmlFor="country"
+            htmlFor={ProductAttributes.CONDITION}
+            className="block text-start text-sm font-medium text-gray-700"
+          >
+            Etat
+          </label>
+          <div className="mt-1">
+            <InputSelect
+              options={[
+                { value: ConditionTypeEnum.NEW, label: 'Neuf' },
+                { value: ConditionTypeEnum.USED, label: 'Occasion' },
+                {
+                  value: ConditionTypeEnum.REFURBISHED,
+                  label: 'Reconditionné',
+                },
+              ]}
+              name={ProductAttributes.CONDITION}
+              register={register(ProductAttributes.CONDITION)}
+              error={errors[ProductAttributes.CONDITION]?.message}
+              inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+        </div>
+        <div>
+          <label
+            htmlFor={ProductAttributes.CATEGORY_UID}
             className="block text-start text-sm font-medium text-gray-700"
           >
             Category
@@ -127,7 +154,7 @@ const SubFormGeneral: FC<Props> = ({ watch, register, errors }) => {
         </div>
         <div>
           <label
-            htmlFor="country"
+            htmlFor={ProductAttributes.SUB_CATEGORY_UID}
             className="block text-start text-sm font-medium text-gray-700"
           >
             Sous catégorie

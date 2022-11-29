@@ -1,6 +1,9 @@
 import { number, object, string } from 'yup';
 
-import { ProductAttributes } from '@/modules/product/productType';
+import {
+  ConditionTypeEnum,
+  ProductAttributes,
+} from '@/modules/product/productType';
 
 export const validationSchema = object()
   .noUnknown()
@@ -19,4 +22,10 @@ export const validationSchema = object()
     [ProductAttributes.DESCRIPTION]: string(),
     [ProductAttributes.PUBLIC_DISPONIBILITY]: string(),
     [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]: object(),
+    [ProductAttributes.CONDITION]: string().oneOf([
+      ConditionTypeEnum.NEW,
+      ConditionTypeEnum.USED,
+      ConditionTypeEnum.REFURBISHED,
+    ]),
+    [ProductAttributes.PHOTO_LINK]: string(),
   });
