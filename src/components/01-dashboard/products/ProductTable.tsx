@@ -1,7 +1,8 @@
-import { EyeIcon } from '@heroicons/react/20/solid';
 import {
   CheckCircleIcon,
+  MagnifyingGlassIcon,
   PencilSquareIcon,
+  PhotoIcon,
   PlusCircleIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
@@ -35,8 +36,15 @@ const DynamicDeleteModal = dynamic(
   }
 );
 
-const DynamicEditInventoryForm = dynamic(
+const DynamicEditProductForm = dynamic(
   () => import('./editProductForm/EditProductForm'),
+  {
+    suspense: true,
+  }
+);
+
+const DynamicEditProductPhotoForm = dynamic(
+  () => import('./editPhotoForm/EditProductPhotoForm'),
   {
     suspense: true,
   }
@@ -52,6 +60,8 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
   const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
   const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] =
     useState(false);
+  const [isEditPhotoModalOpen, setIsEditPhotoModalOpen] = useState(false);
+
   const [productToEdit, setProductToEdit] = useState<ProductEntity | null>(
     null
   );
@@ -104,6 +114,11 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
     setIsDeleteProductModalOpen(true);
   };
 
+  const handleImageProductClick = (product: ProductEntity) => {
+    setProductToEdit(product);
+    setIsEditPhotoModalOpen(true);
+  };
+
   return (
     <>
       {isEditProductModalOpen && (
@@ -113,7 +128,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
           mawWidth="sm:max-w-7xl"
           width="w-full"
         >
-          <DynamicEditInventoryForm
+          <DynamicEditProductForm
             product={productToEdit as unknown as ProductEntity}
             handleCloseModal={handleCloseModal}
             onSubmitEditForm={updateProductMutation.mutate}
@@ -138,6 +153,18 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
             }) as unknown as () => void
           }
         />
+      )}
+      {isEditPhotoModalOpen && (
+        <DynamicModal
+          open={isEditPhotoModalOpen}
+          handleCloseModal={handleCloseModal}
+          mawWidth="sm:max-w-xl"
+          width="w-full"
+        >
+          <DynamicEditProductPhotoForm
+            product={productToEdit as unknown as ProductEntity}
+          />
+        </DynamicModal>
       )}
       <div className="mt-8 flex flex-col">
         <div className="overflow-x-auto rounded-lg shadow ring-1 ring-black/5">
@@ -190,7 +217,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                           className="tooltip tooltip-right mr-3 cursor-pointer"
                           data-tip="Voir le produit"
                         >
-                          <EyeIcon
+                          <MagnifyingGlassIcon
                             className="h-5 w-5 shrink-0 text-primary-600"
                             aria-hidden="true"
                           />
@@ -295,6 +322,19 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                         />
                         <span className="sr-only">
                           Supprimer {product.label}
+                        </span>
+                      </div>
+                      <div
+                        className="tooltip tooltip-left cursor-pointer"
+                        data-tip="Voir ou changer la photo"
+                      >
+                        <PhotoIcon
+                          className="ml-3 h-5 w-5 shrink-0 text-primary-600"
+                          aria-hidden="true"
+                          onClick={() => handleImageProductClick(product)}
+                        />
+                        <span className="sr-only">
+                          Changer la photo {product.label}
                         </span>
                       </div>
                     </td>
