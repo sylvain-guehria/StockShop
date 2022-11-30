@@ -1,8 +1,6 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { productServiceDi } from 'di';
-import { handleDelete, handleUpload } from 'firebaseFolder/storage';
 import type { ChangeEvent, FC } from 'react';
 import { createRef, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
@@ -10,13 +8,17 @@ import { useForm } from 'react-hook-form';
 
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import NextImage from '@/components/04-lib/nextImage/NextImage';
+import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
 import type ProductEntity from '@/modules/product/ProductEntity';
+import { updatePhotoProductUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './EditProductFormValidation';
 
 type Props = {
   product: ProductEntity;
+  handleCloseModal: () => void;
 };
 
 interface PhotoAttributesType {
@@ -24,8 +26,10 @@ interface PhotoAttributesType {
   type: string;
 }
 
-const EditProductPhotoForm: FC<Props> = ({ product }) => {
+const EditProductPhotoForm: FC<Props> = ({ product, handleCloseModal }) => {
   const { user } = useAuth();
+
+  const toast = useToast(5000);
 
   const [currentFile, setCurrentFile] = useState<File | null>(null);
 
@@ -51,37 +55,16 @@ const EditProductPhotoForm: FC<Props> = ({ product }) => {
   register('type');
 
   const onSubmit: SubmitHandler<PhotoAttributesType> = async () => {
-    if (currentFile) {
-      Object.defineProperty(currentFile, 'name', {
-        writable: true,
-        value: product.getUid(),
+    try {
+      await updatePhotoProductUseCase({
+        userUid: user.getUid(),
+        companyUid: user.getCompanyUid(),
+        product,
+        currentFile: currentFile as File,
       });
-      handleUpload({
-        folderName: `/images/${user.getUid()}`,
-        filename: `/${product.getUid()}`,
-        uploadedFile: currentFile,
-        callBackAfterDownloadSuccess: async (photoLink) => {
-          // dans UC check if url changes and not save if not
-          return productServiceDi.updateProduct({
-            product: product.setPhotoLink(photoLink),
-            userUid: user.getUid(),
-            companyUid: user.getCompanyUid(),
-          });
-        },
-      });
-    } else {
-      handleDelete({
-        folderName: `/images/${user.getUid()}`,
-        filename: `/${product.getUid()}`,
-        callBackAfterDownloadSuccess: async () => {
-          // dans UC check if url changes and not save if not
-          return productServiceDi.updateProduct({
-            product: product.setPhotoLink(''),
-            userUid: user.getUid(),
-            companyUid: user.getCompanyUid(),
-          });
-        },
-      });
+      handleCloseModal();
+    } catch (error: any) {
+      toast(ToasterTypeEnum.ERROR, error.message);
     }
   };
 

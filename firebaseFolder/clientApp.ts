@@ -86,6 +86,13 @@ const storageFunctions = {
   deleteObject,
 };
 
+export interface StorageFunctions {
+  ref: typeof ref;
+  uploadBytesResumable: typeof uploadBytesResumable;
+  getDownloadURL: typeof getDownloadURL;
+  deleteObject: typeof deleteObject;
+}
+
 export {
   app,
   auth,
