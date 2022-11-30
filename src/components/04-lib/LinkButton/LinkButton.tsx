@@ -7,7 +7,7 @@ type Props = {
   href?: string;
   children: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
-  style?: 'primary' | 'secondary';
+  style?: 'primary' | 'secondary' | 'tertiary';
   onClick?: (params: any) => any;
   className?: string;
 };
@@ -18,9 +18,13 @@ const primaryStyle =
 const secondaryStyle =
   'bg-primary-500 py-2 px-4 text-base font-medium text-white hover:bg-primary-600';
 
+const tertiaryStyle =
+  'text-primary-600 text-base hover:bg-primary-100 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-primary-500 dark:text-primary-500 dark:hover:text-white dark:hover:bg-primary-600 dark:focus:ring-primary-600';
+
 const styles = {
   primary: primaryStyle,
   secondary: secondaryStyle,
+  tertiary: tertiaryStyle,
 };
 
 const LinkButton: FC<Props> = ({
@@ -35,8 +39,10 @@ const LinkButton: FC<Props> = ({
     <Link href={href}>
       <div
         className={classNames(
-          `mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent ${styles[style]}`,
-          className || ''
+          `mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent`,
+          className || '',
+          styles[style],
+          'focus-within:ring-2 focus-within:ring-primary-500'
         )}
       >
         {children}
@@ -45,11 +51,13 @@ const LinkButton: FC<Props> = ({
   ) : (
     <div
       className={classNames(
-        `mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent ${styles[style]}`,
-        className || ''
+        `mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent`,
+        styles[style],
+        className || '',
+        'focus-within:ring-2 focus-within:ring-primary-500'
       )}
     >
-      <button type={type} onClick={onClick}>
+      <button type={type} onClick={onClick} className="outline-0">
         {children}
       </button>
     </div>
