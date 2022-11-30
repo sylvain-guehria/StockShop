@@ -106,6 +106,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
   const handleCloseModal = () => {
     setIsEditProductModalOpen(false);
     setIsDeleteProductModalOpen(false);
+    setIsEditPhotoModalOpen(false);
     setProductToEdit(null);
   };
 
@@ -161,9 +162,11 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
           mawWidth="sm:max-w-xl"
           width="w-full"
         >
-          <DynamicEditProductPhotoForm
-            product={productToEdit as unknown as ProductEntity}
-          />
+          {productToEdit && (
+            <DynamicEditProductPhotoForm
+              product={productToEdit as unknown as ProductEntity}
+            />
+          )}
         </DynamicModal>
       )}
       <div className="mt-8 flex flex-col">
