@@ -73,6 +73,14 @@ const EditProductPhotoForm: FC<Props> = ({ product }) => {
       handleDelete({
         folderName: `/images/${user.getUid()}`,
         filename: `/${product.getUid()}`,
+        callBackAfterDownloadSuccess: async () => {
+          // dans UC check if url changes and not save if not
+          return productServiceDi.updateProduct({
+            product: product.setPhotoLink(''),
+            userUid: user.getUid(),
+            companyUid: user.getCompanyUid(),
+          });
+        },
       });
     }
   };
@@ -155,7 +163,8 @@ const EditProductPhotoForm: FC<Props> = ({ product }) => {
                   </svg>
                 )}
               </div>
-              <div className="flex text-sm text-gray-600">
+
+              <div className="w-full text-sm text-gray-600">
                 <input
                   ref={fileInput}
                   accept={'.png, .jpg, .jpeg'}
@@ -165,14 +174,18 @@ const EditProductPhotoForm: FC<Props> = ({ product }) => {
                   className="sr-only"
                   onChange={handleImageChange}
                 />
-                <LinkButton type="button" onClick={() => handleClick()}>
-                  Change
-                </LinkButton>
-                <LinkButton type="button" onClick={() => handleRemove()}>
-                  Remove
-                </LinkButton>
+                <div className="text-sm text-gray-600">
+                  <LinkButton type="button" onClick={() => handleClick()}>
+                    {imagePreviewUrl ? 'Changer' : 'Ajouter'}
+                  </LinkButton>
+                  {imagePreviewUrl && (
+                    <LinkButton type="button" onClick={() => handleRemove()}>
+                      Supprimer
+                    </LinkButton>
+                  )}
+                </div>
               </div>
-              <p className="text-xs text-gray-500">PNG, JPG, JPEG up to 5MB</p>
+              <p className="text-xs text-gray-500">PNG, JPG, JPEG max 2MB</p>
               {errors.size?.message && (
                 <p className="text-sm text-red-600" id="inventoryName-error">
                   {errors.size?.message}
@@ -186,7 +199,7 @@ const EditProductPhotoForm: FC<Props> = ({ product }) => {
             </div>
           </div>
         </div>
-        <div className="absolute right-0 bottom-0">
+        <div>
           <LinkButton type="submit" style="tertiary">
             Sauvegarder
           </LinkButton>

@@ -73,9 +73,11 @@ export const handleUpload = async ({
 export const handleDelete = async ({
   folderName,
   filename,
+  callBackAfterDownloadSuccess,
 }: {
   folderName: string;
   filename: string;
+  callBackAfterDownloadSuccess: () => void;
 }): Promise<void> => {
   if (!folderName || !filename) return;
 
@@ -85,7 +87,7 @@ export const handleDelete = async ({
   // Delete the file
   deleteObject(pathReference)
     .then(() => {
-      // File deleted successfully
+      callBackAfterDownloadSuccess();
     })
     .catch((_error) => {
       // Uh-oh, an error occurred!
