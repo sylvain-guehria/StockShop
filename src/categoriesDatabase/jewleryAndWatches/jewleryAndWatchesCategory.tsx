@@ -29,11 +29,6 @@ export const jewleryAndWatchesCategory: Category = {
       options: [...colorOptions],
     },
     {
-      uid: 'brand',
-      label: 'Marque',
-      inputType: AttributeInputTypes.TEXT,
-    },
-    {
       uid: 'material',
       label: 'Matière principale',
       inputType: AttributeInputTypes.SELECT,
