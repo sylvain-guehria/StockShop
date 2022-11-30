@@ -1,7 +1,8 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { handleUpload } from 'firebaseFolder/storage';
+import { productServiceDi } from 'di';
+import { handleDelete, handleUpload } from 'firebaseFolder/storage';
 import type { ChangeEvent, FC } from 'react';
 import { createRef, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
@@ -24,14 +25,13 @@ interface PhotoAttributesType {
 }
 
 const EditProductPhotoForm: FC<Props> = ({ product }) => {
-  const originalPhotoLink = product?.getPhotoLink();
-
   const { user } = useAuth();
 
-  const [file, setFile] = useState<File | null>(null);
   const [currentFile, setCurrentFile] = useState<File | null>(null);
 
-  const [imagePreviewUrl, setImagePreviewUrl] = useState<string>();
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string>(
+    product?.getPhotoLink()
+  );
 
   const fileInput: React.RefObject<HTMLInputElement> = createRef();
 
@@ -56,12 +56,24 @@ const EditProductPhotoForm: FC<Props> = ({ product }) => {
         writable: true,
         value: product.getUid(),
       });
-      const uploadedPhotoLink = await handleUpload(
-        `users/${user.getUid()}`,
-        'product',
-        currentFile
-      );
-      // THEN SAVE PRODUCT WITH photoLink
+      handleUpload({
+        folderName: `/images/${user.getUid()}`,
+        filename: `/${product.getUid()}`,
+        uploadedFile: currentFile,
+        callBackAfterDownloadSuccess: async (photoLink) => {
+          // dans UC check if url changes and not save if not
+          return productServiceDi.updateProduct({
+            product: product.setPhotoLink(photoLink),
+            userUid: user.getUid(),
+            companyUid: user.getCompanyUid(),
+          });
+        },
+      });
+    } else {
+      handleDelete({
+        folderName: `/images/${user.getUid()}`,
+        filename: `/${product.getUid()}`,
+      });
     }
   };
 
@@ -72,7 +84,12 @@ const EditProductPhotoForm: FC<Props> = ({ product }) => {
     } else {
       setValue('size', newFile.size);
       setValue('type', newFile.type);
-      trigger(['size', 'type']);
+      const isValid = trigger(['size', 'type']);
+      if (!isValid) {
+        setCurrentFile(null);
+        setImagePreviewUrl('');
+        return;
+      }
     }
     setCurrentFile(newFile);
   };
@@ -83,7 +100,7 @@ const EditProductPhotoForm: FC<Props> = ({ product }) => {
     const target = e.target as HTMLInputElement;
     const localFile: File = (target.files as FileList)[0] as File;
     reader.onloadend = () => {
-      setFile(file);
+      setCurrentFile(localFile);
       setImagePreviewUrl(reader.result as string);
     };
     reader.readAsDataURL(localFile);
@@ -95,7 +112,7 @@ const EditProductPhotoForm: FC<Props> = ({ product }) => {
   };
 
   const handleRemove = (): void => {
-    setFile(null);
+    setCurrentFile(null);
     setImagePreviewUrl('');
     if (fileInput != null && fileInput.current != null) {
       fileInput.current.value = '';

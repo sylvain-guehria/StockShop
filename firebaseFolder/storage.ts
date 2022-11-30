@@ -3,13 +3,22 @@ import { storage, storageFunctions } from './clientApp';
 
 const { ref, getDownloadURL, uploadBytesResumable, deleteObject } =
   storageFunctions;
-export const handleUpload = async (
-  folder: string,
-  filename: string,
-  uploadedFile: File
-) => {
+
+interface UploadFileInterface {
+  folderName: string;
+  filename: string;
+  uploadedFile: File;
+  callBackAfterDownloadSuccess: (url: string) => void;
+}
+
+export const handleUpload = async ({
+  folderName,
+  filename,
+  uploadedFile,
+  callBackAfterDownloadSuccess,
+}: UploadFileInterface) => {
   if (!uploadedFile) return '';
-  const fullPath = folder + filename;
+  const fullPath = folderName + filename;
 
   const storageRef = ref(storage, fullPath);
   const uploadTask = uploadBytesResumable(storageRef, uploadedFile);
@@ -37,37 +46,40 @@ export const handleUpload = async (
       // https://firebase.google.com/docs/storage/web/handle-errors
       switch (error.code) {
         case 'storage/unauthorized':
-          // User doesn't have permission to access the object
+          console.log(`storage/unauthorized error ${error}`);
           break;
         case 'storage/canceled':
-          // User canceled the upload
+          console.log(`storage/canceled error.code ${error.code}`);
           break;
 
         // ...
 
         case 'storage/unknown':
-          // Unknown error occurred, inspect error.serverResponse
+          console.log(`storage/unknown error.code unknown`);
           break;
         default:
           console.log(`Error: ${error.code}`);
       }
     },
-    () => {
+    async () => {
       // Upload completed successfully, now we can get the download URL
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log('File available at', downloadURL);
-      });
+      return getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
+        callBackAfterDownloadSuccess(downloadURL)
+      );
     }
   );
 };
 
-export const handleDelete = async (
-  folder: string,
-  filename: string
-): Promise<void> => {
-  if (!folder || !filename) return;
+export const handleDelete = async ({
+  folderName,
+  filename,
+}: {
+  folderName: string;
+  filename: string;
+}): Promise<void> => {
+  if (!folderName || !filename) return;
 
-  const fullPath = folder + filename;
+  const fullPath = folderName + filename;
 
   const pathReference = ref(storage, fullPath);
   // Delete the file
