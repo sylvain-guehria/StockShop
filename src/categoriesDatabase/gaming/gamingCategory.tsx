@@ -6,7 +6,7 @@ import {
   subcategorieGameConsoleAccessories,
 } from './gamingSubcategories';
 
-export const electronicsCategory: Category = {
+export const gamingCategory: Category = {
   uid: CategoryId.VIDEO_GAMES,
   label: CategoryLabel.VIDEO_GAMES,
   inputs: [],
