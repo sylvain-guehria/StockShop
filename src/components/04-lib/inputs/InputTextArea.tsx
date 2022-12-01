@@ -10,6 +10,8 @@ type Props = {
   placeholder?: string;
   inputClassName?: string;
   name: string;
+  disabled?: boolean;
+  value?: string;
 };
 
 const InputTextArea: FC<Props> = ({
@@ -19,6 +21,7 @@ const InputTextArea: FC<Props> = ({
   margin,
   inputClassName,
   register,
+  disabled,
   name,
   ...rest
 }) => {
@@ -35,6 +38,7 @@ const InputTextArea: FC<Props> = ({
         id={name}
         placeholder={placeholder}
         autoComplete={name}
+        disabled={disabled}
         {...localRegister}
         {...rest}
         className={classNames(

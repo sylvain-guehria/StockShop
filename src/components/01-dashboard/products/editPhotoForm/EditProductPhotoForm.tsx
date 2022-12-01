@@ -1,7 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import type { ChangeEvent, FC } from 'react';
 import { createRef, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
@@ -34,6 +34,7 @@ const EditProductPhotoForm: FC<Props> = ({
   handleCloseModal,
 }) => {
   const { user } = useAuth();
+  const queryClient = useQueryClient();
   const toast = useToast(5000);
   const [currentFile, setCurrentFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string>('');
@@ -48,9 +49,6 @@ const EditProductPhotoForm: FC<Props> = ({
         inventoryUid,
       }),
     enabled: !!productUid,
-    onSuccess: (data) => {
-      setImagePreviewUrl(data?.getPhotoLink());
-    },
   });
 
   const fileInput: React.RefObject<HTMLInputElement> = createRef();
@@ -79,6 +77,7 @@ const EditProductPhotoForm: FC<Props> = ({
         product,
         currentFile: currentFile as File,
       });
+      queryClient.invalidateQueries({ queryKey: ['get-product'] });
       handleCloseModal();
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);

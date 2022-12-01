@@ -50,6 +50,10 @@ const DynamicEditProductPhotoForm = dynamic(
   }
 );
 
+const DynamicProductView = dynamic(() => import('./ProductView'), {
+  suspense: true,
+});
+
 type Props = {
   currentInventoryUid: string;
 };
@@ -61,6 +65,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
   const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] =
     useState(false);
   const [isEditPhotoModalOpen, setIsEditPhotoModalOpen] = useState(false);
+  const [isViewProductModalOpen, setIsViewProductModalOpen] = useState(false);
 
   const [productToEdit, setProductToEdit] = useState<ProductEntity | null>(
     null
@@ -107,6 +112,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
     setIsEditProductModalOpen(false);
     setIsDeleteProductModalOpen(false);
     setIsEditPhotoModalOpen(false);
+    setIsViewProductModalOpen(false);
     setProductToEdit(null);
   };
 
@@ -118,6 +124,11 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
   const handleImageProductClick = (product: ProductEntity) => {
     setProductToEdit(product);
     setIsEditPhotoModalOpen(true);
+  };
+
+  const handleViewProductClick = (product: ProductEntity) => {
+    setProductToEdit(product);
+    setIsViewProductModalOpen(true);
   };
 
   return (
@@ -167,6 +178,21 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
               productUid={productToEdit.getUid()}
               inventoryUid={productToEdit.getInventoryUid()}
               handleCloseModal={handleCloseModal}
+            />
+          )}
+        </DynamicModal>
+      )}
+      {isViewProductModalOpen && (
+        <DynamicModal
+          open={isViewProductModalOpen}
+          handleCloseModal={handleCloseModal}
+          mawWidth="sm:max-w-7xl"
+          width="w-full"
+        >
+          {productToEdit && (
+            <DynamicProductView
+              productUid={productToEdit.getUid()}
+              inventoryUid={productToEdit.getInventoryUid()}
             />
           )}
         </DynamicModal>
@@ -221,6 +247,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                         <div
                           className="tooltip tooltip-right mr-3 cursor-pointer"
                           data-tip="Voir le produit"
+                          onClick={() => handleViewProductClick(product)}
                         >
                           <MagnifyingGlassIcon
                             className="h-5 w-5 shrink-0 text-primary-600"

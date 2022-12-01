@@ -1,6 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useQueryClient } from '@tanstack/react-query';
 import type { FC } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -47,6 +48,8 @@ const EditProductForm: FC<Props> = ({
 }) => {
   const toast = useToast(10000);
   const { user } = useAuth();
+  const queryClient = useQueryClient();
+
   const formOptions = {
     resolver: yupResolver(validationSchema),
     defaultValues: {
@@ -79,7 +82,7 @@ const EditProductForm: FC<Props> = ({
     data: EditProductFormType
   ) => {
     try {
-      onSubmitEditForm({
+      await onSubmitEditForm({
         product: {
           ...product,
           ...data,
@@ -87,6 +90,7 @@ const EditProductForm: FC<Props> = ({
         userUid: user.getUid(),
         companyUid: user.getCompanyUid(),
       });
+      queryClient.invalidateQueries({ queryKey: ['get-product'] });
     } catch (e: any) {
       toast(ToasterTypeEnum.ERROR, e.message);
     }
@@ -116,8 +120,8 @@ const EditProductForm: FC<Props> = ({
             product={product}
             register={register}
             errors={errors}
-          />{' '}
-        </div> */}
+          />
+          </div> */}
       </div>
 
       <div className="pt-6">

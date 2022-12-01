@@ -24,6 +24,12 @@ export enum ConditionTypeEnum {
   REFURBISHED = 'refurbished',
 }
 
+export const ConditionLabels = {
+  [ConditionTypeEnum.NEW]: 'Neuf',
+  [ConditionTypeEnum.USED]: 'Occasion',
+  [ConditionTypeEnum.REFURBISHED]: 'Reconditionné',
+};
+
 export interface Product {
   [ProductAttributes.UID]?: string;
   [ProductAttributes.LABEL]?: string;

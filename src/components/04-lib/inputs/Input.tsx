@@ -12,6 +12,8 @@ type Props = {
   register?: any;
   name: string;
   step?: string;
+  value?: string | number;
+  disabled?: boolean;
 };
 
 const Input: FC<Props> = ({
@@ -24,6 +26,7 @@ const Input: FC<Props> = ({
   register,
   name,
   step,
+  disabled,
   ...rest
 }) => {
   const localRegister = register || { name };
@@ -41,6 +44,7 @@ const Input: FC<Props> = ({
         step={step}
         placeholder={placeholder}
         autoComplete={name}
+        disabled={disabled}
         {...localRegister}
         {...rest}
         className={classNames(

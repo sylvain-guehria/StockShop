@@ -14,12 +14,12 @@ export const subcategorieClothes = {
     },
     {
       uid: 'europeanSize',
-      label: 'Taille européenne',
+      label: 'Taille UE',
       inputType: AttributeInputTypes.TEXT,
     },
     {
       uid: 'americanSize',
-      label: 'Taille américaine',
+      label: 'Taille US',
       inputType: AttributeInputTypes.TEXT,
     },
     {
@@ -119,12 +119,12 @@ export const subcategorieShoes = {
     },
     {
       uid: 'europeanSize',
-      label: 'Taille européenne',
+      label: 'Taille UE',
       inputType: AttributeInputTypes.TEXT,
     },
     {
       uid: 'americanSize',
-      label: 'Taille américaine',
+      label: 'Taille US',
       inputType: AttributeInputTypes.TEXT,
     },
     {

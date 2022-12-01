@@ -64,3 +64,24 @@ export const getSubCategoryInputsFromDatabase = (
   if (!categoryUid || !subCategoryUid) return [];
   return getSubCategoryInputs(categorieFromDB, categoryUid, subCategoryUid);
 };
+
+export const getCategoryByUid = (categoryUid: string): Category => {
+  if (!categoryUid || !categorieFromDB || !categorieFromDB.length)
+    return {} as Category;
+  return (
+    categorieFromDB.find((category) => category.uid === categoryUid) ||
+    ({} as Category)
+  );
+};
+
+export const getSubCategoryByUid = (
+  categoryUid: string,
+  subCategoryUid: string
+) => {
+  if (!categoryUid || !subCategoryUid) return {} as SubCategory;
+  const category = getCategoryByUid(categoryUid);
+  return (
+    category.subCatgories?.find((subCat) => subCat.uid === subCategoryUid) ||
+    ({} as SubCategory)
+  );
+};

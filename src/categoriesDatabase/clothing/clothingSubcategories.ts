@@ -8,12 +8,12 @@ export const subcategorieClothes = {
   inputs: [
     {
       uid: 'europeanSize',
-      label: 'Taille européenne',
+      label: 'Taille UE',
       inputType: AttributeInputTypes.TEXT,
     },
     {
       uid: 'americanSize',
-      label: 'Taille américaine',
+      label: 'Taille US',
       inputType: AttributeInputTypes.TEXT,
     },
     {
@@ -65,12 +65,12 @@ export const subcategorieShoes = {
   inputs: [
     {
       uid: 'europeanSize',
-      label: 'Taille européenne',
+      label: 'Taille UE',
       inputType: AttributeInputTypes.TEXT,
     },
     {
       uid: 'americanSize',
-      label: 'Taille américaine',
+      label: 'Taille US',
       inputType: AttributeInputTypes.TEXT,
     },
     {
