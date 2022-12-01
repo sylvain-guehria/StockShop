@@ -5,30 +5,45 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 const { USERS, COMPANIES, INVENTORIES, PRODUCTS } = TableNames;
 
 const productByUid = async (req: NextApiRequest, res: NextApiResponse) => {
-  const {
-    query: { uid },
-    method,
-  } = req;
+  const { query, method, body } = req;
 
-  const { userUid, companyUid, inventoryUid, product } = req.body;
+  const { uid } = query;
+
+  let userUid;
+  let companyUid;
+  let inventoryUid;
+  let product;
+
+  if (method === 'GET') {
+    userUid = query.userUid;
+    companyUid = query.companyUid;
+    inventoryUid = query.inventoryUid;
+  }
+
+  if (method === 'PUT') {
+    userUid = body.userUid;
+    companyUid = body.companyUid;
+    inventoryUid = body.inventoryUid;
+    product = body.product;
+  }
 
   if (!uid) {
-    res.status(400).end('Product uid is mandatory to update a product');
+    res.status(400).end('Product uid is mandatory to get or update a product');
     return;
   }
 
   if (!userUid) {
-    res.status(400).end('userUid is mandatory to update a product');
+    res.status(400).end('userUid is mandatory to get or update a product');
     return;
   }
 
   if (!companyUid) {
-    res.status(400).end('companyUid is mandatory to update a product');
+    res.status(400).end('companyUid is mandatory to get or update a product');
     return;
   }
 
   if (!inventoryUid) {
-    res.status(400).end('inventoryUid is mandatory to update a product');
+    res.status(400).end('inventoryUid is mandatory to get or update a product');
     return;
   }
 

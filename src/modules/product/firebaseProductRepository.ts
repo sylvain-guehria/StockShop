@@ -6,6 +6,7 @@ import ProductEntity from './ProductEntity';
 import type {
   AddProduct,
   DeleteProduct,
+  GetProduct,
   UpdateProduct,
 } from './productRepository';
 import { ProductRepository } from './productRepository';
@@ -13,9 +14,23 @@ import { ProductRepository } from './productRepository';
 class FirebaseProductRepository extends ProductRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 
-  async getById(uid: string): Promise<ProductEntity> {
-    console.info('get product in db with uid: ', uid);
-    const response = await axios.get(`${this.baseUrl}/api/product/${uid}`);
+  async getById({
+    productUid,
+    userUid,
+    companyUid,
+    inventoryUid,
+  }: GetProduct): Promise<ProductEntity> {
+    console.info('get product in db with uid: ', productUid);
+    const response = await axios.get(
+      `${this.baseUrl}/api/product/${productUid}`,
+      {
+        params: {
+          userUid,
+          companyUid,
+          inventoryUid,
+        },
+      }
+    );
     const {
       label,
       quantityInInventory,
@@ -29,14 +44,13 @@ class FirebaseProductRepository extends ProductRepository {
       categoryUid,
       subCategoryUid,
       publicDisponibility,
-      inventoryUid,
       catSubcatAttributes,
       condition,
       photoLink,
     } = response.data;
 
     return ProductEntity.new({
-      uid,
+      uid: productUid,
       label,
       quantityInInventory,
       optimumQuantity,
