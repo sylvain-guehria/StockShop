@@ -793,6 +793,7 @@ export const subcategorieComputerDevices: SubCategory = {
         { value: 'microphone', label: 'Microphone' },
         { value: 'webcam', label: 'Webcam' },
         { value: 'accessory', label: 'Accessoire' },
+        { value: 'network', label: 'Réseaux' },
       ],
     },
   ],
