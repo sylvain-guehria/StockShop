@@ -50,10 +50,6 @@ export const updatePhotoProduct =
     }
 
     if (currentFile) {
-      Object.defineProperty(currentFile, 'name', {
-        writable: true,
-        value: product.getLabel(),
-      });
       storageServiceDi
         .handleUpload({
           folderName: `/images/${userUid}`,
