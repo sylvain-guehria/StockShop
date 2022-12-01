@@ -6,13 +6,11 @@ interface UploadFileInterface {
   folderName: string;
   filename: string;
   uploadedFile: File;
-  callBackAfterDownloadSuccess: (url: string) => void;
 }
 
 interface DeleteFileInterface {
   folderName: string;
   filename: string;
-  callBackAfterDownloadSuccess: () => void;
 }
 
 interface HandleDownload {
@@ -31,63 +29,27 @@ class StorageService {
     folderName,
     filename,
     uploadedFile,
-    callBackAfterDownloadSuccess,
   }: UploadFileInterface): Promise<any> {
     if (!uploadedFile) return '';
     const fullPath = folderName + filename;
 
     const storageRef = this.storageFunctions.ref(storage, fullPath);
-    const uploadTask = this.storageFunctions.uploadBytesResumable(
-      storageRef,
-      uploadedFile
-    );
+    await this.storageFunctions.uploadBytesResumable(storageRef, uploadedFile);
+    const downloadURL = await this.storageFunctions.getDownloadURL(storageRef);
+    return downloadURL;
+  }
 
-    // Listen for state changes, errors, and completion of the upload.
-    return uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(`Upload is ${progress}% done`);
-        switch (snapshot.state) {
-          case 'paused':
-            console.log('Upload is paused');
-            break;
-          case 'running':
-            console.log('Upload is running');
-            break;
-          default:
-            console.log(`Upload is ${snapshot.state}`);
-        }
-      },
-      (error) => {
-        // A full list of error codes is available at
-        // https://firebase.google.com/docs/storage/web/handle-errors
-        switch (error.code) {
-          case 'storage/unauthorized':
-            console.log(`storage/unauthorized error ${error}`);
-            break;
-          case 'storage/canceled':
-            console.log(`storage/canceled error.code ${error.code}`);
-            break;
+  async handleDelete({
+    folderName,
+    filename,
+  }: DeleteFileInterface): Promise<void> {
+    if (!folderName || !filename) return;
 
-          // ...
+    const fullPath = folderName + filename;
 
-          case 'storage/unknown':
-            console.log(`storage/unknown error.code unknown`);
-            break;
-          default:
-            console.log(`Error: ${error.code}`);
-        }
-      },
-      async () => {
-        // Upload completed successfully, now we can get the download URL
-        return this.storageFunctions
-          .getDownloadURL(uploadTask.snapshot.ref)
-          .then((downloadURL) => callBackAfterDownloadSuccess(downloadURL));
-      }
-    );
+    const pathReference = this.storageFunctions.ref(storage, fullPath);
+    // Delete the file
+    await this.storageFunctions.deleteObject(pathReference);
   }
 
   async handleDownload({
@@ -134,27 +96,6 @@ class StorageService {
           default:
             break;
         }
-      });
-  }
-
-  async handleDelete({
-    folderName,
-    filename,
-    callBackAfterDownloadSuccess,
-  }: DeleteFileInterface): Promise<void> {
-    if (!folderName || !filename) return;
-
-    const fullPath = folderName + filename;
-
-    const pathReference = this.storageFunctions.ref(storage, fullPath);
-    // Delete the file
-    this.storageFunctions
-      .deleteObject(pathReference)
-      .then(() => {
-        callBackAfterDownloadSuccess();
-      })
-      .catch((_error) => {
-        // Uh-oh, an error occurred!
       });
   }
 }
