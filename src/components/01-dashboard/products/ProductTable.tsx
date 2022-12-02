@@ -177,7 +177,6 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
             <DynamicEditProductPhotoForm
               productUid={productToEdit.getUid()}
               inventoryUid={productToEdit.getInventoryUid()}
-              handleCloseModal={handleCloseModal}
             />
           )}
         </DynamicModal>

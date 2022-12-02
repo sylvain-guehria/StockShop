@@ -1,10 +1,11 @@
 'use client';
 
+import { PlusCircleIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import dynamic from 'next/dynamic';
 import type { ChangeEvent, FC } from 'react';
 import { createRef, useState } from 'react';
-import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
@@ -17,10 +18,16 @@ import { updatePhotoProductUseCase } from '@/usecases/usecases';
 import { productRepository } from '../../../../../di';
 import { validationSchema } from './EditProductFormValidation';
 
+const DynamicDeleteModal = dynamic(
+  () => import('../../../04-lib/modal/DeleteModal'),
+  {
+    suspense: true,
+  }
+);
+
 type Props = {
   productUid: string;
   inventoryUid: string;
-  handleCloseModal: () => void;
 };
 
 interface PhotoAttributesType {
@@ -28,16 +35,11 @@ interface PhotoAttributesType {
   type: string;
 }
 
-const EditProductPhotoForm: FC<Props> = ({
-  productUid,
-  inventoryUid,
-  handleCloseModal,
-}) => {
+const EditProductPhotoForm: FC<Props> = ({ productUid, inventoryUid }) => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const toast = useToast(5000);
-  const [currentFile, setCurrentFile] = useState<File | null>(null);
-  const [imagePreviewUrl, setImagePreviewUrl] = useState<string>('');
+  const [isDeletePhotoModalOpen, setIsDeletePhotoModalOpen] = useState(false);
 
   const { data: product } = useQuery({
     queryKey: ['get-product', { productUid }],
@@ -59,7 +61,6 @@ const EditProductPhotoForm: FC<Props> = ({
 
   const {
     register,
-    handleSubmit,
     setValue,
     trigger,
     formState: { errors },
@@ -68,37 +69,19 @@ const EditProductPhotoForm: FC<Props> = ({
   register('size');
   register('type');
 
-  const onSubmit: SubmitHandler<PhotoAttributesType> = async () => {
+  const submitFile = async (file: File) => {
     if (!product) return;
     try {
       await updatePhotoProductUseCase({
         userUid: user.getUid(),
         companyUid: user.getCompanyUid(),
         product,
-        currentFile: currentFile as File,
+        currentFile: file as File,
       });
       queryClient.invalidateQueries({ queryKey: ['get-product'] });
-      handleCloseModal();
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);
     }
-  };
-
-  const handleFileChange = (newFile: File): void => {
-    if (!newFile) {
-      setValue('size', 0);
-      setValue('type', '');
-    } else {
-      setValue('size', newFile.size);
-      setValue('type', newFile.type);
-      const isValid = trigger(['size', 'type']);
-      if (!isValid) {
-        setCurrentFile(null);
-        setImagePreviewUrl('');
-        return;
-      }
-    }
-    setCurrentFile(newFile);
   };
 
   const handleImageChange = (e: ChangeEvent): void => {
@@ -106,41 +89,58 @@ const EditProductPhotoForm: FC<Props> = ({
     const reader = new FileReader();
     const target = e.target as HTMLInputElement;
     const localFile: File = (target.files as FileList)[0] as File;
-    reader.onloadend = () => {
-      setCurrentFile(localFile);
-      setImagePreviewUrl(reader.result as string);
+    if (!localFile) return;
+    reader.onloadend = async () => {
+      setValue('size', localFile.size);
+      setValue('type', localFile.type);
+      const isValid = await trigger(['size', 'type']);
+      if (isValid) submitFile(localFile);
     };
     reader.readAsDataURL(localFile);
-    handleFileChange(localFile);
   };
 
   const handleClick = (): void => {
     fileInput?.current?.click();
   };
 
-  const handleRemove = (): void => {
-    setCurrentFile(null);
-    setImagePreviewUrl('');
+  const removePhoto = (): void => {
+    setIsDeletePhotoModalOpen(false);
     if (fileInput != null && fileInput.current != null) {
       fileInput.current.value = '';
     }
+    submitFile(null as unknown as File);
+  };
+
+  const handleDeletePhoto = (): void => {
+    setIsDeletePhotoModalOpen(true);
   };
 
   return (
     <div>
+      {isDeletePhotoModalOpen && (
+        <DynamicDeleteModal
+          open={isDeletePhotoModalOpen}
+          cancelLabel="Annuler"
+          confirmLabel="Supprimer"
+          title="Supprimer la photo"
+          description="Êtes-vous sûr de vouloir supprimer le produit cette photo"
+          onConfirm={removePhoto}
+          handleCloseModal={() => setIsDeletePhotoModalOpen(false)}
+        />
+      )}
       <div className="flex justify-center">
         <h3 className="text-lg font-medium leading-6 text-gray-900">
           Visuel du produit
         </h3>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form>
         <div className="mt-6 sm:col-span-6">
           <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
             <div className="space-y-1 text-center">
               <div className="mb-3">
-                {imagePreviewUrl ? (
+                {product?.getPhotoLink() ? (
                   <NextImage
-                    src={imagePreviewUrl}
+                    src={product?.getPhotoLink()}
                     alt="current product photo"
                     width={200}
                     height={200}
@@ -173,18 +173,7 @@ const EditProductPhotoForm: FC<Props> = ({
                   className="sr-only"
                   onChange={handleImageChange}
                 />
-                <div className="text-sm text-gray-600">
-                  <LinkButton type="button" onClick={() => handleClick()}>
-                    {imagePreviewUrl ? 'Changer' : 'Ajouter'}
-                  </LinkButton>
-                  {imagePreviewUrl && (
-                    <LinkButton type="button" onClick={() => handleRemove()}>
-                      Supprimer
-                    </LinkButton>
-                  )}
-                </div>
               </div>
-              <p className="text-xs text-gray-500">PNG, JPG, JPEG max 2MB</p>
               {errors.size?.message && (
                 <p className="text-sm text-red-600" id="inventoryName-error">
                   {errors.size?.message}
@@ -198,10 +187,29 @@ const EditProductPhotoForm: FC<Props> = ({
             </div>
           </div>
         </div>
-        <div>
-          <LinkButton type="submit" style="tertiary">
-            Sauvegarder
-          </LinkButton>
+        <p className="text-xs text-gray-500">PNG, JPG, JPEG max 2MB</p>
+        <div className="mt-4 text-sm text-gray-600">
+          {product?.getPhotoLink() ? (
+            <LinkButton type="button" onClick={() => handleDeletePhoto()}>
+              <div className="flex">
+                <TrashIcon
+                  className="mr-3 h-5 w-5 text-primary-600"
+                  aria-hidden="true"
+                />
+                Supprimer la photo
+              </div>
+            </LinkButton>
+          ) : (
+            <LinkButton type="button" onClick={() => handleClick()}>
+              <div className="flex">
+                <PlusCircleIcon
+                  className="mr-3 h-6 w-5 text-primary-600"
+                  aria-hidden="true"
+                />
+                Ajouter une photo
+              </div>
+            </LinkButton>
+          )}
         </div>
       </form>
     </div>
