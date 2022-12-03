@@ -21,6 +21,9 @@ export const materialOptions = [
 ];
 
 export const styleOptions = [
+  { label: 'Classique', value: 'classic' },
+  { label: 'Elégance - chic', value: 'elegance-chic' },
+  { label: 'Enfant', value: 'child' },
   { label: 'Baroque', value: 'baroque' },
   { label: 'Contemporain', value: 'contemporary' },
   { label: 'Design', value: 'design' },
@@ -28,5 +31,9 @@ export const styleOptions = [
   { label: 'Rétro', value: 'retro' },
   { label: 'Scandinave', value: 'scandinavian' },
   { label: 'Vintage', value: 'vintage' },
+  { label: 'Campagne', value: 'country' },
+  { label: 'Ethnique - ailleurs', value: 'ethnic' },
+  { label: 'Exotique', value: 'exotic' },
+  { label: 'Futuriste', value: 'futuristic' },
   { label: 'Autre', value: 'other' },
 ];
