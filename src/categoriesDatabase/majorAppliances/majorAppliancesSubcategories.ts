@@ -1,6 +1,6 @@
 import { AttributeInputTypes } from '@/modules/category/categoryType';
 
-import { depth, height, volume, width } from './reusableOptions';
+import { depth, height, volume, width } from '../reusableInputs';
 
 export const subcategorieCold = {
   uid: 'cold',
