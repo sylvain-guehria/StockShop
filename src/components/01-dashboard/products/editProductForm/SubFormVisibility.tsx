@@ -2,21 +2,25 @@
 
 import { InformationCircleIcon } from '@heroicons/react/20/solid';
 import type { FC } from 'react';
+import type {
+  FieldErrorsImpl,
+  UseFormRegister,
+  UseFormWatch,
+} from 'react-hook-form';
 
 import InputRadio from '@/components/04-lib/inputs/InputRadio';
 import InputTextArea from '@/components/04-lib/inputs/InputTextArea';
-import type ProductEntity from '@/modules/product/ProductEntity';
 import { ProductAttributes } from '@/modules/product/productType';
 
+import type { EditProductFormType } from './EditProductForm';
+
 type Props = {
-  product: ProductEntity;
-  register: any;
-  errors: any;
+  register: UseFormRegister<EditProductFormType>;
+  watch: UseFormWatch<EditProductFormType>;
+  errors: Partial<FieldErrorsImpl<EditProductFormType>>;
 };
 
-const SubFormVisibility: FC<Props> = ({ product, register, errors }) => {
-  // eslint-disable-next-line no-console
-  console.log('SubFormVisibility product', product);
+const SubFormVisibility: FC<Props> = ({ register, errors }) => {
   return (
     <>
       <div className="flex justify-center">

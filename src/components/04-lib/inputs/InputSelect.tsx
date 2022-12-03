@@ -11,6 +11,7 @@ type Props = {
   name: string;
   register?: any;
   disabled?: boolean;
+  value?: string;
 };
 
 const InputSelect: FC<Props> = ({

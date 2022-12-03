@@ -4,6 +4,8 @@ import {
   inventoryRepository,
   inventoryServiceDi,
   productRepository,
+  productServiceDi,
+  storageServiceDi,
   userRepository,
 } from 'di';
 
@@ -17,6 +19,7 @@ import { getUserInventories } from './inventoy/getUserInventories';
 import { setInventoryAsDefault } from './inventoy/setInventoryAsDefault';
 import { deleteProduct } from './product/deleteProduct';
 import { getInventoryProducts } from './product/getInventoryProducts';
+import { updatePhotoProduct } from './product/updatePhotoProduct';
 import { updateUser } from './user/updateUser';
 
 // AUTH
@@ -42,6 +45,10 @@ export const setInventoryAsDefaultUseCase =
 export const getInventoryProductsUseCase =
   getInventoryProducts(productRepository);
 export const deleteProductUseCase = deleteProduct(productRepository);
+export const updatePhotoProductUseCase = updatePhotoProduct(
+  productServiceDi,
+  storageServiceDi
+);
 
 // USER
 export const updateUserUseCase = updateUser(userRepository);

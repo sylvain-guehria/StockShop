@@ -1,6 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useQueryClient } from '@tanstack/react-query';
 import type { FC } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -11,6 +12,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { UpdateProductParams } from '@/modules/product/productService';
+import type { ConditionTypeEnum } from '@/modules/product/productType';
 import { ProductAttributes } from '@/modules/product/productType';
 
 import { validationSchema } from './EditProductFormValidation';
@@ -29,6 +31,8 @@ export interface EditProductFormType {
   [ProductAttributes.IS_PUBLIC]?: boolean;
   [ProductAttributes.TVA]?: number;
   [ProductAttributes.PUBLIC_DISPONIBILITY]?: string;
+  [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]?: Record<string, any>;
+  [ProductAttributes.CONDITION]?: ConditionTypeEnum;
 }
 
 type Props = {
@@ -44,6 +48,8 @@ const EditProductForm: FC<Props> = ({
 }) => {
   const toast = useToast(10000);
   const { user } = useAuth();
+  const queryClient = useQueryClient();
+
   const formOptions = {
     resolver: yupResolver(validationSchema),
     defaultValues: {
@@ -52,12 +58,14 @@ const EditProductForm: FC<Props> = ({
       [ProductAttributes.OPTIMUM_QUANTITY]: product.optimumQuantity,
       [ProductAttributes.BUYING_PRICE]: product.buyingPrice,
       [ProductAttributes.SELLING_PRICE]: product.sellingPrice,
-      [ProductAttributes.DESCRIPTION]: product.description,
+      [ProductAttributes.TVA]: product.tva,
       [ProductAttributes.CATEGORY_UID]: product.categoryUid,
       [ProductAttributes.SUB_CATEGORY_UID]: product.subCategoryUid,
       [ProductAttributes.IS_PUBLIC]: product.isPublic,
-      [ProductAttributes.TVA]: product.tva,
+      [ProductAttributes.DESCRIPTION]: product.description,
       [ProductAttributes.PUBLIC_DISPONIBILITY]: product.publicDisponibility,
+      [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]: product.catSubcatAttributes,
+      [ProductAttributes.CONDITION]: product.condition,
     },
   };
 
@@ -65,6 +73,8 @@ const EditProductForm: FC<Props> = ({
     register,
     handleSubmit,
     watch,
+    setValue,
+    getValues,
     formState: { errors },
   } = useForm<EditProductFormType>(formOptions);
 
@@ -72,7 +82,7 @@ const EditProductForm: FC<Props> = ({
     data: EditProductFormType
   ) => {
     try {
-      onSubmitEditForm({
+      await onSubmitEditForm({
         product: {
           ...product,
           ...data,
@@ -80,6 +90,7 @@ const EditProductForm: FC<Props> = ({
         userUid: user.getUid(),
         companyUid: user.getCompanyUid(),
       });
+      queryClient.invalidateQueries({ queryKey: ['get-product'] });
     } catch (e: any) {
       toast(ToasterTypeEnum.ERROR, e.message);
     }
@@ -94,9 +105,11 @@ const EditProductForm: FC<Props> = ({
 
         <div className="mt-5 lg:mt-0 lg:w-1/2 lg:pl-4">
           <SubFormCategory
-            product={product}
             register={register}
-            errors={errors}
+            watch={watch}
+            product={product}
+            setValue={setValue}
+            getValues={getValues}
           />
         </div>
 
@@ -107,8 +120,8 @@ const EditProductForm: FC<Props> = ({
             product={product}
             register={register}
             errors={errors}
-          />{' '}
-        </div> */}
+          />
+          </div> */}
       </div>
 
       <div className="pt-6">

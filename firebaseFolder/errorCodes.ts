@@ -10,6 +10,18 @@ export enum AuthFirebaseErrorCodes {
   SessionCookieRevoked = 'auth/session-cookie-revoked',
 }
 
+export enum StorageFirebaseErrorCodes {
+  ObjectNotFound = 'storage/object-not-found',
+  Unauthorized = 'storage/unauthorized',
+  Canceled = 'storage/canceled',
+  Unknown = 'storage/unknown',
+  fileWrongSize = 'storage/server-file-wrong-size',
+}
+
+export enum CustomFirebaseErrorCodes {
+  imageFileWrongType = 'storage/server-image-file-wrong-type',
+}
+
 export class FirebaseAuthenticationError extends Error {
   errorCode;
 
@@ -25,13 +37,47 @@ export class FirebaseAuthenticationError extends Error {
         this.message = 'Cet email est déjà utilisé';
         break;
       case AuthFirebaseErrorCodes.InvalidEmail:
-        this.message = 'invalid-email';
+        this.message = 'Email invalide';
         break;
       case AuthFirebaseErrorCodes.UserNotFound:
-        this.message = 'user-not-found';
+        this.message = 'Utilisateur non trouvé';
         break;
       case AuthFirebaseErrorCodes.WrongPassword:
-        this.message = 'wrong-password';
+        this.message = 'Mot de passe incorrect';
+        break;
+      case AuthFirebaseErrorCodes.TokenExpired:
+        this.message = 'Token expiré';
+        break;
+      case AuthFirebaseErrorCodes.UserDisabled:
+        this.message = 'Utilisateur désactivé';
+        break;
+      case AuthFirebaseErrorCodes.OperationNotAllowed:
+        this.message = 'Opération non autorisée';
+        break;
+      case AuthFirebaseErrorCodes.WeakPassword:
+        this.message = 'Mot de passe trop faible';
+        break;
+      case AuthFirebaseErrorCodes.SessionCookieRevoked:
+        this.message = 'Session cookie révoquée';
+        break;
+      case StorageFirebaseErrorCodes.Canceled:
+        this.message = 'Opération annulée';
+        break;
+      case StorageFirebaseErrorCodes.ObjectNotFound:
+        this.message = 'Fichier non trouvé';
+        break;
+      case StorageFirebaseErrorCodes.Unauthorized:
+        this.message = 'Opération non autorisée';
+        break;
+      case StorageFirebaseErrorCodes.Unknown:
+        this.message = 'Erreur inconnue';
+        break;
+      case StorageFirebaseErrorCodes.fileWrongSize:
+        this.message = 'Fichier trop volumineux';
+        break;
+      case CustomFirebaseErrorCodes.imageFileWrongType:
+        this.message =
+          'Fichier image invalide. Formats acceptés: jpg, jpeg, png';
         break;
       default:
         this.message = message;

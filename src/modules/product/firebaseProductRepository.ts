@@ -6,6 +6,7 @@ import ProductEntity from './ProductEntity';
 import type {
   AddProduct,
   DeleteProduct,
+  GetProduct,
   UpdateProduct,
 } from './productRepository';
 import { ProductRepository } from './productRepository';
@@ -13,9 +14,23 @@ import { ProductRepository } from './productRepository';
 class FirebaseProductRepository extends ProductRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 
-  async getById(uid: string): Promise<ProductEntity> {
-    console.info('get product in db with uid: ', uid);
-    const response = await axios.get(`${this.baseUrl}/api/product/${uid}`);
+  async getById({
+    productUid,
+    userUid,
+    companyUid,
+    inventoryUid,
+  }: GetProduct): Promise<ProductEntity> {
+    console.info('get product in db with uid: ', productUid);
+    const response = await axios.get(
+      `${this.baseUrl}/api/product/${productUid}`,
+      {
+        params: {
+          userUid,
+          companyUid,
+          inventoryUid,
+        },
+      }
+    );
     const {
       label,
       quantityInInventory,
@@ -29,11 +44,13 @@ class FirebaseProductRepository extends ProductRepository {
       categoryUid,
       subCategoryUid,
       publicDisponibility,
-      inventoryUid,
+      catSubcatAttributes,
+      condition,
+      photoLink,
     } = response.data;
 
     return ProductEntity.new({
-      uid,
+      uid: productUid,
       label,
       quantityInInventory,
       optimumQuantity,
@@ -47,6 +64,9 @@ class FirebaseProductRepository extends ProductRepository {
       subCategoryUid,
       publicDisponibility,
       inventoryUid,
+      catSubcatAttributes,
+      condition,
+      photoLink,
     });
   }
 
@@ -103,19 +123,24 @@ class FirebaseProductRepository extends ProductRepository {
         userUid,
         companyUid,
         inventoryUid: product.getInventoryUid(),
-        uid: product.getUid(),
-        label: product.getLabel(),
-        quantityInInventory: product.getQuantityInInventory(),
-        optimumQuantity: product.getOptimumQuantity(),
-        buyingPrice: product.getBuyingPrice(),
-        sellingPrice: product.getSellingPrice(),
-        description: product.getDescription(),
-        toBuy: product.getToBuy(),
-        isPublic: product.getIsPublic(),
-        tva: product.getTva(),
-        categoryUid: product.getCategoryUid(),
-        subCategoryUid: product.getSubCategoryUid(),
-        publicDisponibility: product.getPublicDisponibility(),
+        product: {
+          uid: product.getUid(),
+          label: product.getLabel(),
+          quantityInInventory: product.getQuantityInInventory(),
+          optimumQuantity: product.getOptimumQuantity(),
+          buyingPrice: product.getBuyingPrice(),
+          sellingPrice: product.getSellingPrice(),
+          description: product.getDescription(),
+          toBuy: product.getToBuy(),
+          isPublic: product.getIsPublic(),
+          tva: product.getTva(),
+          categoryUid: product.getCategoryUid(),
+          subCategoryUid: product.getSubCategoryUid(),
+          publicDisponibility: product.getPublicDisponibility(),
+          catSubcatAttributes: product.getCatSubcatAttributes(),
+          condition: product.getCondition(),
+          photoLink: product.getPhotoLink(),
+        },
       }
     );
     return ProductEntity.new({
@@ -133,6 +158,9 @@ class FirebaseProductRepository extends ProductRepository {
       subCategoryUid: data.subCategoryUid,
       publicDisponibility: data.publicDisponibility,
       inventoryUid: data.inventoryUid,
+      catSubcatAttributes: data.catSubcatAttributes,
+      condition: data.condition,
+      photoLink: data.photoLink,
     });
   }
 
@@ -171,6 +199,9 @@ class FirebaseProductRepository extends ProductRepository {
           subCategoryUid: product.subCategoryUid,
           publicDisponibility: product.publicDisponibility,
           inventoryUid: product.inventoryUid,
+          catSubcatAttributes: product.catSubcatAttributes,
+          condition: product.condition,
+          photoLink: product.photoLink,
         })
     );
   }

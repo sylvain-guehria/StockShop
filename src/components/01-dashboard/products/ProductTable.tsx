@@ -1,7 +1,8 @@
-import { EyeIcon } from '@heroicons/react/20/solid';
 import {
   CheckCircleIcon,
+  MagnifyingGlassIcon,
   PencilSquareIcon,
+  PhotoIcon,
   PlusCircleIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
@@ -35,12 +36,23 @@ const DynamicDeleteModal = dynamic(
   }
 );
 
-const DynamicEditInventoryForm = dynamic(
+const DynamicEditProductForm = dynamic(
   () => import('./editProductForm/EditProductForm'),
   {
     suspense: true,
   }
 );
+
+const DynamicEditProductPhotoForm = dynamic(
+  () => import('./editPhotoForm/EditProductPhotoForm'),
+  {
+    suspense: true,
+  }
+);
+
+const DynamicProductView = dynamic(() => import('./ProductView'), {
+  suspense: true,
+});
 
 type Props = {
   currentInventoryUid: string;
@@ -52,6 +64,9 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
   const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
   const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] =
     useState(false);
+  const [isEditPhotoModalOpen, setIsEditPhotoModalOpen] = useState(false);
+  const [isViewProductModalOpen, setIsViewProductModalOpen] = useState(false);
+
   const [productToEdit, setProductToEdit] = useState<ProductEntity | null>(
     null
   );
@@ -96,12 +111,24 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
   const handleCloseModal = () => {
     setIsEditProductModalOpen(false);
     setIsDeleteProductModalOpen(false);
+    setIsEditPhotoModalOpen(false);
+    setIsViewProductModalOpen(false);
     setProductToEdit(null);
   };
 
   const handleDeleteProductClick = (product: ProductEntity) => {
     setProductToEdit(product);
     setIsDeleteProductModalOpen(true);
+  };
+
+  const handleImageProductClick = (product: ProductEntity) => {
+    setProductToEdit(product);
+    setIsEditPhotoModalOpen(true);
+  };
+
+  const handleViewProductClick = (product: ProductEntity) => {
+    setProductToEdit(product);
+    setIsViewProductModalOpen(true);
   };
 
   return (
@@ -113,7 +140,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
           mawWidth="sm:max-w-7xl"
           width="w-full"
         >
-          <DynamicEditInventoryForm
+          <DynamicEditProductForm
             product={productToEdit as unknown as ProductEntity}
             handleCloseModal={handleCloseModal}
             onSubmitEditForm={updateProductMutation.mutate}
@@ -138,6 +165,36 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
             }) as unknown as () => void
           }
         />
+      )}
+      {isEditPhotoModalOpen && (
+        <DynamicModal
+          open={isEditPhotoModalOpen}
+          handleCloseModal={handleCloseModal}
+          mawWidth="sm:max-w-xl"
+          width="w-full"
+        >
+          {productToEdit && (
+            <DynamicEditProductPhotoForm
+              productUid={productToEdit.getUid()}
+              inventoryUid={productToEdit.getInventoryUid()}
+            />
+          )}
+        </DynamicModal>
+      )}
+      {isViewProductModalOpen && (
+        <DynamicModal
+          open={isViewProductModalOpen}
+          handleCloseModal={handleCloseModal}
+          mawWidth="sm:max-w-7xl"
+          width="w-full"
+        >
+          {productToEdit && (
+            <DynamicProductView
+              productUid={productToEdit.getUid()}
+              inventoryUid={productToEdit.getInventoryUid()}
+            />
+          )}
+        </DynamicModal>
       )}
       <div className="mt-8 flex flex-col">
         <div className="overflow-x-auto rounded-lg shadow ring-1 ring-black/5">
@@ -189,8 +246,9 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                         <div
                           className="tooltip tooltip-right mr-3 cursor-pointer"
                           data-tip="Voir le produit"
+                          onClick={() => handleViewProductClick(product)}
                         >
-                          <EyeIcon
+                          <MagnifyingGlassIcon
                             className="h-5 w-5 shrink-0 text-primary-600"
                             aria-hidden="true"
                           />
@@ -232,10 +290,15 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                     </td>
                     <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
                       {product.toBuy > 0 ? (
-                        <CheckCircleIcon
-                          className="ml-3 h-5 w-5 shrink-0 text-green-600"
-                          aria-hidden="true"
-                        />
+                        <div
+                          className="tooltip tooltip-left"
+                          data-tip="Présent dans votre liste des produits à acheter."
+                        >
+                          <CheckCircleIcon
+                            className="ml-3 h-5 w-5 shrink-0 text-green-600"
+                            aria-hidden="true"
+                          />
+                        </div>
                       ) : (
                         <div className="flex">
                           0
@@ -290,6 +353,19 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                         />
                         <span className="sr-only">
                           Supprimer {product.label}
+                        </span>
+                      </div>
+                      <div
+                        className="tooltip tooltip-left cursor-pointer"
+                        data-tip="Voir ou changer la photo"
+                      >
+                        <PhotoIcon
+                          className="ml-3 h-5 w-5 shrink-0 text-primary-600"
+                          aria-hidden="true"
+                          onClick={() => handleImageProductClick(product)}
+                        />
+                        <span className="sr-only">
+                          Changer la photo {product.label}
                         </span>
                       </div>
                     </td>

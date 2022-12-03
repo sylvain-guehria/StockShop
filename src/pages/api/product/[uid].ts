@@ -5,46 +5,45 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 const { USERS, COMPANIES, INVENTORIES, PRODUCTS } = TableNames;
 
 const productByUid = async (req: NextApiRequest, res: NextApiResponse) => {
-  const {
-    query: { uid },
-    method,
-  } = req;
+  const { query, method, body } = req;
 
-  const { userUid, companyUid, inventoryUid } = req.body;
+  const { uid } = query;
 
-  const product = {
-    uid: req.body.uid,
-    label: req.body.label,
-    description: req.body.description,
-    quantityInInventory: req.body.quantityInInventory,
-    optimumQuantity: req.body.optimumQuantity,
-    buyingPrice: req.body.buyingPrice,
-    sellingPrice: req.body.sellingPrice,
-    tva: req.body.tva,
-    categoryUid: req.body.categoryUid,
-    subCategoryUid: req.body.subCategoryUid,
-    publicDisponibility: req.body.publicDisponibility,
-    isPublic: req.body.isPublic,
-    toBuy: req.body.toBuy,
-  };
+  let userUid;
+  let companyUid;
+  let inventoryUid;
+  let product;
+
+  if (method === 'GET') {
+    userUid = query.userUid;
+    companyUid = query.companyUid;
+    inventoryUid = query.inventoryUid;
+  }
+
+  if (method === 'PUT') {
+    userUid = body.userUid;
+    companyUid = body.companyUid;
+    inventoryUid = body.inventoryUid;
+    product = body.product;
+  }
 
   if (!uid) {
-    res.status(400).end('Product uid is mandatory to update a product');
+    res.status(400).end('Product uid is mandatory to get or update a product');
     return;
   }
 
   if (!userUid) {
-    res.status(400).end('userUid is mandatory to update a product');
+    res.status(400).end('userUid is mandatory to get or update a product');
     return;
   }
 
   if (!companyUid) {
-    res.status(400).end('companyUid is mandatory to update a product');
+    res.status(400).end('companyUid is mandatory to get or update a product');
     return;
   }
 
   if (!inventoryUid) {
-    res.status(400).end('inventoryUid is mandatory to update a product');
+    res.status(400).end('inventoryUid is mandatory to get or update a product');
     return;
   }
 
@@ -84,7 +83,7 @@ const productByUid = async (req: NextApiRequest, res: NextApiResponse) => {
           return;
         }
         productDoc.update(product);
-        res.status(200).end();
+        res.status(200).json(product);
         return;
       default:
         res.setHeader('Allow', ['GET', 'PUT']);

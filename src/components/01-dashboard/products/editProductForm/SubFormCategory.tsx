@@ -1,7 +1,13 @@
 'use client';
 
 import type { FC } from 'react';
-import type { FieldErrorsImpl, UseFormRegister } from 'react-hook-form';
+import { useEffect } from 'react';
+import type {
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from 'react-hook-form';
 
 import Input from '@/components/04-lib/inputs/Input';
 import InputSelect from '@/components/04-lib/inputs/InputSelect';
@@ -12,23 +18,54 @@ import {
   getSubCategoryInputsFromDatabase,
 } from '@/modules/category/categoryUtils';
 import type ProductEntity from '@/modules/product/ProductEntity';
+import { ProductAttributes } from '@/modules/product/productType';
 
 import type { EditProductFormType } from './EditProductForm';
 
 type Props = {
-  product: ProductEntity;
   register: UseFormRegister<EditProductFormType>;
-  errors?: Partial<FieldErrorsImpl<EditProductFormType>>;
+  watch: UseFormWatch<EditProductFormType>;
+  product: ProductEntity;
+  setValue: UseFormSetValue<EditProductFormType>;
+  getValues: UseFormGetValues<EditProductFormType>;
 };
 
-const SubFormCategory: FC<Props> = ({ product, register }) => {
-  const categoryInputs = getCategoryInputFromDatabase(product.getCategoryUid());
+const SubFormCategory: FC<Props> = ({
+  register,
+  watch,
+  setValue,
+  product,
+  getValues,
+}) => {
+  const currentCategoryUid = watch(ProductAttributes.CATEGORY_UID);
+  const currentSubCategoryUid = watch(ProductAttributes.SUB_CATEGORY_UID);
+
+  const categoryInputs = getCategoryInputFromDatabase(
+    currentCategoryUid as string
+  );
   const subCategoryInputs = getSubCategoryInputsFromDatabase(
-    product.getCategoryUid(),
-    product.getSubCategoryUid()
+    currentCategoryUid as string,
+    currentSubCategoryUid as string
   );
 
   const allCategoryInputs = [...categoryInputs, ...subCategoryInputs];
+
+  useEffect(() => {
+    const fieldNames = Object.keys(
+      getValues(ProductAttributes.CAT_SUBCAT_ATTRIBUTES) || {}
+    );
+    if (
+      !product.isSameCategory(currentCategoryUid || '') ||
+      !product.isSameSubCategory(currentSubCategoryUid || '')
+    ) {
+      fieldNames.forEach((fieldName) =>
+        setValue(
+          `${ProductAttributes.CAT_SUBCAT_ATTRIBUTES}.${fieldName}`,
+          '' as never
+        )
+      );
+    }
+  }, [currentCategoryUid, currentSubCategoryUid]);
 
   return (
     <>
@@ -54,7 +91,9 @@ const SubFormCategory: FC<Props> = ({ product, register }) => {
                   type={input.inputType as 'text' | 'number'}
                   label={input.label}
                   name={input.uid}
-                  register={register(input.uid as any)}
+                  register={register(
+                    `${ProductAttributes.CAT_SUBCAT_ATTRIBUTES}.${input.uid}`
+                  )}
                 />
               )}
               {isSelectInput && (
@@ -62,7 +101,9 @@ const SubFormCategory: FC<Props> = ({ product, register }) => {
                   label={input.label}
                   options={[{ label: '', value: '' }, ...(input.options || [])]}
                   name={input.uid}
-                  register={register(input.uid as any)}
+                  register={register(
+                    `${ProductAttributes.CAT_SUBCAT_ATTRIBUTES}.${input.uid}`
+                  )}
                   inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               )}

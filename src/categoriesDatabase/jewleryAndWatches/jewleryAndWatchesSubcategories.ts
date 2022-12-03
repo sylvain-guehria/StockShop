@@ -1,6 +1,5 @@
 import { AttributeInputTypes } from '@/modules/category/categoryType';
 
-import { colorOptions, sexOptions } from '../reusableOptions';
 import {
   jewleryMaterial,
   meshType,
@@ -14,32 +13,14 @@ export const subcategorieNeckless = {
   label: 'Colliers',
   inputs: [
     {
-      uid: 'sex',
-      label: 'Sexe',
-      inputType: AttributeInputTypes.SELECT,
-      options: sexOptions,
-    },
-    {
-      uid: 'color',
-      label: 'Couleur',
-      inputType: AttributeInputTypes.SELECT,
-      options: [...colorOptions],
-    },
-    {
-      uid: 'brand',
-      label: 'Marque',
-      inputType: AttributeInputTypes.TEXT,
-    },
-    {
       uid: 'manufacturer',
       label: 'Fabricant',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'material',
-      label: 'Matière principale',
-      inputType: AttributeInputTypes.SELECT,
-      options: jewleryMaterial,
+      uid: 'brand',
+      label: 'Marque',
+      inputType: AttributeInputTypes.TEXT,
     },
     {
       uid: 'titration',
@@ -82,32 +63,14 @@ export const subcategorieRing = {
   label: 'Bagues',
   inputs: [
     {
-      uid: 'sex',
-      label: 'Sexe',
-      inputType: AttributeInputTypes.SELECT,
-      options: sexOptions,
-    },
-    {
-      uid: 'color',
-      label: 'Couleur',
-      inputType: AttributeInputTypes.SELECT,
-      options: [...colorOptions],
-    },
-    {
-      uid: 'brand',
-      label: 'Marque',
-      inputType: AttributeInputTypes.TEXT,
-    },
-    {
       uid: 'manufacturer',
       label: 'Fabricant',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'material',
-      label: 'Matière principale',
-      inputType: AttributeInputTypes.SELECT,
-      options: jewleryMaterial,
+      uid: 'brand',
+      label: 'Marque',
+      inputType: AttributeInputTypes.TEXT,
     },
     {
       uid: 'titration',
@@ -150,32 +113,14 @@ export const subcategorieEaring = {
   label: "Boucles d'oreilles",
   inputs: [
     {
-      uid: 'sex',
-      label: 'Sexe',
-      inputType: AttributeInputTypes.SELECT,
-      options: sexOptions,
-    },
-    {
-      uid: 'color',
-      label: 'Couleur',
-      inputType: AttributeInputTypes.SELECT,
-      options: [...colorOptions],
-    },
-    {
-      uid: 'brand',
-      label: 'Marque',
-      inputType: AttributeInputTypes.TEXT,
-    },
-    {
       uid: 'manufacturer',
       label: 'Fabricant',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'material',
-      label: 'Matière principale',
-      inputType: AttributeInputTypes.SELECT,
-      options: jewleryMaterial,
+      uid: 'brand',
+      label: 'Marque',
+      inputType: AttributeInputTypes.TEXT,
     },
     {
       uid: 'titration',
@@ -222,32 +167,14 @@ export const subcategorieBracelet = {
   label: 'Bracelets',
   inputs: [
     {
-      uid: 'sex',
-      label: 'Sexe',
-      inputType: AttributeInputTypes.SELECT,
-      options: sexOptions,
-    },
-    {
-      uid: 'color',
-      label: 'Couleur',
-      inputType: AttributeInputTypes.SELECT,
-      options: [...colorOptions],
-    },
-    {
-      uid: 'brand',
-      label: 'Marque',
-      inputType: AttributeInputTypes.TEXT,
-    },
-    {
       uid: 'manufacturer',
       label: 'Fabricant',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'material',
-      label: 'Matière principale',
-      inputType: AttributeInputTypes.SELECT,
-      options: jewleryMaterial,
+      uid: 'brand',
+      label: 'Marque',
+      inputType: AttributeInputTypes.TEXT,
     },
     {
       uid: 'titration',
@@ -290,23 +217,6 @@ export const subcategorieWatches = {
   label: 'Montres',
   inputs: [
     {
-      uid: 'sex',
-      label: 'Sexe',
-      inputType: AttributeInputTypes.SELECT,
-      options: sexOptions,
-    },
-    {
-      uid: 'color',
-      label: 'Couleur',
-      inputType: AttributeInputTypes.SELECT,
-      options: [...colorOptions],
-    },
-    {
-      uid: 'brand',
-      label: 'Marque',
-      inputType: AttributeInputTypes.TEXT,
-    },
-    {
       uid: 'mecanisme',
       label: 'Mécanisme',
       inputType: AttributeInputTypes.SELECT,
@@ -316,6 +226,51 @@ export const subcategorieWatches = {
         { label: 'Solaire', value: 'solaire' },
         { label: 'Hybride', value: 'hybride' },
         { label: 'Kinétique', value: 'kinetique' },
+        { label: 'Autre', value: 'autre' },
+      ],
+    },
+    {
+      uid: 'brand',
+      label: 'Marque',
+      inputType: AttributeInputTypes.SELECT,
+      options: [
+        { label: 'Rolex', value: 'rolex' },
+        { label: 'Omega', value: 'omega' },
+        { label: 'Cartier', value: 'cartier' },
+        { label: 'Breitling', value: 'breitling' },
+        { label: 'Tag Heuer', value: 'tagheuer' },
+        { label: 'Patek Philippe', value: 'patekphilippe' },
+        { label: 'Audemars Piguet', value: 'audemarspiguet' },
+        { label: 'IWC', value: 'iwc' },
+        { label: 'Hublot', value: 'hublot' },
+        { label: 'Chopard', value: 'chopard' },
+        { label: 'Zenith', value: 'zenith' },
+        { label: 'Jaeger-LeCoultre', value: 'jaegerlecoultre' },
+        { label: 'Parmigiani Fleurier', value: 'parmigianifleurier' },
+        { label: 'Breguet', value: 'breguet' },
+        { label: 'Vacheron Constantin', value: 'vacheronconstantin' },
+        { label: 'Blancpain', value: 'blancpain' },
+        { label: 'Ulysse Nardin', value: 'ulysseardin' },
+        { label: 'Richard Mille', value: 'richardmille' },
+        { label: 'Corum', value: 'corum' },
+        { label: 'Girard-Perregaux', value: 'girardperregaux' },
+        { label: 'Tudor', value: 'tudor' },
+        { label: 'Longines', value: 'longines' },
+        { label: 'Montblanc', value: 'montblanc' },
+        { label: 'Rado', value: 'rado' },
+        { label: 'Tissot', value: 'tissot' },
+        { label: 'Bulova', value: 'bulova' },
+        { label: 'Seiko', value: 'seiko' },
+        { label: 'Casio', value: 'casio' },
+        { label: 'Fossil', value: 'fossil' },
+        { label: 'Hamilton', value: 'hamilton' },
+        { label: 'Movado', value: 'movado' },
+        { label: 'Citizen', value: 'citizen' },
+        { label: 'Orient', value: 'orient' },
+        { label: 'Invicta', value: 'invicta' },
+        { label: 'Victorinox', value: 'victorinox' },
+        { label: 'Timex', value: 'timex' },
+        { label: 'Casio', value: 'casio' },
         { label: 'Autre', value: 'autre' },
       ],
     },

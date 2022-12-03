@@ -13,7 +13,22 @@ export enum ProductAttributes {
   SUB_CATEGORY_UID = 'subCategoryUid',
   PUBLIC_DISPONIBILITY = 'publicDisponibility',
   INVENTORY_UID = 'inventoryUid',
+  CAT_SUBCAT_ATTRIBUTES = 'catSubcatAttributes',
+  CONDITION = 'condition',
+  PHOTO_LINK = 'photoLink',
 }
+
+export enum ConditionTypeEnum {
+  NEW = 'new',
+  USED = 'used',
+  REFURBISHED = 'refurbished',
+}
+
+export const ConditionLabels = {
+  [ConditionTypeEnum.NEW]: 'Neuf',
+  [ConditionTypeEnum.USED]: 'Occasion',
+  [ConditionTypeEnum.REFURBISHED]: 'Reconditionné',
+};
 
 export interface Product {
   [ProductAttributes.UID]?: string;
@@ -30,4 +45,7 @@ export interface Product {
   [ProductAttributes.SUB_CATEGORY_UID]?: string;
   [ProductAttributes.PUBLIC_DISPONIBILITY]?: string;
   [ProductAttributes.INVENTORY_UID]?: string;
+  [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]?: Record<string, any>;
+  [ProductAttributes.CONDITION]?: ConditionTypeEnum;
+  [ProductAttributes.PHOTO_LINK]?: string;
 }

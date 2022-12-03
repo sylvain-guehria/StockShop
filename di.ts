@@ -1,3 +1,6 @@
+import { storageFunctions } from 'firebaseFolder/clientApp';
+import StorageService from 'firebaseFolder/storage';
+
 import CompanyService from '@/modules/company/companyService';
 import FirebaseCompanyRepository from '@/modules/company/firebaseCompanyRepository';
 import FirebaseInventoryRepository from '@/modules/inventory/firebaseInventoryRepository';
@@ -15,3 +18,5 @@ export const inventoryRepository = new FirebaseInventoryRepository();
 export const inventoryServiceDi = new InventoryService(inventoryRepository);
 export const productRepository = new FirebaseProductRepository();
 export const productServiceDi = new ProductService(productRepository);
+
+export const storageServiceDi = new StorageService(storageFunctions);
