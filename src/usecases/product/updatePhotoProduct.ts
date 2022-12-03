@@ -26,7 +26,7 @@ export const updatePhotoProduct =
     companyUid,
     product,
     currentFile,
-  }: UpdatePhotoProductInterface): Promise<void> => {
+  }: UpdatePhotoProductInterface): Promise<ProductEntity> => {
     if (!userUid)
       throw new Error('userUid is required to update the photo of the product');
     if (!companyUid)
@@ -49,39 +49,32 @@ export const updatePhotoProduct =
       });
     }
 
-    if (currentFile) {
-      storageServiceDi
-        .handleUpload({
+    try {
+      if (currentFile) {
+        const downloadURL = await storageServiceDi.handleUpload({
           folderName: `/images/${userUid}`,
           filename: `/${product.getUid()}`,
           uploadedFile: currentFile,
-        })
-        .then(async (downloadURL) => {
-          await productServiceDi.updateProduct({
-            product: product.setPhotoLink(downloadURL),
-            userUid,
-            companyUid,
-          });
-        })
-        .catch((error) => {
-          throw new FirebaseAuthenticationError(error);
         });
-      return;
-    }
 
-    await storageServiceDi
-      .handleDelete({
-        folderName: `/images/${userUid}`,
-        filename: `/${product.getUid()}`,
-      })
-      .then(async () => {
-        await productServiceDi.updateProduct({
-          product: product.setPhotoLink(''),
+        return await productServiceDi.updateProduct({
+          product: product.setPhotoLink(downloadURL),
           userUid,
           companyUid,
         });
-      })
-      .catch((error) => {
-        throw new FirebaseAuthenticationError(error);
+      }
+
+      await storageServiceDi.handleDelete({
+        folderName: `/images/${userUid}`,
+        filename: `/${product.getUid()}`,
       });
+
+      return await productServiceDi.updateProduct({
+        product: product.setPhotoLink(''),
+        userUid,
+        companyUid,
+      });
+    } catch (error: any) {
+      throw new FirebaseAuthenticationError(error);
+    }
   };

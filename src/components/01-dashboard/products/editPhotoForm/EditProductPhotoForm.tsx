@@ -41,7 +41,7 @@ const EditProductPhotoForm: FC<Props> = ({ productUid, inventoryUid }) => {
   const toast = useToast(5000);
   const [isDeletePhotoModalOpen, setIsDeletePhotoModalOpen] = useState(false);
 
-  const { data: product } = useQuery({
+  const { data: product, refetch } = useQuery({
     queryKey: ['get-product', { productUid }],
     queryFn: () =>
       productRepository.getById({
@@ -79,6 +79,7 @@ const EditProductPhotoForm: FC<Props> = ({ productUid, inventoryUid }) => {
         currentFile: file as File,
       });
       queryClient.invalidateQueries({ queryKey: ['get-product'] });
+      refetch();
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);
     }

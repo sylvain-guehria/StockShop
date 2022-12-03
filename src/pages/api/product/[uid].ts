@@ -83,7 +83,7 @@ const productByUid = async (req: NextApiRequest, res: NextApiResponse) => {
           return;
         }
         productDoc.update(product);
-        res.status(200).end();
+        res.status(200).json(product);
         return;
       default:
         res.setHeader('Allow', ['GET', 'PUT']);
