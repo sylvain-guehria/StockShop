@@ -5,6 +5,7 @@ type GetInventoryProductsParamsType = {
   userUid: string;
   companyUid: string;
   inventoryUid: string;
+  currentPage: number;
 };
 
 export const getInventoryProducts =
@@ -13,6 +14,7 @@ export const getInventoryProducts =
     userUid,
     inventoryUid,
     companyUid,
+    currentPage,
   }: GetInventoryProductsParamsType): Promise<ProductEntity[]> => {
     try {
       if (!userUid) {
@@ -35,6 +37,7 @@ export const getInventoryProducts =
           userUid,
           inventoryUid,
           companyUid,
+          currentPage,
         });
       return products;
     } catch (error: any) {

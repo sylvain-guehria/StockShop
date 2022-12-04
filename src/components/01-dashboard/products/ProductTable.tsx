@@ -75,14 +75,19 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data: products = [], isLoading: isLoadingProducts } = useQuery({
-    queryKey: ['get-products', { inventoryUid: currentInventoryUid }],
+    queryKey: [
+      'get-products',
+      { inventoryUid: currentInventoryUid, currentPage },
+    ],
     queryFn: () =>
       getInventoryProductsUseCase({
         userUid: user.uid,
         inventoryUid: currentInventoryUid,
         companyUid: user.companyUid,
+        currentPage,
       }),
-    enabled: !!(user.uid && currentInventoryUid && user.companyUid),
+    enabled: !!(user.uid && currentInventoryUid && user.companyUid,
+    currentPage),
   });
 
   const updateProductMutation = useMutation({

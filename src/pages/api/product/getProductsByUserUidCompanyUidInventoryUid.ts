@@ -2,6 +2,8 @@ import { firestoreAdmin } from 'firebaseFolder/serverApp';
 import { TableNames } from 'firebaseFolder/tableNames';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+import { ProductAttributes } from '@/modules/product/productType';
+
 const { USERS, COMPANIES, INVENTORIES, PRODUCTS } = TableNames;
 
 const getProductsByUserUidAndInventoryUid = async (
@@ -9,9 +11,11 @@ const getProductsByUserUidAndInventoryUid = async (
   res: NextApiResponse
 ) => {
   const {
-    query: { userUid, inventoryUid, companyUid },
+    query: { userUid, inventoryUid, companyUid, currentPage },
     method,
   } = req;
+
+  const numberOfProductsPerPage = 10;
 
   try {
     if (!userUid) {
@@ -83,6 +87,10 @@ const getProductsByUserUidAndInventoryUid = async (
     //   return;
     // }
 
+    const currentPageNumber = parseInt(currentPage as string, 10);
+    const offset =
+      currentPageNumber * numberOfProductsPerPage - numberOfProductsPerPage;
+
     const productsRef = await firestoreAdmin
       .collection(USERS)
       .doc(userUid as string)
@@ -91,6 +99,9 @@ const getProductsByUserUidAndInventoryUid = async (
       .collection(INVENTORIES)
       .doc(inventoryUid as string)
       .collection(PRODUCTS)
+      .orderBy(ProductAttributes.LABEL)
+      .offset(offset)
+      .limit(numberOfProductsPerPage)
       .get();
 
     if (productsRef.empty) {

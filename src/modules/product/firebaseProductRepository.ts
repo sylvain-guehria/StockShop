@@ -7,6 +7,7 @@ import type {
   AddProduct,
   DeleteProduct,
   GetProduct,
+  GetProductsByUserUidCompanyUidInventoryUid,
   UpdateProduct,
 } from './productRepository';
 import { ProductRepository } from './productRepository';
@@ -168,18 +169,15 @@ class FirebaseProductRepository extends ProductRepository {
     userUid,
     inventoryUid,
     companyUid,
-  }: {
-    userUid: string;
-    inventoryUid: string;
-    companyUid: string;
-  }): Promise<ProductEntity[]> {
+    currentPage,
+  }: GetProductsByUserUidCompanyUidInventoryUid): Promise<ProductEntity[]> {
     console.info(
       'get all products by userUid, companyUid and inventoryUid in db'
     );
     const response = await axios.get(
       `${this.baseUrl}/api/product/getProductsByUserUidCompanyUidInventoryUid`,
       {
-        params: { userUid, companyUid, inventoryUid },
+        params: { userUid, companyUid, inventoryUid, currentPage },
       }
     );
     return response.data.map(

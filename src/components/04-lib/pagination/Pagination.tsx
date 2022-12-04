@@ -35,10 +35,15 @@ const Pagination: FC<Props> = ({
     >
       <div className="hidden sm:block">
         <p className="text-sm text-gray-700">
-          Résultats <span className="font-medium">{currentPage * 10 - 9}</span>{' '}
+          Résultats{' '}
+          <span className="font-medium">
+            {currentPage * numberOfResultsPerPage - 9}
+          </span>{' '}
           à{' '}
           <span className="font-medium">
-            {currentPage * 10 > totalResults ? totalResults : currentPage * 10}
+            {currentPage * 10 > totalResults
+              ? totalResults
+              : currentPage * numberOfResultsPerPage}
           </span>{' '}
           sur <span className="font-medium">{totalResults}</span>
         </p>
@@ -52,7 +57,7 @@ const Pagination: FC<Props> = ({
           <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
         </div>
         <div className="relative ml-3 inline-flex items-center  bg-white px-4 py-2 text-sm font-medium text-gray-700">
-          Page 1 sur 2
+          Page {currentPage} sur {totalPages}
         </div>
         <div
           onClick={handleNextPageClick}
