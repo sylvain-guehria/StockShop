@@ -1,10 +1,12 @@
 'use client';
 
 import { InformationCircleIcon } from '@heroicons/react/20/solid';
+import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
 import { useState } from 'react';
 
+import Dropdown from '@/components/04-lib/dropdown/Dropdown';
 import { useAuth } from '@/hooks/useAuth';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { getUserInventoriesUseCase } from '@/usecases/usecases';
@@ -41,7 +43,7 @@ const Inventories: FC = () => {
       <div className="min-h-full">
         <div className="flex flex-col px-8">
           <main className="flex-1">
-            <div className="border-b border-gray-200 p-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+            <div className="relative border-b border-gray-200 p-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
               <div className="flex min-w-0 flex-1">
                 <h1 className="flex text-lg font-medium leading-6 text-gray-900 sm:truncate">
                   {inventoryManagementRoutes.myInventory.label}
@@ -54,7 +56,24 @@ const Inventories: FC = () => {
                 </div>
               </div>
               <div className="mt-4 flex sm:mt-0 sm:ml-4">
-                <CreateInventoryButton />
+                <Dropdown
+                  label="Ajouter nouveau"
+                  Icon={PlusCircleIcon}
+                  childrens={[
+                    {
+                      key: 'create-inventory',
+                      render: <CreateInventoryButton />,
+                    },
+                    {
+                      key: 'create-product',
+                      render: (
+                        <CreateProductButton
+                          currentInventoryUid={currentInventoryUid}
+                        />
+                      ),
+                    },
+                  ]}
+                />
               </div>
             </div>
             <div className="mt-6 px-4 sm:px-6 lg:px-8">
@@ -79,11 +98,6 @@ const Inventories: FC = () => {
                     <InformationCircleIcon className="ml-3 h-6 w-6 shrink-0 text-primary-400" />
                   </div>
                 </div>
-              </div>
-              <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                <CreateProductButton
-                  currentInventoryUid={currentInventoryUid}
-                />
               </div>
             </div>
             {/* <MobileProductTable /> */}

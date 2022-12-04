@@ -1,11 +1,10 @@
 'use client';
 
-import { PlusCircleIcon } from '@heroicons/react/20/solid';
+import { DocumentPlusIcon } from '@heroicons/react/24/outline';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { productServiceDi } from 'di';
 import type { FC } from 'react';
 
-import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import { useAuth } from '@/hooks/useAuth';
 import type { CreateProductParams } from '@/modules/product/productService';
 
@@ -43,12 +42,13 @@ const CreateProductButton: FC<Props> = ({ currentInventoryUid }) => {
   };
 
   return (
-    <LinkButton onClick={handleClickCreateInventory} style="secondary">
-      <div className="flex">
-        Ajouter un produit
-        <PlusCircleIcon className="ml-3 h-6 w-6 shrink-0 text-primary-100" />
-      </div>
-    </LinkButton>
+    <div
+      onClick={handleClickCreateInventory}
+      className="mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent py-2 px-4 text-base font-medium text-primary-500 "
+    >
+      <DocumentPlusIcon className="mr-3 h-6 w-6 shrink-0 text-primary-500" />
+      Ajouter produit
+    </div>
   );
 };
 
