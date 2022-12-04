@@ -1,7 +1,11 @@
 'use client';
 
 import { InformationCircleIcon } from '@heroicons/react/20/solid';
-import { PlusCircleIcon } from '@heroicons/react/24/outline';
+import {
+  ChevronDownIcon,
+  ChevronRightIcon,
+  PlusCircleIcon,
+} from '@heroicons/react/24/outline';
 import { useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
 import { useState } from 'react';
@@ -19,6 +23,8 @@ import PinnedInventories from './PinnedInventories';
 const Inventories: FC = () => {
   const { user } = useAuth();
   const [currentInventoryUid, setCurrentInventoryUid] = useState('');
+  const [isInventoriesDropdownOpen, setIsInventoriesDropdownOpen] =
+    useState(true);
 
   const { data: inventories = [], isLoading: isLoadingInventory } = useQuery({
     queryKey: ['get-inventories'],
@@ -48,12 +54,28 @@ const Inventories: FC = () => {
                 <h1 className="flex text-lg font-medium leading-6 text-gray-900 sm:truncate">
                   {inventoryManagementRoutes.myInventory.label}
                 </h1>
-                <div
+                {isInventoriesDropdownOpen && (
+                  <div className="tooltip" data-tip="Cacher les inventaires">
+                    <ChevronDownIcon
+                      className="ml-3 h-6 w-6 shrink-0 "
+                      onClick={() => setIsInventoriesDropdownOpen(false)}
+                    />
+                  </div>
+                )}
+                {!isInventoriesDropdownOpen && (
+                  <div className="tooltip" data-tip="Afficher les inventaires">
+                    <ChevronRightIcon
+                      className="ml-3 h-6 w-6 shrink-0 "
+                      onClick={() => setIsInventoriesDropdownOpen(true)}
+                    />
+                  </div>
+                )}
+                {/* <div
                   className="tooltip"
                   data-tip="Prennez un compte premium pro pour gérer jusquà 5 inventaires."
                 >
                   <InformationCircleIcon className="ml-3 h-6 w-6 shrink-0 text-primary-400" />
-                </div>
+                </div> */}
               </div>
               <div className="mt-4 flex sm:mt-0 sm:ml-4">
                 <Dropdown
@@ -77,12 +99,14 @@ const Inventories: FC = () => {
               </div>
             </div>
             <div className="mt-6 px-4 sm:px-6 lg:px-8">
-              <PinnedInventories
-                currentInventoryUid={currentInventoryUid}
-                onSelectInventory={onSelectInventory}
-                inventories={inventories}
-                isLoadingInventory={isLoadingInventory}
-              />
+              {isInventoriesDropdownOpen && (
+                <PinnedInventories
+                  currentInventoryUid={currentInventoryUid}
+                  onSelectInventory={onSelectInventory}
+                  inventories={inventories}
+                  isLoadingInventory={isLoadingInventory}
+                />
+              )}
             </div>
             <div className="mt-10 px-8 sm:flex sm:items-center">
               <div className="sm:flex-auto">
