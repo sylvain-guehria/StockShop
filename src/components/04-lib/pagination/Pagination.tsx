@@ -1,17 +1,19 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import type { FC } from 'react';
-import { useState } from 'react';
 
 type Props = {
   totalResults: number;
   numberOfResultsPerPage: number;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
 };
 
-const ProductPagination: FC<Props> = ({
+const Pagination: FC<Props> = ({
   totalResults = 0,
   numberOfResultsPerPage = 10,
+  currentPage,
+  setCurrentPage,
 }) => {
-  const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(totalResults / numberOfResultsPerPage);
 
   const handleNextPageClick = () => {
@@ -38,7 +40,7 @@ const ProductPagination: FC<Props> = ({
           <span className="font-medium">
             {currentPage * 10 > totalResults ? totalResults : currentPage * 10}
           </span>{' '}
-          sur <span className="font-medium">{totalResults}</span> produits
+          sur <span className="font-medium">{totalResults}</span>
         </p>
       </div>
       <div className="flex flex-1 justify-between sm:justify-end">
@@ -64,4 +66,4 @@ const ProductPagination: FC<Props> = ({
   );
 };
 
-export default ProductPagination;
+export default Pagination;

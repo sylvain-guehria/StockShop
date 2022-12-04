@@ -12,6 +12,7 @@ import dynamic from 'next/dynamic';
 import type { FC } from 'react';
 import { useState } from 'react';
 
+import Pagination from '@/components/04-lib/pagination/Pagination';
 import Spinner from '@/components/04-lib/spinner/Spinner';
 import Tag from '@/components/04-lib/tag/Tag';
 import { useAuth } from '@/hooks/useAuth';
@@ -24,7 +25,6 @@ import {
 } from '@/usecases/usecases';
 
 import Column from './ColumnProduct';
-import ProductPagination from './ProductPagination';
 
 const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
   suspense: true,
@@ -71,6 +71,8 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
   const [productToEdit, setProductToEdit] = useState<ProductEntity | null>(
     null
   );
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { data: products = [], isLoading: isLoadingProducts } = useQuery({
     queryKey: ['get-products', { inventoryUid: currentInventoryUid }],
@@ -376,9 +378,11 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
             </tbody>
           </table>
           {!isLoadingProducts && (
-            <ProductPagination
+            <Pagination
               totalResults={products.length}
               numberOfResultsPerPage={10}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
             />
           )}
 
