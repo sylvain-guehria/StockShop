@@ -48,7 +48,7 @@ const Inventories: FC = () => {
   return (
     <>
       <div className="min-h-full">
-        <div className="flex flex-col px-8">
+        <div className="mb-6 flex flex-col px-8">
           <main className="flex-1">
             <div className="relative border-b border-gray-200 p-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
               <div className="flex min-w-0 flex-1">
