@@ -23,31 +23,33 @@ const getInventoriesByUserUidAndCompanyUid = async (
     return;
   }
 
-  const userRef = await firestoreAdmin
-    .collection(USERS)
-    .doc(userUid as string)
-    .get();
+  // THIS IS AN EXCELLENT CHECKING BUT TO EXPENSIVE do we need it?
 
-  if (!userRef.exists) {
-    // eslint-disable-next-line no-console
-    console.log(`User with uid ${userUid} not found`);
-    res.status(200).end([]);
-    return;
-  }
+  // const userRef = await firestoreAdmin
+  //   .collection(USERS)
+  //   .doc(userUid as string)
+  //   .get();
 
-  const companyRef = await firestoreAdmin
-    .collection(USERS)
-    .doc(userUid as string)
-    .collection(COMPANIES)
-    .doc(companyUid as string)
-    .get();
+  // if (!userRef.exists) {
+  //   // eslint-disable-next-line no-console
+  //   console.log(`User with uid ${userUid} not found`);
+  //   res.status(200).end([]);
+  //   return;
+  // }
 
-  if (!companyRef.exists) {
-    // eslint-disable-next-line no-console
-    console.log(`Company with uid ${companyUid} not found`);
-    res.status(200).end('[]');
-    return;
-  }
+  // const companyRef = await firestoreAdmin
+  //   .collection(USERS)
+  //   .doc(userUid as string)
+  //   .collection(COMPANIES)
+  //   .doc(companyUid as string)
+  //   .get();
+
+  // if (!companyRef.exists) {
+  //   // eslint-disable-next-line no-console
+  //   console.log(`Company with uid ${companyUid} not found`);
+  //   res.status(200).end('[]');
+  //   return;
+  // }
 
   const inventoriesRef = await firestoreAdmin
     .collection(USERS)

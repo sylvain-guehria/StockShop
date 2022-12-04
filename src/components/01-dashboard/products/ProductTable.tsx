@@ -24,6 +24,7 @@ import {
 } from '@/usecases/usecases';
 
 import Column from './ColumnProduct';
+import ProductPagination from './ProductPagination';
 
 const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
   suspense: true,
@@ -196,10 +197,10 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
           )}
         </DynamicModal>
       )}
-      <div className="mt-8 flex flex-col">
+      <div className="mt-8 flex flex-col bg-white">
         <div className="overflow-x-auto rounded-lg shadow ring-1 ring-black/5">
           <table className="min-w-full divide-y divide-gray-300">
-            <thead>
+            <thead className="bg-gray-100">
               <tr className="border-t border-gray-200">
                 <Column label="Label" className="py-3.5 pl-4 pr-3 sm:pl-6" />
                 <Column label="Catégorie" className="px-3 py-3.5" />
@@ -374,6 +375,13 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
               })}
             </tbody>
           </table>
+          {!isLoadingProducts && (
+            <ProductPagination
+              totalResults={products.length}
+              numberOfResultsPerPage={10}
+            />
+          )}
+
           {isLoadingProducts && (
             <div className="my-5">
               <Spinner />

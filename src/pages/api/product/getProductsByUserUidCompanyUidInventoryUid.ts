@@ -35,51 +35,53 @@ const getProductsByUserUidAndInventoryUid = async (
       return;
     }
 
-    const userRef = await firestoreAdmin
-      .collection(USERS)
-      .doc(userUid as string)
-      .get();
+    // THIS IS AN EXCELLENT CHECKING BUT TO EXPENSIVE do we need it?
 
-    if (!userRef.exists) {
-      // eslint-disable-next-line no-console
-      console.log(`User with uid ${userUid} not found`);
-      res.status(200).end('[]');
-      return;
-    }
+    // const userRef = await firestoreAdmin
+    //   .collection(USERS)
+    //   .doc(userUid as string)
+    //   .get();
 
-    const companiesRef = await firestoreAdmin
-      .collection(USERS)
-      .doc(userUid as string)
-      .collection(COMPANIES)
-      .doc(companyUid as string)
-      .get();
+    // if (!userRef.exists) {
+    //   // eslint-disable-next-line no-console
+    //   console.log(`User with uid ${userUid} not found`);
+    //   res.status(200).end('[]');
+    //   return;
+    // }
 
-    if (!companiesRef.exists) {
-      // eslint-disable-next-line no-console
-      console.log(
-        `Company with uid ${companyUid} not found in user ${userUid}`
-      );
-      res.status(200).end('[]');
-      return;
-    }
+    // const companiesRef = await firestoreAdmin
+    //   .collection(USERS)
+    //   .doc(userUid as string)
+    //   .collection(COMPANIES)
+    //   .doc(companyUid as string)
+    //   .get();
 
-    const inventoriesRef = await firestoreAdmin
-      .collection(USERS)
-      .doc(userUid as string)
-      .collection(COMPANIES)
-      .doc(companyUid as string)
-      .collection(INVENTORIES)
-      .doc(inventoryUid as string)
-      .get();
+    // if (!companiesRef.exists) {
+    //   // eslint-disable-next-line no-console
+    //   console.log(
+    //     `Company with uid ${companyUid} not found in user ${userUid}`
+    //   );
+    //   res.status(200).end('[]');
+    //   return;
+    // }
 
-    if (!inventoriesRef.exists) {
-      // eslint-disable-next-line no-console
-      console.log(
-        `Inventory ${inventoryUid}, Company uid ${companyUid}, User uid ${userUid} does not exist`
-      );
-      res.status(200).end('[]');
-      return;
-    }
+    // const inventoriesRef = await firestoreAdmin
+    //   .collection(USERS)
+    //   .doc(userUid as string)
+    //   .collection(COMPANIES)
+    //   .doc(companyUid as string)
+    //   .collection(INVENTORIES)
+    //   .doc(inventoryUid as string)
+    //   .get();
+
+    // if (!inventoriesRef.exists) {
+    //   // eslint-disable-next-line no-console
+    //   console.log(
+    //     `Inventory ${inventoryUid}, Company uid ${companyUid}, User uid ${userUid} does not exist`
+    //   );
+    //   res.status(200).end('[]');
+    //   return;
+    // }
 
     const productsRef = await firestoreAdmin
       .collection(USERS)
@@ -90,6 +92,15 @@ const getProductsByUserUidAndInventoryUid = async (
       .doc(inventoryUid as string)
       .collection(PRODUCTS)
       .get();
+
+    if (productsRef.empty) {
+      // eslint-disable-next-line no-console
+      console.log(
+        `Collection Products in Inventory (${inventoryUid}) in Company (${companyUid}) in User (${userUid}) does not exist or is empty`
+      );
+      res.status(200).end('[]');
+      return;
+    }
 
     switch (method) {
       case 'GET':
