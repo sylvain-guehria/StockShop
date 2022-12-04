@@ -34,19 +34,26 @@ const Pagination: FC<Props> = ({
       aria-label="Pagination"
     >
       <div className="hidden sm:block">
-        <p className="text-sm text-gray-700">
-          Résultats{' '}
-          <span className="font-medium">
-            {currentPage * numberOfResultsPerPage - 9}
-          </span>{' '}
-          à{' '}
-          <span className="font-medium">
-            {currentPage * 10 > totalResults
-              ? totalResults
-              : currentPage * numberOfResultsPerPage}
-          </span>{' '}
-          sur <span className="font-medium">{totalResults}</span>
-        </p>
+        {totalResults > 0 ? (
+          <p className="text-sm text-gray-700">
+            Résultats{' '}
+            <span className="font-medium">
+              {currentPage * numberOfResultsPerPage - 9}
+            </span>{' '}
+            à{' '}
+            <span className="font-medium">
+              {currentPage * 10 > totalResults
+                ? totalResults
+                : currentPage * numberOfResultsPerPage}
+            </span>{' '}
+            sur <span className="font-medium">{totalResults}</span>
+          </p>
+        ) : (
+          <p className="text-sm text-gray-700">
+            {' '}
+            <span className="font-medium">Aucun résultat</span>
+          </p>
+        )}
       </div>
       <div className="flex flex-1 justify-between sm:justify-end">
         <div

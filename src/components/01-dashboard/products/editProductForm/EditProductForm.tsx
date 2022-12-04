@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import type ProductEntity from '@/modules/product/ProductEntity';
@@ -90,7 +91,7 @@ const EditProductForm: FC<Props> = ({
         userUid: user.getUid(),
         companyUid: user.getCompanyUid(),
       });
-      queryClient.invalidateQueries({ queryKey: ['get-product'] });
+      queryClient.invalidateQueries({ queryKey: [ApiRequestEnums.GetProduct] });
     } catch (e: any) {
       toast(ToasterTypeEnum.ERROR, e.message);
     }

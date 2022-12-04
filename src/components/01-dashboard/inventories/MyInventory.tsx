@@ -11,6 +11,7 @@ import type { FC } from 'react';
 import { useState } from 'react';
 
 import Dropdown from '@/components/04-lib/dropdown/Dropdown';
+import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { getUserInventoriesUseCase } from '@/usecases/usecases';
@@ -27,7 +28,7 @@ const Inventories: FC = () => {
     useState(true);
 
   const { data: inventories = [], isLoading: isLoadingInventory } = useQuery({
-    queryKey: ['get-inventories'],
+    queryKey: [ApiRequestEnums.GetInventories],
     queryFn: () => getUserInventoriesUseCase(user.uid),
     enabled: !!user.uid,
     onSuccess: (data) => {

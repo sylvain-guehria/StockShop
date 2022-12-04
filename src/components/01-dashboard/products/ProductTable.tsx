@@ -10,11 +10,13 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { productServiceDi } from 'di';
 import dynamic from 'next/dynamic';
 import type { FC } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Pagination from '@/components/04-lib/pagination/Pagination';
 import Spinner from '@/components/04-lib/spinner/Spinner';
 import Tag from '@/components/04-lib/tag/Tag';
+import { ApiRequestEnums } from '@/enums/apiRequestEnums';
+import { CustomEvents } from '@/enums/eventEnums';
 import { useAuth } from '@/hooks/useAuth';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { DeleteProduct } from '@/modules/product/productRepository';
@@ -67,12 +69,23 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
     useState(false);
   const [isEditPhotoModalOpen, setIsEditPhotoModalOpen] = useState(false);
   const [isViewProductModalOpen, setIsViewProductModalOpen] = useState(false);
-
+  const [currentPage, setCurrentPage] = useState(1);
   const [productToEdit, setProductToEdit] = useState<ProductEntity | null>(
     null
   );
 
-  const [currentPage, setCurrentPage] = useState(1);
+  useEffect(() => {
+    window.addEventListener(CustomEvents.ProductEventCreation, (event: any) =>
+      handleEditProductClick(event.detail as ProductEntity)
+    );
+
+    return () => {
+      window.removeEventListener(
+        CustomEvents.ProductEventCreation,
+        (event: any) => handleEditProductClick(event.detail as ProductEntity)
+      );
+    };
+  }, []);
 
   const {
     data = {
@@ -82,7 +95,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
     isLoading: isLoadingProducts,
   } = useQuery({
     queryKey: [
-      'get-products',
+      ApiRequestEnums.GetProducts,
       { inventoryUid: currentInventoryUid, currentPage },
     ],
     queryFn: () =>
@@ -105,7 +118,9 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
       productServiceDi.updateProduct(params),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ['get-products'] });
+      queryClient.invalidateQueries({
+        queryKey: [ApiRequestEnums.GetProducts],
+      });
       setIsEditProductModalOpen(false);
       setProductToEdit(null);
     },
@@ -115,13 +130,16 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
     mutationFn: (params: DeleteProduct) => deleteProductUseCase(params),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ['get-products'] });
+      queryClient.invalidateQueries({
+        queryKey: [ApiRequestEnums.GetProducts],
+      });
       setIsDeleteProductModalOpen(false);
       setProductToEdit(null);
     },
   });
 
   const handleEditProductClick = (product: ProductEntity) => {
+    if (!product) return;
     setProductToEdit(product);
     setIsEditProductModalOpen(true);
   };

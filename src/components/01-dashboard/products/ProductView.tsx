@@ -6,6 +6,7 @@ import Input from '@/components/04-lib/inputs/Input';
 import InputSelect from '@/components/04-lib/inputs/InputSelect';
 import InputTextArea from '@/components/04-lib/inputs/InputTextArea';
 import NextImage from '@/components/04-lib/nextImage/NextImage';
+import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import type { CategoryInput } from '@/modules/category/categoryType';
 import {
@@ -28,7 +29,7 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
   const { user } = useAuth();
 
   const { data: product } = useQuery({
-    queryKey: ['get-product', { productUid }],
+    queryKey: [ApiRequestEnums.GetProduct, { productUid }],
     queryFn: () =>
       productRepository.getById({
         productUid,

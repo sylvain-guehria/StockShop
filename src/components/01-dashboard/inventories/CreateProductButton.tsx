@@ -5,6 +5,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { productServiceDi } from 'di';
 import type { FC } from 'react';
 
+import { ApiRequestEnums } from '@/enums/apiRequestEnums';
+import { CustomEvents } from '@/enums/eventEnums';
 import { useAuth } from '@/hooks/useAuth';
 import type { CreateProductParams } from '@/modules/product/productService';
 
@@ -16,16 +18,21 @@ const CreateProductButton: FC<Props> = ({ currentInventoryUid }) => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
 
-  const mutation = useMutation({
+  const { mutate } = useMutation({
     mutationFn: ({ userUid, companyUid, inventoryUid }: CreateProductParams) =>
       productServiceDi.createProductByUserUidCompanyUidAndInventoryUid({
         userUid,
         companyUid,
         inventoryUid,
       }),
-    onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ['get-products'] });
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: [ApiRequestEnums.GetProducts],
+      });
+      const event = new CustomEvent(CustomEvents.ProductEventCreation, {
+        detail: data,
+      });
+      window.dispatchEvent(event);
     },
   });
 
@@ -34,7 +41,7 @@ const CreateProductButton: FC<Props> = ({ currentInventoryUid }) => {
     const companyId = user.getCompanyUid();
 
     if (!userId || !companyId || !currentInventoryUid) return;
-    mutation.mutate({
+    mutate({
       userUid: userId,
       companyUid: companyId,
       inventoryUid: currentInventoryUid,

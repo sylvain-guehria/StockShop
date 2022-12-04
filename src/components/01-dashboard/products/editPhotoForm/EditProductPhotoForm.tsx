@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import NextImage from '@/components/04-lib/nextImage/NextImage';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { updatePhotoProductUseCase } from '@/usecases/usecases';
@@ -42,7 +43,7 @@ const EditProductPhotoForm: FC<Props> = ({ productUid, inventoryUid }) => {
   const [isDeletePhotoModalOpen, setIsDeletePhotoModalOpen] = useState(false);
 
   const { data: product, refetch } = useQuery({
-    queryKey: ['get-product', { productUid }],
+    queryKey: [ApiRequestEnums.GetProduct, { productUid }],
     queryFn: () =>
       productRepository.getById({
         productUid,
@@ -78,7 +79,7 @@ const EditProductPhotoForm: FC<Props> = ({ productUid, inventoryUid }) => {
         product,
         currentFile: file as File,
       });
-      queryClient.invalidateQueries({ queryKey: ['get-product'] });
+      queryClient.invalidateQueries({ queryKey: [ApiRequestEnums.GetProduct] });
       refetch();
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);
