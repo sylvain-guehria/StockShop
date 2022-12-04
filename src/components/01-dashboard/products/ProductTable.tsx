@@ -31,6 +31,7 @@ import {
 } from '@/usecases/usecases';
 
 import Column from './ColumnProduct';
+import { ProductsFilters } from './ProductsFilters';
 
 const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
   suspense: true,
@@ -238,6 +239,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
       )}
       <div className="mt-8 flex flex-col bg-white">
         <div className="overflow-x-auto rounded-lg shadow ring-1 ring-black/5">
+          <ProductsFilters />
           <table className="min-w-full divide-y divide-gray-300">
             <thead className="bg-gray-100">
               <tr className="border-t border-gray-200">

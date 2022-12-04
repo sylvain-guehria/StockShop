@@ -12,6 +12,7 @@ type Props = {
   register?: any;
   disabled?: boolean;
   value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 const InputSelect: FC<Props> = ({
