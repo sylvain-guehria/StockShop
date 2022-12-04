@@ -15,7 +15,10 @@ export const getInventoryProducts =
     inventoryUid,
     companyUid,
     currentPage,
-  }: GetInventoryProductsParamsType): Promise<ProductEntity[]> => {
+  }: GetInventoryProductsParamsType): Promise<{
+    count: number;
+    products: ProductEntity[];
+  }> => {
     try {
       if (!userUid) {
         throw new Error('userUid is required to get user inventoriy products');
@@ -32,14 +35,18 @@ export const getInventoryProducts =
         );
       }
 
-      const products =
+      const response =
         await productRepository.getProductsByUserUidCompanyUidInventoryUid({
           userUid,
           inventoryUid,
           companyUid,
           currentPage,
         });
-      return products;
+
+      return {
+        count: response.count,
+        products: response.products,
+      };
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log('error', error);

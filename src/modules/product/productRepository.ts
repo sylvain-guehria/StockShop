@@ -79,7 +79,10 @@ export abstract class ProductRepository {
     inventoryUid,
     companyUid,
     currentPage,
-  }: GetProductsByUserUidCompanyUidInventoryUid): Promise<ProductEntity[]> {
+  }: GetProductsByUserUidCompanyUidInventoryUid): Promise<{
+    count: number;
+    products: ProductEntity[];
+  }> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
         userUid,

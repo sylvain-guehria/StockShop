@@ -170,7 +170,10 @@ class FirebaseProductRepository extends ProductRepository {
     inventoryUid,
     companyUid,
     currentPage,
-  }: GetProductsByUserUidCompanyUidInventoryUid): Promise<ProductEntity[]> {
+  }: GetProductsByUserUidCompanyUidInventoryUid): Promise<{
+    count: number;
+    products: ProductEntity[];
+  }> {
     console.info(
       'get all products by userUid, companyUid and inventoryUid in db'
     );
@@ -180,28 +183,31 @@ class FirebaseProductRepository extends ProductRepository {
         params: { userUid, companyUid, inventoryUid, currentPage },
       }
     );
-    return response.data.map(
-      (product: ProductEntity) =>
-        new ProductEntity({
-          uid: product.uid,
-          label: product.label,
-          quantityInInventory: product.quantityInInventory,
-          optimumQuantity: product.optimumQuantity,
-          buyingPrice: product.buyingPrice,
-          sellingPrice: product.sellingPrice,
-          description: product.description,
-          toBuy: product.toBuy,
-          isPublic: product.isPublic,
-          tva: product.tva,
-          categoryUid: product.categoryUid,
-          subCategoryUid: product.subCategoryUid,
-          publicDisponibility: product.publicDisponibility,
-          inventoryUid: product.inventoryUid,
-          catSubcatAttributes: product.catSubcatAttributes,
-          condition: product.condition,
-          photoLink: product.photoLink,
-        })
-    );
+    return {
+      count: response.data.count,
+      products: response.data.results.map(
+        (product: ProductEntity) =>
+          new ProductEntity({
+            uid: product.uid,
+            label: product.label,
+            quantityInInventory: product.quantityInInventory,
+            optimumQuantity: product.optimumQuantity,
+            buyingPrice: product.buyingPrice,
+            sellingPrice: product.sellingPrice,
+            description: product.description,
+            toBuy: product.toBuy,
+            isPublic: product.isPublic,
+            tva: product.tva,
+            categoryUid: product.categoryUid,
+            subCategoryUid: product.subCategoryUid,
+            publicDisponibility: product.publicDisponibility,
+            inventoryUid: product.inventoryUid,
+            catSubcatAttributes: product.catSubcatAttributes,
+            condition: product.condition,
+            photoLink: product.photoLink,
+          })
+      ),
+    };
   }
 }
 

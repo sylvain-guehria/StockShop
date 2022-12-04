@@ -74,20 +74,30 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data: products = [], isLoading: isLoadingProducts } = useQuery({
+  const {
+    data = {
+      count: 0,
+      products: [],
+    },
+    isLoading: isLoadingProducts,
+  } = useQuery({
     queryKey: [
       'get-products',
       { inventoryUid: currentInventoryUid, currentPage },
     ],
     queryFn: () =>
       getInventoryProductsUseCase({
-        userUid: user.uid,
+        userUid: user.getUid(),
         inventoryUid: currentInventoryUid,
-        companyUid: user.companyUid,
+        companyUid: user.getCompanyUid(),
         currentPage,
       }),
-    enabled: !!(user.uid && currentInventoryUid && user.companyUid,
-    currentPage),
+    enabled: !!(
+      user.getUid() &&
+      currentInventoryUid &&
+      user.getCompanyUid() &&
+      currentPage
+    ),
   });
 
   const updateProductMutation = useMutation({
@@ -243,7 +253,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
-              {products.map((product: ProductEntity) => {
+              {data.products.map((product: ProductEntity) => {
                 const quantityMissing =
                   (product.quantityInInventory || 0) -
                   (product.optimumQuantity || 0);
@@ -384,7 +394,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
           </table>
           {!isLoadingProducts && (
             <Pagination
-              totalResults={products.length}
+              totalResults={data.count}
               numberOfResultsPerPage={10}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}

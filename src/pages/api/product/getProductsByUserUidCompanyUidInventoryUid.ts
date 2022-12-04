@@ -91,6 +91,17 @@ const getProductsByUserUidAndInventoryUid = async (
     const offset =
       currentPageNumber * numberOfProductsPerPage - numberOfProductsPerPage;
 
+    const productsCount = await firestoreAdmin
+      .collection(USERS)
+      .doc(userUid as string)
+      .collection(COMPANIES)
+      .doc(companyUid as string)
+      .collection(INVENTORIES)
+      .doc(inventoryUid as string)
+      .collection(PRODUCTS)
+      .count()
+      .get();
+
     const productsRef = await firestoreAdmin
       .collection(USERS)
       .doc(userUid as string)
@@ -115,11 +126,13 @@ const getProductsByUserUidAndInventoryUid = async (
 
     switch (method) {
       case 'GET':
-        res
-          .status(200)
-          .json(
-            productsRef.docs.map((doc) => ({ ...doc.data(), inventoryUid }))
-          );
+        res.status(200).json({
+          count: productsCount.data().count,
+          results: productsRef.docs.map((doc) => ({
+            ...doc.data(),
+            inventoryUid,
+          })),
+        });
         return;
       default:
         res.setHeader('Allow', ['GET']);
