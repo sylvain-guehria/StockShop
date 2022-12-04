@@ -133,7 +133,7 @@ const EditProductForm: FC<Props> = ({
             style="primary"
             className="flex justify-center"
           >
-            Annuler
+            Retour
           </LinkButton>
           <LinkButton
             type="submit"

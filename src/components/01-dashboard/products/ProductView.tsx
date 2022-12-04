@@ -19,6 +19,7 @@ import {
   ConditionLabels,
   ProductAttributes,
 } from '@/modules/product/productType';
+import { classNames } from '@/utils/tailwindUtils';
 
 type Props = {
   productUid: string;
@@ -51,10 +52,16 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
   );
 
   const allCategoryInputs = [...categoryInputs, ...subCategoryInputs];
+  const hasCategoryInputs = allCategoryInputs.length > 0;
   return (
     <>
       <div className="lg:flex">
-        <div className="lg:w-1/3 lg:pr-4">
+        <div
+          className={classNames(
+            'lg:pr-4',
+            hasCategoryInputs ? 'lg:w-1/3' : 'lg:w-1/2'
+          )}
+        >
           <>
             <div>
               <h3 className="text-lg font-medium leading-6 text-gray-900">
@@ -182,47 +189,54 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
           </>
         </div>
 
-        <div className="mt-10 lg:mt-0 lg:w-1/3 lg:pl-4 ">
-          <>
-            <div>
-              <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Information spécifique à la catégorie
-              </h3>
-            </div>
+        {hasCategoryInputs && (
+          <div className={classNames('mt-10 lg:mt-0 lg:w-1/3 lg:pl-4')}>
+            <>
+              <div>
+                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                  Information spécifique à la catégorie
+                </h3>
+              </div>
 
-            <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-              {allCategoryInputs.map((input: CategoryInput) => {
-                if (input.inputType === 'select') {
+              <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                {allCategoryInputs.map((input: CategoryInput) => {
+                  if (input.inputType === 'select') {
+                    return (
+                      <div className="sm:col-span-2" key={input.uid}>
+                        <InputSelect
+                          label={input.label}
+                          name={input.uid}
+                          options={input.options || []}
+                          disabled={true}
+                          value={product.getCatSubcatAttributes()[input.uid]}
+                        />
+                      </div>
+                    );
+                  }
+
                   return (
                     <div className="sm:col-span-2" key={input.uid}>
-                      <InputSelect
+                      <Input
+                        type="text"
                         label={input.label}
                         name={input.uid}
-                        options={input.options || []}
-                        disabled={true}
                         value={product.getCatSubcatAttributes()[input.uid]}
+                        disabled={true}
                       />
                     </div>
                   );
-                }
+                })}
+              </div>
+            </>
+          </div>
+        )}
 
-                return (
-                  <div className="sm:col-span-2" key={input.uid}>
-                    <Input
-                      type="text"
-                      label={input.label}
-                      name={input.uid}
-                      value={product.getCatSubcatAttributes()[input.uid]}
-                      disabled={true}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          </>
-        </div>
-
-        <div className="mt-10 lg:mt-0 lg:w-1/3 lg:pl-4">
+        <div
+          className={classNames(
+            'mt-10 lg:mt-0 lg:pl-4',
+            hasCategoryInputs ? 'lg:w-1/3' : 'lg:w-1/2'
+          )}
+        >
           <>
             <div className="flex justify-center">
               <h3 className="text-lg font-medium leading-6 text-gray-900">

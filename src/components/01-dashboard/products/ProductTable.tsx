@@ -18,6 +18,10 @@ import Tag from '@/components/04-lib/tag/Tag';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { CustomEvents } from '@/enums/eventEnums';
 import { useAuth } from '@/hooks/useAuth';
+import {
+  getCategoryByUid,
+  getSubCategoryByUid,
+} from '@/modules/category/categoryUtils';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { DeleteProduct } from '@/modules/product/productRepository';
 import type { UpdateProductParams } from '@/modules/product/productService';
@@ -275,6 +279,13 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                 const quantityMissing =
                   (product.quantityInInventory || 0) -
                   (product.optimumQuantity || 0);
+                const categroyLabel =
+                  getCategoryByUid(product.categoryUid)?.label || '';
+                const subCategoryLabel =
+                  getSubCategoryByUid(
+                    product.categoryUid,
+                    product.subCategoryUid
+                  )?.label || '';
                 return (
                   <tr key={product.uid}>
                     <td className="whitespace-nowrap pr-3 text-sm font-medium text-gray-900 sm:pl-6">
@@ -293,8 +304,18 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                         {product.label}
                       </div>
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {product.categoryUid}
+                    <td className=" whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <div
+                        className="tooltip tooltip-right"
+                        data-tip={`${categroyLabel} ${
+                          subCategoryLabel ? ` - ${subCategoryLabel}` : ''
+                        }`}
+                      >
+                        <div className="flex w-28 overflow-hidden text-ellipsis">
+                          {categroyLabel}
+                          {subCategoryLabel ? ` - ${subCategoryLabel}` : ''}
+                        </div>
+                      </div>
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {product.buyingPrice} €
