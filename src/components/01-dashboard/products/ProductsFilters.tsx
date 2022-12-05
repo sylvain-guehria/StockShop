@@ -4,6 +4,7 @@ import type { FC } from 'react';
 import { Fragment, useState } from 'react';
 
 import { categories } from '@/categoriesDatabase/categories';
+import Input from '@/components/04-lib/inputs/Input';
 import InputSelect from '@/components/04-lib/inputs/InputSelect';
 import { getSubCategoriesByCategoryUidFromDatabase } from '@/modules/category/categoryUtils';
 import { ProductAttributes } from '@/modules/product/productType';
@@ -47,10 +48,20 @@ export const ProductsFilters: FC<Props> = () => {
           </div>
         </div>
         <Disclosure.Panel className="border-t border-gray-200 py-4">
-          <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 px-6 sm:grid-cols-3 xl:grid-cols-6">
-            <fieldset>
+          <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 px-6 sm:grid-cols-12 xl:grid-cols-10">
+            <fieldset className="sm:col-span-4 xl:col-span-2">
+              <legend className="block font-medium">Label</legend>
+              <div>
+                <Input
+                  type="text"
+                  name={ProductAttributes.LABEL}
+                  inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+            </fieldset>
+            <fieldset className="sm:col-span-4 xl:col-span-2">
               <legend className="block font-medium">Catégorie</legend>
-              <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
+              <div>
                 <InputSelect
                   options={[
                     { label: '', value: '' },
@@ -65,9 +76,9 @@ export const ProductsFilters: FC<Props> = () => {
                 />
               </div>
             </fieldset>
-            <fieldset>
+            <fieldset className="sm:col-span-4 xl:col-span-2">
               <legend className="block font-medium">Sous Catégorie</legend>
-              <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
+              <div>
                 <InputSelect
                   options={[
                     { label: '', value: '' },
@@ -84,9 +95,9 @@ export const ProductsFilters: FC<Props> = () => {
                 />
               </div>
             </fieldset>
-            <fieldset>
+            <fieldset className="sm:col-span-3 xl:col-span-1">
               <legend className="block font-medium">TVA</legend>
-              <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
+              <div>
                 <InputSelect
                   options={[
                     { label: '', value: '' },
@@ -95,42 +106,42 @@ export const ProductsFilters: FC<Props> = () => {
                     { label: '5.5%', value: '5.5' },
                     { label: '2.1%', value: '2.1' },
                   ]}
-                  name={ProductAttributes.SUB_CATEGORY_UID}
+                  name={ProductAttributes.TVA}
                   inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
             </fieldset>
-            <fieldset>
+            <fieldset className="sm:col-span-3 xl:col-span-1">
               <legend className="block font-medium">A acheter</legend>
-              <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
+              <div>
                 <InputSelect
                   options={[
                     { label: '', value: '' },
                     { label: 'Oui', value: 'yes' },
                     { label: 'Non', value: 'no' },
                   ]}
-                  name={ProductAttributes.SUB_CATEGORY_UID}
+                  name={ProductAttributes.TO_BUY}
                   inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
             </fieldset>
-            <fieldset>
+            <fieldset className="sm:col-span-3 xl:col-span-1">
               <legend className="block font-medium">Visibilité</legend>
-              <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
+              <div>
                 <InputSelect
                   options={[
                     { label: '', value: '' },
                     { label: 'Privé', value: 'private' },
                     { label: 'Public', value: 'public' },
                   ]}
-                  name={ProductAttributes.SUB_CATEGORY_UID}
+                  name={ProductAttributes.IS_PUBLIC}
                   inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
             </fieldset>
-            <fieldset>
+            <fieldset className="sm:col-span-3 xl:col-span-1">
               <legend className="block font-medium">Etat</legend>
-              <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
+              <div>
                 <InputSelect
                   options={[
                     { label: '', value: '' },
@@ -138,7 +149,7 @@ export const ProductsFilters: FC<Props> = () => {
                     { label: 'Occasion', value: 'used' },
                     { label: 'Reconditionné', value: 'refurbished' },
                   ]}
-                  name={ProductAttributes.SUB_CATEGORY_UID}
+                  name={ProductAttributes.CONDITION}
                   inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
