@@ -48,6 +48,7 @@ class FirebaseProductRepository extends ProductRepository {
       catSubcatAttributes,
       condition,
       photoLink,
+      creationDate,
     } = response.data;
 
     return ProductEntity.new({
@@ -68,6 +69,7 @@ class FirebaseProductRepository extends ProductRepository {
       catSubcatAttributes,
       condition,
       photoLink,
+      creationDate,
     });
   }
 
@@ -84,14 +86,16 @@ class FirebaseProductRepository extends ProductRepository {
         uid: product.getUid(),
         label: product.getLabel(),
         inventoryUid: product.getInventoryUid(),
+        creationDate: product.getCreationDate(),
       },
     });
     console.info('Product added in DB, uid: ', product.getUid());
-    const { uid, label, inventoryUid } = res.data;
+    const { uid, label, inventoryUid, creationDate } = res.data;
     return ProductEntity.new({
       uid,
       label,
       inventoryUid,
+      creationDate,
     });
   }
 
@@ -141,6 +145,7 @@ class FirebaseProductRepository extends ProductRepository {
           catSubcatAttributes: product.getCatSubcatAttributes(),
           condition: product.getCondition(),
           photoLink: product.getPhotoLink(),
+          creationDate: product.getCreationDate(),
         },
       }
     );
@@ -162,6 +167,7 @@ class FirebaseProductRepository extends ProductRepository {
       catSubcatAttributes: data.catSubcatAttributes,
       condition: data.condition,
       photoLink: data.photoLink,
+      creationDate: data.creationDate,
     });
   }
 
@@ -205,6 +211,7 @@ class FirebaseProductRepository extends ProductRepository {
             catSubcatAttributes: product.catSubcatAttributes,
             condition: product.condition,
             photoLink: product.photoLink,
+            creationDate: product.creationDate,
           })
       ),
     };

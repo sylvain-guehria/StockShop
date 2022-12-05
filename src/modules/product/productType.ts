@@ -16,6 +16,7 @@ export enum ProductAttributes {
   CAT_SUBCAT_ATTRIBUTES = 'catSubcatAttributes',
   CONDITION = 'condition',
   PHOTO_LINK = 'photoLink',
+  CREATION_DATE = 'creationDate',
 }
 
 export enum ConditionTypeEnum {
@@ -48,4 +49,5 @@ export interface Product {
   [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]?: Record<string, any>;
   [ProductAttributes.CONDITION]?: ConditionTypeEnum;
   [ProductAttributes.PHOTO_LINK]?: string;
+  [ProductAttributes.CREATION_DATE]?: number;
 }

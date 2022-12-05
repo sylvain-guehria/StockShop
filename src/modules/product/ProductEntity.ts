@@ -36,6 +36,8 @@ class ProductEntity implements Product {
 
   photoLink: string;
 
+  creationDate: number;
+
   static new(product?: Product): ProductEntity {
     return new ProductEntity(product || ({} as Product));
   }
@@ -58,6 +60,16 @@ class ProductEntity implements Product {
     this.catSubcatAttributes = product.catSubcatAttributes || {};
     this.condition = product.condition || ConditionTypeEnum.NEW;
     this.photoLink = product.photoLink || '';
+    this.creationDate = product.creationDate || Date.now();
+  }
+
+  getCreationDate(): number {
+    return this.creationDate;
+  }
+
+  setCreationDate(creationDate: number): ProductEntity {
+    this.creationDate = creationDate;
+    return this;
   }
 
   getCatSubcatAttributes(): Record<string, any> {
