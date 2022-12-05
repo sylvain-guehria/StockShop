@@ -9,7 +9,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { productServiceDi } from 'di';
 import dynamic from 'next/dynamic';
-import type { FC } from 'react';
+import type { FC, Reducer } from 'react';
 import { useEffect, useReducer, useState } from 'react';
 
 import Pagination from '@/components/04-lib/pagination/Pagination';
@@ -32,6 +32,10 @@ import {
 
 import Column from './ColumnProduct';
 import { ProductsFilters } from './ProductsFilters';
+import type {
+  FiltersActionsType,
+  FiltersStateType,
+} from './ProductsFiltersReducer';
 import { initialFilterState, reducerFilters } from './ProductsFiltersReducer';
 
 const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
@@ -81,10 +85,9 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
     null
   );
 
-  const [filtersState, dispatchFilterActions] = useReducer(
-    reducerFilters,
-    initialFilterState
-  );
+  const [filtersState, dispatchFilterActions] = useReducer<
+    Reducer<FiltersStateType, FiltersActionsType>
+  >(reducerFilters, initialFilterState);
 
   useEffect(() => {
     window.addEventListener(CustomEvents.ProductEventCreation, (event: any) =>
@@ -246,7 +249,10 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
       )}
       <div className="mt-8 flex flex-col">
         <div className="rounded-lg bg-white shadow ring-1 ring-black/5 only:overflow-x-auto">
-          <ProductsFilters />
+          <ProductsFilters
+            filtersState={filtersState}
+            dispatchFilterActions={dispatchFilterActions}
+          />
           <table className="min-w-full divide-y divide-gray-300">
             <thead className="bg-gray-100">
               <tr className="border-t border-gray-200">

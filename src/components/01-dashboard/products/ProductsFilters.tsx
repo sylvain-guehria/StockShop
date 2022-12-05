@@ -4,7 +4,7 @@ import {
   AdjustmentsVerticalIcon,
   ArrowUturnLeftIcon,
 } from '@heroicons/react/24/outline';
-import type { FC } from 'react';
+import type { Dispatch, FC } from 'react';
 import { Fragment, useState } from 'react';
 
 import { categories } from '@/categoriesDatabase/categories';
@@ -14,7 +14,10 @@ import { getSubCategoriesByCategoryUidFromDatabase } from '@/modules/category/ca
 import { ProductAttributes } from '@/modules/product/productType';
 import { classNames } from '@/utils/tailwindUtils';
 
-type Props = {};
+import type {
+  FiltersActionsType,
+  FiltersStateType,
+} from './ProductsFiltersReducer';
 
 const sortingOptions = [
   { value: ProductAttributes.LABEL, label: 'Ordre alphabétique' },
@@ -28,7 +31,15 @@ const sortingOptions = [
   { value: ProductAttributes.OPTIMUM_QUANTITY, label: 'Quantité optimale' },
 ];
 
-export const ProductsFilters: FC<Props> = () => {
+type Props = {
+  filtersState: FiltersStateType;
+  dispatchFilterActions: Dispatch<FiltersActionsType>;
+};
+
+export const ProductsFilters: FC<Props> = ({
+  filtersState,
+  dispatchFilterActions,
+}) => {
   const [categoryUid, setCategoryUid] = useState<string>('');
   return (
     <div className="bg-white">
@@ -66,6 +77,7 @@ export const ProductsFilters: FC<Props> = () => {
               <button
                 type="button"
                 className="group flex items-center font-medium text-gray-700"
+                onClick={() => {}}
               >
                 <AdjustmentsVerticalIcon className="mr-2 h-4 w-4 flex-none text-gray-400 group-hover:text-gray-500" />
                 Filtrer
