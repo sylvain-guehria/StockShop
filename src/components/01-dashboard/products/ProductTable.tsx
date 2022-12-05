@@ -10,7 +10,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { productServiceDi } from 'di';
 import dynamic from 'next/dynamic';
 import type { FC } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 
 import Pagination from '@/components/04-lib/pagination/Pagination';
 import Spinner from '@/components/04-lib/spinner/Spinner';
@@ -32,6 +32,7 @@ import {
 
 import Column from './ColumnProduct';
 import { ProductsFilters } from './ProductsFilters';
+import { initialFilterState, reducerFilters } from './ProductsFiltersReducer';
 
 const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
   suspense: true,
@@ -69,6 +70,7 @@ type Props = {
 const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
+  // TODO : add a reducer to manage the state of the table
   const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
   const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] =
     useState(false);
@@ -77,6 +79,11 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productToEdit, setProductToEdit] = useState<ProductEntity | null>(
     null
+  );
+
+  const [filtersState, dispatchFilterActions] = useReducer(
+    reducerFilters,
+    initialFilterState
   );
 
   useEffect(() => {
@@ -237,8 +244,8 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
           )}
         </DynamicModal>
       )}
-      <div className="mt-8 flex flex-col bg-white">
-        <div className="overflow-x-auto rounded-lg shadow ring-1 ring-black/5">
+      <div className="mt-8 flex flex-col">
+        <div className="rounded-lg bg-white shadow ring-1 ring-black/5 only:overflow-x-auto">
           <ProductsFilters />
           <table className="min-w-full divide-y divide-gray-300">
             <thead className="bg-gray-100">

@@ -1,5 +1,9 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon, FunnelIcon } from '@heroicons/react/20/solid';
+import {
+  AdjustmentsVerticalIcon,
+  ArrowUturnLeftIcon,
+} from '@heroicons/react/24/outline';
 import type { FC } from 'react';
 import { Fragment, useState } from 'react';
 
@@ -13,8 +17,15 @@ import { classNames } from '@/utils/tailwindUtils';
 type Props = {};
 
 const sortingOptions = [
-  { value: 'alphabetical', label: 'Ordre alphabétique' },
-  { value: 'price', label: 'Prix' },
+  { value: ProductAttributes.LABEL, label: 'Ordre alphabétique' },
+  { value: ProductAttributes.CREATION_DATE, label: 'Date de création' },
+  { value: ProductAttributes.SELLING_PRICE, label: 'Prix de vente' },
+  { value: ProductAttributes.BUYING_PRICE, label: "Prix d'achat" },
+  {
+    value: ProductAttributes.QUANTITY_IN_INVENTORY,
+    label: 'Quantité en stock',
+  },
+  { value: ProductAttributes.OPTIMUM_QUANTITY, label: 'Quantité optimale' },
 ];
 
 export const ProductsFilters: FC<Props> = () => {
@@ -34,23 +45,40 @@ export const ProductsFilters: FC<Props> = () => {
             <div>
               <Disclosure.Button className="group flex items-center font-medium text-gray-700">
                 <FunnelIcon
-                  className="mr-2 h-5 w-5 flex-none text-gray-400 group-hover:text-gray-500"
+                  className="mr-2 h-4 w-4 flex-none text-gray-400 group-hover:text-gray-500"
                   aria-hidden="true"
                 />
                 2 Filtres
               </Disclosure.Button>
             </div>
             <div className="pl-6">
-              <button type="button" className="text-gray-500">
-                Réinitiliser les filtres
+              <button
+                type="button"
+                className="group flex items-center font-medium text-gray-700"
+              >
+                <ArrowUturnLeftIcon className="mr-2 h-4 w-4 flex-none text-gray-400 group-hover:text-gray-500" />
+                <div className="hidden sm:contents">
+                  Réinitialiser les filtres{' '}
+                </div>
+              </button>
+            </div>
+            <div className="pl-6">
+              <button
+                type="button"
+                className="group flex items-center font-medium text-gray-700"
+              >
+                <AdjustmentsVerticalIcon className="mr-2 h-4 w-4 flex-none text-gray-400 group-hover:text-gray-500" />
+                Filtrer
               </button>
             </div>
           </div>
         </div>
         <Disclosure.Panel className="border-t border-gray-200 py-4">
-          <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 px-6 sm:grid-cols-12 xl:grid-cols-10">
+          <div className="my-3 grid grid-cols-1 gap-y-6 gap-x-4 px-6 sm:grid-cols-12 xl:grid-cols-10">
             <fieldset className="sm:col-span-4 xl:col-span-2">
-              <legend className="block font-medium">Label</legend>
+              <legend className="text-sm font-medium text-gray-900">
+                Label
+              </legend>
               <div>
                 <Input
                   type="text"
@@ -60,7 +88,9 @@ export const ProductsFilters: FC<Props> = () => {
               </div>
             </fieldset>
             <fieldset className="sm:col-span-4 xl:col-span-2">
-              <legend className="block font-medium">Catégorie</legend>
+              <legend className="text-sm font-medium text-gray-900">
+                Catégorie
+              </legend>
               <div>
                 <InputSelect
                   options={[
@@ -77,7 +107,9 @@ export const ProductsFilters: FC<Props> = () => {
               </div>
             </fieldset>
             <fieldset className="sm:col-span-4 xl:col-span-2">
-              <legend className="block font-medium">Sous Catégorie</legend>
+              <legend className="text-sm font-medium text-gray-900">
+                Sous Catégorie
+              </legend>
               <div>
                 <InputSelect
                   options={[
@@ -96,7 +128,7 @@ export const ProductsFilters: FC<Props> = () => {
               </div>
             </fieldset>
             <fieldset className="sm:col-span-3 xl:col-span-1">
-              <legend className="block font-medium">TVA</legend>
+              <legend className="text-sm font-medium text-gray-900">TVA</legend>
               <div>
                 <InputSelect
                   options={[
@@ -112,7 +144,9 @@ export const ProductsFilters: FC<Props> = () => {
               </div>
             </fieldset>
             <fieldset className="sm:col-span-3 xl:col-span-1">
-              <legend className="block font-medium">A acheter</legend>
+              <legend className="text-sm font-medium text-gray-900">
+                A acheter
+              </legend>
               <div>
                 <InputSelect
                   options={[
@@ -126,7 +160,9 @@ export const ProductsFilters: FC<Props> = () => {
               </div>
             </fieldset>
             <fieldset className="sm:col-span-3 xl:col-span-1">
-              <legend className="block font-medium">Visibilité</legend>
+              <legend className="text-sm font-medium text-gray-900">
+                Visibilité
+              </legend>
               <div>
                 <InputSelect
                   options={[
@@ -140,7 +176,9 @@ export const ProductsFilters: FC<Props> = () => {
               </div>
             </fieldset>
             <fieldset className="sm:col-span-3 xl:col-span-1">
-              <legend className="block font-medium">Etat</legend>
+              <legend className="text-sm font-medium text-gray-900">
+                Etat
+              </legend>
               <div>
                 <InputSelect
                   options={[
