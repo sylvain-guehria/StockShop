@@ -8,6 +8,7 @@ import { useState } from 'react';
 
 import Spinner from '@/components/04-lib/spinner/Spinner';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import type InventoryEntity from '@/modules/inventory/InventoryEntity';
@@ -59,7 +60,9 @@ const PinnedInventories: FC<Props> = ({
       inventoryServiceDi.updateInventory(params),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ['get-inventories'] });
+      queryClient.invalidateQueries({
+        queryKey: [ApiRequestEnums.GetInventories],
+      });
       setIsEditModalOpen(false);
     },
   });
@@ -69,7 +72,9 @@ const PinnedInventories: FC<Props> = ({
       deleteInventoryUseCase(params),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ['get-inventories'] });
+      queryClient.invalidateQueries({
+        queryKey: [ApiRequestEnums.GetInventories],
+      });
     },
   });
 
@@ -78,7 +83,9 @@ const PinnedInventories: FC<Props> = ({
       setInventoryAsDefaultUseCase(params),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ['get-inventories'] });
+      queryClient.invalidateQueries({
+        queryKey: [ApiRequestEnums.GetInventories],
+      });
     },
   });
 
@@ -113,6 +120,12 @@ const PinnedInventories: FC<Props> = ({
         companyUid: inventories[0]?.companyUid as string,
       });
       handleCloseModal();
+      queryClient.refetchQueries({
+        queryKey: [ApiRequestEnums.GetProducts],
+      });
+      queryClient.refetchQueries({
+        queryKey: [ApiRequestEnums.GetInventories],
+      });
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);
     }

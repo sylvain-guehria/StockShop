@@ -18,6 +18,7 @@ import {
 import {
   ConditionLabels,
   ProductAttributes,
+  ProductLabels,
 } from '@/modules/product/productType';
 import { classNames } from '@/utils/tailwindUtils';
 
@@ -72,7 +73,7 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
             <div className="mt-3 sm:col-span-6">
               <Input
                 type="text"
-                label="label"
+                label={ProductLabels[ProductAttributes.LABEL]}
                 disabled={true}
                 name={ProductAttributes.LABEL}
                 value={product.getLabel()}
@@ -82,7 +83,7 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
               <div className="sm:col-span-3">
                 <Input
                   type="number"
-                  label="Quantité en stock"
+                  label={ProductLabels[ProductAttributes.QUANTITY_IN_INVENTORY]}
                   name={ProductAttributes.QUANTITY_IN_INVENTORY}
                   value={product.getQuantityInInventory()}
                   disabled={true}
@@ -92,7 +93,7 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
               <div className="sm:col-span-3">
                 <Input
                   type="number"
-                  label="Quantité optimal en stock"
+                  label={ProductLabels[ProductAttributes.OPTIMUM_QUANTITY]}
                   name={ProductAttributes.OPTIMUM_QUANTITY}
                   value={product.getOptimumQuantity()}
                   disabled={true}
@@ -102,8 +103,8 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
               <div className="sm:col-span-2">
                 <Input
                   type="number"
-                  label="Prix d'achat HT"
                   name={ProductAttributes.BUYING_PRICE}
+                  label={ProductLabels[ProductAttributes.BUYING_PRICE]}
                   value={product.getOptimumQuantity()}
                   disabled={true}
                 />
@@ -113,8 +114,8 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
                 <Input
                   type="number"
                   step="0.01"
-                  label="Prix de vente HT"
                   name={ProductAttributes.SELLING_PRICE}
+                  label={ProductLabels[ProductAttributes.SELLING_PRICE]}
                   value={product.getBuyingPrice()}
                   disabled={true}
                 />
@@ -123,9 +124,9 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
               <div className="sm:col-span-2">
                 <Input
                   type="number"
-                  label="TVA"
                   step="0.1"
                   name={ProductAttributes.TVA}
+                  label={ProductLabels[ProductAttributes.TVA]}
                   value={product.getTva()}
                   disabled={true}
                 />
@@ -133,48 +134,33 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
             </div>
             <div className="mt-6 grid gap-y-6 gap-x-4 sm:grid-cols-3">
               <div>
-                <label
-                  htmlFor={ProductAttributes.CONDITION}
-                  className="block text-start text-sm font-medium text-gray-700"
-                >
-                  Etat
-                </label>
                 <div className="mt-1">
                   <Input
                     type="text"
                     value={ConditionLabels[product.getCondition()]}
                     disabled={true}
                     name={ProductAttributes.CONDITION}
+                    label={ProductLabels[ProductAttributes.CONDITION]}
                   />
                 </div>
               </div>
               <div>
-                <label
-                  htmlFor={ProductAttributes.CATEGORY_UID}
-                  className="block text-start text-sm font-medium text-gray-700"
-                >
-                  Category
-                </label>
                 <div className="mt-1">
                   <Input
                     type="text"
                     name={ProductAttributes.CATEGORY_UID}
+                    label={ProductLabels[ProductAttributes.CATEGORY_UID]}
                     value={getCategoryByUid(product.getCategoryUid()).label}
                     disabled={true}
                   />
                 </div>
               </div>
               <div>
-                <label
-                  htmlFor={ProductAttributes.SUB_CATEGORY_UID}
-                  className="block text-start text-sm font-medium text-gray-700"
-                >
-                  Sous catégorie
-                </label>
                 <div className="mt-1">
                   <Input
                     type="text"
                     name={ProductAttributes.SUB_CATEGORY_UID}
+                    label={ProductLabels[ProductAttributes.SUB_CATEGORY_UID]}
                     value={
                       getSubCategoryByUid(
                         product.getCategoryUid(),

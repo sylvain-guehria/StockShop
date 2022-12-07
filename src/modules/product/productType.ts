@@ -19,6 +19,27 @@ export enum ProductAttributes {
   CREATION_DATE = 'creationDate',
 }
 
+export const ProductLabels = {
+  [ProductAttributes.UID]: 'Uid',
+  [ProductAttributes.LABEL]: 'Label',
+  [ProductAttributes.QUANTITY_IN_INVENTORY]: 'Quantité en stock',
+  [ProductAttributes.OPTIMUM_QUANTITY]: 'Quantité optimale en stock',
+  [ProductAttributes.BUYING_PRICE]: "Prix d'achat HT",
+  [ProductAttributes.SELLING_PRICE]: 'Prix de vente HT',
+  [ProductAttributes.DESCRIPTION]: 'Description',
+  [ProductAttributes.TO_BUY]: 'A acheter',
+  [ProductAttributes.IS_PUBLIC]: 'Publique',
+  [ProductAttributes.TVA]: 'TVA',
+  [ProductAttributes.CATEGORY_UID]: 'Catégorie',
+  [ProductAttributes.SUB_CATEGORY_UID]: 'Sous-catégorie',
+  [ProductAttributes.PUBLIC_DISPONIBILITY]: 'Disponibilité publique',
+  [ProductAttributes.INVENTORY_UID]: 'Inventaire',
+  [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]: 'Attributs',
+  [ProductAttributes.CONDITION]: 'Etat',
+  [ProductAttributes.PHOTO_LINK]: 'Photo',
+  [ProductAttributes.CREATION_DATE]: 'Date de création',
+} as const;
+
 export enum ConditionTypeEnum {
   NEW = 'new',
   USED = 'used',

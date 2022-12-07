@@ -16,6 +16,7 @@ import { getSubCategoriesByCategoryUidFromDatabase } from '@/modules/category/ca
 import {
   ConditionTypeEnum,
   ProductAttributes,
+  ProductLabels,
 } from '@/modules/product/productType';
 import { classNames } from '@/utils/tailwindUtils';
 
@@ -29,14 +30,26 @@ import { ActionNamesEnum, initialFilters } from './ProductsFiltersReducer';
 
 const sortingOptions = [
   { value: ProductAttributes.LABEL, label: 'Ordre alphabétique' },
-  { value: ProductAttributes.CREATION_DATE, label: 'Date de création' },
-  { value: ProductAttributes.SELLING_PRICE, label: 'Prix de vente' },
-  { value: ProductAttributes.BUYING_PRICE, label: "Prix d'achat" },
+  {
+    value: ProductAttributes.CREATION_DATE,
+    label: ProductLabels[ProductAttributes.CREATION_DATE],
+  },
+  {
+    value: ProductAttributes.SELLING_PRICE,
+    label: ProductLabels[ProductAttributes.SELLING_PRICE],
+  },
+  {
+    value: ProductAttributes.BUYING_PRICE,
+    label: ProductLabels[ProductAttributes.BUYING_PRICE],
+  },
   {
     value: ProductAttributes.QUANTITY_IN_INVENTORY,
-    label: 'Quantité en stock',
+    label: ProductLabels[ProductAttributes.QUANTITY_IN_INVENTORY],
   },
-  { value: ProductAttributes.OPTIMUM_QUANTITY, label: 'Quantité optimale' },
+  {
+    value: ProductAttributes.OPTIMUM_QUANTITY,
+    label: ProductLabels[ProductAttributes.OPTIMUM_QUANTITY],
+  },
 ];
 
 type Props = {
@@ -89,7 +102,7 @@ export const ProductsFilters: FC<Props> = ({
             Filters
           </h2>
           <div className="relative col-start-1 row-start-1 py-4">
-            <div className="mx-auto flex max-w-7xl space-x-6 divide-x divide-gray-200 px-4 text-sm sm:px-6 lg:px-8">
+            <div className="mx-auto flex max-w-7xl space-x-6 divide-x divide-gray-300 px-4 text-sm sm:px-6 lg:px-8">
               <div>
                 <Disclosure.Button className="group flex items-center font-medium text-gray-700">
                   <FunnelIcon
@@ -245,13 +258,21 @@ export const ProductsFilters: FC<Props> = ({
             <div className="mx-auto flex max-w-7xl justify-end px-4 sm:px-6 lg:px-8">
               <Menu as="div" className="relative inline-block">
                 <div className="flex">
-                  <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                    Trier par
+                  <Menu.Button className="group inline-flex justify-center border-x border-gray-300 px-3 text-sm  font-medium text-gray-700 hover:text-gray-900">
+                    <div className="hidden lg:inline-flex">Trier par</div>
                     <ChevronDownIcon
-                      className="-mr-1 ml-1 h-5 w-5 shrink-0 text-gray-400 group-hover:text-gray-500"
+                      className="ml-1 h-5 w-5 shrink-0 text-gray-400 group-hover:text-gray-500 lg:-mr-1"
                       aria-hidden="true"
                     />
                   </Menu.Button>
+                  <div className="ml-6 hidden text-sm font-medium text-gray-700 hover:text-gray-900 lg:inline-flex">
+                    {
+                      ProductLabels[
+                        filtersState.sorter.field ||
+                          ('' as keyof typeof ProductLabels)
+                      ]
+                    }
+                  </div>
                 </div>
 
                 <Transition
@@ -274,7 +295,10 @@ export const ProductsFilters: FC<Props> = ({
                                   ? 'font-medium text-gray-900'
                                   : 'text-gray-500',
                                 active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm cursor-pointer'
+                                'block px-4 py-2 text-sm cursor-pointer',
+                                option.value === filtersState.sorter.field
+                                  ? 'bg-gray-200'
+                                  : ''
                               )}
                               onClick={() =>
                                 dispatchFilterActions({
