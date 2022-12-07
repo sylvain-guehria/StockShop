@@ -2,6 +2,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon, FunnelIcon } from '@heroicons/react/20/solid';
 import {
   AdjustmentsVerticalIcon,
+  ArrowsUpDownIcon,
   ArrowUturnLeftIcon,
 } from '@heroicons/react/24/outline';
 import type { Dispatch, FC } from 'react';
@@ -122,9 +123,14 @@ export const ProductsFilters: FC<Props> = ({
                   type="button"
                   className="group flex items-center font-medium text-gray-700"
                 >
-                  <ArrowUturnLeftIcon className="mr-2 h-4 w-4 flex-none text-gray-400 group-hover:text-gray-500" />
-                  <div className="hidden sm:contents" onClick={resetFilters}>
-                    Réinitialiser les filtres{' '}
+                  <div
+                    className="tooltip tooltip-right"
+                    data-tip="Réinitialiser les filtres"
+                  >
+                    <ArrowUturnLeftIcon className="mr-2 h-4 w-4 flex-none text-gray-400 group-hover:text-gray-500" />
+                  </div>{' '}
+                  <div className="hidden lg:contents" onClick={resetFilters}>
+                    Réinitialiser filtres{' '}
                   </div>
                 </button>
               </div>
@@ -258,14 +264,30 @@ export const ProductsFilters: FC<Props> = ({
             <div className="mx-auto flex max-w-7xl justify-end px-4 sm:px-6 lg:px-8">
               <Menu as="div" className="relative inline-block">
                 <div className="flex">
-                  <Menu.Button className="group inline-flex justify-center border-x border-gray-300 px-3 text-sm  font-medium text-gray-700 hover:text-gray-900">
-                    <div className="hidden lg:inline-flex">Trier par</div>
-                    <ChevronDownIcon
-                      className="ml-1 h-5 w-5 shrink-0 text-gray-400 group-hover:text-gray-500 lg:-mr-1"
+                  <div
+                    className="tooltip tooltip-left cursor-pointer"
+                    data-tip="Inverser l'ordre"
+                    onClick={() =>
+                      dispatchFilterActions({
+                        type: ActionNamesEnum.CHANGE_SORTER_ORDER,
+                      })
+                    }
+                  >
+                    <ArrowsUpDownIcon
+                      className="mr-3 h-5 w-5 shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
+                  </div>
+                  <Menu.Button className="group inline-flex justify-center border-x border-gray-300 px-3 text-sm  font-medium text-gray-700 hover:text-gray-900">
+                    <div className="hidden lg:inline-flex">Trier par</div>
+                    <div className="tooltip tooltip-left" data-tip="Trier par">
+                      <ChevronDownIcon
+                        className="ml-1 h-5 w-5 shrink-0 text-gray-400 group-hover:text-gray-500 lg:-mr-1"
+                        aria-hidden="true"
+                      />
+                    </div>
                   </Menu.Button>
-                  <div className="ml-6 hidden text-sm font-medium text-gray-700 hover:text-gray-900 lg:inline-flex">
+                  <div className="ml-6 hidden text-sm font-medium text-gray-700 hover:text-gray-900 xl:inline-flex">
                     {
                       ProductLabels[
                         filtersState.sorter.field ||
