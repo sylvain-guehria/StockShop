@@ -18,6 +18,7 @@ import type {
   FiltersActionsType,
   FiltersStateType,
 } from './ProductsFiltersReducer';
+import { ActionNamesEnum } from './ProductsFiltersReducer';
 
 const sortingOptions = [
   { value: ProductAttributes.LABEL, label: 'Ordre alphabétique' },
@@ -59,7 +60,11 @@ export const ProductsFilters: FC<Props> = ({
                   className="mr-2 h-4 w-4 flex-none text-gray-400 group-hover:text-gray-500"
                   aria-hidden="true"
                 />
-                2 Filtres
+                {
+                  Object.values(filtersState.filters).filter((filter) => filter)
+                    .length
+                }{' '}
+                Filtres
               </Disclosure.Button>
             </div>
             <div className="pl-6">
@@ -68,7 +73,14 @@ export const ProductsFilters: FC<Props> = ({
                 className="group flex items-center font-medium text-gray-700"
               >
                 <ArrowUturnLeftIcon className="mr-2 h-4 w-4 flex-none text-gray-400 group-hover:text-gray-500" />
-                <div className="hidden sm:contents">
+                <div
+                  className="hidden sm:contents"
+                  onClick={() =>
+                    dispatchFilterActions({
+                      type: ActionNamesEnum.RESET_FILTERS,
+                    })
+                  }
+                >
                   Réinitialiser les filtres{' '}
                 </div>
               </button>
