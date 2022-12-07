@@ -61,20 +61,22 @@ export type FiltersActionsType = {
   };
 };
 
+export const initialFilters = {
+  [ProductAttributes.LABEL]: undefined,
+  [ProductAttributes.CATEGORY_UID]: undefined,
+  [ProductAttributes.SUB_CATEGORY_UID]: undefined,
+  [ProductAttributes.TVA]: undefined,
+  [ProductAttributes.TO_BUY]: undefined,
+  [ProductAttributes.IS_PUBLIC]: undefined,
+  [ProductAttributes.CONDITION]: undefined,
+};
+
 export const initialFilterState: FiltersStateType = {
   sorter: {
     field: ProductAttributes.CREATION_DATE,
     order: ORDER.DESC,
   },
-  filters: {
-    [ProductAttributes.LABEL]: undefined,
-    [ProductAttributes.CATEGORY_UID]: undefined,
-    [ProductAttributes.SUB_CATEGORY_UID]: undefined,
-    [ProductAttributes.TVA]: undefined,
-    [ProductAttributes.TO_BUY]: undefined,
-    [ProductAttributes.IS_PUBLIC]: undefined,
-    [ProductAttributes.CONDITION]: undefined,
-  },
+  filters: initialFilters,
 };
 
 export const reducerFilters = (
