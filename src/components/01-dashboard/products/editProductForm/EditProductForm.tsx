@@ -101,7 +101,12 @@ const EditProductForm: FC<Props> = ({
     <form onSubmit={handleSubmit(onSubmitEditProductForm)}>
       <div className="lg:flex">
         <div className="lg:w-1/2 lg:pr-4">
-          <SubFormGeneral register={register} errors={errors} watch={watch} />
+          <SubFormGeneral
+            register={register}
+            errors={errors}
+            watch={watch}
+            setValue={setValue}
+          />
         </div>
 
         <div className="mt-5 lg:mt-0 lg:w-1/2 lg:pl-4">

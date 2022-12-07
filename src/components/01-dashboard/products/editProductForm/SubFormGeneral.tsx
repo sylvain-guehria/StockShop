@@ -1,9 +1,11 @@
 'use client';
 
 import type { FC } from 'react';
+import { useEffect } from 'react';
 import type {
   FieldErrorsImpl,
   UseFormRegister,
+  UseFormSetValue,
   UseFormWatch,
 } from 'react-hook-form';
 
@@ -22,10 +24,15 @@ type Props = {
   register: UseFormRegister<EditProductFormType>;
   watch: UseFormWatch<EditProductFormType>;
   errors: Partial<FieldErrorsImpl<EditProductFormType>>;
+  setValue: UseFormSetValue<EditProductFormType>;
 };
 
-const SubFormGeneral: FC<Props> = ({ watch, register, errors }) => {
+const SubFormGeneral: FC<Props> = ({ watch, register, errors, setValue }) => {
   const watchCategoryUid = watch(ProductAttributes.CATEGORY_UID);
+
+  useEffect(() => {
+    setValue(ProductAttributes.SUB_CATEGORY_UID, '');
+  }, [watchCategoryUid]);
 
   return (
     <>

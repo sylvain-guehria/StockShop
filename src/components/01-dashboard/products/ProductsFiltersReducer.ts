@@ -35,7 +35,7 @@ export type AuthorizedOrderProperty =
 
 export type FiltersStateType = {
   sorter: {
-    field: AuthorizedOrderProperty;
+    field?: AuthorizedOrderProperty;
     order: ORDER;
   };
   filters: FilterPropertyType;

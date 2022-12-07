@@ -5,7 +5,7 @@ import {
   ArrowUturnLeftIcon,
 } from '@heroicons/react/24/outline';
 import type { Dispatch, FC } from 'react';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -13,7 +13,10 @@ import { categories } from '@/categoriesDatabase/categories';
 import Input from '@/components/04-lib/inputs/Input';
 import InputSelect from '@/components/04-lib/inputs/InputSelect';
 import { getSubCategoriesByCategoryUidFromDatabase } from '@/modules/category/categoryUtils';
-import { ProductAttributes } from '@/modules/product/productType';
+import {
+  ConditionTypeEnum,
+  ProductAttributes,
+} from '@/modules/product/productType';
 import { classNames } from '@/utils/tailwindUtils';
 
 import type {
@@ -48,14 +51,8 @@ export const ProductsFilters: FC<Props> = ({
     defaultValues: initialFilters,
   };
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    getValues,
-    formState: { errors },
-  } = useForm<FilterPropertyType>(formOptions);
+  const { register, handleSubmit, watch, setValue, reset } =
+    useForm<FilterPropertyType>(formOptions);
 
   const watchCategoryUid = watch(ProductAttributes.CATEGORY_UID);
 
@@ -67,6 +64,18 @@ export const ProductsFilters: FC<Props> = ({
       payload: { filters: data },
     });
   };
+
+  useEffect(() => {
+    setValue(ProductAttributes.SUB_CATEGORY_UID, '');
+  }, [watchCategoryUid]);
+
+  const resetFilters = () => {
+    reset();
+    dispatchFilterActions({
+      type: ActionNamesEnum.RESET_FILTERS,
+    });
+  };
+
   return (
     <div className="bg-white">
       <form onSubmit={handleSubmit(onSubmitFilterForm)}>
@@ -100,23 +109,15 @@ export const ProductsFilters: FC<Props> = ({
                   className="group flex items-center font-medium text-gray-700"
                 >
                   <ArrowUturnLeftIcon className="mr-2 h-4 w-4 flex-none text-gray-400 group-hover:text-gray-500" />
-                  <div
-                    className="hidden sm:contents"
-                    onClick={() =>
-                      dispatchFilterActions({
-                        type: ActionNamesEnum.RESET_FILTERS,
-                      })
-                    }
-                  >
+                  <div className="hidden sm:contents" onClick={resetFilters}>
                     Réinitialiser les filtres{' '}
                   </div>
                 </button>
               </div>
               <div className="pl-6">
                 <button
-                  type="button"
+                  type="submit"
                   className="group flex items-center font-medium text-gray-700"
-                  onClick={() => {}}
                 >
                   <AdjustmentsVerticalIcon className="mr-2 h-4 w-4 flex-none text-gray-400 group-hover:text-gray-500" />
                   Filtrer
@@ -124,7 +125,7 @@ export const ProductsFilters: FC<Props> = ({
               </div>
             </div>
           </div>
-          <Disclosure.Panel className="border-t border-gray-200 py-4">
+          <Disclosure.Panel className="border-t border-gray-200 pb-4 pt-1">
             <div className="my-3 grid grid-cols-1 gap-y-6 gap-x-4 px-6 sm:grid-cols-12 xl:grid-cols-10">
               <fieldset className="sm:col-span-4 xl:col-span-2">
                 <div>
@@ -189,50 +190,50 @@ export const ProductsFilters: FC<Props> = ({
                 </div>
               </fieldset>
               <fieldset className="sm:col-span-3 xl:col-span-1">
-                <legend className="text-sm font-medium text-gray-900">
-                  A acheter
-                </legend>
                 <div>
                   <InputSelect
+                    label="A acheter"
                     options={[
                       { label: '', value: '' },
-                      { label: 'Oui', value: 'yes' },
-                      { label: 'Non', value: 'no' },
+                      { label: 'Oui', value: 'true' },
+                      { label: 'Non', value: 'false' },
                     ]}
                     name={ProductAttributes.TO_BUY}
+                    register={register(ProductAttributes.TO_BUY)}
                     inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
               </fieldset>
               <fieldset className="sm:col-span-3 xl:col-span-1">
-                <legend className="text-sm font-medium text-gray-900">
-                  Visibilité
-                </legend>
                 <div>
                   <InputSelect
+                    label="Visibilité"
                     options={[
                       { label: '', value: '' },
-                      { label: 'Privé', value: 'private' },
-                      { label: 'Public', value: 'public' },
+                      { label: 'Privé', value: 'true' },
+                      { label: 'Public', value: 'false' },
                     ]}
                     name={ProductAttributes.IS_PUBLIC}
+                    register={register(ProductAttributes.IS_PUBLIC)}
                     inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
               </fieldset>
               <fieldset className="sm:col-span-3 xl:col-span-1">
-                <legend className="text-sm font-medium text-gray-900">
-                  Etat
-                </legend>
                 <div>
                   <InputSelect
+                    label="Etat"
                     options={[
                       { label: '', value: '' },
-                      { label: 'Neuf', value: 'new' },
-                      { label: 'Occasion', value: 'used' },
-                      { label: 'Reconditionné', value: 'refurbished' },
+                      { label: 'Neuf', value: ConditionTypeEnum.NEW },
+                      { label: 'Occasion', value: ConditionTypeEnum.USED },
+                      {
+                        label: 'Reconditionné',
+                        value: ConditionTypeEnum.REFURBISHED,
+                      },
                     ]}
                     name={ProductAttributes.CONDITION}
+                    register={register(ProductAttributes.CONDITION)}
                     inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
