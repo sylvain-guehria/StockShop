@@ -2,8 +2,8 @@ import type { ConditionTypeEnum } from '@/modules/product/productType';
 import { ProductAttributes } from '@/modules/product/productType';
 
 export enum ORDER {
-  ASC = 'ASC',
-  DESC = 'DESC',
+  ASC = 'asc',
+  DESC = 'desc',
 }
 
 export type FilterPropertyType = {
@@ -14,6 +14,11 @@ export type FilterPropertyType = {
   [ProductAttributes.TO_BUY]?: boolean;
   [ProductAttributes.IS_PUBLIC]?: boolean;
   [ProductAttributes.CONDITION]?: ConditionTypeEnum;
+};
+
+export type SorterType = {
+  field?: AuthorizedOrderProperty;
+  order: ORDER;
 };
 
 export type AuthorizedFilterProperty =
@@ -34,10 +39,7 @@ export type AuthorizedOrderProperty =
   | ProductAttributes.OPTIMUM_QUANTITY;
 
 export type FiltersStateType = {
-  sorter: {
-    field?: AuthorizedOrderProperty;
-    order: ORDER;
-  };
+  sorter: SorterType;
   filters: FilterPropertyType;
 };
 

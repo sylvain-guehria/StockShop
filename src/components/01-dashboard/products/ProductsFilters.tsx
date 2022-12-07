@@ -20,6 +20,7 @@ import {
 import { classNames } from '@/utils/tailwindUtils';
 
 import type {
+  AuthorizedOrderProperty,
   FilterPropertyType,
   FiltersActionsType,
   FiltersStateType,
@@ -275,6 +276,15 @@ export const ProductsFilters: FC<Props> = ({
                                 active ? 'bg-gray-100' : '',
                                 'block px-4 py-2 text-sm cursor-pointer'
                               )}
+                              onClick={() =>
+                                dispatchFilterActions({
+                                  type: ActionNamesEnum.SET_SORTER_FIELD,
+                                  payload: {
+                                    sorterField:
+                                      option.value as AuthorizedOrderProperty,
+                                  },
+                                })
+                              }
                             >
                               {option.label}
                             </div>

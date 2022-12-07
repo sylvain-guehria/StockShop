@@ -176,6 +176,8 @@ class FirebaseProductRepository extends ProductRepository {
     inventoryUid,
     companyUid,
     currentPage,
+    numberOfProductsPerPage,
+    sorter,
   }: GetProductsByUserUidCompanyUidInventoryUid): Promise<{
     count: number;
     products: ProductEntity[];
@@ -186,7 +188,15 @@ class FirebaseProductRepository extends ProductRepository {
     const response = await axios.get(
       `${this.baseUrl}/api/product/getProductsByUserUidCompanyUidInventoryUid`,
       {
-        params: { userUid, companyUid, inventoryUid, currentPage },
+        params: {
+          userUid,
+          companyUid,
+          inventoryUid,
+          currentPage,
+          numberOfProductsPerPage,
+          sorterField: sorter.field,
+          sorterOrder: sorter.order,
+        },
       }
     );
     return {

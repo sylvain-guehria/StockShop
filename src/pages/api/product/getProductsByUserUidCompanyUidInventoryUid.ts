@@ -2,7 +2,10 @@ import { firestoreAdmin } from 'firebaseFolder/serverApp';
 import { TableNames } from 'firebaseFolder/tableNames';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { ProductAttributes } from '@/modules/product/productType';
+import type {
+  AuthorizedOrderProperty,
+  ORDER,
+} from '@/components/01-dashboard/products/ProductsFiltersReducer';
 
 const { USERS, COMPANIES, INVENTORIES, PRODUCTS } = TableNames;
 
@@ -11,11 +14,17 @@ const getProductsByUserUidAndInventoryUid = async (
   res: NextApiResponse
 ) => {
   const {
-    query: { userUid, inventoryUid, companyUid, currentPage },
+    query: {
+      userUid,
+      inventoryUid,
+      companyUid,
+      currentPage,
+      numberOfProductsPerPage,
+      sorterField,
+      sorterOrder,
+    },
     method,
   } = req;
-
-  const numberOfProductsPerPage = 10;
 
   try {
     if (!userUid) {
@@ -88,8 +97,14 @@ const getProductsByUserUidAndInventoryUid = async (
     // }
 
     const currentPageNumber = parseInt(currentPage as string, 10);
+    const numberOfProductsPerPageNumber = parseInt(
+      numberOfProductsPerPage as string,
+      10
+    );
+
     const offset =
-      currentPageNumber * numberOfProductsPerPage - numberOfProductsPerPage;
+      currentPageNumber * numberOfProductsPerPageNumber -
+      numberOfProductsPerPageNumber;
 
     const productsCount = await firestoreAdmin
       .collection(USERS)
@@ -110,9 +125,9 @@ const getProductsByUserUidAndInventoryUid = async (
       .collection(INVENTORIES)
       .doc(inventoryUid as string)
       .collection(PRODUCTS)
-      .orderBy(ProductAttributes.LABEL)
+      .orderBy(sorterField as AuthorizedOrderProperty, sorterOrder as ORDER)
       .offset(offset)
-      .limit(numberOfProductsPerPage)
+      .limit(numberOfProductsPerPageNumber)
       .get();
 
     if (productsRef.empty) {

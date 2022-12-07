@@ -1,5 +1,7 @@
 /* eslint-disable class-methods-use-this */
 
+import type { SorterType } from '@/components/01-dashboard/products/ProductsFiltersReducer';
+
 import type ProductEntity from './ProductEntity';
 
 /**
@@ -79,6 +81,8 @@ export abstract class ProductRepository {
     inventoryUid,
     companyUid,
     currentPage,
+    numberOfProductsPerPage,
+    sorter,
   }: GetProductsByUserUidCompanyUidInventoryUid): Promise<{
     count: number;
     products: ProductEntity[];
@@ -89,6 +93,8 @@ export abstract class ProductRepository {
         inventoryUid,
         companyUid,
         currentPage,
+        numberOfProductsPerPage,
+        sorter,
       }}`
     );
   }
@@ -127,4 +133,6 @@ export interface GetProductsByUserUidCompanyUidInventoryUid {
   inventoryUid: string;
   companyUid: string;
   currentPage: number;
+  numberOfProductsPerPage: number;
+  sorter: SorterType;
 }

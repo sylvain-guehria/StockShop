@@ -1,11 +1,19 @@
+import type {
+  FilterPropertyType,
+  SorterType,
+} from '@/components/01-dashboard/products/ProductsFiltersReducer';
+import { ORDER } from '@/components/01-dashboard/products/ProductsFiltersReducer';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { ProductRepository } from '@/modules/product/productRepository';
+import { ProductAttributes } from '@/modules/product/productType';
 
 type GetInventoryProductsParamsType = {
   userUid: string;
   companyUid: string;
   inventoryUid: string;
   currentPage: number;
+  filters?: FilterPropertyType;
+  sorter?: SorterType;
 };
 
 export const getInventoryProducts =
@@ -14,11 +22,14 @@ export const getInventoryProducts =
     userUid,
     inventoryUid,
     companyUid,
-    currentPage,
+    currentPage: currentPageFromParams,
+    sorter,
   }: GetInventoryProductsParamsType): Promise<{
     count: number;
     products: ProductEntity[];
   }> => {
+    const currentPage = currentPageFromParams || 1;
+    const numberOfProductsPerPage = 10;
     try {
       if (!userUid) {
         throw new Error('userUid is required to get user inventoriy products');
@@ -41,6 +52,11 @@ export const getInventoryProducts =
           inventoryUid,
           companyUid,
           currentPage,
+          numberOfProductsPerPage,
+          sorter: {
+            field: sorter?.field || ProductAttributes.CREATION_DATE,
+            order: sorter?.order || ORDER.DESC,
+          },
         });
 
       return {

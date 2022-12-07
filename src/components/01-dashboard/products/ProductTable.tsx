@@ -111,7 +111,13 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
   } = useQuery({
     queryKey: [
       ApiRequestEnums.GetProducts,
-      { inventoryUid: currentInventoryUid, currentPage },
+      {
+        inventoryUid: currentInventoryUid,
+        currentPage,
+        filters: filtersState.filters,
+        sorterField: filtersState.sorter.field,
+        sorterOrder: filtersState.sorter.order,
+      },
     ],
     queryFn: () =>
       getInventoryProductsUseCase({
@@ -119,6 +125,11 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
         inventoryUid: currentInventoryUid,
         companyUid: user.getCompanyUid(),
         currentPage,
+        filters: filtersState.filters,
+        sorter: {
+          field: filtersState.sorter.field,
+          order: filtersState.sorter.order,
+        },
       }),
     enabled: !!(
       user.getUid() &&
