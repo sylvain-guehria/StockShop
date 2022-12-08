@@ -1,3 +1,4 @@
+import { FirebaseQueryBuilder } from 'firebaseFolder/firebaseQueryBuilder';
 import { firestoreAdmin } from 'firebaseFolder/serverApp';
 import { TableNames } from 'firebaseFolder/tableNames';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -5,7 +6,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import type {
   AuthorizedOrderProperty,
   ORDER,
-} from '@/components/01-dashboard/products/ProductsFiltersReducer';
+} from '@/components/01-dashboard/products/filters/ProductsFiltersReducer';
 
 const { USERS, COMPANIES, INVENTORIES, PRODUCTS } = TableNames;
 
@@ -22,6 +23,14 @@ const getProductsByUserUidAndInventoryUid = async (
       numberOfProductsPerPage,
       sorterField,
       sorterOrder,
+      filters,
+      filterLabel,
+      filterCategoryUid,
+      filterSubCategoryUid,
+      filterTva,
+      filterToBuy,
+      filterIsPublic,
+      filterCondition,
     },
     method,
   } = req;
@@ -96,6 +105,21 @@ const getProductsByUserUidAndInventoryUid = async (
     //   return;
     // }
 
+    // [ProductAttributes.LABEL]?: string;
+    // [ProductAttributes.CATEGORY_UID]?: string;
+    // [ProductAttributes.SUB_CATEGORY_UID]?: string;
+    // [ProductAttributes.TVA]?: number;
+    // [ProductAttributes.TO_BUY]?: boolean;
+    // [ProductAttributes.IS_PUBLIC]?: boolean;
+    // [ProductAttributes.CONDITION]?: ConditionTypeEnum;
+
+    // https://cloud.google.com/firestore/docs/query-data/queries
+
+    // where('ProductAttributes.LABEL', '==', filters?.label)
+    // where('ProductAttributes.CATEGORY_UID', '==', true)
+
+    // BUILD THE FULL REQUEST HERE ??
+
     const currentPageNumber = parseInt(currentPage as string, 10);
     const numberOfProductsPerPageNumber = parseInt(
       numberOfProductsPerPage as string,
@@ -106,17 +130,6 @@ const getProductsByUserUidAndInventoryUid = async (
       currentPageNumber * numberOfProductsPerPageNumber -
       numberOfProductsPerPageNumber;
 
-    const productsCount = await firestoreAdmin
-      .collection(USERS)
-      .doc(userUid as string)
-      .collection(COMPANIES)
-      .doc(companyUid as string)
-      .collection(INVENTORIES)
-      .doc(inventoryUid as string)
-      .collection(PRODUCTS)
-      .count()
-      .get();
-
     const productsRef = await firestoreAdmin
       .collection(USERS)
       .doc(userUid as string)
@@ -124,26 +137,33 @@ const getProductsByUserUidAndInventoryUid = async (
       .doc(companyUid as string)
       .collection(INVENTORIES)
       .doc(inventoryUid as string)
-      .collection(PRODUCTS)
+      .collection(PRODUCTS);
+
+    const productsCount = await productsRef.count().get();
+
+    if (productsCount.data().count === 0) {
+      // eslint-disable-next-line no-console
+      console.log(
+        `Collection Products in Inventory (${inventoryUid}) in Company (${companyUid}) in User (${userUid}) does not exist or is empty`
+      );
+      res.status(200).json({
+        count: productsCount.data().count,
+        results: [],
+      });
+      return;
+    }
+
+    const getProductQuery = await new FirebaseQueryBuilder(productsRef)
       .orderBy(sorterField as AuthorizedOrderProperty, sorterOrder as ORDER)
       .offset(offset)
       .limit(numberOfProductsPerPageNumber)
       .get();
 
-    if (productsRef.empty) {
-      // eslint-disable-next-line no-console
-      console.log(
-        `Collection Products in Inventory (${inventoryUid}) in Company (${companyUid}) in User (${userUid}) does not exist or is empty`
-      );
-      res.status(200).end('[]');
-      return;
-    }
-
     switch (method) {
       case 'GET':
         res.status(200).json({
           count: productsCount.data().count,
-          results: productsRef.docs.map((doc) => ({
+          results: getProductQuery.docs.map((doc) => ({
             ...doc.data(),
             inventoryUid,
           })),

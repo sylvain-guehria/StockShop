@@ -24,6 +24,7 @@ export const getInventoryProducts =
     companyUid,
     currentPage: currentPageFromParams,
     sorter,
+    filters,
   }: GetInventoryProductsParamsType): Promise<{
     count: number;
     products: ProductEntity[];
@@ -57,6 +58,7 @@ export const getInventoryProducts =
             field: sorter?.field || ProductAttributes.CREATION_DATE,
             order: sorter?.order || ORDER.DESC,
           },
+          filters: filters as FilterPropertyType,
         });
 
       return {
