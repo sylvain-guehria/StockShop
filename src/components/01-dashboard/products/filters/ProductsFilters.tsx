@@ -12,9 +12,9 @@ import { useForm } from 'react-hook-form';
 
 import { categories } from '@/categoriesDatabase/categories';
 import InputSelect from '@/components/04-lib/inputs/InputSelect';
+import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import { getSubCategoriesByCategoryUidFromDatabase } from '@/modules/category/categoryUtils';
 import {
-  ConditionTypeEnum,
   ProductAttributes,
   ProductLabels,
 } from '@/modules/product/productType';
@@ -34,22 +34,22 @@ const sortingOptions = [
     value: ProductAttributes.CREATION_DATE,
     label: ProductLabels[ProductAttributes.CREATION_DATE],
   },
-  {
-    value: ProductAttributes.SELLING_PRICE,
-    label: ProductLabels[ProductAttributes.SELLING_PRICE],
-  },
-  {
-    value: ProductAttributes.BUYING_PRICE,
-    label: ProductLabels[ProductAttributes.BUYING_PRICE],
-  },
+  // {
+  //   value: ProductAttributes.SELLING_PRICE,
+  //   label: ProductLabels[ProductAttributes.SELLING_PRICE],
+  // },
+  // {
+  //   value: ProductAttributes.BUYING_PRICE,
+  //   label: ProductLabels[ProductAttributes.BUYING_PRICE],
+  // },
   {
     value: ProductAttributes.QUANTITY_IN_INVENTORY,
     label: ProductLabels[ProductAttributes.QUANTITY_IN_INVENTORY],
   },
-  {
-    value: ProductAttributes.OPTIMUM_QUANTITY,
-    label: ProductLabels[ProductAttributes.OPTIMUM_QUANTITY],
-  },
+  // {
+  //   value: ProductAttributes.OPTIMUM_QUANTITY,
+  //   label: ProductLabels[ProductAttributes.OPTIMUM_QUANTITY],
+  // },
   {
     value: ProductAttributes.TO_BUY,
     label: ProductLabels[ProductAttributes.TO_BUY],
@@ -95,7 +95,7 @@ export const ProductsFilters: FC<Props> = ({
   };
 
   return (
-    <div className="bg-white">
+    <div className="rounded-lg bg-white">
       <form onSubmit={handleSubmit(onSubmitFilterForm)}>
         <Disclosure
           as="section"
@@ -137,20 +137,11 @@ export const ProductsFilters: FC<Props> = ({
                   </div>
                 </button>
               </div>
-              <div className="pl-6">
-                <button
-                  type="submit"
-                  className="group flex items-center font-medium text-gray-700"
-                >
-                  <AdjustmentsVerticalIcon className="mr-2 h-4 w-4 flex-none text-gray-400 group-hover:text-gray-500" />
-                  Filtrer
-                </button>
-              </div>
             </div>
           </div>
           <Disclosure.Panel className="border-t border-gray-200 pb-4 pt-1">
-            <div className="my-3 grid grid-cols-1 gap-y-6 gap-x-4 px-6 sm:grid-cols-12 xl:grid-cols-10">
-              <fieldset className="sm:col-span-4 xl:col-span-2">
+            <div className="my-3 grid grid-cols-1 gap-y-6 gap-x-4 px-6 sm:grid-cols-12">
+              <fieldset className="sm:col-span-3">
                 <InputSelect
                   options={[
                     { label: '', value: '' },
@@ -165,7 +156,7 @@ export const ProductsFilters: FC<Props> = ({
                   inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </fieldset>
-              <fieldset className="sm:col-span-4 xl:col-span-2">
+              <fieldset className="sm:col-span-3">
                 <div>
                   <InputSelect
                     options={[
@@ -185,7 +176,7 @@ export const ProductsFilters: FC<Props> = ({
                   />
                 </div>
               </fieldset>
-              <fieldset className="sm:col-span-3 xl:col-span-1">
+              <fieldset className="sm:col-span-2">
                 <div>
                   <InputSelect
                     label="A acheter"
@@ -200,7 +191,7 @@ export const ProductsFilters: FC<Props> = ({
                   />
                 </div>
               </fieldset>
-              <fieldset className="sm:col-span-3 xl:col-span-1">
+              <fieldset className="sm:col-span-2">
                 <div>
                   <InputSelect
                     label="Visibilité"
@@ -215,25 +206,14 @@ export const ProductsFilters: FC<Props> = ({
                   />
                 </div>
               </fieldset>
-              <fieldset className="sm:col-span-3 xl:col-span-1">
-                <div>
-                  <InputSelect
-                    label="Etat"
-                    options={[
-                      { label: '', value: '' },
-                      { label: 'Neuf', value: ConditionTypeEnum.NEW },
-                      { label: 'Occasion', value: ConditionTypeEnum.USED },
-                      {
-                        label: 'Reconditionné',
-                        value: ConditionTypeEnum.REFURBISHED,
-                      },
-                    ]}
-                    name={ProductAttributes.CONDITION}
-                    register={register(ProductAttributes.CONDITION)}
-                    inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  />
-                </div>
-              </fieldset>
+              <div className="self-end text-right sm:col-span-2 sm:text-center">
+                <LinkButton type="submit">
+                  <div className="flex items-center font-medium">
+                    <AdjustmentsVerticalIcon className="mr-2 h-4 w-4 flex-none text-primary-600" />
+                    Filtrer
+                  </div>
+                </LinkButton>
+              </div>
             </div>
           </Disclosure.Panel>
           <div className="col-start-1 row-start-1 py-4">
@@ -255,7 +235,7 @@ export const ProductsFilters: FC<Props> = ({
                     />
                   </div>
                   <Menu.Button className="group inline-flex justify-center border-x border-gray-300 px-3 text-sm  font-medium text-gray-700 hover:text-gray-900">
-                    <div className="hidden lg:inline-flex">Trier par</div>
+                    <div>Trier par</div>
                     <div className="tooltip tooltip-left" data-tip="Trier par">
                       <ChevronDownIcon
                         className="ml-1 h-5 w-5 shrink-0 text-gray-400 group-hover:text-gray-500 lg:-mr-1"

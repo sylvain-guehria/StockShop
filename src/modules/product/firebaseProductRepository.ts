@@ -202,7 +202,6 @@ class FirebaseProductRepository extends ProductRepository {
           filterSubCategoryUid: filters.subCategoryUid,
           filterToBuy: filters.toBuy,
           filterIsPublic: filters.isPublic,
-          filterCondition: filters.condition,
         },
       }
     );

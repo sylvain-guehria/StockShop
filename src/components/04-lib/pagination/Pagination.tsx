@@ -30,7 +30,7 @@ const Pagination: FC<Props> = ({
 
   return (
     <nav
-      className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
+      className="flex items-center justify-between rounded-lg border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
       aria-label="Pagination"
     >
       <div className="hidden sm:block">

@@ -1,7 +1,4 @@
-import {
-  ConditionTypeEnum,
-  ProductAttributes,
-} from '@/modules/product/productType';
+import { ProductAttributes } from '@/modules/product/productType';
 
 import type {
   FiltersActionsType,
@@ -24,7 +21,6 @@ const initialFiltersState: FiltersStateType = {
     [ProductAttributes.SUB_CATEGORY_UID]: '67890',
     [ProductAttributes.TO_BUY]: true,
     [ProductAttributes.IS_PUBLIC]: false,
-    [ProductAttributes.CONDITION]: ConditionTypeEnum.NEW,
   },
 };
 
@@ -58,7 +54,6 @@ describe('reducerFilters', () => {
           [ProductAttributes.SUB_CATEGORY_UID]: 'qsdfghj',
           [ProductAttributes.TO_BUY]: false,
           [ProductAttributes.IS_PUBLIC]: true,
-          [ProductAttributes.CONDITION]: ConditionTypeEnum.REFURBISHED,
         },
       },
     };
@@ -71,7 +66,6 @@ describe('reducerFilters', () => {
         [ProductAttributes.TVA]: 25,
         [ProductAttributes.TO_BUY]: false,
         [ProductAttributes.IS_PUBLIC]: true,
-        [ProductAttributes.CONDITION]: ConditionTypeEnum.REFURBISHED,
       },
     };
     expect(reducerFilters(initialFiltersState, action)).toEqual(expectedState);

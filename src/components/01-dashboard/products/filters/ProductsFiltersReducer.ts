@@ -1,4 +1,3 @@
-import type { ConditionTypeEnum } from '@/modules/product/productType';
 import { ProductAttributes } from '@/modules/product/productType';
 
 export enum ORDER {
@@ -11,7 +10,6 @@ export type FilterPropertyType = {
   [ProductAttributes.SUB_CATEGORY_UID]?: string;
   [ProductAttributes.TO_BUY]?: boolean;
   [ProductAttributes.IS_PUBLIC]?: boolean;
-  [ProductAttributes.CONDITION]?: ConditionTypeEnum;
 };
 
 export type SorterType = {
@@ -23,14 +21,11 @@ export type AuthorizedFilterProperty =
   | ProductAttributes.CATEGORY_UID
   | ProductAttributes.SUB_CATEGORY_UID
   | ProductAttributes.TO_BUY
-  | ProductAttributes.IS_PUBLIC
-  | ProductAttributes.CONDITION;
+  | ProductAttributes.IS_PUBLIC;
 
 export type AuthorizedOrderProperty =
   | ProductAttributes.LABEL
   | ProductAttributes.CREATION_DATE
-  | ProductAttributes.SELLING_PRICE
-  | ProductAttributes.BUYING_PRICE
   | ProductAttributes.QUANTITY_IN_INVENTORY
   | ProductAttributes.OPTIMUM_QUANTITY;
 

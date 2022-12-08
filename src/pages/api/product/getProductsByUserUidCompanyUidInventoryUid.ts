@@ -26,7 +26,6 @@ const getProductsByUserUidAndInventoryUid = async (
       filterSubCategoryUid,
       filterToBuy,
       filterIsPublic,
-      filterCondition,
     },
     method,
   } = req;
@@ -143,7 +142,6 @@ const getProductsByUserUidAndInventoryUid = async (
       .where(ProductAttributes.SUB_CATEGORY_UID, '==', filterSubCategoryUid)
       .where(ProductAttributes.TO_BUY, '>', boolToBuy ? 0 : undefined)
       .where(ProductAttributes.IS_PUBLIC, '==', boolIsPublic)
-      .where(ProductAttributes.CONDITION, '==', filterCondition)
       .toCollectionRefType();
 
     const productsCount = (await getProductQuery.count().get()).data().count;
