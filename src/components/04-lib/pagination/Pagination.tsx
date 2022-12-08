@@ -64,7 +64,7 @@ const Pagination: FC<Props> = ({
           <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
         </div>
         <div className="relative ml-3 inline-flex items-center  bg-white px-4 py-2 text-sm font-medium text-gray-700">
-          Page {currentPage} sur {totalPages}
+          {totalPages ? `Page ${currentPage} sur ${totalPages}` : ''}
         </div>
         <div
           onClick={handleNextPageClick}

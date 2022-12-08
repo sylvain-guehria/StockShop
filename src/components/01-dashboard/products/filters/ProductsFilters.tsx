@@ -11,7 +11,6 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import { categories } from '@/categoriesDatabase/categories';
-import Input from '@/components/04-lib/inputs/Input';
 import InputSelect from '@/components/04-lib/inputs/InputSelect';
 import { getSubCategoriesByCategoryUidFromDatabase } from '@/modules/category/categoryUtils';
 import {
@@ -50,6 +49,10 @@ const sortingOptions = [
   {
     value: ProductAttributes.OPTIMUM_QUANTITY,
     label: ProductLabels[ProductAttributes.OPTIMUM_QUANTITY],
+  },
+  {
+    value: ProductAttributes.TO_BUY,
+    label: ProductLabels[ProductAttributes.TO_BUY],
   },
 ];
 
@@ -148,16 +151,6 @@ export const ProductsFilters: FC<Props> = ({
           <Disclosure.Panel className="border-t border-gray-200 pb-4 pt-1">
             <div className="my-3 grid grid-cols-1 gap-y-6 gap-x-4 px-6 sm:grid-cols-12 xl:grid-cols-10">
               <fieldset className="sm:col-span-4 xl:col-span-2">
-                <div>
-                  <Input
-                    type="text"
-                    label="Label"
-                    name={ProductAttributes.LABEL}
-                    register={register(ProductAttributes.LABEL)}
-                  />
-                </div>
-              </fieldset>
-              <fieldset className="sm:col-span-4 xl:col-span-2">
                 <InputSelect
                   options={[
                     { label: '', value: '' },
@@ -188,23 +181,6 @@ export const ProductsFilters: FC<Props> = ({
                     disabled={!watchCategoryUid}
                     name={ProductAttributes.SUB_CATEGORY_UID}
                     register={register(ProductAttributes.SUB_CATEGORY_UID)}
-                    inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  />
-                </div>
-              </fieldset>
-              <fieldset className="sm:col-span-3 xl:col-span-1">
-                <div>
-                  <InputSelect
-                    label="TVA"
-                    options={[
-                      { label: '', value: '' },
-                      { label: '20%', value: '20' },
-                      { label: '10%', value: '10' },
-                      { label: '5.5%', value: '5.5' },
-                      { label: '2.1%', value: '2.1' },
-                    ]}
-                    name={ProductAttributes.TVA}
-                    register={register(ProductAttributes.TVA)}
                     inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>

@@ -20,10 +20,8 @@ const initialFiltersState: FiltersStateType = {
     order: ORDER.DESC,
   },
   filters: {
-    [ProductAttributes.LABEL]: 'Test',
-    [ProductAttributes.CATEGORY_UID]: '12345',
+    [ProductAttributes.CATEGORY_UID]: 'cat_uid',
     [ProductAttributes.SUB_CATEGORY_UID]: '67890',
-    [ProductAttributes.TVA]: 20,
     [ProductAttributes.TO_BUY]: true,
     [ProductAttributes.IS_PUBLIC]: false,
     [ProductAttributes.CONDITION]: ConditionTypeEnum.NEW,
@@ -36,8 +34,8 @@ describe('reducerFilters', () => {
       type: ActionNamesEnum.SET_FILTER,
       payload: {
         filter: {
-          attribute: ProductAttributes.LABEL,
-          value: 'Test 2',
+          attribute: ProductAttributes.CATEGORY_UID,
+          value: 'updated_cat_uid',
         },
       },
     };
@@ -45,7 +43,7 @@ describe('reducerFilters', () => {
       ...initialFiltersState,
       filters: {
         ...initialFiltersState.filters,
-        [ProductAttributes.LABEL]: 'Test 2',
+        [ProductAttributes.CATEGORY_UID]: 'updated_cat_uid',
       },
     };
     expect(reducerFilters(initialFiltersState, action)).toEqual(expectedState);
@@ -56,10 +54,8 @@ describe('reducerFilters', () => {
       type: ActionNamesEnum.SET_FILTERS,
       payload: {
         filters: {
-          [ProductAttributes.LABEL]: 'Test SET_FILTERS 2',
           [ProductAttributes.CATEGORY_UID]: 'azertyui',
           [ProductAttributes.SUB_CATEGORY_UID]: 'qsdfghj',
-          [ProductAttributes.TVA]: 25,
           [ProductAttributes.TO_BUY]: false,
           [ProductAttributes.IS_PUBLIC]: true,
           [ProductAttributes.CONDITION]: ConditionTypeEnum.REFURBISHED,

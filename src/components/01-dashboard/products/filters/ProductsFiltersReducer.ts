@@ -7,10 +7,8 @@ export enum ORDER {
 }
 
 export type FilterPropertyType = {
-  [ProductAttributes.LABEL]?: string;
   [ProductAttributes.CATEGORY_UID]?: string;
   [ProductAttributes.SUB_CATEGORY_UID]?: string;
-  [ProductAttributes.TVA]?: number;
   [ProductAttributes.TO_BUY]?: boolean;
   [ProductAttributes.IS_PUBLIC]?: boolean;
   [ProductAttributes.CONDITION]?: ConditionTypeEnum;
@@ -22,10 +20,8 @@ export type SorterType = {
 };
 
 export type AuthorizedFilterProperty =
-  | ProductAttributes.LABEL
   | ProductAttributes.CATEGORY_UID
   | ProductAttributes.SUB_CATEGORY_UID
-  | ProductAttributes.TVA
   | ProductAttributes.TO_BUY
   | ProductAttributes.IS_PUBLIC
   | ProductAttributes.CONDITION;
@@ -64,10 +60,8 @@ export type FiltersActionsType = {
 };
 
 export const initialFilters = {
-  [ProductAttributes.LABEL]: undefined,
   [ProductAttributes.CATEGORY_UID]: undefined,
   [ProductAttributes.SUB_CATEGORY_UID]: undefined,
-  [ProductAttributes.TVA]: undefined,
   [ProductAttributes.TO_BUY]: undefined,
   [ProductAttributes.IS_PUBLIC]: undefined,
   [ProductAttributes.CONDITION]: undefined,

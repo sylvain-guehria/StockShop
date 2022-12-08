@@ -31,12 +31,15 @@ import {
 } from '@/usecases/usecases';
 
 import Column from './ColumnProduct';
-import { ProductsFilters } from './ProductsFilters';
+import { ProductsFilters } from './filters/ProductsFilters';
 import type {
   FiltersActionsType,
   FiltersStateType,
-} from './ProductsFiltersReducer';
-import { initialFilterState, reducerFilters } from './ProductsFiltersReducer';
+} from './filters/ProductsFiltersReducer';
+import {
+  initialFilterState,
+  reducerFilters,
+} from './filters/ProductsFiltersReducer';
 
 const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
   suspense: true,

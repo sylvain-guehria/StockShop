@@ -28,8 +28,12 @@ export class FirebaseQueryBuilder {
     return this;
   }
 
-  orderBy(property: string, order: firestore.OrderByDirection = 'asc') {
-    if (!property) return this.query;
+  orderBy(
+    property: string,
+    order: firestore.OrderByDirection = 'asc',
+    enable = false
+  ) {
+    if (!property || !enable) return this;
     this.query = this.query.orderBy(property, order);
     return this;
   }
@@ -48,6 +52,14 @@ export class FirebaseQueryBuilder {
 
   get() {
     return this.query.get();
+  }
+
+  toDocumentRefType(): firestore.DocumentReference {
+    return this.query as unknown as firestore.DocumentReference;
+  }
+
+  toCollectionRefType(): firestore.CollectionReference {
+    return this.query as firestore.CollectionReference;
   }
 }
 

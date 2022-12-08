@@ -3,10 +3,9 @@ import { firestoreAdmin } from 'firebaseFolder/serverApp';
 import { TableNames } from 'firebaseFolder/tableNames';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import type {
-  AuthorizedOrderProperty,
-  ORDER,
-} from '@/components/01-dashboard/products/filters/ProductsFiltersReducer';
+import type { ORDER } from '@/components/01-dashboard/products/filters/ProductsFiltersReducer';
+import { ProductAttributes } from '@/modules/product/productType';
+import { parseBoolean } from '@/utils/primitiveUtils';
 
 const { USERS, COMPANIES, INVENTORIES, PRODUCTS } = TableNames;
 
@@ -23,11 +22,8 @@ const getProductsByUserUidAndInventoryUid = async (
       numberOfProductsPerPage,
       sorterField,
       sorterOrder,
-      filters,
-      filterLabel,
       filterCategoryUid,
       filterSubCategoryUid,
-      filterTva,
       filterToBuy,
       filterIsPublic,
       filterCondition,
@@ -139,22 +135,33 @@ const getProductsByUserUidAndInventoryUid = async (
       .doc(inventoryUid as string)
       .collection(PRODUCTS);
 
-    const productsCount = await productsRef.count().get();
+    const boolToBuy = parseBoolean(filterToBuy as string);
+    const boolIsPublic = parseBoolean(filterIsPublic as string);
 
-    if (productsCount.data().count === 0) {
+    const getProductQuery = await new FirebaseQueryBuilder(productsRef)
+      .where(ProductAttributes.CATEGORY_UID, '==', filterCategoryUid)
+      .where(ProductAttributes.SUB_CATEGORY_UID, '==', filterSubCategoryUid)
+      .where(ProductAttributes.TO_BUY, '>', boolToBuy ? 0 : undefined)
+      .where(ProductAttributes.IS_PUBLIC, '==', boolIsPublic)
+      .where(ProductAttributes.CONDITION, '==', filterCondition)
+      .toCollectionRefType();
+
+    const productsCount = (await getProductQuery.count().get()).data().count;
+
+    if (!productsCount || productsCount === 0) {
       // eslint-disable-next-line no-console
       console.log(
         `Collection Products in Inventory (${inventoryUid}) in Company (${companyUid}) in User (${userUid}) does not exist or is empty`
       );
       res.status(200).json({
-        count: productsCount.data().count,
+        count: productsCount,
         results: [],
       });
       return;
     }
 
-    const getProductQuery = await new FirebaseQueryBuilder(productsRef)
-      .orderBy(sorterField as AuthorizedOrderProperty, sorterOrder as ORDER)
+    const getProductQueryWithOffsetAndLimit = await getProductQuery
+      .orderBy(sorterField as string, sorterOrder as ORDER)
       .offset(offset)
       .limit(numberOfProductsPerPageNumber)
       .get();
@@ -162,8 +169,8 @@ const getProductsByUserUidAndInventoryUid = async (
     switch (method) {
       case 'GET':
         res.status(200).json({
-          count: productsCount.data().count,
-          results: getProductQuery.docs.map((doc) => ({
+          count: productsCount,
+          results: getProductQueryWithOffsetAndLimit.docs.map((doc) => ({
             ...doc.data(),
             inventoryUid,
           })),

@@ -27,7 +27,7 @@ export const ProductLabels = {
   [ProductAttributes.BUYING_PRICE]: "Prix d'achat HT",
   [ProductAttributes.SELLING_PRICE]: 'Prix de vente HT',
   [ProductAttributes.DESCRIPTION]: 'Description',
-  [ProductAttributes.TO_BUY]: 'A acheter',
+  [ProductAttributes.TO_BUY]: 'Quantité à acheter',
   [ProductAttributes.IS_PUBLIC]: 'Publique',
   [ProductAttributes.TVA]: 'TVA',
   [ProductAttributes.CATEGORY_UID]: 'Catégorie',
