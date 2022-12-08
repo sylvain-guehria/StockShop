@@ -6,10 +6,12 @@ const ColumnProduct = ({
   label,
   className,
   children,
+  help,
 }: {
   label: string;
   className?: string;
   children?: ReactNode;
+  help?: string;
 }) => (
   <th
     className={classNames(
@@ -18,7 +20,7 @@ const ColumnProduct = ({
     )}
     scope="col"
   >
-    {label}
+    <div className={help ? 'tooltip tooltip-right' : ''}>{label}</div>
     {children}
   </th>
 );

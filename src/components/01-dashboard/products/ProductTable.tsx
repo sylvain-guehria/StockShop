@@ -1,6 +1,6 @@
 import {
-  CheckCircleIcon,
   MagnifyingGlassIcon,
+  MinusCircleIcon,
   PencilSquareIcon,
   PhotoIcon,
   PlusCircleIcon,
@@ -272,15 +272,20 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
               <tr className="border-t border-gray-200">
                 <Column label="Label" className="py-3.5 pl-4 pr-3 sm:pl-6" />
                 <Column label="Catégorie" className="px-3 py-3.5" />
-                <Column label="Prix d'achat HT" className="px-3 py-3.5" />
-                <Column label="Prix de vente HT" className="px-3 py-3.5" />
+                <Column label="Prix achat HT" className="px-3 py-3.5" />
+                <Column label="Prix vente HT" className="px-3 py-3.5" />
                 <Column
                   label="TVA"
                   className="hidden px-3 py-3.5 sm:table-cell"
                 />
-                <Column label="Quantité en stock" className="px-3 py-3.5" />
                 <Column
-                  label="Quantité optimal"
+                  label="En stock"
+                  className="px-3 py-3.5"
+                  help="Quantité en stock"
+                />
+                <Column
+                  label="Optimal"
+                  help="Quantité Optimal"
                   className="hidden px-3 py-3.5 sm:table-cell"
                 />
                 <Column label="" className="px-3 py-1">
@@ -330,10 +335,17 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                           />
                           <span className="sr-only">Voir {product.label}</span>
                         </div>
-                        {product.label}
+                        <div
+                          className="tooltip tooltip-right"
+                          data-tip={product.label}
+                        >
+                          <div className="w-28 overflow-hidden text-ellipsis text-left">
+                            {product.label}
+                          </div>
+                        </div>
                       </div>
                     </td>
-                    <td className=" whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       <div
                         className="tooltip tooltip-right"
                         data-tip={`${categroyLabel} ${
@@ -375,41 +387,40 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                       />
                     </td>
                     <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                      {product.toBuy > 0 ? (
-                        <div
-                          className="tooltip tooltip-left"
-                          data-tip="Présent dans votre liste des produits à acheter."
-                        >
-                          <CheckCircleIcon
-                            className="ml-3 h-5 w-5 shrink-0 text-green-600"
-                            aria-hidden="true"
-                          />
-                        </div>
-                      ) : (
-                        <div className="flex">
-                          0
-                          <div
-                            className="tooltip tooltip-left cursor-pointer"
-                            data-tip='Ajouter à la liste : "À acheter"'
-                          >
-                            <PlusCircleIcon
-                              className="ml-3 h-5 w-5 shrink-0 text-primary-600"
-                              aria-hidden="true"
-                              onClick={() =>
-                                updateProductMutation.mutate({
-                                  product: { ...product, toBuy: 1 },
-                                  userUid: user.getUid(),
-                                  companyUid: user.getCompanyUid(),
-                                })
-                              }
-                            />
-                            <span className="sr-only">
-                              Ajouter à la liste produit à acheter{' '}
-                              {product.label}
-                            </span>
-                          </div>
-                        </div>
-                      )}
+                      <div className="flex">
+                        <MinusCircleIcon
+                          className="mr-3 h-5 w-5 shrink-0 cursor-pointer text-primary-600"
+                          aria-hidden="true"
+                          onClick={() =>
+                            updateProductMutation.mutate({
+                              product: {
+                                ...product,
+                                toBuy:
+                                  product.toBuy > 0 ? product.toBuy - 1 : 0,
+                              },
+                              userUid: user.getUid(),
+                              companyUid: user.getCompanyUid(),
+                            })
+                          }
+                        />
+
+                        {product.toBuy}
+
+                        <PlusCircleIcon
+                          className="ml-3 h-5 w-5 shrink-0 cursor-pointer text-primary-600"
+                          aria-hidden="true"
+                          onClick={() =>
+                            updateProductMutation.mutate({
+                              product: {
+                                ...product,
+                                toBuy: product.toBuy + 1,
+                              },
+                              userUid: user.getUid(),
+                              companyUid: user.getCompanyUid(),
+                            })
+                          }
+                        />
+                      </div>
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {product.isPublic ? 'Public' : 'Privé'}
