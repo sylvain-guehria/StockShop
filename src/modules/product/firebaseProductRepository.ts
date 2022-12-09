@@ -7,6 +7,7 @@ import type {
   AddProduct,
   DeleteProduct,
   GetProduct,
+  GetProductsByUserUidCompanyUidInventoryUid,
   UpdateProduct,
 } from './productRepository';
 import { ProductRepository } from './productRepository';
@@ -47,6 +48,7 @@ class FirebaseProductRepository extends ProductRepository {
       catSubcatAttributes,
       condition,
       photoLink,
+      creationDate,
     } = response.data;
 
     return ProductEntity.new({
@@ -67,6 +69,7 @@ class FirebaseProductRepository extends ProductRepository {
       catSubcatAttributes,
       condition,
       photoLink,
+      creationDate,
     });
   }
 
@@ -83,14 +86,16 @@ class FirebaseProductRepository extends ProductRepository {
         uid: product.getUid(),
         label: product.getLabel(),
         inventoryUid: product.getInventoryUid(),
+        creationDate: product.getCreationDate(),
       },
     });
     console.info('Product added in DB, uid: ', product.getUid());
-    const { uid, label, inventoryUid } = res.data;
+    const { uid, label, inventoryUid, creationDate } = res.data;
     return ProductEntity.new({
       uid,
       label,
       inventoryUid,
+      creationDate,
     });
   }
 
@@ -140,6 +145,7 @@ class FirebaseProductRepository extends ProductRepository {
           catSubcatAttributes: product.getCatSubcatAttributes(),
           condition: product.getCondition(),
           photoLink: product.getPhotoLink(),
+          creationDate: product.getCreationDate(),
         },
       }
     );
@@ -161,6 +167,7 @@ class FirebaseProductRepository extends ProductRepository {
       catSubcatAttributes: data.catSubcatAttributes,
       condition: data.condition,
       photoLink: data.photoLink,
+      creationDate: data.creationDate,
     });
   }
 
@@ -168,42 +175,61 @@ class FirebaseProductRepository extends ProductRepository {
     userUid,
     inventoryUid,
     companyUid,
-  }: {
-    userUid: string;
-    inventoryUid: string;
-    companyUid: string;
-  }): Promise<ProductEntity[]> {
+    currentPage,
+    numberOfProductsPerPage,
+    sorter,
+    filters,
+  }: GetProductsByUserUidCompanyUidInventoryUid): Promise<{
+    count: number;
+    products: ProductEntity[];
+  }> {
     console.info(
       'get all products by userUid, companyUid and inventoryUid in db'
     );
     const response = await axios.get(
       `${this.baseUrl}/api/product/getProductsByUserUidCompanyUidInventoryUid`,
       {
-        params: { userUid, companyUid, inventoryUid },
+        params: {
+          userUid,
+          companyUid,
+          inventoryUid,
+          currentPage,
+          numberOfProductsPerPage,
+          sorterField: sorter.field,
+          sorterOrder: sorter.order,
+          filterCategoryUid: filters.categoryUid,
+          filterSubCategoryUid: filters.subCategoryUid,
+          filterToBuy: filters.toBuy,
+          filterIsPublic: filters.isPublic,
+        },
       }
     );
-    return response.data.map(
-      (product: ProductEntity) =>
-        new ProductEntity({
-          uid: product.uid,
-          label: product.label,
-          quantityInInventory: product.quantityInInventory,
-          optimumQuantity: product.optimumQuantity,
-          buyingPrice: product.buyingPrice,
-          sellingPrice: product.sellingPrice,
-          description: product.description,
-          toBuy: product.toBuy,
-          isPublic: product.isPublic,
-          tva: product.tva,
-          categoryUid: product.categoryUid,
-          subCategoryUid: product.subCategoryUid,
-          publicDisponibility: product.publicDisponibility,
-          inventoryUid: product.inventoryUid,
-          catSubcatAttributes: product.catSubcatAttributes,
-          condition: product.condition,
-          photoLink: product.photoLink,
-        })
-    );
+    return {
+      count: response.data.count,
+      products: response.data.results.map(
+        (product: ProductEntity) =>
+          new ProductEntity({
+            uid: product.uid,
+            label: product.label,
+            quantityInInventory: product.quantityInInventory,
+            optimumQuantity: product.optimumQuantity,
+            buyingPrice: product.buyingPrice,
+            sellingPrice: product.sellingPrice,
+            description: product.description,
+            toBuy: product.toBuy,
+            isPublic: product.isPublic,
+            tva: product.tva,
+            categoryUid: product.categoryUid,
+            subCategoryUid: product.subCategoryUid,
+            publicDisponibility: product.publicDisponibility,
+            inventoryUid: product.inventoryUid,
+            catSubcatAttributes: product.catSubcatAttributes,
+            condition: product.condition,
+            photoLink: product.photoLink,
+            creationDate: product.creationDate,
+          })
+      ),
+    };
   }
 }
 

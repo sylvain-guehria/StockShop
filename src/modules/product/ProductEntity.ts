@@ -36,6 +36,8 @@ class ProductEntity implements Product {
 
   photoLink: string;
 
+  creationDate: number;
+
   static new(product?: Product): ProductEntity {
     return new ProductEntity(product || ({} as Product));
   }
@@ -49,7 +51,8 @@ class ProductEntity implements Product {
     this.sellingPrice = product.sellingPrice || 0;
     this.description = product.description || '';
     this.toBuy = product.toBuy || 0;
-    this.isPublic = product.isPublic || false;
+    // @ts-ignore
+    this.isPublic = product.isPublic ? product.isPublic === 'true' : false;
     this.tva = product.tva || 0;
     this.categoryUid = product.categoryUid || '';
     this.subCategoryUid = product.subCategoryUid || '';
@@ -58,6 +61,16 @@ class ProductEntity implements Product {
     this.catSubcatAttributes = product.catSubcatAttributes || {};
     this.condition = product.condition || ConditionTypeEnum.NEW;
     this.photoLink = product.photoLink || '';
+    this.creationDate = product.creationDate || Date.now();
+  }
+
+  getCreationDate(): number {
+    return this.creationDate;
+  }
+
+  setCreationDate(creationDate: number): ProductEntity {
+    this.creationDate = creationDate;
+    return this;
   }
 
   getCatSubcatAttributes(): Record<string, any> {

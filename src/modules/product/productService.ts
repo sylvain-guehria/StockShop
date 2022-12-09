@@ -22,6 +22,7 @@ class ProductService {
       uid,
       label: 'New product',
       inventoryUid,
+      creationDate: Date.now(),
     });
 
     return this.productRepository.add({
