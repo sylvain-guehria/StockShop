@@ -1,5 +1,10 @@
 /* eslint-disable class-methods-use-this */
 
+import type {
+  FilterPropertyType,
+  SorterType,
+} from '@/components/01-dashboard/products/filters/ProductsFiltersReducer';
+
 import type ProductEntity from './ProductEntity';
 
 /**
@@ -78,16 +83,23 @@ export abstract class ProductRepository {
     userUid,
     inventoryUid,
     companyUid,
-  }: {
-    userUid: string;
-    inventoryUid: string;
-    companyUid: string;
-  }): Promise<ProductEntity[]> {
+    currentPage,
+    numberOfProductsPerPage,
+    sorter,
+    filters,
+  }: GetProductsByUserUidCompanyUidInventoryUid): Promise<{
+    count: number;
+    products: ProductEntity[];
+  }> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
         userUid,
         inventoryUid,
         companyUid,
+        currentPage,
+        numberOfProductsPerPage,
+        sorter,
+        filters,
       }}`
     );
   }
@@ -119,4 +131,14 @@ export interface GetProduct {
   inventoryUid: string;
   userUid: string;
   companyUid: string;
+}
+
+export interface GetProductsByUserUidCompanyUidInventoryUid {
+  userUid: string;
+  inventoryUid: string;
+  companyUid: string;
+  currentPage: number;
+  numberOfProductsPerPage: number;
+  sorter: SorterType;
+  filters: FilterPropertyType;
 }

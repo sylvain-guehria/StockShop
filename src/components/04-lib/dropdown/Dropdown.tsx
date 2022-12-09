@@ -1,22 +1,43 @@
 import { Menu, Transition } from '@headlessui/react';
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid';
-import { ArrowRightCircleIcon } from '@heroicons/react/24/outline';
 import type { FC } from 'react';
-import { Fragment } from 'react';
+import React, { Fragment } from 'react';
 
 import { classNames } from '@/utils/tailwindUtils';
 
 type Props = {
   iconClassName?: string;
+  Icon?: (
+    props: React.ComponentProps<'svg'> & { title?: string; titleId?: string }
+  ) => JSX.Element;
+  childrens: {
+    key: string;
+    render: JSX.Element;
+  }[];
+  label?: string;
 };
 
-const Dropdown: FC<Props> = ({ iconClassName }) => {
+const Dropdown: FC<Props> = ({
+  iconClassName,
+  childrens = [],
+  label,
+  Icon = EllipsisVerticalIcon,
+}) => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="flex items-center rounded-full bg-gray-100 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+        <Menu.Button className="mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200">
           <span className="sr-only">Open options</span>
-          <EllipsisVerticalIcon className={iconClassName} aria-hidden="true" />
+          <div>{label}</div>
+          {
+            <Icon
+              className={classNames(
+                'h-7 w-7 shrink-0 text-primary-500 hover:bg-primary-300 rounded-full  ml-3',
+                iconClassName || ''
+              )}
+              aria-hidden="true"
+            />
+          }
         </Menu.Button>
       </div>
 
@@ -31,64 +52,11 @@ const Dropdown: FC<Props> = ({ iconClassName }) => {
       >
         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
           <div className="py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                  Account settings
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                  Support
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                  <ArrowRightCircleIcon
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                    aria-hidden="true"
-                  />
-                  License
-                </a>
-              )}
-            </Menu.Item>
-            <form method="POST" action="#">
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    type="submit"
-                    className={classNames(
-                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block w-full px-4 py-2 text-left text-sm'
-                    )}
-                  >
-                    Sign out
-                  </button>
-                )}
+            {childrens.map((child, index) => (
+              <Menu.Item key={index}>
+                <div className="hover:bg-primary-200">{child.render}</div>
               </Menu.Item>
-            </form>
+            ))}
           </div>
         </Menu.Items>
       </Transition>

@@ -1,6 +1,6 @@
 import {
-  CheckCircleIcon,
   MagnifyingGlassIcon,
+  MinusCircleIcon,
   PencilSquareIcon,
   PhotoIcon,
   PlusCircleIcon,
@@ -9,12 +9,19 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { productServiceDi } from 'di';
 import dynamic from 'next/dynamic';
-import type { FC } from 'react';
-import { useState } from 'react';
+import type { FC, Reducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 
+import Pagination from '@/components/04-lib/pagination/Pagination';
 import Spinner from '@/components/04-lib/spinner/Spinner';
 import Tag from '@/components/04-lib/tag/Tag';
+import { ApiRequestEnums } from '@/enums/apiRequestEnums';
+import { CustomEvents } from '@/enums/eventEnums';
 import { useAuth } from '@/hooks/useAuth';
+import {
+  getCategoryByUid,
+  getSubCategoryByUid,
+} from '@/modules/category/categoryUtils';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { DeleteProduct } from '@/modules/product/productRepository';
 import type { UpdateProductParams } from '@/modules/product/productService';
@@ -24,6 +31,15 @@ import {
 } from '@/usecases/usecases';
 
 import Column from './ColumnProduct';
+import { ProductsFilters } from './filters/ProductsFilters';
+import type {
+  FiltersActionsType,
+  FiltersStateType,
+} from './filters/ProductsFiltersReducer';
+import {
+  initialFilterState,
+  reducerFilters,
+} from './filters/ProductsFiltersReducer';
 
 const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
   suspense: true,
@@ -61,25 +77,69 @@ type Props = {
 const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
+  // TODO : add a reducer to manage the state of the table
   const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
   const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] =
     useState(false);
   const [isEditPhotoModalOpen, setIsEditPhotoModalOpen] = useState(false);
   const [isViewProductModalOpen, setIsViewProductModalOpen] = useState(false);
-
+  const [currentPage, setCurrentPage] = useState(1);
   const [productToEdit, setProductToEdit] = useState<ProductEntity | null>(
     null
   );
 
-  const { data: products = [], isLoading: isLoadingProducts } = useQuery({
-    queryKey: ['get-products', { inventoryUid: currentInventoryUid }],
+  const [filtersState, dispatchFilterActions] = useReducer<
+    Reducer<FiltersStateType, FiltersActionsType>
+  >(reducerFilters, initialFilterState);
+
+  useEffect(() => {
+    window.addEventListener(CustomEvents.ProductEventCreation, (event: any) =>
+      handleEditProductClick(event.detail as ProductEntity)
+    );
+
+    return () => {
+      window.removeEventListener(
+        CustomEvents.ProductEventCreation,
+        (event: any) => handleEditProductClick(event.detail as ProductEntity)
+      );
+    };
+  }, []);
+
+  const {
+    data = {
+      count: 0,
+      products: [],
+    },
+    isLoading: isLoadingProducts,
+  } = useQuery({
+    queryKey: [
+      ApiRequestEnums.GetProducts,
+      {
+        inventoryUid: currentInventoryUid,
+        currentPage,
+        filters: filtersState.filters,
+        sorterField: filtersState.sorter.field,
+        sorterOrder: filtersState.sorter.order,
+      },
+    ],
     queryFn: () =>
       getInventoryProductsUseCase({
-        userUid: user.uid,
+        userUid: user.getUid(),
         inventoryUid: currentInventoryUid,
-        companyUid: user.companyUid,
+        companyUid: user.getCompanyUid(),
+        currentPage,
+        filters: filtersState.filters,
+        sorter: {
+          field: filtersState.sorter.field,
+          order: filtersState.sorter.order,
+        },
       }),
-    enabled: !!(user.uid && currentInventoryUid && user.companyUid),
+    enabled: !!(
+      user.getUid() &&
+      currentInventoryUid &&
+      user.getCompanyUid() &&
+      currentPage
+    ),
   });
 
   const updateProductMutation = useMutation({
@@ -87,7 +147,9 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
       productServiceDi.updateProduct(params),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ['get-products'] });
+      queryClient.invalidateQueries({
+        queryKey: [ApiRequestEnums.GetProducts],
+      });
       setIsEditProductModalOpen(false);
       setProductToEdit(null);
     },
@@ -97,13 +159,16 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
     mutationFn: (params: DeleteProduct) => deleteProductUseCase(params),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ['get-products'] });
+      queryClient.invalidateQueries({
+        queryKey: [ApiRequestEnums.GetProducts],
+      });
       setIsDeleteProductModalOpen(false);
       setProductToEdit(null);
     },
   });
 
   const handleEditProductClick = (product: ProductEntity) => {
+    if (!product) return;
     setProductToEdit(product);
     setIsEditProductModalOpen(true);
   };
@@ -197,183 +262,228 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
         </DynamicModal>
       )}
       <div className="mt-8 flex flex-col">
-        <div className="overflow-x-auto rounded-lg shadow ring-1 ring-black/5">
-          <table className="min-w-full divide-y divide-gray-300">
-            <thead>
-              <tr className="border-t border-gray-200">
-                <Column label="Label" className="py-3.5 pl-4 pr-3 sm:pl-6" />
-                <Column label="Catégorie" className="px-3 py-3.5" />
-                <Column label="Prix d'achat HT" className="px-3 py-3.5" />
-                <Column label="Prix de vente HT" className="px-3 py-3.5" />
-                <Column
-                  label="TVA"
-                  className="hidden px-3 py-3.5 sm:table-cell"
-                />
-                <Column label="Quantité en stock" className="px-3 py-3.5" />
-                <Column
-                  label="Quantité optimal"
-                  className="hidden px-3 py-3.5 sm:table-cell"
-                />
-                <Column label="" className="px-3 py-1">
-                  <Tag
-                    label="Manquant"
-                    bgColor="bg-red-200"
-                    textColor="text-red-800"
+        <div className="rounded-lg bg-white shadow ring-1 ring-black/5">
+          <ProductsFilters
+            filtersState={filtersState}
+            dispatchFilterActions={dispatchFilterActions}
+          />
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-300">
+              <thead className="bg-gray-100">
+                <tr className="border-t border-gray-200">
+                  <Column label="Label" className="py-3.5 pl-4 pr-3 sm:pl-6" />
+                  <Column label="Catégorie" className="px-3 py-3.5" />
+                  <Column label="Prix achat HT" className="px-3 py-3.5" />
+                  <Column label="Prix vente HT" className="px-3 py-3.5" />
+                  <Column
+                    label="TVA"
+                    className="hidden px-3 py-3.5 sm:table-cell"
                   />
-                  <Tag
-                    label="En trop"
-                    bgColor="bg-green-200"
-                    textColor="text-green-800"
+                  <Column
+                    label="En stock"
+                    className="px-3 py-3.5"
+                    help="Quantité en stock"
                   />
-                </Column>
-                <Column
-                  label="A acheter"
-                  className="hidden px-3 py-3.5 sm:table-cell"
-                />
-                <Column label="Visibilité" className="px-3 py-3.5" />
-                <Column label="" className="px-3 py-3.5" />
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
-              {products.map((product: ProductEntity) => {
-                const quantityMissing =
-                  (product.quantityInInventory || 0) -
-                  (product.optimumQuantity || 0);
-                return (
-                  <tr key={product.uid}>
-                    <td className="whitespace-nowrap pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                      <div className="flex">
-                        <div
-                          className="tooltip tooltip-right mr-3 cursor-pointer"
-                          data-tip="Voir le produit"
-                          onClick={() => handleViewProductClick(product)}
-                        >
-                          <MagnifyingGlassIcon
-                            className="h-5 w-5 shrink-0 text-primary-600"
-                            aria-hidden="true"
-                          />
-                          <span className="sr-only">Voir {product.label}</span>
-                        </div>
-                        {product.label}
-                      </div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {product.categoryUid}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {product.buyingPrice} €
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {product.sellingPrice} €
-                    </td>
-                    <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                      {product.tva} %
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {product.quantityInInventory}
-                    </td>
-                    <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                      {product.optimumQuantity}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      <Tag
-                        label={`${quantityMissing}`}
-                        bgColor={
-                          quantityMissing < 0 ? 'bg-red-200' : 'bg-green-200'
-                        }
-                        textColor={
-                          quantityMissing < 0
-                            ? 'text-red-800'
-                            : 'text-green-800'
-                        }
-                      />
-                    </td>
-                    <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                      {product.toBuy > 0 ? (
-                        <div
-                          className="tooltip tooltip-left"
-                          data-tip="Présent dans votre liste des produits à acheter."
-                        >
-                          <CheckCircleIcon
-                            className="ml-3 h-5 w-5 shrink-0 text-green-600"
-                            aria-hidden="true"
-                          />
-                        </div>
-                      ) : (
+                  <Column
+                    label="Optimal"
+                    help="Quantité Optimal"
+                    className="hidden px-3 py-3.5 sm:table-cell"
+                  />
+                  <Column label="" className="px-3 py-1">
+                    <Tag
+                      label="Manquant"
+                      bgColor="bg-red-200"
+                      textColor="text-red-800"
+                    />
+                    <Tag
+                      label="En trop"
+                      bgColor="bg-green-200"
+                      textColor="text-green-800"
+                    />
+                  </Column>
+                  <Column
+                    label="A acheter"
+                    className="hidden px-3 py-3.5 sm:table-cell"
+                  />
+                  <Column label="Visibilité" className="px-3 py-3.5" />
+                  <Column label="" className="px-3 py-3.5" />
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200 bg-white">
+                {data.products.map((product: ProductEntity) => {
+                  const quantityMissing =
+                    (product.quantityInInventory || 0) -
+                    (product.optimumQuantity || 0);
+                  const categroyLabel =
+                    getCategoryByUid(product.categoryUid)?.label || '';
+                  const subCategoryLabel =
+                    getSubCategoryByUid(
+                      product.categoryUid,
+                      product.subCategoryUid
+                    )?.label || '';
+                  return (
+                    <tr key={product.uid}>
+                      <td className="whitespace-nowrap px-3 text-sm font-medium text-gray-900 sm:pl-6">
                         <div className="flex">
-                          0
                           <div
-                            className="tooltip tooltip-left cursor-pointer"
-                            data-tip='Ajouter à la liste : "À acheter"'
+                            className="tooltip tooltip-right mr-3 cursor-pointer"
+                            data-tip="Voir le produit"
+                            onClick={() => handleViewProductClick(product)}
                           >
-                            <PlusCircleIcon
-                              className="ml-3 h-5 w-5 shrink-0 text-primary-600"
+                            <MagnifyingGlassIcon
+                              className="h-5 w-5 shrink-0 text-primary-600"
                               aria-hidden="true"
-                              onClick={() =>
-                                updateProductMutation.mutate({
-                                  product: { ...product, toBuy: 1 },
-                                  userUid: user.getUid(),
-                                  companyUid: user.getCompanyUid(),
-                                })
-                              }
                             />
                             <span className="sr-only">
-                              Ajouter à la liste produit à acheter{' '}
-                              {product.label}
+                              Voir {product.label}
                             </span>
                           </div>
+                          <div
+                            className="tooltip tooltip-right"
+                            data-tip={product.label}
+                          >
+                            <div className="w-28 overflow-hidden text-ellipsis text-left">
+                              {product.label}
+                            </div>
+                          </div>
                         </div>
-                      )}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {product.isPublic ? 'Public' : 'Privé'}
-                    </td>
-                    <td className="relative flex whitespace-nowrap py-4 pl-3 pr-1 text-right text-sm font-medium">
-                      <div
-                        className="tooltip tooltip-left cursor-pointer"
-                        data-tip="Modifier le produit"
-                        onClick={() => handleEditProductClick(product)}
-                      >
-                        <PencilSquareIcon
-                          className="ml-3 h-5 w-5 shrink-0 text-primary-600"
-                          aria-hidden="true"
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <div
+                          className="tooltip tooltip-right"
+                          data-tip={`${categroyLabel} ${
+                            subCategoryLabel ? ` - ${subCategoryLabel}` : ''
+                          }`}
+                        >
+                          <div className="flex w-28 overflow-hidden text-ellipsis">
+                            {categroyLabel}
+                            {subCategoryLabel ? ` - ${subCategoryLabel}` : ''}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {product.buyingPrice} €
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {product.sellingPrice} €
+                      </td>
+                      <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                        {product.tva} %
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {product.quantityInInventory}
+                      </td>
+                      <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                        {product.optimumQuantity}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <Tag
+                          label={`${quantityMissing}`}
+                          bgColor={
+                            quantityMissing < 0 ? 'bg-red-200' : 'bg-green-200'
+                          }
+                          textColor={
+                            quantityMissing < 0
+                              ? 'text-red-800'
+                              : 'text-green-800'
+                          }
                         />
-                        <span className="sr-only">
-                          Modifier {product.label}
-                        </span>
-                      </div>
-                      <div
-                        className="tooltip tooltip-left cursor-pointer"
-                        data-tip="Supprimer le produit"
-                        onClick={() => handleDeleteProductClick(product)}
-                      >
-                        <TrashIcon
-                          className="ml-3 h-5 w-5 shrink-0 text-primary-600"
-                          aria-hidden="true"
-                        />
-                        <span className="sr-only">
-                          Supprimer {product.label}
-                        </span>
-                      </div>
-                      <div
-                        className="tooltip tooltip-left cursor-pointer"
-                        data-tip="Voir ou changer la photo"
-                      >
-                        <PhotoIcon
-                          className="ml-3 h-5 w-5 shrink-0 text-primary-600"
-                          aria-hidden="true"
-                          onClick={() => handleImageProductClick(product)}
-                        />
-                        <span className="sr-only">
-                          Changer la photo {product.label}
-                        </span>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                      </td>
+                      <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                        <div className="flex">
+                          <MinusCircleIcon
+                            className="mr-3 h-5 w-5 shrink-0 cursor-pointer text-primary-600"
+                            aria-hidden="true"
+                            onClick={() =>
+                              updateProductMutation.mutate({
+                                product: {
+                                  ...product,
+                                  toBuy:
+                                    product.toBuy > 0 ? product.toBuy - 1 : 0,
+                                },
+                                userUid: user.getUid(),
+                                companyUid: user.getCompanyUid(),
+                              })
+                            }
+                          />
+
+                          {product.toBuy}
+
+                          <PlusCircleIcon
+                            className="ml-3 h-5 w-5 shrink-0 cursor-pointer text-primary-600"
+                            aria-hidden="true"
+                            onClick={() =>
+                              updateProductMutation.mutate({
+                                product: {
+                                  ...product,
+                                  toBuy: product.toBuy + 1,
+                                },
+                                userUid: user.getUid(),
+                                companyUid: user.getCompanyUid(),
+                              })
+                            }
+                          />
+                        </div>
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {product.isPublic ? 'Public' : 'Privé'}
+                      </td>
+                      <td className="relative flex whitespace-nowrap py-4 pl-3 pr-1 text-right text-sm font-medium">
+                        <div
+                          className="tooltip tooltip-left cursor-pointer"
+                          data-tip="Modifier le produit"
+                          onClick={() => handleEditProductClick(product)}
+                        >
+                          <PencilSquareIcon
+                            className="ml-3 h-5 w-5 shrink-0 text-primary-600"
+                            aria-hidden="true"
+                          />
+                          <span className="sr-only">
+                            Modifier {product.label}
+                          </span>
+                        </div>
+                        <div
+                          className="tooltip tooltip-left cursor-pointer"
+                          data-tip="Supprimer le produit"
+                          onClick={() => handleDeleteProductClick(product)}
+                        >
+                          <TrashIcon
+                            className="ml-3 h-5 w-5 shrink-0 text-primary-600"
+                            aria-hidden="true"
+                          />
+                          <span className="sr-only">
+                            Supprimer {product.label}
+                          </span>
+                        </div>
+                        <div
+                          className="tooltip tooltip-left cursor-pointer"
+                          data-tip="Voir ou changer la photo"
+                        >
+                          <PhotoIcon
+                            className="ml-3 h-5 w-5 shrink-0 text-primary-600"
+                            aria-hidden="true"
+                            onClick={() => handleImageProductClick(product)}
+                          />
+                          <span className="sr-only">
+                            Changer la photo {product.label}
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          {!isLoadingProducts && (
+            <Pagination
+              totalResults={data.count}
+              numberOfResultsPerPage={10}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          )}
+
           {isLoadingProducts && (
             <div className="my-5">
               <Spinner />

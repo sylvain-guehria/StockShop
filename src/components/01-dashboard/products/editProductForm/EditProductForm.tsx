@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import type ProductEntity from '@/modules/product/ProductEntity';
@@ -90,7 +91,7 @@ const EditProductForm: FC<Props> = ({
         userUid: user.getUid(),
         companyUid: user.getCompanyUid(),
       });
-      queryClient.invalidateQueries({ queryKey: ['get-product'] });
+      queryClient.invalidateQueries({ queryKey: [ApiRequestEnums.GetProduct] });
     } catch (e: any) {
       toast(ToasterTypeEnum.ERROR, e.message);
     }
@@ -100,7 +101,12 @@ const EditProductForm: FC<Props> = ({
     <form onSubmit={handleSubmit(onSubmitEditProductForm)}>
       <div className="lg:flex">
         <div className="lg:w-1/2 lg:pr-4">
-          <SubFormGeneral register={register} errors={errors} watch={watch} />
+          <SubFormGeneral
+            register={register}
+            errors={errors}
+            watch={watch}
+            setValue={setValue}
+          />
         </div>
 
         <div className="mt-5 lg:mt-0 lg:w-1/2 lg:pl-4">
@@ -132,7 +138,7 @@ const EditProductForm: FC<Props> = ({
             style="primary"
             className="flex justify-center"
           >
-            Annuler
+            Retour
           </LinkButton>
           <LinkButton
             type="submit"
