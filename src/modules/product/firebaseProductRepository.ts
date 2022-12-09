@@ -186,7 +186,6 @@ class FirebaseProductRepository extends ProductRepository {
     console.info(
       'get all products by userUid, companyUid and inventoryUid in db'
     );
-    // list all filters one by one
     const response = await axios.get(
       `${this.baseUrl}/api/product/getProductsByUserUidCompanyUidInventoryUid`,
       {

@@ -197,8 +197,8 @@ export const ProductsFilters: FC<Props> = ({
                     label="Visibilité"
                     options={[
                       { label: '', value: '' },
-                      { label: 'Privé', value: 'true' },
-                      { label: 'Public', value: 'false' },
+                      { label: 'Privé', value: 'false' },
+                      { label: 'Public', value: 'true' },
                     ]}
                     name={ProductAttributes.IS_PUBLIC}
                     register={register(ProductAttributes.IS_PUBLIC)}

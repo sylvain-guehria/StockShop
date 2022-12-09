@@ -22,9 +22,10 @@ export class FirebaseQueryBuilder {
   }
 
   where(property: string, operator: firestore.WhereFilterOp, value: any) {
-    if (value !== null && value !== undefined && value !== '') {
-      this.query = this.query.where(property, operator, value);
+    if (value === null || value === undefined || value === '') {
+      return this;
     }
+    this.query = this.query.where(property, operator, value);
     return this;
   }
 

@@ -141,6 +141,11 @@ const getProductsByUserUidAndInventoryUid = async (
       .where(ProductAttributes.CATEGORY_UID, '==', filterCategoryUid)
       .where(ProductAttributes.SUB_CATEGORY_UID, '==', filterSubCategoryUid)
       .where(ProductAttributes.TO_BUY, '>', boolToBuy ? 0 : undefined)
+      .where(
+        ProductAttributes.TO_BUY,
+        '==',
+        boolToBuy === false ? 0 : undefined
+      )
       .where(ProductAttributes.IS_PUBLIC, '==', boolIsPublic)
       .toCollectionRefType();
 
