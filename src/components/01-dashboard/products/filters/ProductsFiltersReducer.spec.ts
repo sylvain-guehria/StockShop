@@ -19,8 +19,8 @@ const initialFiltersState: FiltersStateType = {
   filters: {
     [ProductAttributes.CATEGORY_UID]: 'cat_uid',
     [ProductAttributes.SUB_CATEGORY_UID]: '67890',
-    [ProductAttributes.TO_BUY]: true,
-    [ProductAttributes.IS_PUBLIC]: false,
+    [ProductAttributes.TO_BUY]: 'true',
+    [ProductAttributes.IS_PUBLIC]: 'false',
   },
 };
 
@@ -52,8 +52,8 @@ describe('reducerFilters', () => {
         filters: {
           [ProductAttributes.CATEGORY_UID]: 'azertyui',
           [ProductAttributes.SUB_CATEGORY_UID]: 'qsdfghj',
-          [ProductAttributes.TO_BUY]: false,
-          [ProductAttributes.IS_PUBLIC]: true,
+          [ProductAttributes.TO_BUY]: 'false',
+          [ProductAttributes.IS_PUBLIC]: 'true',
         },
       },
     };
@@ -64,8 +64,8 @@ describe('reducerFilters', () => {
         [ProductAttributes.CATEGORY_UID]: 'azertyui',
         [ProductAttributes.SUB_CATEGORY_UID]: 'qsdfghj',
         [ProductAttributes.TVA]: 25,
-        [ProductAttributes.TO_BUY]: false,
-        [ProductAttributes.IS_PUBLIC]: true,
+        [ProductAttributes.TO_BUY]: 'false',
+        [ProductAttributes.IS_PUBLIC]: 'true',
       },
     };
     expect(reducerFilters(initialFiltersState, action)).toEqual(expectedState);

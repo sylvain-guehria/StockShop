@@ -100,21 +100,6 @@ const getProductsByUserUidAndInventoryUid = async (
     //   return;
     // }
 
-    // [ProductAttributes.LABEL]?: string;
-    // [ProductAttributes.CATEGORY_UID]?: string;
-    // [ProductAttributes.SUB_CATEGORY_UID]?: string;
-    // [ProductAttributes.TVA]?: number;
-    // [ProductAttributes.TO_BUY]?: boolean;
-    // [ProductAttributes.IS_PUBLIC]?: boolean;
-    // [ProductAttributes.CONDITION]?: ConditionTypeEnum;
-
-    // https://cloud.google.com/firestore/docs/query-data/queries
-
-    // where('ProductAttributes.LABEL', '==', filters?.label)
-    // where('ProductAttributes.CATEGORY_UID', '==', true)
-
-    // BUILD THE FULL REQUEST HERE ??
-
     const currentPageNumber = parseInt(currentPage as string, 10);
     const numberOfProductsPerPageNumber = parseInt(
       numberOfProductsPerPage as string,

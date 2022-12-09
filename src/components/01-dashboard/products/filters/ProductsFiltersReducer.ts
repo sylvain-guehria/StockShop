@@ -8,8 +8,8 @@ export enum ORDER {
 export type FilterPropertyType = {
   [ProductAttributes.CATEGORY_UID]?: string;
   [ProductAttributes.SUB_CATEGORY_UID]?: string;
-  [ProductAttributes.TO_BUY]?: boolean;
-  [ProductAttributes.IS_PUBLIC]?: boolean;
+  [ProductAttributes.TO_BUY]?: 'true' | 'false';
+  [ProductAttributes.IS_PUBLIC]?: 'true' | 'false';
 };
 
 export type SorterType = {

@@ -6,6 +6,7 @@ import { ORDER } from '@/components/01-dashboard/products/filters/ProductsFilter
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { ProductRepository } from '@/modules/product/productRepository';
 import { ProductAttributes } from '@/modules/product/productType';
+import { getKeysWithValues } from '@/utils/objectUtils';
 
 type GetInventoryProductsParamsType = {
   userUid: string;
@@ -35,16 +36,27 @@ export const getInventoryProducts =
       if (!userUid) {
         throw new Error('userUid is required to get user inventoriy products');
       }
+
+      if (!companyUid) {
+        throw new Error(
+          'companyUid is required to get user inventoriy products'
+        );
+      }
+
       if (!inventoryUid) {
         throw new Error(
           'inventoryUid is required to get user inventoriy products'
         );
       }
 
-      if (!companyUid) {
-        throw new Error(
-          'companyUid is required to get user inventoriy products'
-        );
+      const filtersWithValue = getKeysWithValues(filters as FilterPropertyType);
+      let sorterField = sorter?.field || ProductAttributes.CREATION_DATE;
+
+      if (filtersWithValue.length > 0) {
+        const sorterFieldIsInFilters = filtersWithValue.includes(sorterField);
+        if (sorterFieldIsInFilters) {
+          sorterField = ProductAttributes.CREATION_DATE;
+        }
       }
 
       const response =
@@ -55,7 +67,7 @@ export const getInventoryProducts =
           currentPage,
           numberOfProductsPerPage,
           sorter: {
-            field: sorter?.field || ProductAttributes.CREATION_DATE,
+            field: sorterField,
             order: sorter?.order || ORDER.DESC,
           },
           filters: filters as FilterPropertyType,
