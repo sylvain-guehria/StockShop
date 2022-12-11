@@ -10,6 +10,7 @@ import { useToast } from '@/hooks/useToast';
 import { addressEmails } from '@/sendinblue/emailConfig';
 import { sendContactUsEmail } from '@/sendinblue/sender';
 
+import Input from '../04-lib/inputs/Input';
 import { validationSchema } from './ContactFormValidation';
 
 interface ContactFormType {
@@ -66,79 +67,42 @@ const ContactForm = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div>
-        <label
-          htmlFor="fullName"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Nom
-        </label>
-        <div className="mt-1">
-          <input
-            type="text"
-            id="fullName"
-            {...register('fullName')}
-            autoComplete="given-name"
-            className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
-          />
-        </div>
+        <Input
+          type="text"
+          name="fullName"
+          label="Nom"
+          register={register('fullName')}
+        />
       </div>
       <div>
-        <label
-          htmlFor="company"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Company
-        </label>
+        <Input
+          type="text"
+          name="company"
+          label="Entreprise"
+          register={register('company')}
+        />
+      </div>
+      <div className="sm:col-span-2">
         <div className="mt-1">
-          <input
+          <Input
             type="text"
-            {...register('company')}
-            id="company"
-            autoComplete="family-name"
-            className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
+            name="email"
+            label="Email"
+            help="Obligatoire"
+            placeholder="emial@gmail.com"
+            register={register('email')}
+            error={errors.email?.message}
           />
         </div>
       </div>
       <div className="sm:col-span-2">
-        <div className="flex justify-between">
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Email
-          </label>
-          <span id="phone-description" className="text-sm text-gray-500">
-            Obligatoire
-          </span>
-        </div>
         <div className="mt-1">
-          <input
-            id="email"
+          <Input
             type="text"
-            {...register('email')}
-            autoComplete="email"
-            className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
-          />
-          <div className="text-sm text-red-600">{errors.email?.message}</div>
-        </div>
-      </div>
-      <div className="sm:col-span-2">
-        <div className="flex justify-between">
-          <label
-            htmlFor="phone"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Phone
-          </label>
-        </div>
-        <div className="mt-1">
-          <input
-            type="text"
-            {...register('phone')}
-            id="phone"
-            autoComplete="tel"
+            name="phone"
+            label="Phone"
             aria-describedby="phone-description"
-            className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
+            register={register('phone')}
           />
         </div>
       </div>
@@ -167,21 +131,13 @@ const ContactForm = () => {
         </div>
       </div>
       <div className="sm:col-span-2">
-        <label
-          htmlFor="soureOfHeard"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Ou nous avez vous connu?
-        </label>
-        <div className="mt-1">
-          <input
-            type="text"
-            {...register('soureOfHeard')}
-            id="soureOfHeard"
-            className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
-            placeholder="Google, Facebook, Instagram, Bouch à oreille..."
-          />
-        </div>
+        <Input
+          type="text"
+          name="soureOfHeard"
+          label="Où nous avez vous connu?"
+          register={register('soureOfHeard')}
+          placeholder="Google, Facebook, Instagram, Bouch à oreille..."
+        />
       </div>
       <div className="text-right sm:col-span-2">
         <LinkButton>Envoyer</LinkButton>

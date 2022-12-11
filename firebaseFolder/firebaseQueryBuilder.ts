@@ -1,14 +1,6 @@
-// import type {
-//   CollectionReference,
-//   DocumentData,
-//   DocumentReference,
-//   OrderByDirection,
-//   Query,
-//   WhereFilterOp,
-// } from 'firebase/firestore';
-
 import type { firestore } from 'firebase-admin';
 
+const filterRangeComparaison = ['>=', '<=', '>', '<'];
 export class FirebaseQueryBuilder {
   ref: firestore.DocumentReference | firestore.CollectionReference;
 
@@ -25,6 +17,9 @@ export class FirebaseQueryBuilder {
     if (value === null || value === undefined || value === '') {
       return this;
     }
+    if (filterRangeComparaison.includes(operator)) {
+      this.query = this.query.orderBy(property, 'asc');
+    }
     this.query = this.query.where(property, operator, value);
     return this;
   }
@@ -32,7 +27,7 @@ export class FirebaseQueryBuilder {
   orderBy(
     property: string,
     order: firestore.OrderByDirection = 'asc',
-    enable = false
+    enable = true
   ) {
     if (!property || !enable) return this;
     this.query = this.query.orderBy(property, order);

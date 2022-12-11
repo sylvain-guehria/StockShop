@@ -312,14 +312,14 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
               <tbody className="divide-y divide-gray-200 bg-white">
                 {data.products.map((product: ProductEntity) => {
                   const quantityMissing =
-                    (product.quantityInInventory || 0) -
-                    (product.optimumQuantity || 0);
+                    (product.getQuantityInInventory() || 0) -
+                    (product.getOptimumQuantity() || 0);
                   const categroyLabel =
-                    getCategoryByUid(product.categoryUid)?.label || '';
+                    getCategoryByUid(product.getCategoryUid())?.label || '';
                   const subCategoryLabel =
                     getSubCategoryByUid(
-                      product.categoryUid,
-                      product.subCategoryUid
+                      product.getCategoryUid(),
+                      product.getSubCategoryUid()
                     )?.label || '';
                   return (
                     <tr key={product.uid}>

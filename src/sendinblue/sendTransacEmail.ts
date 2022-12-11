@@ -5,7 +5,7 @@ const defaultClient = SibApiV3Sdk.ApiClient.instance;
 
 // Configure API key authorization: api-key
 const apiKey = defaultClient.authentications['api-key'];
-apiKey.apiKey = 'YOUR_API_KEY';
+apiKey.apiKey = process.env.SENDINBLUE_API_KEY;
 
 // Uncomment below two lines to configure authorization using: partner-key
 // var partnerKey = defaultClient.authentications['partner-key'];
