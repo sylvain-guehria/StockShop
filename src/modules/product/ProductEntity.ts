@@ -1,3 +1,5 @@
+import { parseBoolean } from '@/utils/primitiveUtils';
+
 import type { Product } from './productType';
 import { ConditionTypeEnum } from './productType';
 
@@ -52,7 +54,7 @@ class ProductEntity implements Product {
     this.description = product.description || '';
     this.toBuy = product.toBuy || 0;
     // @ts-ignore
-    this.isPublic = product.isPublic ? product.isPublic === 'true' : false;
+    this.isPublic = product.isPublic ? parseBoolean(product.isPublic) : false;
     this.tva = product.tva || 0;
     this.categoryUid = product.categoryUid || '';
     this.subCategoryUid = product.subCategoryUid || '';
