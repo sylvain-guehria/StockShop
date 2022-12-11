@@ -14,6 +14,7 @@ type Props = {
   step?: string;
   value?: string | number;
   disabled?: boolean;
+  help?: string;
 };
 
 const Input: FC<Props> = ({
@@ -25,6 +26,7 @@ const Input: FC<Props> = ({
   inputClassName,
   register,
   name,
+  help,
   step,
   disabled,
   ...rest
@@ -32,12 +34,17 @@ const Input: FC<Props> = ({
   const localRegister = register || { name };
   return (
     <div className={classNames('text-left', margin || 'mt-1')}>
-      <label
-        htmlFor={name}
-        className="block text-start text-sm font-medium text-gray-700"
-      >
-        {label}
-      </label>
+      <div className="flex justify-between">
+        <label
+          htmlFor={name}
+          className="block text-start text-sm font-medium text-gray-700"
+        >
+          {label}
+        </label>
+        <span id="phone-description" className="text-sm text-gray-500">
+          {help}
+        </span>
+      </div>
       <input
         type={type}
         id={name}
