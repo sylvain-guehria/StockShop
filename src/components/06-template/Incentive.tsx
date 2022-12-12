@@ -17,7 +17,7 @@ const incentives = [
     name: 'Page web auto générée',
     icon: ArrowPathIcon,
     description:
-      "Une page web se créée automatiquement sur notre marketplace. Vous pouvez la customiser. Elle n'est  visible par le public qui si vous le souhaitez.",
+      "Une page web se créée automatiquement sur notre marketplace. Vous pouvez la customiser. Elle n'est  visible par le public que si vous le souhaitez.",
   },
   {
     name: 'Achat',

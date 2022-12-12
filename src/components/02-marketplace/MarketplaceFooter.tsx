@@ -1,6 +1,5 @@
 import inventoryMarketLogo from '../../../public/assets/images/inventoryMarket.png';
 import NextImage from '../04-lib/nextImage/NextImage';
-import { footerNavigation } from './fakeDatas';
 
 const MarketplaceFooter = () => {
   return (
@@ -18,7 +17,7 @@ const MarketplaceFooter = () => {
                 alt="inventory shop logo"
               />
             </div>
-            <div className="mx-auto mt-16 max-w-5xl xl:grid xl:grid-cols-2 xl:gap-8">
+            {/* <div className="mx-auto mt-16 max-w-5xl xl:grid xl:grid-cols-2 xl:gap-8">
               <div className="grid grid-cols-2 gap-8 xl:col-span-2">
                 <div className="space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0">
                   <div>
@@ -91,19 +90,19 @@ const MarketplaceFooter = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
         <div className="py-10 md:flex md:items-center md:justify-between">
           <div className="text-center md:text-left">
             <p className="text-sm text-gray-500">
-              &copy; 2021 All Rights Reserved
+              &copy; 2022 All Rights Reserved
             </p>
           </div>
 
-          <div className="mt-4 flex items-center justify-center md:mt-0">
-            <div className="flex space-x-8">
+          <div className="flex items-center justify-center md:mt-0">
+            {/* <div className="flex space-x-8">
               {footerNavigation.bottomLinks.map((item) => (
                 <a
                   key={item.name}
@@ -113,7 +112,7 @@ const MarketplaceFooter = () => {
                   {item.name}
                 </a>
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

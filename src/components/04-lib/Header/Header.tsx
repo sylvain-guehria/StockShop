@@ -43,7 +43,7 @@ const Header = () => {
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link href={mainRoutes.home.path}>
               <div>
-                <span className="sr-only">Your Company</span>
+                <span className="sr-only">Inventory Market</span>
                 <NextImage
                   className="h-10 w-auto cursor-pointer"
                   src={inventoryMarketLogo}

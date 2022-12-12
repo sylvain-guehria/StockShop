@@ -48,7 +48,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                   {/* Logo (lg+) */}
                   <Link href={mainRoutes.home.path}>
                     <div className="hidden cursor-pointer lg:flex lg:items-center">
-                      <span className="sr-only">Your Company</span>
+                      <span className="sr-only">Inventory Market</span>
                       <NextImage
                         className="h-10 w-auto cursor-pointer"
                         src={inventoryMarketLogo}
@@ -88,7 +88,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                   </div>
                   {/* Logo (lg-) */}
                   <a href="#" className="lg:hidden">
-                    <span className="sr-only">Your Company</span>
+                    <span className="sr-only">Inventory Market</span>
                     <NextImage
                       className="h-10 w-auto cursor-pointer"
                       src={inventoryMarketLogo}
