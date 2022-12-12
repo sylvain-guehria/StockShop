@@ -17,13 +17,13 @@ const incentives = [
     name: 'Page web auto générée',
     icon: ArrowPathIcon,
     description:
-      'Une page web se créée automatiquement sur notre marketplace et est accessible au public uniquement si vous le shouaitez.',
+      "Une page web se créée automatiquement sur notre marketplace. Vous pouvez la customiser. Elle n'est  visible par le public qui si vous le souhaitez.",
   },
   {
     name: 'Achat',
     icon: CreditCardIcon,
     description:
-      "Le public peut acheter directement vos produits qu'ils viendront récupérer en magasin.",
+      "Les visiteurs peuvent consulter vos produits publics. Ils peuvent acheter directement vos produits qu'ils viendront récupérer en magasin.",
   },
 ];
 
