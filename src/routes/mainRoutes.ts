@@ -27,6 +27,10 @@ export const mainRoutes = {
     path: '/profile',
     label: 'Profile',
   },
+  roadmap: {
+    path: '/roadmap',
+    label: 'Roadmap',
+  },
 };
 
 export const headerRoutes = [

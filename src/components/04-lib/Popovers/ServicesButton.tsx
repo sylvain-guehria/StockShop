@@ -1,5 +1,6 @@
 import { Popover, Transition } from '@headlessui/react';
 import {
+  Bars3Icon,
   CheckCircleIcon,
   ChevronDownIcon,
   PhoneIcon,
@@ -21,6 +22,7 @@ export const callsToAction = [
     icon: CheckCircleIcon,
   },
   { name: 'Nous contacter', href: mainRoutes.contact.path, icon: PhoneIcon },
+  { name: 'Voir la roadmap', href: mainRoutes.roadmap.path, icon: Bars3Icon },
 ];
 
 const ServicesButton: FC = () => {

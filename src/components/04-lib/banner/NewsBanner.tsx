@@ -2,6 +2,8 @@ import { MegaphoneIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import type { FC } from 'react';
 
+import { mainRoutes } from '@/routes/mainRoutes';
+
 type Props = {
   setIsBetaBannerOpen: (value: boolean) => void;
 };
@@ -27,12 +29,12 @@ const NewsBanner: FC<Props> = ({ setIsBetaBannerOpen }) => {
               </p>
             </div>
             <div className="order-3 mt-2 flex w-full shrink-0 sm:order-2 sm:mt-0 sm:w-auto">
-              <Link href="/contact">
+              <Link href={mainRoutes.contact.path}>
                 <div className="mr-3 flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-primary-600 shadow-sm">
                   Faire un retour
                 </div>
               </Link>
-              <Link href="/roadmap">
+              <Link href={mainRoutes.roadmap.path}>
                 <div className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-primary-600 shadow-sm">
                   Voir la roadmap
                 </div>
