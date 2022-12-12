@@ -1,53 +1,80 @@
+import { Disclosure } from '@headlessui/react';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
 import { mainRoutes } from '@/routes/mainRoutes';
+import { classNames } from '@/utils/tailwindUtils';
 
 import { Section } from '../04-lib/layout/Section';
 
 const faqs = [
   {
     id: 1,
-    question: "What's the best thing about Switzerland?",
+    question: "Quel est l'objectif d'Inventory Market ?",
     answer:
-      "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+      "Notre but premier est d'aider les petites entreprises à gérer leurs inventaires et à avoir une visibilité sur internet.",
   },
   {
     id: 2,
-    question: "What's the best thing about Switzerland?",
+    question: 'Comment fonctionne le site pour une entreprise ?',
     answer:
-      "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+      "Si vous êtes une entreprise, il vous suffit de vous connecter en vous créant un compte. Vous aurez accès à un module de gestion d'inventaire. Vous pourrez ajouter vos produits, les classer par catégories, gérer leur approvisionnement etc... Vous pourrez également ajouter des images à vos produits et décider pour chaque inventaire et chaque produit si celui-ci est privé ou public. Si vous avez un inventaire public, une page dédiée à votre entreprise sera créée sur notre marketplace. Les produits marqués comme public seront visibles sur ce marketplace.",
   },
   {
     id: 3,
-    question: "What's the best thing about Switzerland?",
+    question: 'Suis-je obligé de rendre un inventaire public ?',
     answer:
-      "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+      'Pas du tout. Vous pouvez utiliser ce site uniquement pour son module de gestion des stocks. Par defaut un inventaire est privé. Vous pouvez le rendre public à tout moment.',
   },
   {
     id: 4,
-    question: "What's the best thing about Switzerland?",
+    question: 'Comment fonctionne le site pour un visiteur ou un client ?',
     answer:
-      "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+      'Si vous êtes un client, vous pourrez rechercher vos commerces locaux par ville et voir leurs produits. Vous pourrez également vous créer un compte pour suivre vos commandes et avoir une visibilité sur vos achats.',
   },
-  // More questions...
+  {
+    id: 5,
+    question: 'Je ne trouve pas le marketplace ?',
+    answer:
+      "Le marketpalce est en cours de dévelopment. Il sera disponible prochainement. Vous pouvez nous contacter pour plus d'informations.",
+  },
 ];
 
 const FAQ = () => (
   <Section
-    title="You have Questions?"
+    title="Vous avez des questions ?"
     subtitle="FAQ"
-    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus malesuada nisi tellus, non imperdiet nisi tempor at."
+    description="Si la réponse à votre question ne se trouve pas ci dessous, n'hésitez pas à nous contacter par email ou via le formulaire disponible sur la page contact."
   >
     <section aria-labelledby="faq-heading" className="bg-white">
       <div>
-        <dl className="mt-12 grid grid-cols-1 gap-y-10 sm:mt-16 md:grid-cols-2 md:gap-x-6 lg:grid-cols-3">
+        <dl className="mt-6 space-y-6 divide-y divide-gray-200">
           {faqs.map((faq) => (
-            <div key={faq.id}>
-              <dt className="text-lg font-medium text-gray-900">
-                {faq.question}
-              </dt>
-              <dd className="mt-3 text-lg text-gray-500">{faq.answer}</dd>
-            </div>
+            <Disclosure as="div" key={faq.question} className="pt-6">
+              {({ open }) => (
+                <>
+                  <dt className="text-lg">
+                    <Disclosure.Button className="flex w-full items-start justify-between text-left text-gray-400">
+                      <span className="font-medium text-gray-900">
+                        {faq.question}
+                      </span>
+                      <span className="ml-6 flex h-7 items-center">
+                        <ChevronDownIcon
+                          className={classNames(
+                            open ? '-rotate-180' : 'rotate-0',
+                            'h-6 w-6 transform'
+                          )}
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </Disclosure.Button>
+                  </dt>
+                  <Disclosure.Panel as="dd" className="mt-2 pr-12">
+                    <p className="text-base text-gray-500">{faq.answer}</p>
+                  </Disclosure.Panel>
+                </>
+              )}
+            </Disclosure>
           ))}
         </dl>
       </div>
