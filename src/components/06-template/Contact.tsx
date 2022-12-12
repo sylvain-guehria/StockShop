@@ -66,8 +66,4 @@ const Contact = () => {
   );
 };
 
-const ContactWithProviders = () => {
-  return <Contact />;
-};
-
-export default ContactWithProviders;
+export default Contact;

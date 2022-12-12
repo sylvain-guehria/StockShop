@@ -1,7 +1,12 @@
 import { MegaphoneIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import type { FC } from 'react';
 
-const NewsBanner = () => {
+type Props = {
+  setIsBetaBannerOpen: (value: boolean) => void;
+};
+
+const NewsBanner: FC<Props> = ({ setIsBetaBannerOpen }) => {
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 pb-2 sm:pb-5">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -14,10 +19,10 @@ const NewsBanner = () => {
                   aria-hidden="true"
                 />
               </span>
-              <p className="ml-3 truncate font-medium text-white">
+              <p className="ml-3 font-medium text-white">
                 <span>
                   Bienvenue ! Ce site est en version beta. Nous comptons sur vos
-                  retours pour le faire écoluer selon vos envie !
+                  retours pour le faire évoluer selon vos envies.
                 </span>
               </p>
             </div>
@@ -39,7 +44,11 @@ const NewsBanner = () => {
                 className="-mr-1 flex rounded-md p-2 hover:bg-primary-500 focus:outline-none focus:ring-2 focus:ring-white"
               >
                 <span className="sr-only">Dismiss</span>
-                <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                <XMarkIcon
+                  className="h-6 w-6 text-white"
+                  aria-hidden="true"
+                  onClick={() => setIsBetaBannerOpen(false)}
+                />
               </button>
             </div>
           </div>
