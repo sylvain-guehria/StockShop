@@ -29,7 +29,7 @@ const Hero = () => (
         </div>
         <img
           className="mx-auto mt-12 rounded-md text-center"
-          src="/assets/images/hero-image.png"
+          src="/assets/images/capture-inventory-market.png"
           alt="Hero screenshot"
         />
       </header>

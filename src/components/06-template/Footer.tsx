@@ -109,7 +109,7 @@ const Footer: FC = () => {
             ))}
           </div>
           <p className="mt-8 text-center text-base text-gray-500">
-            &copy; 2020 Your Company, Inc. All rights reserved.
+            &copy; 2020 Inventory Market, Inc. All rights reserved.
           </p>
         </div>
       </footer>

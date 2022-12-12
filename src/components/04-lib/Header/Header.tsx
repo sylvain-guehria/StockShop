@@ -12,7 +12,6 @@ import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { headerRoutes, mainRoutes } from '@/routes/mainRoutes';
-import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
 import { logoutUseCase } from '@/usecases/usecases';
 
 import NextImage from '../nextImage/NextImage';
@@ -44,7 +43,7 @@ const Header = () => {
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link href={mainRoutes.home.path}>
               <div>
-                <span className="sr-only">Your Company</span>
+                <span className="sr-only">Inventory Market</span>
                 <NextImage
                   className="h-10 w-auto cursor-pointer"
                   src={inventoryMarketLogo}
@@ -62,7 +61,7 @@ const Header = () => {
           <div className="hidden md:flex md:flex-1 md:items-center md:justify-between">
             <Popover.Group as="nav" className="hidden space-x-10 md:flex">
               <ServicesButton />
-              <Link href={mainRoutes.pricing.path}>
+              {/* <Link href={mainRoutes.pricing.path}>
                 <div className="cursor-pointer text-base font-medium text-gray-600 hover:text-gray-900">
                   {mainRoutes.pricing.label}
                 </div>
@@ -71,7 +70,7 @@ const Header = () => {
                 <div className="cursor-pointer text-base font-medium text-gray-600 hover:text-gray-900">
                   {marketpalceRoutes.marketplace.label}
                 </div>
-              </Link>
+              </Link> */}
               {/* <MoreButton /> */}
             </Popover.Group>
           </div>

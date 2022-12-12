@@ -112,7 +112,7 @@ const ContactForm = () => {
             htmlFor="message"
             className="block text-sm font-medium text-gray-700"
           >
-            Comment pouvez-vous nous aider ?
+            Comment pouvons-nous vous aider ?
           </label>
           <span id="message-max" className="text-sm text-gray-500">
             Max. 500 characters
@@ -123,6 +123,7 @@ const ContactForm = () => {
             id="message"
             {...register('message')}
             aria-describedby="message-description"
+            placeholder="Feedback, questions, suggestions, etc."
             rows={4}
             maxLength={500}
             className="  block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
