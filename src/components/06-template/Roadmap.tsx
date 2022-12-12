@@ -33,6 +33,13 @@ const timeline = [
     status: StatusRoadmapStepEnum.ONGOING,
   },
   {
+    feature: 'Module création de catégories custom',
+    description:
+      'Un module permettant au entreprise de créer des catégories de produits custom avec des champs personnalisés',
+    date: 'Janvier 2023',
+    status: StatusRoadmapStepEnum.FUTURE,
+  },
+  {
     feature: 'Module marketplace V2 click & collect',
     description:
       'Les visiteurs pourront passer des commandes directement sur le site et payer en ligne ou sur place',
