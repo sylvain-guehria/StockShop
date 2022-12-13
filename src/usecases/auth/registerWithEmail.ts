@@ -73,7 +73,7 @@ export const registerWithEmail =
         );
       }
     } catch (error: any) {
-      deleteUser(auth.currentUser as User);
+      if (auth.currentUser) deleteUser(auth.currentUser);
       throw new FirebaseAuthenticationError({
         errorCode: error.code,
         message: error.message,

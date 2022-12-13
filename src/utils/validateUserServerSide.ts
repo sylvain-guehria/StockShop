@@ -2,10 +2,11 @@ import { sessionCookieName } from 'firebaseFolder/constant';
 import { cookies } from 'next/headers';
 
 export const validateUser = async () => {
-  const sessionCookie = cookies().get(sessionCookieName);
+  const sessionCookie = cookies().get(sessionCookieName)?.value;
   if (!sessionCookie) {
     return false;
   }
+
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/checkUserSession`,

@@ -88,7 +88,7 @@ const FirstConnectionModal = () => {
                       Souhaitez vous accéder à l&apos;application de gestion des
                       inventaires ou souhaitez vous seulement acheter ou
                       consulter des produits dans les inventaires de vos
-                      commerçant préféfés ?
+                      commerçant préférés ?
                     </Dialog.Title>
                     <div className="mt-2">
                       <p className="text-justify text-sm text-gray-500">

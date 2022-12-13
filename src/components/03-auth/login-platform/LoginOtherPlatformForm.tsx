@@ -3,6 +3,7 @@
 import axios from 'axios';
 import {
   auth,
+  deleteUser,
   getAdditionalUserInfo,
   GoogleAuthProvider,
   signInWithPopup,
@@ -25,6 +26,7 @@ const LoginOtherPlatformForm = () => {
         provider: new GoogleAuthProvider(),
         auth,
         axios,
+        deleteUser,
       });
       router.push(mainRoutes.home.path);
     } catch (e: any) {

@@ -8,8 +8,12 @@ const { EMAIL } = UserAttibutes;
 
 const addUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    if (!req.body.user) {
-      res.status(400).end('Missing arg user to add user DB');
+    if (!req.body.uid) {
+      res.status(400).end('uid is mandatory to add user in DB');
+      return;
+    }
+    if (!req.body.email) {
+      res.status(400).end('email  is mandatory to add user in DB');
       return;
     }
 

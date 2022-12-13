@@ -34,7 +34,7 @@ export const mainRoutes = {
 };
 
 export const headerRoutes = [
-  mainRoutes.pricing,
+  // mainRoutes.pricing,
   mainRoutes.contact,
   mainRoutes.profile,
 ];

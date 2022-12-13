@@ -27,7 +27,7 @@ const faqs = [
     question:
       "J'utilise les catégories pour trier mes produits mais je ne trouve pas la catégorie que je veux ?",
     answer:
-      'Nous ajoutons des nouvelles catégories aussi souvent que possible. Ecrivez-nous si vous souhaitez une nouvelle catégorie. Nous la créerons très vite pour vous. De plus une feature vous mermettant de créer vos propres catégories est prévue dans la roadmap.',
+      'Nous ajoutons des nouvelles catégories aussi souvent que possible. Ecrivez-nous si vous souhaitez une nouvelle catégorie. Nous la créerons très vite pour vous. De plus une feature vous permettant de créer vos propres catégories est prévue dans la roadmap.',
   },
   {
     question: 'Comment fonctionne le site pour un visiteur ou un client ?',
