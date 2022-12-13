@@ -1,5 +1,5 @@
 import type { AxiosStatic } from 'axios';
-import type { Auth, AuthProvider } from 'firebase/auth';
+import type { Auth, AuthProvider, User } from 'firebase/auth';
 
 import UserEntity from '@/modules/user/UserEntity';
 import { LOCALES, PROVIDERS } from '@/modules/user/userType';
@@ -15,6 +15,7 @@ const axios = {
 } as unknown as AxiosStatic;
 
 const signInWithPopup: SignInWithPopupType = jest.fn();
+const deleteUser: (user: User) => Promise<void> = jest.fn();
 const getAdditionalUserInfo: GetAdditionalUserInfoType = jest.fn();
 
 const userRepository = {
@@ -44,10 +45,47 @@ it('Open the firebase popup to signin the user', async () => {
     provider,
     auth,
     axios,
+    deleteUser,
   });
 
   expect(signInWithPopup).toHaveBeenCalledTimes(1);
   expect(signInWithPopup).toHaveBeenCalledWith(auth, provider);
+});
+
+it('Delete the firebase user if he is not added in DB', async () => {
+  const auth = { name: 'auth' } as Auth;
+  const provider = {} as AuthProvider;
+
+  const googeUser = { uid: 'uid-123', getIdToken: () => 'sessionToken' };
+
+  (signInWithPopup as jest.Mock).mockResolvedValue({
+    user: googeUser,
+  });
+
+  (userRepository.add as jest.Mock).mockRejectedValue(new Error());
+
+  const additionalUserInfo = {
+    isNewUser: true,
+    profile: {
+      given_name: 'given_name',
+      family_name: 'family_name',
+      locale: LOCALES.FR,
+    },
+  };
+
+  (getAdditionalUserInfo as jest.Mock).mockReturnValue(additionalUserInfo);
+
+  await loginWithGoogle(userRepository)({
+    signInWithPopup,
+    getAdditionalUserInfo,
+    provider,
+    auth,
+    axios,
+    deleteUser,
+  }).catch(() => {
+    expect(deleteUser).toHaveBeenCalledTimes(1);
+    expect(deleteUser).toHaveBeenCalledWith(googeUser);
+  });
 });
 
 it('Get the additionnal user information', async () => {
@@ -69,6 +107,7 @@ it('Get the additionnal user information', async () => {
     provider,
     auth,
     axios,
+    deleteUser,
   });
 
   expect(getAdditionalUserInfo).toHaveBeenCalledTimes(1);
@@ -105,6 +144,7 @@ it('Add the user in the database if he is a new user', async () => {
     provider,
     auth,
     axios,
+    deleteUser,
   });
 
   expect(userRepository.add).toHaveBeenCalledTimes(1);
@@ -120,7 +160,7 @@ it('Add the user in the database if he is a new user', async () => {
   );
 });
 
-it('Do not add the user in the database if he is a new user', async () => {
+it('Do not add the user in the database if he is not a new user', async () => {
   const auth = { name: 'auth' } as Auth;
   const provider = {} as AuthProvider;
 
@@ -150,6 +190,7 @@ it('Do not add the user in the database if he is a new user', async () => {
     provider,
     auth,
     axios,
+    deleteUser,
   });
 
   expect(userRepository.add).toHaveBeenCalledTimes(0);
@@ -185,6 +226,7 @@ it('Init the session', async () => {
     provider,
     auth,
     axios,
+    deleteUser,
   });
 
   expect(axios.post).toHaveBeenCalledTimes(1);
@@ -208,6 +250,7 @@ it('Do not init the session if there is an error during the popup signin and log
       provider,
       auth,
       axios,
+      deleteUser,
     });
   } catch (e: any) {
     expect(getAdditionalUserInfo).toHaveBeenCalledTimes(0);

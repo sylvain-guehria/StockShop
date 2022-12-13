@@ -3,6 +3,7 @@ import type {
   AdditionalUserInfo,
   Auth,
   AuthProvider,
+  User,
   UserCredential,
 } from 'firebase/auth';
 import { FirebaseAuthenticationError } from 'firebaseFolder/errorCodes';
@@ -18,6 +19,7 @@ export type LoginWithGoogleParamsType = {
   provider: AuthProvider;
   auth: Auth;
   axios: AxiosStatic;
+  deleteUser: (user: User) => Promise<void>;
 };
 
 export type SignInWithPopupType = (
@@ -37,12 +39,15 @@ export const loginWithGoogle =
     provider,
     auth,
     axios,
+    deleteUser,
   }: LoginWithGoogleParamsType): Promise<any> => {
+    let googleUser;
     try {
       const userCredentialFromFirebase = await signInWithPopup(auth, provider);
 
       const userDetails = getAdditionalUserInfo(userCredentialFromFirebase);
-      const { user: googleUser } = userCredentialFromFirebase;
+      const { user } = userCredentialFromFirebase;
+      googleUser = user;
       const isNewUser = userDetails?.isNewUser;
 
       if (isNewUser) {
@@ -64,7 +69,7 @@ export const loginWithGoogle =
         idToken,
       });
     } catch (error: any) {
-      // eslint-disable-next-line no-console
+      if (googleUser) deleteUser(googleUser);
       throw new FirebaseAuthenticationError({
         message: error.response?.data || error.message,
         errorCode: error.code,
