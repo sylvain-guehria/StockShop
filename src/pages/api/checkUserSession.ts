@@ -4,7 +4,7 @@ import { AuthFirebaseErrorCodes } from 'firebaseFolder/errorCodes';
 import { authAdmin } from 'firebaseFolder/serverApp';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const profile = async (req: NextApiRequest, res: NextApiResponse) => {
+const checkUserSession = async (req: NextApiRequest, res: NextApiResponse) => {
   const sessionCookie = getCookie(sessionCookieName, { req, res });
 
   if (!sessionCookie) return res.status(400).end('No session cookie');
@@ -24,4 +24,4 @@ const profile = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default profile;
+export default checkUserSession;

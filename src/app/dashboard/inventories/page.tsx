@@ -8,7 +8,6 @@ const InventoriesPages = async () => {
   const userUid = await validateUser();
   if (!userUid) {
     redirect(mainRoutes.login.path);
-    return null;
   }
   return <Inventories />;
 };
