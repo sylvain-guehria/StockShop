@@ -33,10 +33,11 @@ const Inventories: FC = () => {
     enabled: !!user.uid,
     onSuccess: (data) => {
       if (!currentInventoryUid && data.length > 0) {
-        const defaultInventoryUid = data.find((inventory) =>
-          inventory.getIsDefaultInventory()
-        )?.uid;
-        setCurrentInventoryUid(defaultInventoryUid || '');
+        const defaultInventoryUid =
+          data.find((inventory) => inventory.getIsDefaultInventory())?.uid ||
+          '';
+        const firstInventoryUid = data[0]?.getUid() || '';
+        setCurrentInventoryUid(defaultInventoryUid || firstInventoryUid);
       }
     },
   });

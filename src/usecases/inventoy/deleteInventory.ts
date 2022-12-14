@@ -17,14 +17,22 @@ export const deleteInventory =
       if (!inventoryUid)
         throw new Error('inventoryUid is required to delete inventory');
 
+      const inventories =
+        await inventoryRepository.getInventoriesByUserUidAndCompanyUid(
+          userUid,
+          companyUid
+        );
+
+      if (inventories && inventories.length <= 1) {
+        throw new Error('Vous ne pouvez pas supprimer le dernier inventaire');
+      }
+
       await inventoryRepository.delete({
         userUid,
         companyUid,
         inventoryUid,
       });
     } catch (error: any) {
-      // eslint-disable-next-line no-console
-      console.log('error', error);
       throw new Error(error.message);
     }
   };
