@@ -1,24 +1,43 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
 
 import Spinner from '../04-lib/spinner/Spinner';
+import { ToasterTypeEnum } from '../08-toaster/toasterEnum';
 import DisclosureSection from './DisclosureSection';
 import ProfileContainerSideBar, {
   subNavigation,
+  tabNames,
 } from './ProfileContainerSideBar';
 import ProfileForm from './profileForm/ProfileForm';
 import SettingsForm from './settingsForm/SettingsForm';
 
 const Profile = () => {
   const { user } = useAuth();
+
+  const toast = useToast(100000);
   const searchParams = useSearchParams();
   const [seletedTab, setSelectedTab] = useState(
-    searchParams.get('tab') || 'profil'
+    tabNames.includes(searchParams.get('tab') as string)
+      ? searchParams.get('tab')
+      : 'profil'
   );
+
+  useEffect(() => {
+    if (
+      searchParams.get('tab') &&
+      searchParams.get('displayHelpIM') === 'true'
+    ) {
+      toast(
+        ToasterTypeEnum.INFO,
+        'Vous devez activer la gestion des stocks dans les paramètres de votre compte pour acceder à ce module'
+      );
+    }
+  }, []);
 
   return (
     <div>
@@ -28,7 +47,7 @@ const Profile = () => {
           <div className="overflow-hidden rounded-lg bg-white shadow">
             <div className="divide-y divide-gray-200 lg:grid lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
               <ProfileContainerSideBar
-                seletedTab={seletedTab}
+                seletedTab={seletedTab as string}
                 setSelectedTab={setSelectedTab}
               />
               {user.isLoggedIn() && seletedTab === subNavigation[0]?.tab && (

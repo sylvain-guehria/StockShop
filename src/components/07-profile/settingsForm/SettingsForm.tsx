@@ -51,6 +51,7 @@ const SettingsForm: FC<Props> = ({ user }) => {
       await updateUserUseCase(user);
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);
+      return;
     }
     toast(ToasterTypeEnum.SUCCESS, 'Vos informations ont été mises à jour');
   };
@@ -64,7 +65,7 @@ const SettingsForm: FC<Props> = ({ user }) => {
 
   return (
     <form
-      className="divide-y divide-gray-200 lg:col-span-9"
+      className="divide-y divide-gray-200 p-3 px-6 lg:col-span-9"
       onSubmit={handleSubmit(onSubmit)}
     >
       <Switch.Group as="li" className="flex items-center justify-between py-4">
@@ -74,10 +75,12 @@ const SettingsForm: FC<Props> = ({ user }) => {
             className="text-sm font-medium text-gray-900"
             passive
           >
-            Allow commenting
+            Activer le module de gestion des stocks
           </Switch.Label>
           <Switch.Description className="text-sm text-gray-500">
-            Integer amet, nunc hendrerit adipiscing nam. Elementum ame
+            Un fois ce module activé, vous pourrez gérer les stocks de vos
+            produits en cliquant sur le bouton &quot;Gestion inventaire&quot; du
+            menu Services. Désactiver ce module n&apos;efface pas vos données.
           </Switch.Description>
         </div>
         <Switch

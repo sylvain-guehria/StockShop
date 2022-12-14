@@ -8,7 +8,10 @@ export function useToast(delay: number) {
   const dispatch = useToastDispatchContext();
 
   function toast(
-    type: ToasterTypeEnum.ERROR | ToasterTypeEnum.SUCCESS,
+    type:
+      | ToasterTypeEnum.ERROR
+      | ToasterTypeEnum.SUCCESS
+      | ToasterTypeEnum.INFO,
     message: string
   ) {
     const id = uuidV4();

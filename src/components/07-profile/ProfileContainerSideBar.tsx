@@ -3,8 +3,10 @@ import type { FC } from 'react';
 
 export const subNavigation = [
   { tab: 'profil', label: 'Profil', icon: UserCircleIcon },
-  { tab: 'settings', label: 'Settings', icon: CogIcon },
+  { tab: 'settings', label: 'Paramètres', icon: CogIcon },
 ];
+
+export const tabNames = subNavigation.map((item) => item.tab);
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');

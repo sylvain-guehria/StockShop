@@ -20,7 +20,7 @@ type ActionType = {
 };
 
 export type ToastType = {
-  type: ToasterTypeEnum.ERROR | ToasterTypeEnum.SUCCESS;
+  type: ToasterTypeEnum.ERROR | ToasterTypeEnum.SUCCESS | ToasterTypeEnum.INFO;
   message: string;
   id: string;
 };

@@ -13,7 +13,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   }
   const user = await userRepository.getById(uid);
   if (!user.isSeller()) {
-    redirect(`${mainRoutes.profile.path}/?tab=settings`);
+    redirect(`${mainRoutes.profile.path}/?tab=settings&displayHelpIM=true`);
   }
 
   return <InventoryManagementLayout>{children}</InventoryManagementLayout>;
