@@ -15,3 +15,16 @@ export const sendMail = async ({
     templateId,
   });
 };
+
+export const addContact = async ({
+  email,
+  listIds,
+}: {
+  email: string;
+  listIds: number[];
+}): Promise<void> => {
+  await axios.post('/api/email/addContact', {
+    email,
+    listIds,
+  });
+};

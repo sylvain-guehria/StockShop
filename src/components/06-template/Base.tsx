@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { AppConfig } from '../../utils/AppConfig';
 import NewsBanner from '../04-lib/banner/NewsBanner';
 import { Meta } from '../04-lib/layout/Meta';
+import NewsLetterIncentive from '../10-home/NewsLetterIncentive/NewsLetterIncentive';
 import { Banner } from './Banner';
 import { FAQ } from './FAQ';
 import Hero from './Hero';
@@ -18,7 +19,7 @@ const Base = () => {
       )}
       <Meta title={AppConfig.title} description={AppConfig.description} />
       <Hero />
-      {/* <GetEarlyAccessIncentive /> */}
+      <NewsLetterIncentive />
       {/* <Customer /> */}
       {/* <Features /> */}
       {/* <VerticalFeatures /> */}
