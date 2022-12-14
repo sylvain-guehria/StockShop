@@ -1,6 +1,3 @@
-import inventoryMarketLogo from '../../../public/assets/images/inventoryMarket.png';
-import NextImage from '../04-lib/nextImage/NextImage';
-
 const MarketplaceFooter = () => {
   return (
     <footer aria-labelledby="footer-heading" className="bg-white">
@@ -9,15 +6,15 @@ const MarketplaceFooter = () => {
       </h2>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="border-t border-gray-200">
-          <div className="pt-16 pb-20">
-            <div className="md:flex md:justify-center">
+          {/* <div className="pt-16 pb-20"> */}
+          {/* <div className="md:flex md:justify-center">
               <NextImage
                 className="h-10 w-auto cursor-pointer"
                 src={inventoryMarketLogo}
                 alt="inventory shop logo"
               />
-            </div>
-            {/* <div className="mx-auto mt-16 max-w-5xl xl:grid xl:grid-cols-2 xl:gap-8">
+            </div> */}
+          {/* <div className="mx-auto mt-16 max-w-5xl xl:grid xl:grid-cols-2 xl:gap-8">
               <div className="grid grid-cols-2 gap-8 xl:col-span-2">
                 <div className="space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0">
                   <div>
@@ -91,7 +88,7 @@ const MarketplaceFooter = () => {
                 </div>
               </div>
             </div> */}
-          </div>
+          {/* </div> */}
         </div>
 
         <div className="py-10 md:flex md:items-center md:justify-between">
