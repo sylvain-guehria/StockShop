@@ -9,7 +9,6 @@ import { mainRoutes } from './routes/mainRoutes';
 export function middleware(request: NextRequestType) {
   const sessionCookie = request.cookies.get(sessionCookieName);
   const { pathname } = request.nextUrl;
-
   if (!sessionCookie) {
     return NextResponse.redirect(new URL(mainRoutes.login.path, request.url));
   }

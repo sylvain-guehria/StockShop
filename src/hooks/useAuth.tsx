@@ -60,6 +60,10 @@ export const AuthContextProvider = ({
         logoutUseCase({ signOut, auth });
       }
 
+      if (firebaseUser && !sessionCookie) {
+        logoutUseCase({ signOut, auth });
+      }
+
       setIsUserLoading(true);
       if (firebaseUser) {
         const isFirstConnexion = isFirebaseUserFirstConnexion(

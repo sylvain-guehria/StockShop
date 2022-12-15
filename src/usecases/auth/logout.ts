@@ -12,7 +12,6 @@ export const logout =
   () =>
   async ({ signOut, auth }: LoginWithEmailParamsType) => {
     try {
-      await signOut(auth);
       const cookies = Cookies.get();
       const sessionCookie = cookies ? cookies[sessionCookieName] : '';
 
@@ -24,6 +23,7 @@ export const logout =
         },
       });
       Cookies.remove(sessionCookieName);
+      await signOut(auth);
     } catch (error: any) {
       throw new FirebaseAuthenticationError({
         errorCode: error.code,
