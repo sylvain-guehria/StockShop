@@ -19,7 +19,7 @@ import SettingsForm from './settingsForm/SettingsForm';
 const Profile = () => {
   const { user } = useAuth();
 
-  const toast = useToast(100000);
+  const toast = useToast(10000);
   const searchParams = useSearchParams();
   const [seletedTab, setSelectedTab] = useState(
     tabNames.includes(searchParams.get('tab') as string)
