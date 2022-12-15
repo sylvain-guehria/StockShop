@@ -52,6 +52,7 @@ const EditProductPhotoForm: FC<Props> = ({ productUid, inventoryUid }) => {
         inventoryUid,
       }),
     enabled: !!productUid,
+    staleTime: 30000,
   });
 
   const fileInput: React.RefObject<HTMLInputElement> = createRef();

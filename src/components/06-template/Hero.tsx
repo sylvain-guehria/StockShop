@@ -3,7 +3,6 @@ import { mainRoutes } from '@/routes/mainRoutes';
 import { Background } from '../04-lib/background/Background';
 import { Section } from '../04-lib/layout/Section';
 import LinkButton from '../04-lib/LinkButton/LinkButton';
-import Incentive from './Incentive';
 
 const Hero = () => (
   <Background color="bg-gray-200">
@@ -15,7 +14,7 @@ const Hero = () => (
             Vendez en ligne en click & collect
           </span>
         </div>
-        <div className="mt-4 text-sm md:text-lg">
+        <div className="mt-8 text-sm md:text-lg">
           Gérer votre inventaire et vendre vos produits en ligne n&apos;a jamais
           été aussi facile.
         </div>
@@ -24,14 +23,6 @@ const Hero = () => (
             Créé votre compte gratuitement
           </LinkButton>
         </div>
-        <div className=" mb-8 text-center">
-          <Incentive />
-        </div>
-        <img
-          className="mx-auto mt-12 rounded-md text-center"
-          src="/assets/images/capture-inventory-market.png"
-          alt="Hero screenshot"
-        />
       </header>
     </Section>
   </Background>

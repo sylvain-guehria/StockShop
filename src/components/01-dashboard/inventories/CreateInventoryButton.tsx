@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { inventoryServiceDi } from 'di';
 import type { FC } from 'react';
 
+import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import type { CreateInventoryParams } from '@/modules/inventory/inventoryService';
 import { getUserInventoriesUseCase } from '@/usecases/usecases';
@@ -14,9 +15,10 @@ const CreateInventoryButton: FC = () => {
   const { user } = useAuth();
 
   const { data: inventories = [] } = useQuery({
-    queryKey: ['get-inventories'],
+    queryKey: [ApiRequestEnums.GetInventories],
     queryFn: () => getUserInventoriesUseCase(user.uid),
     enabled: !!user.uid,
+    staleTime: 30000,
   });
 
   const mutation = useMutation({
@@ -27,7 +29,9 @@ const CreateInventoryButton: FC = () => {
       }),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ['get-inventories'] });
+      queryClient.invalidateQueries({
+        queryKey: [ApiRequestEnums.GetInventories],
+      });
     },
   });
 

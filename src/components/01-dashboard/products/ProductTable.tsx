@@ -140,6 +140,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
       user.getCompanyUid() &&
       currentPage
     ),
+    staleTime: 30000,
   });
 
   const updateProductMutation = useMutation({
