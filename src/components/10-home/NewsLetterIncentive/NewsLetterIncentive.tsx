@@ -10,7 +10,7 @@ const GetEarlyAccessIncentive = () => {
     <Section>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:gap-x-6 xl:gap-x-8">
-          <div className="flex items-center rounded-lg bg-gray-100 p-6 sm:p-10">
+          <div className="flex items-center rounded-lg bg-gray-200 p-6 sm:p-10">
             <div className="mx-auto max-w-sm">
               <h3 className="font-semibold text-gray-900">
                 Inscrivez vous à notre future newsletter
