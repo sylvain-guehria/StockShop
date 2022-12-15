@@ -48,8 +48,8 @@ const userByUid = async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(200).json({ ...userRef.data(), companyUid });
         return;
       case 'PUT':
-        userDoc.update({ ...req.body });
-        res.status(200).end();
+        await userDoc.update({ ...req.body });
+        res.status(200).json({ ...userRef.data(), ...req.body, companyUid });
         return;
       default:
         res.setHeader('Allow', ['GET', 'PUT']);

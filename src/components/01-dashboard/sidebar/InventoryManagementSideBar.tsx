@@ -53,8 +53,9 @@ const InventoryManagementSideBar: FC<Props> = ({
                 aria-hidden="true"
               />
             </div>
+            {/* PUTIT BACK IN NAV className when more items:  divide-y divide-primary-300 */}
             <nav
-              className="mt-5 flex flex-1 flex-col divide-y divide-primary-300 overflow-y-auto"
+              className="mt-5 flex flex-1 flex-col  overflow-y-auto"
               aria-label="Sidebar"
             >
               <div className="space-y-1 px-2">
@@ -78,7 +79,8 @@ const InventoryManagementSideBar: FC<Props> = ({
                   </Link>
                 ))}
               </div>
-              <div className="mt-6 pt-6">
+              {/* <div className="mt-6 pt-6"> */}
+              <div className="pt-6">
                 <div className="space-y-1 px-2">
                   {secondaryNavigation.map((item) => (
                     <Link key={item.name} href={item.path}>
