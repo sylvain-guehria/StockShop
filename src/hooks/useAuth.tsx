@@ -12,6 +12,7 @@ import { isFirebaseUserFirstConnexion } from './hooksUtils';
 
 type ContextType = {
   user: UserEntity;
+  setUser: (user: UserEntity) => void;
   isUserLoading: boolean;
 };
 
@@ -19,6 +20,7 @@ const userRepository = new FirebaseUserRepository();
 const AuthContext = createContext<ContextType>({
   user: UserEntity.new(),
   isUserLoading: false,
+  setUser: () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -96,6 +98,7 @@ export const AuthContextProvider = ({
       value={{
         user,
         isUserLoading,
+        setUser,
       }}
     >
       {children}

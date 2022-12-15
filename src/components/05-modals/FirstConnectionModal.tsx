@@ -86,16 +86,15 @@ const FirstConnectionModal = () => {
                       className="text-justify text-lg font-medium leading-6 text-gray-900"
                     >
                       Souhaitez vous accéder à l&apos;application de gestion des
-                      inventaires ou souhaitez vous seulement acheter ou
-                      consulter des produits dans les inventaires de vos
-                      commerçant préférés ?
+                      inventaires ou souhaitez vous seulement accéder à la
+                      marketplace?
                     </Dialog.Title>
                     <div className="mt-2">
                       <p className="text-justify text-sm text-gray-500">
                         Si vous choisissez de gérer votre inventaire vous aurez
-                        en plus accès à l&apos;application de gestion. Ne vous
-                        en fait pas, à tout moment vous pouvez activer ou
-                        désactiver la fonction de gestion dans vos paramètres.
+                        en plus accès à l&apos;application de gestion des
+                        stocks. À tout moment vous pouvez activer ou désactiver
+                        la fonction de gestion dans vos paramètres.
                       </p>
                     </div>
                   </div>

@@ -71,10 +71,17 @@ const PinnedInventories: FC<Props> = ({
     mutationFn: (params: DeleteInventoryParams) =>
       deleteInventoryUseCase(params),
     onSuccess: () => {
-      // Invalidate and refetch
+      handleCloseModal();
+      queryClient.refetchQueries({
+        queryKey: [ApiRequestEnums.GetProducts],
+      });
       queryClient.invalidateQueries({
         queryKey: [ApiRequestEnums.GetInventories],
       });
+    },
+    onError: (error: any) => {
+      handleCloseModal();
+      toast(ToasterTypeEnum.ERROR, error.message);
     },
   });
 
@@ -112,25 +119,6 @@ const PinnedInventories: FC<Props> = ({
     });
   };
 
-  const deleteInventory = (inventory: Inventory) => {
-    try {
-      deleteInventoryMutation.mutate({
-        inventoryUid: inventory.uid as string,
-        userUid: user.uid as string,
-        companyUid: inventories[0]?.companyUid as string,
-      });
-      handleCloseModal();
-      queryClient.refetchQueries({
-        queryKey: [ApiRequestEnums.GetProducts],
-      });
-      queryClient.refetchQueries({
-        queryKey: [ApiRequestEnums.GetInventories],
-      });
-    } catch (error: any) {
-      toast(ToasterTypeEnum.ERROR, error.message);
-    }
-  };
-
   return (
     <>
       {isEditModalOpen && (
@@ -151,7 +139,13 @@ const PinnedInventories: FC<Props> = ({
         >
           <DeleteInventoryForm
             inventory={selectedInventory as unknown as Inventory}
-            deleteInventory={(inventory) => deleteInventory(inventory)}
+            deleteInventory={(inventory) =>
+              deleteInventoryMutation.mutate({
+                inventoryUid: inventory.uid as string,
+                userUid: user.getUid(),
+                companyUid: user.getCompanyUid(),
+              })
+            }
           />
         </DynamicModal>
       )}

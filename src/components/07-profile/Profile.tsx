@@ -1,14 +1,43 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
 import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
 
 import Spinner from '../04-lib/spinner/Spinner';
+import { ToasterTypeEnum } from '../08-toaster/toasterEnum';
 import DisclosureSection from './DisclosureSection';
-import ProfileContainerSideBar from './ProfileContainerSideBar';
+import ProfileContainerSideBar, {
+  subNavigation,
+  tabNames,
+} from './ProfileContainerSideBar';
 import ProfileForm from './profileForm/ProfileForm';
+import SettingsForm from './settingsForm/SettingsForm';
 
 const Profile = () => {
   const { user } = useAuth();
+
+  const toast = useToast(10000);
+  const searchParams = useSearchParams();
+  const [seletedTab, setSelectedTab] = useState(
+    tabNames.includes(searchParams.get('tab') as string)
+      ? searchParams.get('tab')
+      : 'profil'
+  );
+
+  useEffect(() => {
+    if (
+      searchParams.get('tab') &&
+      searchParams.get('displayHelpIM') === 'true'
+    ) {
+      toast(
+        ToasterTypeEnum.INFO,
+        'Vous devez activer la gestion des stocks dans les paramètres de votre compte pour acceder à ce module'
+      );
+    }
+  }, []);
 
   return (
     <div>
@@ -17,10 +46,19 @@ const Profile = () => {
         <div className="mx-auto max-w-screen-xl px-4 pb-6 sm:px-6 lg:px-8 lg:pb-16">
           <div className="overflow-hidden rounded-lg bg-white shadow">
             <div className="divide-y divide-gray-200 lg:grid lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
-              <ProfileContainerSideBar />
-              {user.isLoggedIn() ? (
+              <ProfileContainerSideBar
+                seletedTab={seletedTab as string}
+                setSelectedTab={setSelectedTab}
+              />
+              {user.isLoggedIn() && seletedTab === subNavigation[0]?.tab && (
                 <ProfileForm user={user} />
-              ) : (
+              )}
+
+              {user.isLoggedIn() && seletedTab === subNavigation[1]?.tab && (
+                <SettingsForm user={user} />
+              )}
+
+              {!user.isLoggedIn() && (
                 <div className="flex h-52 flex-col items-center justify-center">
                   <Spinner />
                 </div>

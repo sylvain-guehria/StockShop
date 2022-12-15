@@ -1,6 +1,7 @@
 export enum ToasterTypeEnum {
   ERROR = 'error',
   SUCCESS = 'success',
+  INFO = 'info',
 }
 
 export enum ToasterActionsEnum {

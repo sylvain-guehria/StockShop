@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import UserEntity from './UserEntity';
 import { UserRepository } from './userRepository';
+import type { User } from './userType';
 
 class FirebaseUserRepository extends UserRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
@@ -78,19 +79,23 @@ class FirebaseUserRepository extends UserRepository {
     );
   }
 
-  async update(user: UserEntity): Promise<void> {
+  async update(user: UserEntity): Promise<User> {
     console.info('update user uid: ', user.getUid());
-    await axios.put(`${this.baseUrl}/api/user/${user.getUid()}`, {
-      email: user.getEmail(),
-      username: user.getUsername(),
-      firstName: user.getFirstName(),
-      lastName: user.getLastName(),
-      phoneNumber: user.getPhoneNumber(),
-      role: user.getRole(),
-      hasInventoryManagementServiceActivated: user.isSeller(),
-      hasSeenFirstConnectionModal: user.hasSeenFirstConnectionModal,
-      locale: user.getLocale(),
-    });
+    const response = await axios.put(
+      `${this.baseUrl}/api/user/${user.getUid()}`,
+      {
+        email: user.getEmail(),
+        username: user.getUsername(),
+        firstName: user.getFirstName(),
+        lastName: user.getLastName(),
+        phoneNumber: user.getPhoneNumber(),
+        role: user.getRole(),
+        hasInventoryManagementServiceActivated: user.isSeller(),
+        hasSeenFirstConnectionModal: user.hasSeenFirstConnectionModal,
+        locale: user.getLocale(),
+      }
+    );
+    return response.data;
   }
 }
 

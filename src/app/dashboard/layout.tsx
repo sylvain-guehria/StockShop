@@ -1,3 +1,4 @@
+import { userRepository } from 'di';
 import { redirect } from 'next/navigation';
 
 import InventoryManagementLayout from '@/layouts/InventoryManagementLayout';
@@ -9,6 +10,10 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
 
   if (!uid) {
     redirect(mainRoutes.login.path);
+  }
+  const user = await userRepository.getById(uid);
+  if (!user.isSeller()) {
+    redirect(`${mainRoutes.profile.path}/?tab=settings&displayHelpIM=true`);
   }
 
   return <InventoryManagementLayout>{children}</InventoryManagementLayout>;

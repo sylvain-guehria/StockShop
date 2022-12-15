@@ -7,8 +7,9 @@ import { useForm } from 'react-hook-form';
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import NextImage from '@/components/04-lib/nextImage/NextImage';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
-import type UserEntity from '@/modules/user/UserEntity';
+import UserEntity from '@/modules/user/UserEntity';
 import { updateUserUseCase } from '@/usecases/usecases';
 
 import defaultAvatar from '../../../../public/assets/images/defaultAvatar.png';
@@ -27,6 +28,7 @@ type ProfileFormType = {
 const ProfileForm: FC<Props> = ({ user }) => {
   const [errorUserNameExist, setErrorUserNameExist] = useState(false);
   const toast = useToast(4000);
+  const { setUser } = useAuth();
 
   const formOptions = {
     resolver: yupResolver(validationSchema),
@@ -52,7 +54,9 @@ const ProfileForm: FC<Props> = ({ user }) => {
     user.setUserName(username);
 
     try {
-      await updateUserUseCase(user);
+      const updatedUser = await updateUserUseCase(user);
+      setUser(UserEntity.new({ ...updatedUser }).logInUser());
+      toast(ToasterTypeEnum.SUCCESS, 'Vos informations ont été mises à jour');
     } catch (error: any) {
       if (error.message === 'UserName already exists') {
         setErrorUserNameExist(true);
@@ -60,7 +64,6 @@ const ProfileForm: FC<Props> = ({ user }) => {
         toast(ToasterTypeEnum.ERROR, error.message);
       }
     }
-    toast(ToasterTypeEnum.SUCCESS, 'Vos informations ont été mises à jour');
   };
 
   return (
@@ -71,12 +74,12 @@ const ProfileForm: FC<Props> = ({ user }) => {
       <div className="py-6 px-4 sm:p-6 lg:pb-8">
         <div>
           <h2 className="text-lg font-medium leading-6 text-gray-900">
-            Profile
+            Profil
           </h2>
-          <p className="mt-1 text-sm text-gray-500">
+          {/* <p className="mt-1 text-sm text-gray-500">
             This information will be displayed publicly so be careful what you
             share.
-          </p>
+          </p> */}
         </div>
 
         <div className="mt-6 flex flex-col lg:flex-row">
