@@ -40,6 +40,7 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
         inventoryUid,
       }),
     enabled: !!productUid,
+    staleTime: 30000,
   });
 
   if (!product) return null;
