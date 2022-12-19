@@ -4,7 +4,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
-import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
+import { marketplaceRoutes } from '@/routes/marketplaceRoutes';
 
 export type Service = {
   name: string;
@@ -27,7 +27,7 @@ export const services: Service[] = [
     name: 'Marketplace',
     description:
       'Trouvez des commerces dans votre villes et parcourez leurs inventaires.',
-    href: marketpalceRoutes.marketplace.path,
+    href: marketplaceRoutes.marketplace.path,
     icon: CursorArrowRaysIcon,
     callToAction: 'Trouver un commerce',
   },

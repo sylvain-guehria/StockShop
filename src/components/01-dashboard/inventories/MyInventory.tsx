@@ -8,11 +8,13 @@ import {
 } from '@heroicons/react/24/outline';
 import { useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Dropdown from '@/components/04-lib/dropdown/Dropdown';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
+import UserEntity from '@/modules/user/UserEntity';
+import type { User } from '@/modules/user/userType';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { getUserInventoriesUseCase } from '@/usecases/usecases';
 
@@ -21,8 +23,17 @@ import CreateInventoryButton from './CreateInventoryButton';
 import CreateProductButton from './CreateProductButton';
 import PinnedInventories from './PinnedInventories';
 
-const Inventories: FC = () => {
-  const { user } = useAuth();
+type Props = {
+  fetchedUser: User;
+};
+
+const Inventories: FC<Props> = ({ fetchedUser }) => {
+  const { checkSessionCookieAndSetUser, user } = useAuth();
+
+  useEffect(() => {
+    checkSessionCookieAndSetUser(UserEntity.new({ ...(fetchedUser || {}) }));
+  }, [fetchedUser?.uid]);
+
   const [currentInventoryUid, setCurrentInventoryUid] = useState('');
   const [isInventoriesDropdownOpen, setIsInventoriesDropdownOpen] =
     useState(true);

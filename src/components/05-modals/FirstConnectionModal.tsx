@@ -10,7 +10,7 @@ import { useAuth } from '@/hooks/useAuth';
 import Providers from '@/layouts/Providers';
 import { SUBROLES } from '@/modules/user/userType';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
-import { marketpalceRoutes } from '@/routes/marketpalceRoutes';
+import { marketplaceRoutes } from '@/routes/marketplaceRoutes';
 import { chooseSubRoleOnFirstConnectionUseCase } from '@/usecases/usecases';
 
 import NextImage from '../04-lib/nextImage/NextImage';
@@ -27,7 +27,7 @@ const FirstConnectionModal = () => {
   ) => {
     chooseSubRoleOnFirstConnectionUseCase(user, subrole).then(() => {
       if (subrole === SUBROLES.BUYER)
-        router.push(marketpalceRoutes.marketplace.path);
+        router.push(marketplaceRoutes.marketplace.path);
       if (subrole === SUBROLES.SELLER)
         router.push(inventoryManagementRoutes.myInventory.path);
       setOpen(false);
@@ -100,7 +100,7 @@ const FirstConnectionModal = () => {
                   </div>
                 </div>
                 <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-                  <Link href={marketpalceRoutes.marketplace.path}>
+                  <Link href={marketplaceRoutes.marketplace.path}>
                     <button
                       type="button"
                       className="inline-flex w-full justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"

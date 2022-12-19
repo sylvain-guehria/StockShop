@@ -3,8 +3,6 @@ import type { LocaleType, ProviderType, RoleType, User } from './userType';
 import { LOCALES, PROVIDERS, ROLES } from './userType';
 
 class UserEntity implements User {
-  loggedIn: boolean;
-
   email: string;
 
   username: string;
@@ -36,13 +34,10 @@ class UserEntity implements User {
       ? new UserEntity({
           ...user,
         })
-      : new UserEntity({
-          loggedIn: false,
-        });
+      : new UserEntity({});
   }
 
   constructor(user: User) {
-    this.loggedIn = user.loggedIn || false;
     this.email = user.email || '';
     this.provider = user.provider || PROVIDERS.NOTKNOWN;
     this.username = user.username || '';
@@ -150,16 +145,11 @@ class UserEntity implements User {
   }
 
   isLoggedIn(): boolean {
-    return this.loggedIn;
+    return !!this.uid;
   }
 
   isLoggedOut(): boolean {
-    return !this.loggedIn;
-  }
-
-  logInUser(): UserEntity {
-    this.loggedIn = true;
-    return this;
+    return !this.isLoggedIn();
   }
 
   isSeller(): boolean {

@@ -66,9 +66,9 @@ const Header = () => {
                   {mainRoutes.pricing.label}
                 </div>
               </Link>
-              <Link href={marketpalceRoutes.marketplace.path}>
+              <Link href={marketplaceRoutes.marketplace.path}>
                 <div className="cursor-pointer text-base font-medium text-gray-600 hover:text-gray-900">
-                  {marketpalceRoutes.marketplace.label}
+                  {marketplaceRoutes.marketplace.label}
                 </div>
               </Link> */}
               {/* <MoreButton /> */}
