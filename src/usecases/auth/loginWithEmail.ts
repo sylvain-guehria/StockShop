@@ -31,9 +31,7 @@ export const loginWithEmail =
       );
       const idToken = await userCredential.user.getIdToken();
 
-      await axios.post('/api/sessionInit', {
-        idToken,
-      });
+      await axios.post('/api/sessionInit', { idToken });
     } catch (error: any) {
       throw new FirebaseAuthenticationError({
         errorCode: error.code,

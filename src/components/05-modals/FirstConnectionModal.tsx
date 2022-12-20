@@ -4,10 +4,11 @@ import { Dialog, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import SettingsImg from 'public/assets/images/settings.png';
+import type { FC } from 'react';
 import { Fragment, useRef, useState } from 'react';
 
-import { useAuth } from '@/hooks/useAuth';
-import Providers from '@/layouts/Providers';
+import UserEntity from '@/modules/user/UserEntity';
+import type { User } from '@/modules/user/userType';
 import { SUBROLES } from '@/modules/user/userType';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { marketplaceRoutes } from '@/routes/marketplaceRoutes';
@@ -15,9 +16,12 @@ import { chooseSubRoleOnFirstConnectionUseCase } from '@/usecases/usecases';
 
 import NextImage from '../04-lib/nextImage/NextImage';
 
-const FirstConnectionModal = () => {
+type Props = {
+  user: User;
+};
+
+const FirstConnectionModal: FC<Props> = ({ user }) => {
   const [open, setOpen] = useState(true);
-  const { user } = useAuth();
   const router = useRouter();
 
   const cancelButtonRef = useRef(null);
@@ -25,7 +29,10 @@ const FirstConnectionModal = () => {
   const onChooseRoleFirstConnection = async (
     subrole: SUBROLES.BUYER | SUBROLES.SELLER
   ) => {
-    chooseSubRoleOnFirstConnectionUseCase(user, subrole).then(() => {
+    chooseSubRoleOnFirstConnectionUseCase(
+      UserEntity.new({ ...user }),
+      subrole
+    ).then(() => {
       if (subrole === SUBROLES.BUYER)
         router.push(marketplaceRoutes.marketplace.path);
       if (subrole === SUBROLES.SELLER)
@@ -133,12 +140,4 @@ const FirstConnectionModal = () => {
   );
 };
 
-const FirstConnectionModalWithProviders = () => {
-  return (
-    <Providers>
-      <FirstConnectionModal />
-    </Providers>
-  );
-};
-
-export default FirstConnectionModalWithProviders;
+export default FirstConnectionModal;

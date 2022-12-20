@@ -26,17 +26,23 @@ export const AuthContextProvider = ({
 }) => {
   const [user, setUser] = useState<UserEntity>(UserEntity.new());
 
-  const checkSessionCookieAndSetUser = (receivedUser: User) => {
-    logoutIfNoSessionCookie();
-    setUser(UserEntity.new({ ...receivedUser }));
-  };
-
-  const logoutIfNoSessionCookie = () => {
+  const checkSessionCookieAndSetUser = async (receivedUser: User) => {
     const cookies = Cookies.get();
     const sessionCookie = cookies ? cookies[sessionCookieName] : '';
-    if (!sessionCookie) {
-      logoutUseCase({ signOut, auth });
+
+    const firebaseCurrentUser = auth.currentUser;
+
+    if (!sessionCookie && firebaseCurrentUser) {
+      await logoutUseCase({ signOut, auth });
+      setUser(UserEntity.new({}));
+      return;
     }
+    if (sessionCookie && !firebaseCurrentUser) {
+      Cookies.remove(sessionCookieName);
+      setUser(UserEntity.new({}));
+      return;
+    }
+    setUser(UserEntity.new({ ...receivedUser }));
   };
 
   return (
