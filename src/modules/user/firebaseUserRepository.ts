@@ -42,7 +42,7 @@ class FirebaseUserRepository extends UserRepository {
     });
   }
 
-  async add(user: UserEntity): Promise<string> {
+  async add(user: UserEntity): Promise<UserEntity> {
     console.info('adding user in db...');
     const res = await axios.post(`${this.baseUrl}/api/user/add`, {
       uid: user.getUid(),
@@ -52,7 +52,8 @@ class FirebaseUserRepository extends UserRepository {
       locale: user.getLocale(),
     });
     console.info('User added in DB, uid: ', user.getUid());
-    return res.data;
+
+    return UserEntity.new(res.data ? { ...res.data } : {});
   }
 
   async delete(uid: string): Promise<void> {

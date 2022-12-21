@@ -11,16 +11,18 @@ import {
 import { useRouter } from 'next/navigation';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { loginWithGoogleUseCase } from '@/usecases/usecases';
 
 const LoginOtherPlatformForm = () => {
   const toast = useToast(4000);
+  const { setUser } = useAuth();
   const router = useRouter();
   const handleLoginGoogle = async () => {
     try {
-      await loginWithGoogleUseCase({
+      const user = await loginWithGoogleUseCase({
         signInWithPopup,
         getAdditionalUserInfo,
         provider: new GoogleAuthProvider(),
@@ -28,6 +30,7 @@ const LoginOtherPlatformForm = () => {
         axios,
         deleteUser,
       });
+      setUser(user);
       router.push(mainRoutes.home.path);
     } catch (e: any) {
       toast(ToasterTypeEnum.ERROR, e.message);

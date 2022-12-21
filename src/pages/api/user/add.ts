@@ -37,7 +37,7 @@ const addUser = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     await firestoreAdmin.collection(USERS).doc(user.uid).set(user);
-    res.status(200).json(user.uid);
+    res.status(200).json(user);
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error('error when adding user', e);

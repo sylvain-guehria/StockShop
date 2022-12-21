@@ -6,12 +6,10 @@ import type {
   UserCredential,
 } from 'firebase/auth';
 import { FirebaseAuthenticationError } from 'firebaseFolder/errorCodes';
-import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 
 import UserEntity from '@/modules/user/UserEntity';
 import type { UserRepository } from '@/modules/user/userRepository';
 import { PROVIDERS, ROLES } from '@/modules/user/userType';
-import { mainRoutes } from '@/routes/mainRoutes';
 
 type RegisterWithEmailParams = {
   email: string;
@@ -22,7 +20,6 @@ type RegisterWithEmailParams = {
     password: string
   ) => Promise<UserCredential>;
   auth: Auth;
-  router: AppRouterInstance;
   deleteUser: (user: User) => Promise<void>;
   sendEmailVerification: (
     user: User,
@@ -38,13 +35,12 @@ export const registerWithEmail =
     password,
     createUserWithEmailAndPassword,
     auth,
-    router,
     deleteUser,
     sendEmailVerification,
     axios,
-  }: RegisterWithEmailParams) => {
+  }: RegisterWithEmailParams): Promise<UserEntity> => {
     let userCredentialFromFirebase: UserCredential;
-    let userUidFromDatabase: string = '';
+    let userUidFromDatabase: UserEntity = UserEntity.new({});
     try {
       userCredentialFromFirebase = await createUserWithEmailAndPassword(
         auth,
@@ -81,7 +77,7 @@ export const registerWithEmail =
     }
 
     if (
-      userCredentialFromFirebase?.user?.uid === userUidFromDatabase &&
+      userCredentialFromFirebase?.user?.uid === userUidFromDatabase?.uid &&
       auth.currentUser
     ) {
       sendEmailVerification(auth.currentUser as User).catch(() => {
@@ -91,6 +87,6 @@ export const registerWithEmail =
           auth.currentUser
         );
       });
-      router.push(mainRoutes.home.path);
     }
+    return userRepository.getById(userCredentialFromFirebase.user.uid);
   };

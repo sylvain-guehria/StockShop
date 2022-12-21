@@ -25,10 +25,10 @@ type ProfileFormType = {
   lastName: string;
 };
 
-const ProfileForm: FC<Props> = ({ user }) => {
+const ProfileForm: FC<Props> = () => {
   const [errorUserNameExist, setErrorUserNameExist] = useState(false);
   const toast = useToast(4000);
-  const { checkSessionCookieAndSetUser } = useAuth();
+  const { user, setUser } = useAuth();
 
   const formOptions = {
     resolver: yupResolver(validationSchema),
@@ -55,7 +55,7 @@ const ProfileForm: FC<Props> = ({ user }) => {
 
     try {
       const updatedUser = await updateUserUseCase(user);
-      checkSessionCookieAndSetUser(UserEntity.new({ ...updatedUser }));
+      setUser(UserEntity.new({ ...updatedUser }));
       toast(ToasterTypeEnum.SUCCESS, 'Vos informations ont été mises à jour');
     } catch (error: any) {
       if (error.message === 'UserName already exists') {

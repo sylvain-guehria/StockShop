@@ -40,7 +40,7 @@ export const loginWithGoogle =
     auth,
     axios,
     deleteUser,
-  }: LoginWithGoogleParamsType): Promise<any> => {
+  }: LoginWithGoogleParamsType): Promise<UserEntity> => {
     let googleUser;
     try {
       const userCredentialFromFirebase = await signInWithPopup(auth, provider);
@@ -68,6 +68,8 @@ export const loginWithGoogle =
       await axios.post('/api/sessionInit', {
         idToken,
       });
+
+      return await userRepository.getById(user.uid);
     } catch (error: any) {
       if (googleUser) deleteUser(googleUser);
       throw new FirebaseAuthenticationError({

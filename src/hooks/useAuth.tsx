@@ -1,20 +1,21 @@
-import { auth, signOut } from 'firebaseFolder/clientApp';
+import { userRepository } from 'di';
 import { sessionCookieName } from 'firebaseFolder/constant';
 import Cookies from 'js-cookie';
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import UserEntity from '@/modules/user/UserEntity';
-import type { User } from '@/modules/user/userType';
-import { logoutUseCase } from '@/usecases/usecases';
+
+import { auth, onAuthStateChanged } from '../../firebaseFolder/clientApp';
+import { isFirebaseUserFirstConnexion } from './hooksUtils';
 
 type ContextType = {
   user: UserEntity;
-  checkSessionCookieAndSetUser: (user: UserEntity) => void;
+  setUser: (user: UserEntity) => void;
 };
 
 const AuthContext = createContext<ContextType>({
   user: UserEntity.new(),
-  checkSessionCookieAndSetUser: () => {},
+  setUser: () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -26,27 +27,43 @@ export const AuthContextProvider = ({
 }) => {
   const [user, setUser] = useState<UserEntity>(UserEntity.new());
 
-  const checkSessionCookieAndSetUser = async (receivedUser: User) => {
-    const cookies = Cookies.get();
-    const sessionCookie = cookies ? cookies[sessionCookieName] : '';
+  useEffect(() => {
+    const fetchUserInformation = async (uid: string) => {
+      try {
+        return await userRepository.getById(uid);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('ERROR fetchUserInformation', e);
+        return null;
+      }
+    };
 
-    const firebaseCurrentUser = auth.currentUser;
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (!firebaseUser) {
+        Cookies.remove(sessionCookieName);
+        setUser(UserEntity.new({}));
+        return;
+      }
 
-    if (!sessionCookie && firebaseCurrentUser) {
-      await logoutUseCase({ signOut, auth });
-      setUser(UserEntity.new({}));
-      return;
-    }
-    if (sessionCookie && !firebaseCurrentUser) {
-      Cookies.remove(sessionCookieName);
-      setUser(UserEntity.new({}));
-      return;
-    }
-    setUser(UserEntity.new({ ...receivedUser }));
-  };
+      const isFirstConnexion = isFirebaseUserFirstConnexion(
+        // @ts-ignore
+        firebaseUser.metadata.createdAt || '0'
+      );
+
+      if (isFirstConnexion) {
+        console.error('isFirstConnexion*******************');
+        // is handled in usecases
+        return;
+      }
+
+      const fetchedUser = await fetchUserInformation(firebaseUser.uid);
+      setUser(UserEntity.new(fetchedUser || {}));
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user, checkSessionCookieAndSetUser }}>
+    <AuthContext.Provider value={{ user, setUser }}>
       {children}
     </AuthContext.Provider>
   );

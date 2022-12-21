@@ -19,7 +19,7 @@ export abstract class UserRepository {
     throw new Error(`You tried to call an abstract methode, arg: ${uid}`);
   }
 
-  async add(user: UserEntity): Promise<string> {
+  async add(user: UserEntity): Promise<UserEntity> {
     throw new Error(`You tried to call an abstract methode, arg: ${user}`);
   }
 

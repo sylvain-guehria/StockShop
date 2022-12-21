@@ -8,13 +8,11 @@ import {
 } from '@heroicons/react/24/outline';
 import { useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import Dropdown from '@/components/04-lib/dropdown/Dropdown';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
-import UserEntity from '@/modules/user/UserEntity';
-import type { User } from '@/modules/user/userType';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { getUserInventoriesUseCase } from '@/usecases/usecases';
 
@@ -23,16 +21,9 @@ import CreateInventoryButton from './CreateInventoryButton';
 import CreateProductButton from './CreateProductButton';
 import PinnedInventories from './PinnedInventories';
 
-type Props = {
-  fetchedUser: User;
-};
-
-const Inventories: FC<Props> = ({ fetchedUser }) => {
-  const { checkSessionCookieAndSetUser, user } = useAuth();
-
-  useEffect(() => {
-    checkSessionCookieAndSetUser(UserEntity.new({ ...(fetchedUser || {}) }));
-  }, [fetchedUser?.uid]);
+const Inventories: FC = () => {
+  const { user } = useAuth();
+  const oneHourInMilliseconds = 1000 * 60 * 60;
 
   const [currentInventoryUid, setCurrentInventoryUid] = useState('');
   const [isInventoriesDropdownOpen, setIsInventoriesDropdownOpen] =
@@ -51,6 +42,7 @@ const Inventories: FC<Props> = ({ fetchedUser }) => {
         setCurrentInventoryUid(defaultInventoryUid || firstInventoryUid);
       }
     },
+    staleTime: oneHourInMilliseconds,
   });
 
   const onSelectInventory = (inventoryUid: string) => {

@@ -202,8 +202,4 @@ const Header = () => {
   );
 };
 
-const HeaderWithProviders = () => {
-  return <Header />;
-};
-
-export default HeaderWithProviders;
+export default Header;

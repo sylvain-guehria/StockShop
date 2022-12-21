@@ -15,7 +15,9 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
+import { mainRoutes } from '@/routes/mainRoutes';
 import { registerWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './RegisterFormValidation';
@@ -28,6 +30,7 @@ interface RegisterFormType {
 }
 const RegisterForm = () => {
   const router = useRouter();
+  const { setUser } = useAuth();
   const toast = useToast(4000);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -44,16 +47,18 @@ const RegisterForm = () => {
   ) => {
     const { email, password } = data;
     try {
-      await registerWithEmailUseCase({
+      const user = await registerWithEmailUseCase({
         email,
         password,
         createUserWithEmailAndPassword,
         deleteUser,
         auth,
-        router,
         sendEmailVerification,
         axios,
       });
+      console.log('user--------------------------register form', user);
+      setUser(user);
+      router.push(mainRoutes.home.path);
     } catch (error: any) {
       if (error.errorCode === AuthFirebaseErrorCodes.EmailAlreadyInUse) {
         setErrorMessage(error.message);
