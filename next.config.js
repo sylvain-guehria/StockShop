@@ -22,6 +22,15 @@ const nextConfig = {
       'firebasestorage.googleapis.com',
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/dashboard/',
+        destination: '/dashboard/inventories/',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = withBundleAnalyzer(nextConfig);
