@@ -2,7 +2,7 @@ import type { AxiosStatic } from 'axios';
 import type { Auth, UserCredential } from 'firebase/auth';
 import { FirebaseAuthenticationError } from 'firebaseFolder/errorCodes';
 
-import type UserRepository from '@/modules/user/userRepository';
+import type { UserRepository } from '@/modules/user/userRepository';
 
 type LoginWithEmailParamsType = {
   signInWithEmailAndPassword: (

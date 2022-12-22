@@ -51,7 +51,6 @@ export const AuthContextProvider = ({
       );
 
       if (isFirstConnexion) {
-        console.error('isFirstConnexion*******************');
         // is handled in usecases
         return;
       }

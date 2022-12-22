@@ -56,7 +56,6 @@ const RegisterForm = () => {
         sendEmailVerification,
         axios,
       });
-      console.log('user--------------------------register form', user);
       setUser(user);
       router.push(mainRoutes.home.path);
     } catch (error: any) {

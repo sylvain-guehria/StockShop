@@ -5,11 +5,13 @@ import axios from 'axios';
 import { auth, signInWithEmailAndPassword } from 'firebaseFolder/clientApp';
 import { AuthFirebaseErrorCodes } from 'firebaseFolder/errorCodes';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { loginWithEmailUseCase } from '@/usecases/usecases';
@@ -25,6 +27,8 @@ interface LoginFormType {
 const LoginEmailForm = () => {
   const [wrongEmailPasswordError, setWrongEmailPasswordError] = useState(false);
   const toast = useToast(4000);
+  const { setUser } = useAuth();
+  const router = useRouter();
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   const {
@@ -38,13 +42,15 @@ const LoginEmailForm = () => {
   ) => {
     const { email, password } = data;
     try {
-      await loginWithEmailUseCase({
+      const user = await loginWithEmailUseCase({
         signInWithEmailAndPassword,
         email,
         password,
         auth,
         axios,
       });
+      setUser(user);
+      router.push(mainRoutes.home.path);
     } catch (error: any) {
       if (
         error.errorCode === AuthFirebaseErrorCodes.WrongPassword ||
