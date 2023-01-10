@@ -53,19 +53,17 @@ describe('reducerFilters', () => {
           [ProductAttributes.CATEGORY_UID]: 'azertyui',
           [ProductAttributes.SUB_CATEGORY_UID]: 'qsdfghj',
           [ProductAttributes.TO_BUY]: 'false',
-          [ProductAttributes.IS_PUBLIC]: 'true',
+          [ProductAttributes.IS_PUBLIC]: 'false',
         },
       },
     };
     const expectedState = {
       ...initialFiltersState,
       filters: {
-        [ProductAttributes.LABEL]: 'Test SET_FILTERS 2',
         [ProductAttributes.CATEGORY_UID]: 'azertyui',
         [ProductAttributes.SUB_CATEGORY_UID]: 'qsdfghj',
-        [ProductAttributes.TVA]: 25,
         [ProductAttributes.TO_BUY]: 'false',
-        [ProductAttributes.IS_PUBLIC]: 'true',
+        [ProductAttributes.IS_PUBLIC]: 'false',
       },
     };
     expect(reducerFilters(initialFiltersState, action)).toEqual(expectedState);
