@@ -1,5 +1,5 @@
 import { FeatureElement } from '../04-lib/feature/FeatureElement';
-import { Section } from '../04-lib/layout/Section';
+import Section from '../04-lib/layout/Section';
 
 const Features = () => (
   <Section

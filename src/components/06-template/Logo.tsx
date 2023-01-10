@@ -1,4 +1,4 @@
-import { AppConfig } from '../../utils/AppConfig';
+import { NEXT_SEO_DEFAULT } from 'next-seo.config';
 
 type ILogoProps = {
   xl?: boolean;
@@ -30,7 +30,7 @@ const Logo = (props: ILogoProps) => {
         <path d="M4 20h14" />
       </svg>
 
-      {AppConfig.site_name}
+      {NEXT_SEO_DEFAULT.title}
     </div>
   );
 };

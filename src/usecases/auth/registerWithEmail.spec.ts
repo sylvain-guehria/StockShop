@@ -3,7 +3,6 @@ import type { Auth, UserCredential } from 'firebase/auth';
 
 import UserEntity from '@/modules/user/UserEntity';
 import { PROVIDERS, ROLES } from '@/modules/user/userType';
-import { mainRoutes } from '@/routes/mainRoutes';
 
 import { registerWithEmail } from './registerWithEmail';
 
@@ -20,14 +19,6 @@ const userRepository = {
   getAll: jest.fn(),
   update: jest.fn(),
 };
-const router = {
-  push: jest.fn(),
-  back: jest.fn(),
-  forward: jest.fn(),
-  refresh: jest.fn(),
-  replace: jest.fn(),
-  prefetch: jest.fn(),
-};
 
 const deleteUser = jest.fn();
 const sendEmailVerification = jest.fn();
@@ -35,6 +26,10 @@ const sendEmailVerification = jest.fn();
 const axios = {
   post: jest.fn(),
 } as unknown as AxiosStatic;
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 it('Create and signup the user in firebase', async () => {
   const email = 'sylvain.guehria@gmail.com';
@@ -52,7 +47,6 @@ it('Create and signup the user in firebase', async () => {
     password,
     createUserWithEmailAndPassword,
     auth,
-    router,
     deleteUser,
     sendEmailVerification,
     axios,
@@ -81,7 +75,6 @@ it('Add the user to the database with the role "user" and the provider "email"',
     password,
     createUserWithEmailAndPassword,
     auth,
-    router,
     deleteUser,
     sendEmailVerification,
     axios,
@@ -116,7 +109,6 @@ it('Init the session token when user is registered', async () => {
     password,
     createUserWithEmailAndPassword,
     auth,
-    router,
     deleteUser,
     sendEmailVerification,
     axios,
@@ -145,7 +137,6 @@ it('Do not add the user in the database if the user is not added to firebase', a
     password,
     createUserWithEmailAndPassword,
     auth,
-    router,
     deleteUser,
     sendEmailVerification,
     axios,
@@ -174,7 +165,6 @@ it('Delete the user from firebase if the user is not added to the database', asy
       password,
       createUserWithEmailAndPassword,
       auth,
-      router,
       deleteUser,
       sendEmailVerification,
       axios,
@@ -193,7 +183,7 @@ it('Delete the user from firebase if the user is not added to the database', asy
   }
 });
 
-it('send an Email Verification and redirect the user if the user is added to firebase and the DB', async () => {
+it('send an Email Verification if the user is added to firebase and the DB', async () => {
   const email = 'sylvain.guehria@gmail.com';
   const password = 'password';
   const auth = { currentUser: { uid: 'uid-123' } } as Auth;
@@ -201,7 +191,7 @@ it('send an Email Verification and redirect the user if the user is added to fir
   (createUserWithEmailAndPassword as jest.Mock).mockResolvedValue({
     user: { uid: 'uid-123', getIdToken: () => 'sessionToken' },
   });
-  (userRepository.add as jest.Mock).mockResolvedValue('uid-123');
+  (userRepository.add as jest.Mock).mockResolvedValue({ uid: 'uid-123' });
   (sendEmailVerification as jest.Mock).mockResolvedValue(true);
 
   await registerWithEmail(userRepository)({
@@ -209,7 +199,6 @@ it('send an Email Verification and redirect the user if the user is added to fir
     password,
     createUserWithEmailAndPassword,
     auth,
-    router,
     deleteUser,
     sendEmailVerification,
     axios,
@@ -228,5 +217,4 @@ it('send an Email Verification and redirect the user if the user is added to fir
     })
   );
   expect(sendEmailVerification).toHaveBeenCalledWith({ uid: 'uid-123' });
-  expect(router.push).toHaveBeenCalledWith(mainRoutes.home.path);
 });

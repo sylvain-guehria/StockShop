@@ -2,6 +2,8 @@ import type { AxiosStatic } from 'axios';
 import type { Auth, UserCredential } from 'firebase/auth';
 import { FirebaseAuthenticationError } from 'firebaseFolder/errorCodes';
 
+import type { UserRepository } from '@/modules/user/userRepository';
+
 import { loginWithEmail } from './loginWithEmail';
 
 type SignInType = (
@@ -13,6 +15,10 @@ type SignInType = (
 const axios = {
   post: jest.fn(),
 } as unknown as AxiosStatic;
+
+const userRepository = {
+  getById: jest.fn(),
+} as unknown as UserRepository;
 
 const signInWithEmailAndPassword: SignInType = jest.fn();
 
@@ -30,7 +36,7 @@ it('Login in firebase client', async () => {
     user: { uid: 'uid-123', getIdToken: () => 'sessionToken' },
   });
 
-  await loginWithEmail()({
+  await loginWithEmail(userRepository)({
     signInWithEmailAndPassword,
     email,
     password,
@@ -55,7 +61,7 @@ it('Login the session', async () => {
     user: { uid: 'uid-123', getIdToken: () => 'sessionToken' },
   });
 
-  await loginWithEmail()({
+  await loginWithEmail(userRepository)({
     signInWithEmailAndPassword,
     email,
     password,
@@ -82,7 +88,7 @@ it('Do not login the session if it failed to login in firebase client', async ()
   addListenerSignOut.mockImplementation(() => Promise.reject(error));
 
   try {
-    await loginWithEmail()({
+    await loginWithEmail(userRepository)({
       signInWithEmailAndPassword,
       email,
       password,
