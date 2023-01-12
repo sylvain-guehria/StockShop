@@ -56,6 +56,8 @@ export const AuthContextProvider = ({
         return;
       }
 
+      if (firebaseUser && !Cookies.get(sessionCookieName)) return;
+
       const isFirstConnexion = isFirebaseUserFirstConnexion(
         // @ts-ignore
         firebaseUser.metadata.createdAt || '0'

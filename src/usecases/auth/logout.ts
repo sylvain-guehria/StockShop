@@ -23,9 +23,8 @@ export const logout =
             Cookie: `${sessionCookieName}=${sessionCookie}`,
           },
         });
-        Cookies.remove(sessionCookieName);
       }
-      await signOut(auth);
+      return await signOut(auth);
     } catch (error: any) {
       throw new FirebaseAuthenticationError({
         errorCode: error.code,
