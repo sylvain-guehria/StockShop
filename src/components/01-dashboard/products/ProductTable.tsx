@@ -111,7 +111,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
       count: 0,
       products: [],
     },
-    isFetching: isFetchingProducts,
+    isLoading: isLoadingProducts,
   } = useQuery({
     queryKey: [
       ApiRequestEnums.GetProducts,
@@ -477,16 +477,17 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
               </tbody>
             </table>
           </div>
-          {!isFetchingProducts && (
+          {!isLoadingProducts && (
             <Pagination
               totalResults={data.count}
               numberOfResultsPerPage={10}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
+              currentInventoryUid={currentInventoryUid}
             />
           )}
 
-          {isFetchingProducts && (
+          {isLoadingProducts && (
             <div className="my-5">
               <Spinner />
             </div>
