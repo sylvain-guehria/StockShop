@@ -171,6 +171,7 @@ const ProfileForm: FC<Props> = () => {
                     className="h-full w-full rounded-full"
                     src={defaultAvatar}
                     alt=""
+                    priority={true}
                   />
                 </div>
                 <div className="ml-5 rounded-md shadow-sm">

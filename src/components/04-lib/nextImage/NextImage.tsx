@@ -12,6 +12,7 @@ type Props = {
   fill?: boolean;
   style?: React.CSSProperties;
   sizes?: string;
+  priority?: boolean;
 };
 
 const NextImage: FC<Props> = ({
@@ -24,6 +25,7 @@ const NextImage: FC<Props> = ({
   fill = false,
   style,
   sizes,
+  priority = false,
 }) => {
   return (
     <Image
@@ -36,6 +38,7 @@ const NextImage: FC<Props> = ({
       fill={fill}
       style={style}
       sizes={sizes}
+      priority={priority}
     />
   );
 };

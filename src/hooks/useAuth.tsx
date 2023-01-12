@@ -39,7 +39,6 @@ export const AuthContextProvider = ({
     queryFn: () => userRepository.getById(userUid),
     enabled: !!userUid,
     onSuccess: (retrievedUser) => {
-      console.log('retrievedUser---------------------', retrievedUser);
       setUser(retrievedUser);
     },
     onError: (error) => {

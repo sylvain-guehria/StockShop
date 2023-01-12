@@ -35,6 +35,7 @@ const Contact = () => {
                 <Image
                   src={ContactImg}
                   alt="Zanzi illustrations from getillustrations.com"
+                  priority
                 />
               </div>
             </div>
