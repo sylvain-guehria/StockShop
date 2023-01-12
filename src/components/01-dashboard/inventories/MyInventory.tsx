@@ -31,7 +31,7 @@ const Inventories: FC = () => {
 
   const { data: inventories = [], isLoading: isLoadingInventory } = useQuery({
     queryKey: [ApiRequestEnums.GetInventories],
-    queryFn: () => getUserInventoriesUseCase(user.uid),
+    queryFn: () => getUserInventoriesUseCase(user),
     enabled: !!user.uid,
     onSuccess: (data) => {
       if (!currentInventoryUid && data.length > 0) {

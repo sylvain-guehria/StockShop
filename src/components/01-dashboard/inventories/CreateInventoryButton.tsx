@@ -1,25 +1,17 @@
 'use client';
 
 import { FolderPlusIcon } from '@heroicons/react/24/outline';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { inventoryServiceDi } from 'di';
 import type { FC } from 'react';
 
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import type { CreateInventoryParams } from '@/modules/inventory/inventoryService';
-import { getUserInventoriesUseCase } from '@/usecases/usecases';
 
 const CreateInventoryButton: FC = () => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
-
-  const { data: inventories = [] } = useQuery({
-    queryKey: [ApiRequestEnums.GetInventories],
-    queryFn: () => getUserInventoriesUseCase(user.uid),
-    enabled: !!user.uid,
-    staleTime: 30000,
-  });
 
   const mutation = useMutation({
     mutationFn: ({ userUid, companyUid }: CreateInventoryParams) =>
@@ -37,7 +29,7 @@ const CreateInventoryButton: FC = () => {
 
   const handleClickCreateInventory = () => {
     const userId = user.uid;
-    const companyId = inventories[0]?.companyUid;
+    const companyId = user.companyUid;
 
     if (!userId || !companyId) return;
     mutation.mutate({
