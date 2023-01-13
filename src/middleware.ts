@@ -1,4 +1,3 @@
-// middleware.ts
 import { sessionCookieName } from 'firebaseFolder/constant';
 import type { NextRequest as NextRequestType } from 'next/server';
 import { NextResponse } from 'next/server';

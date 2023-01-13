@@ -34,10 +34,6 @@ const Header = () => {
 
   return (
     <Popover className="relative bg-white">
-      {/* <div
-        className="pointer-events-none absolute inset-0 z-30 shadow"
-        aria-hidden="true"
-      /> */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="flex items-center justify-between border-b border-gray-200 py-4 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">

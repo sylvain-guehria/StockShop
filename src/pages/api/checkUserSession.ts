@@ -18,7 +18,7 @@ const checkUserSession = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json(decodedClaims.uid);
   } catch (error: any) {
     if (error.code === AuthFirebaseErrorCodes.SessionCookieRevoked) {
-      // TODO : Session cookie is revoked. Force user to login => NOT WORKING.
+      // TODO : Session cookie is revoked. cannot be set ATM, waiting for vercel to add the ability to do it.
       setCookie(sessionCookieName, null, { req, res });
     }
     // eslint-disable-next-line no-console

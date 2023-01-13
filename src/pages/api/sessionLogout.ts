@@ -8,7 +8,7 @@ const sessionLogout = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (!sessionCookie) return res.status(400).end('No session cookie');
 
-  setCookie('session', null, { req, res });
+  setCookie(sessionCookieName, null, { req, res });
 
   await authAdmin
     .verifySessionCookie(sessionCookie as string)
