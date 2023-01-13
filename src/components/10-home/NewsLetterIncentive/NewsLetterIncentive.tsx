@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { mainRoutes } from '@/routes/mainRoutes';
 
-import { Section } from '../../04-lib/layout/Section';
+import Section from '../../04-lib/layout/Section';
 import NewsLetterIncentiveForm from './NewsLetterIncentiveForm';
 
 const GetEarlyAccessIncentive = () => {

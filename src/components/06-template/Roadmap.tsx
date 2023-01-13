@@ -3,7 +3,7 @@ import { ArrowPathIcon, ClockIcon } from '@heroicons/react/24/outline';
 
 import { classNames } from '@/utils/tailwindUtils';
 
-import { Section } from '../04-lib/layout/Section';
+import Section from '../04-lib/layout/Section';
 
 const StatusRoadmapStepEnum = {
   ONGOING: 'ONGOING',

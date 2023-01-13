@@ -65,25 +65,6 @@ it('Logout the session', async () => {
   );
 });
 
-it('Remove the session token from cookies', async () => {
-  const auth = { name: 'auth' } as Auth;
-
-  const listenerGetCookie = jest.spyOn(Cookie, 'get');
-  listenerGetCookie.mockImplementation(() => {
-    return { [sessionCookieName]: 'mockedSessionCookie' };
-  });
-
-  (fetch as any).mockResponseOnce({});
-
-  await logout()({
-    signOut,
-    auth,
-  });
-
-  expect(Cookie.remove).toHaveBeenCalledTimes(1);
-  expect(Cookie.remove).toHaveBeenCalledWith(sessionCookieName);
-});
-
 it('Do not logout the session if it failed to logout from firebase client', async () => {
   const auth = { name: 'auth' } as Auth;
 

@@ -12,7 +12,6 @@ export enum UserEnum {
   HAS_SEEN_FIRST_CONNECTION_MODAL = 'hasSeenFirstConnectionModal',
   LOCALE = 'locale',
   COMPANY_UID = 'companyUid',
-  LOGGED_IN = 'loggedIn',
 }
 
 export interface User {
@@ -29,7 +28,6 @@ export interface User {
   [UserEnum.HAS_SEEN_FIRST_CONNECTION_MODAL]?: boolean;
   [UserEnum.LOCALE]?: LocaleType;
   [UserEnum.COMPANY_UID]?: string;
-  [UserEnum.LOGGED_IN]?: boolean;
 }
 
 export enum ROLES {

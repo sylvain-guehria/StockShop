@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -13,8 +14,17 @@ import ProfileContainerSideBar, {
   subNavigation,
   tabNames,
 } from './ProfileContainerSideBar';
-import ProfileForm from './profileForm/ProfileForm';
-import SettingsForm from './settingsForm/SettingsForm';
+
+const DynamicProfileForm = dynamic(() => import('./profileForm/ProfileForm'), {
+  loading: () => <Spinner />,
+});
+
+const DynamicSettingsForm = dynamic(
+  () => import('./settingsForm/SettingsForm'),
+  {
+    loading: () => <Spinner />,
+  }
+);
 
 const Profile = () => {
   const { user } = useAuth();
@@ -51,11 +61,11 @@ const Profile = () => {
                 setSelectedTab={setSelectedTab}
               />
               {user.isLoggedIn() && seletedTab === subNavigation[0]?.tab && (
-                <ProfileForm user={user} />
+                <DynamicProfileForm user={user} />
               )}
 
               {user.isLoggedIn() && seletedTab === subNavigation[1]?.tab && (
-                <SettingsForm user={user} />
+                <DynamicSettingsForm user={user} />
               )}
 
               {!user.isLoggedIn() && (

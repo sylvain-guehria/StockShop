@@ -8,16 +8,14 @@ const sessionLogout = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (!sessionCookie) return res.status(400).end('No session cookie');
 
-  try {
-    const decodedClaims = await authAdmin.verifySessionCookie(
-      sessionCookie as string
-    );
-    await authAdmin.revokeRefreshTokens(decodedClaims.sub);
-    setCookie('session', null, { req, res });
-    return res.status(200).end('Session revoked');
-  } catch (error: any) {
-    return res.status(400).end(error).redirect('/');
-  }
+  setCookie(sessionCookieName, null, { req, res });
+
+  await authAdmin
+    .verifySessionCookie(sessionCookie as string)
+    .then((decodedClaims) => authAdmin.revokeRefreshTokens(decodedClaims.sub))
+    // eslint-disable-next-line no-console
+    .catch((error) => console.log(error));
+  return res.status(200).end('Session Cookie deleted');
 };
 
 export default sessionLogout;

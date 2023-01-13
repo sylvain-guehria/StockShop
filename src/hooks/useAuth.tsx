@@ -1,14 +1,16 @@
-import { auth, onAuthStateChanged, signOut } from 'firebaseFolder/clientApp';
+import { useQuery } from '@tanstack/react-query';
+import { userRepository } from 'di';
 import { sessionCookieName } from 'firebaseFolder/constant';
 import Cookies from 'js-cookie';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-import FirebaseUserRepository from '@/modules/user/firebaseUserRepository';
+import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import UserEntity from '@/modules/user/UserEntity';
-import type { ProviderType } from '@/modules/user/userType';
-import { logoutUseCase } from '@/usecases/usecases';
 
+import { auth, onAuthStateChanged } from '../../firebaseFolder/clientApp';
 import { isFirebaseUserFirstConnexion } from './hooksUtils';
+
+const oneHourInMilliseconds = 1000 * 60 * 60;
 
 type ContextType = {
   user: UserEntity;
@@ -16,11 +18,10 @@ type ContextType = {
   isUserLoading: boolean;
 };
 
-const userRepository = new FirebaseUserRepository();
 const AuthContext = createContext<ContextType>({
   user: UserEntity.new(),
-  isUserLoading: false,
   setUser: () => {},
+  isUserLoading: false,
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -31,80 +32,49 @@ export const AuthContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [user, setUser] = useState<UserEntity>(UserEntity.new());
-  const [isUserLoading, setIsUserLoading] = useState(true);
+  const [userUid, setUserUid] = useState<string>('');
 
-  const callsignOut = async () => {
-    setIsUserLoading(true);
-    return signOut(auth).then(() => {
-      setUser(UserEntity.new());
-      setIsUserLoading(false);
-    });
-  };
+  const { isLoading: isUserLoading } = useQuery({
+    queryKey: [ApiRequestEnums.GetUser],
+    queryFn: () => userRepository.getById(userUid),
+    enabled: !!userUid,
+    onSuccess: (retrievedUser) => {
+      setUser(retrievedUser);
+    },
+    onError: (error) => {
+      // eslint-disable-next-line no-console
+      console.error('Error userRepository.getById in useAuth', error);
+    },
+    staleTime: oneHourInMilliseconds,
+  });
 
   useEffect(() => {
-    const fetchUserInformation = async (uid: string) => {
-      try {
-        return await userRepository.getById(uid);
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error('ERROR fetchUserInformation', e);
-        return '';
-      }
-    };
-
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      const cookies = Cookies.get();
-      const sessionCookie = cookies ? cookies[sessionCookieName] : '';
-
-      if (!firebaseUser && sessionCookie) {
-        logoutUseCase({ signOut, auth });
+      if (!firebaseUser) {
+        Cookies.remove(sessionCookieName);
+        setUserUid('');
+        return;
       }
 
-      if (firebaseUser && !sessionCookie) {
-        logoutUseCase({ signOut, auth });
+      if (firebaseUser && !Cookies.get(sessionCookieName)) return;
+
+      const isFirstConnexion = isFirebaseUserFirstConnexion(
+        // @ts-ignore
+        firebaseUser.metadata.createdAt || '0'
+      );
+
+      if (isFirstConnexion) {
+        // is handled in usecases
+        return;
       }
 
-      setIsUserLoading(true);
-      if (firebaseUser) {
-        const isFirstConnexion = isFirebaseUserFirstConnexion(
-          // @ts-ignore
-          firebaseUser.metadata.createdAt || '0'
-        );
-
-        if (isFirstConnexion) {
-          setUser(
-            UserEntity.new({
-              email: firebaseUser.email as string,
-              uid: firebaseUser.uid,
-              provider: firebaseUser.providerData[0]
-                ?.providerId as ProviderType,
-            }).logInUser()
-          );
-        } else {
-          const fetchedUser = await fetchUserInformation(firebaseUser.uid);
-          if (fetchedUser) {
-            setUser(fetchedUser.logInUser());
-          } else {
-            callsignOut();
-            setUser(UserEntity.new());
-          }
-        }
-      } else {
-        setUser(UserEntity.new());
-      }
-      setIsUserLoading(false);
+      setUserUid(firebaseUser?.uid || '');
     });
     return () => unsubscribe();
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        isUserLoading,
-        setUser,
-      }}
-    >
+    <AuthContext.Provider value={{ user, setUser, isUserLoading }}>
       {children}
     </AuthContext.Provider>
   );

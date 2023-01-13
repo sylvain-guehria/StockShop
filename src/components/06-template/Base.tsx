@@ -3,11 +3,9 @@
 import { useState } from 'react';
 
 import screenShot from '../../../public/assets/images/capture-inventory-market.png';
-import { AppConfig } from '../../utils/AppConfig';
 import { Background } from '../04-lib/background/Background';
 import NewsBanner from '../04-lib/banner/NewsBanner';
-import { Meta } from '../04-lib/layout/Meta';
-import { Section } from '../04-lib/layout/Section';
+import Section from '../04-lib/layout/Section';
 import NextImage from '../04-lib/nextImage/NextImage';
 import NewsLetterIncentive from '../10-home/NewsLetterIncentive/NewsLetterIncentive';
 import { Banner } from './Banner';
@@ -22,7 +20,6 @@ const Base = () => {
       {isBetaBannerOpen && (
         <NewsBanner setIsBetaBannerOpen={setIsBetaBannerOpen} />
       )}
-      <Meta title={AppConfig.title} description={AppConfig.description} />
       <Hero />
       <div className="text-center">
         <Incentive />

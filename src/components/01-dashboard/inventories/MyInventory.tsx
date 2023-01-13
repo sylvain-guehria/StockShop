@@ -23,13 +23,15 @@ import PinnedInventories from './PinnedInventories';
 
 const Inventories: FC = () => {
   const { user } = useAuth();
+  const oneHourInMilliseconds = 1000 * 60 * 60;
+
   const [currentInventoryUid, setCurrentInventoryUid] = useState('');
   const [isInventoriesDropdownOpen, setIsInventoriesDropdownOpen] =
     useState(true);
 
   const { data: inventories = [], isLoading: isLoadingInventory } = useQuery({
     queryKey: [ApiRequestEnums.GetInventories],
-    queryFn: () => getUserInventoriesUseCase(user.uid),
+    queryFn: () => getUserInventoriesUseCase(user),
     enabled: !!user.uid,
     onSuccess: (data) => {
       if (!currentInventoryUid && data.length > 0) {
@@ -40,6 +42,7 @@ const Inventories: FC = () => {
         setCurrentInventoryUid(defaultInventoryUid || firstInventoryUid);
       }
     },
+    staleTime: oneHourInMilliseconds,
   });
 
   const onSelectInventory = (inventoryUid: string) => {

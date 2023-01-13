@@ -9,7 +9,6 @@ export const chooseSubRoleOnFirstConnection =
     user: UserEntity,
     subrole: SUBROLES.BUYER | SUBROLES.SELLER
   ): Promise<User> => {
-    //
     if (subrole === SUBROLES.SELLER) {
       user.activateSockManagement();
     }

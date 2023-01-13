@@ -1,7 +1,7 @@
 import { mainRoutes } from '@/routes/mainRoutes';
 
 import { Background } from '../04-lib/background/Background';
-import { Section } from '../04-lib/layout/Section';
+import Section from '../04-lib/layout/Section';
 import LinkButton from '../04-lib/LinkButton/LinkButton';
 
 const Hero = () => (

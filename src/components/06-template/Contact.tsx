@@ -5,7 +5,7 @@ import ContactImg from 'public/assets/images/contact.png';
 
 import { addressEmails } from '@/sendinblue/emailConfig';
 
-import { Section } from '../04-lib/layout/Section';
+import Section from '../04-lib/layout/Section';
 import ContactForm from '../09-contact/ContactForm';
 
 const Contact = () => {
@@ -35,6 +35,7 @@ const Contact = () => {
                 <Image
                   src={ContactImg}
                   alt="Zanzi illustrations from getillustrations.com"
+                  priority
                 />
               </div>
             </div>

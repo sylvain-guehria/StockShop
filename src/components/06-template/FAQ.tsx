@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { classNames } from '@/utils/tailwindUtils';
 
-import { Section } from '../04-lib/layout/Section';
+import Section from '../04-lib/layout/Section';
 
 const faqs = [
   {

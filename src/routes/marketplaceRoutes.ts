@@ -1,4 +1,4 @@
-export const marketpalceRoutes = {
+export const marketplaceRoutes = {
   marketplace: {
     path: '/marketplace',
     label: 'Marketplace',

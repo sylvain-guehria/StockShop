@@ -36,4 +36,4 @@ const Section = (props: ISectionProps) => (
   </div>
 );
 
-export { Section };
+export default Section;

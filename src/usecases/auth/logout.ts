@@ -15,15 +15,16 @@ export const logout =
       const cookies = Cookies.get();
       const sessionCookie = cookies ? cookies[sessionCookieName] : '';
 
-      await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/sessionLogout`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          Cookie: `${sessionCookieName}=${sessionCookie}`,
-        },
-      });
-      Cookies.remove(sessionCookieName);
-      await signOut(auth);
+      if (sessionCookie) {
+        await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/sessionLogout`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            Cookie: `${sessionCookieName}=${sessionCookie}`,
+          },
+        });
+      }
+      return await signOut(auth);
     } catch (error: any) {
       throw new FirebaseAuthenticationError({
         errorCode: error.code,

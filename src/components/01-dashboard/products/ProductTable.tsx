@@ -77,7 +77,6 @@ type Props = {
 const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
-  // TODO : add a reducer to manage the state of the table
   const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
   const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] =
     useState(false);
@@ -87,6 +86,8 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
   const [productToEdit, setProductToEdit] = useState<ProductEntity | null>(
     null
   );
+
+  const oneHourInMilliseconds = 1000 * 60 * 60;
 
   const [filtersState, dispatchFilterActions] = useReducer<
     Reducer<FiltersStateType, FiltersActionsType>
@@ -140,7 +141,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
       user.getCompanyUid() &&
       currentPage
     ),
-    staleTime: 30000,
+    staleTime: oneHourInMilliseconds,
   });
 
   const updateProductMutation = useMutation({
@@ -482,6 +483,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
               numberOfResultsPerPage={10}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
+              currentInventoryUid={currentInventoryUid}
             />
           )}
 

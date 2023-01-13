@@ -1,6 +1,6 @@
 import { mainRoutes } from '@/routes/mainRoutes';
 
-import { Section } from '../04-lib/layout/Section';
+import Section from '../04-lib/layout/Section';
 import LinkButton from '../04-lib/LinkButton/LinkButton';
 
 const Banner = () => (
