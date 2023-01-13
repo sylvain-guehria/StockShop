@@ -1,26 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
 import { userRepository } from 'di';
-import { sessionCookieName } from 'firebaseFolder/constant';
-import Cookies from 'js-cookie';
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import UserEntity from '@/modules/user/UserEntity';
-
-import { auth, onAuthStateChanged } from '../../firebaseFolder/clientApp';
-import { isFirebaseUserFirstConnexion } from './hooksUtils';
 
 const oneHourInMilliseconds = 1000 * 60 * 60;
 
 type ContextType = {
   user: UserEntity;
   setUser: (user: UserEntity) => void;
+  setUserUid: (userUid: string) => void;
   isUserLoading: boolean;
 };
 
 const AuthContext = createContext<ContextType>({
   user: UserEntity.new(),
   setUser: () => {},
+  setUserUid: () => {},
   isUserLoading: false,
 });
 
@@ -35,7 +32,7 @@ export const AuthContextProvider = ({
   const [userUid, setUserUid] = useState<string>('');
 
   const { isLoading: isUserLoading } = useQuery({
-    queryKey: [ApiRequestEnums.GetUser],
+    queryKey: [ApiRequestEnums.GetUser, { userUid }],
     queryFn: () => userRepository.getById(userUid),
     enabled: !!userUid,
     onSuccess: (retrievedUser) => {
@@ -48,33 +45,8 @@ export const AuthContextProvider = ({
     staleTime: oneHourInMilliseconds,
   });
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (!firebaseUser) {
-        Cookies.remove(sessionCookieName);
-        setUserUid('');
-        return;
-      }
-
-      if (firebaseUser && !Cookies.get(sessionCookieName)) return;
-
-      const isFirstConnexion = isFirebaseUserFirstConnexion(
-        // @ts-ignore
-        firebaseUser.metadata.createdAt || '0'
-      );
-
-      if (isFirstConnexion) {
-        // is handled in usecases
-        return;
-      }
-
-      setUserUid(firebaseUser?.uid || '');
-    });
-    return () => unsubscribe();
-  }, []);
-
   return (
-    <AuthContext.Provider value={{ user, setUser, isUserLoading }}>
+    <AuthContext.Provider value={{ user, setUser, isUserLoading, setUserUid }}>
       {children}
     </AuthContext.Provider>
   );

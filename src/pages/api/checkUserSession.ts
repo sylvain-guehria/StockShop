@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
 import { getCookie, setCookie } from 'cookies-next';
-import { sessionCookieName } from 'firebaseFolder/constant';
-import { AuthFirebaseErrorCodes } from 'firebaseFolder/errorCodes';
-import { authAdmin } from 'firebaseFolder/serverApp';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { sessionCookieName } from 'superbase/constant';
+import { SuperbaseAuthenticationError } from 'superbase/errorCodes';
 
 const checkUserSession = async (req: NextApiRequest, res: NextApiResponse) => {
   const sessionCookie = getCookie(sessionCookieName, { req, res });
@@ -11,13 +10,10 @@ const checkUserSession = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!sessionCookie) return res.status(400).end('No session cookie');
 
   try {
-    const decodedClaims = await authAdmin.verifySessionCookie(
-      sessionCookie as string,
-      true /** checkRevoked */
-    );
+    const decodedClaims = { uid: 'uid' };
     return res.status(200).json(decodedClaims.uid);
   } catch (error: any) {
-    if (error.code === AuthFirebaseErrorCodes.SessionCookieRevoked) {
+    if (error.code === SuperbaseAuthenticationError.SessionCookieRevoked) {
       // TODO : Session cookie is revoked. cannot be set ATM, waiting for vercel to add the ability to do it.
       setCookie(sessionCookieName, null, { req, res });
     }

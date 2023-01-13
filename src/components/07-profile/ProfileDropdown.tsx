@@ -1,11 +1,11 @@
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import classNames from 'classnames';
-import { auth, signOut } from 'firebaseFolder/clientApp';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 import { Fragment } from 'react';
+import { signOut } from 'superbase/clientApp';
 
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
@@ -27,7 +27,7 @@ const ProfileDropdown: FC<Props> = ({ logo }) => {
 
   const handleSingOut = async () => {
     try {
-      await logoutUseCase({ auth, signOut });
+      await logoutUseCase({ signOut });
       router.push(mainRoutes.home.path);
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);

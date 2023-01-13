@@ -2,13 +2,6 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
-import {
-  auth,
-  createUserWithEmailAndPassword,
-  deleteUser,
-  sendEmailVerification,
-} from 'firebaseFolder/clientApp';
-import { AuthFirebaseErrorCodes } from 'firebaseFolder/errorCodes';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
@@ -17,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
+import Providers from '@/layouts/Providers';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { registerWithEmailUseCase } from '@/usecases/usecases';
 
@@ -50,16 +44,12 @@ const RegisterForm = () => {
       const user = await registerWithEmailUseCase({
         email,
         password,
-        createUserWithEmailAndPassword,
-        deleteUser,
-        auth,
-        sendEmailVerification,
         axios,
       });
       setUser(user);
       router.push(mainRoutes.home.path);
     } catch (error: any) {
-      if (error.errorCode === AuthFirebaseErrorCodes.EmailAlreadyInUse) {
+      if (error.errorCode === 'EmailAlreadyInUse') {
         setErrorMessage(error.message);
       } else {
         toast(ToasterTypeEnum.ERROR, error.message);
@@ -160,4 +150,11 @@ const RegisterForm = () => {
     </form>
   );
 };
-export default RegisterForm;
+
+const RegisterFormWithProviders = () => (
+  <Providers>
+    <RegisterForm />
+  </Providers>
+);
+
+export default RegisterFormWithProviders;

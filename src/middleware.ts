@@ -1,6 +1,6 @@
-import { sessionCookieName } from 'firebaseFolder/constant';
 import type { NextRequest as NextRequestType } from 'next/server';
 import { NextResponse } from 'next/server';
+import { sessionCookieName } from 'superbase/constant';
 
 import { inventoryManagementRoutes } from './routes/inventoryManagementRoutes';
 import { mainRoutes } from './routes/mainRoutes';

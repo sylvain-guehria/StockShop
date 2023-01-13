@@ -1,18 +1,11 @@
 'use client';
 
-import axios from 'axios';
-import {
-  auth,
-  deleteUser,
-  getAdditionalUserInfo,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from 'firebaseFolder/clientApp';
 import { useRouter } from 'next/navigation';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
+import Providers from '@/layouts/Providers';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { loginWithGoogleUseCase } from '@/usecases/usecases';
 
@@ -22,14 +15,7 @@ const LoginOtherPlatformForm = () => {
   const router = useRouter();
   const handleLoginGoogle = async () => {
     try {
-      const user = await loginWithGoogleUseCase({
-        signInWithPopup,
-        getAdditionalUserInfo,
-        provider: new GoogleAuthProvider(),
-        auth,
-        axios,
-        deleteUser,
-      });
+      const user = await loginWithGoogleUseCase({});
       setUser(user);
       router.push(mainRoutes.home.path);
     } catch (e: any) {
@@ -115,4 +101,11 @@ const LoginOtherPlatformForm = () => {
     </div>
   );
 };
+
+const LoginOtherPlatformFormWithProviders = () => (
+  <Providers>
+    <LoginOtherPlatformFormWithProviders />
+  </Providers>
+);
+
 export default LoginOtherPlatformForm;

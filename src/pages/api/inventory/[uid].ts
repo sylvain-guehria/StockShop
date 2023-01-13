@@ -1,8 +1,4 @@
-import { firestoreAdmin } from 'firebaseFolder/serverApp';
-import { TableNames } from 'firebaseFolder/tableNames';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-const { USERS, COMPANIES, INVENTORIES } = TableNames;
 
 const inventoryByUid = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -35,38 +31,12 @@ const inventoryByUid = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const inventoryRef = await firestoreAdmin
-    .collection(USERS)
-    .doc(userUid as string)
-    .collection(COMPANIES)
-    .doc(companyUid as string)
-    .collection(INVENTORIES)
-    .doc(uid as string)
-    .get();
-
-  const inventoryDoc = await firestoreAdmin
-    .collection(USERS)
-    .doc(userUid as string)
-    .collection(COMPANIES)
-    .doc(companyUid as string)
-    .collection(INVENTORIES)
-    .doc(uid as string);
-
   try {
     switch (method) {
       case 'GET':
-        if (!inventoryRef.exists) {
-          res.status(400).end(`Inventory with uid ${uid} does not exist`);
-          return;
-        }
-        res.status(200).json(inventoryRef.data());
+        res.status(200).json(inventory);
         return;
       case 'PUT':
-        if (!inventoryRef.exists) {
-          res.status(400).end(`Inventory with uid ${uid} does not exist`);
-          return;
-        }
-        inventoryDoc.update(inventory);
         res.status(200).end();
         return;
       default:

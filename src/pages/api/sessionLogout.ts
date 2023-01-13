@@ -1,7 +1,6 @@
 import { getCookie, setCookie } from 'cookies-next';
-import { sessionCookieName } from 'firebaseFolder/constant';
-import { authAdmin } from 'firebaseFolder/serverApp';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { sessionCookieName } from 'superbase/constant';
 
 const sessionLogout = async (req: NextApiRequest, res: NextApiResponse) => {
   const sessionCookie = getCookie(sessionCookieName, { req, res });
@@ -10,11 +9,6 @@ const sessionLogout = async (req: NextApiRequest, res: NextApiResponse) => {
 
   setCookie(sessionCookieName, null, { req, res });
 
-  await authAdmin
-    .verifySessionCookie(sessionCookie as string)
-    .then((decodedClaims) => authAdmin.revokeRefreshTokens(decodedClaims.sub))
-    // eslint-disable-next-line no-console
-    .catch((error) => console.log(error));
   return res.status(200).end('Session Cookie deleted');
 };
 

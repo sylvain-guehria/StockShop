@@ -1,33 +1,25 @@
 import type { AxiosStatic } from 'axios';
-import type { Auth, UserCredential } from 'firebase/auth';
-import { FirebaseAuthenticationError } from 'firebaseFolder/errorCodes';
+import type { UserCredential } from 'firebase/auth';
 
 import type { UserRepository } from '@/modules/user/userRepository';
 
 type LoginWithEmailParamsType = {
-  signInWithEmailAndPassword: (
-    auth: Auth,
-    email: string,
-    password: string
-  ) => Promise<UserCredential>;
+  signInWithEmailAndPassword: any;
   email: string;
   password: string;
-  auth: Auth;
   axios: AxiosStatic;
 };
 
 export const loginWithEmail =
   (userRepository: UserRepository) =>
   async ({
-    signInWithEmailAndPassword,
     email,
     password,
-    auth,
     axios,
+    signInWithEmailAndPassword,
   }: LoginWithEmailParamsType) => {
     try {
       const userCredential: UserCredential = await signInWithEmailAndPassword(
-        auth,
         email,
         password
       );
@@ -36,9 +28,6 @@ export const loginWithEmail =
       await axios.post('/api/sessionInit', { idToken });
       return await userRepository.getById(userCredential.user.uid);
     } catch (error: any) {
-      throw new FirebaseAuthenticationError({
-        errorCode: error.code,
-        message: error.message,
-      });
+      return null;
     }
   };

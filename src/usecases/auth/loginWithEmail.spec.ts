@@ -1,6 +1,6 @@
 import type { AxiosStatic } from 'axios';
 import type { Auth, UserCredential } from 'firebase/auth';
-import { FirebaseAuthenticationError } from 'firebaseFolder/errorCodes';
+import { SuperbaseAuthenticationError } from 'superbase/errorCodes';
 
 import type { UserRepository } from '@/modules/user/userRepository';
 
@@ -97,7 +97,7 @@ it('Do not login the session if it failed to login in firebase client', async ()
     });
   } catch (e: any) {
     expect(e).toEqual(
-      new FirebaseAuthenticationError({
+      new SuperbaseAuthenticationError({
         errorCode: error.code,
         message: error.message,
       })

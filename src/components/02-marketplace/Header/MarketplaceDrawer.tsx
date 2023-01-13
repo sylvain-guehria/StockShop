@@ -1,10 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/20/solid';
-import { auth, signOut } from 'firebaseFolder/clientApp';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 import { Fragment } from 'react';
+import { auth, signOut } from 'superbase/clientApp';
 
 import MobileServicesButton from '@/components/04-lib/Popovers/MobileServicesButton';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';

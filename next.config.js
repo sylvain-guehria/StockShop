@@ -16,11 +16,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: [
-      'assets.vercel.com',
-      'images.unsplash.com',
-      'firebasestorage.googleapis.com',
-    ],
+    domains: ['assets.vercel.com', 'images.unsplash.com'],
   },
   async redirects() {
     return [

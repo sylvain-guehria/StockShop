@@ -1,9 +1,8 @@
 import {
   CustomFirebaseErrorCodes,
-  FirebaseAuthenticationError,
   StorageFirebaseErrorCodes,
-} from 'firebaseFolder/errorCodes';
-import type StorageService from 'firebaseFolder/storage';
+} from 'superbase/errorCodes';
+import type StorageService from 'superbase/storage';
 
 import {
   authorizedFileTypes,
@@ -37,16 +36,10 @@ export const updatePhotoProduct =
       throw new Error('product is required to update the photo of the product');
 
     if (currentFile && currentFile.size > twoMegaBits)
-      throw new FirebaseAuthenticationError({
-        errorCode: StorageFirebaseErrorCodes.fileWrongSize,
-        message: '',
-      });
+      throw new Error(StorageFirebaseErrorCodes.fileWrongSize);
 
     if (currentFile && !authorizedFileTypes.includes(currentFile.type)) {
-      throw new FirebaseAuthenticationError({
-        errorCode: CustomFirebaseErrorCodes.imageFileWrongType,
-        message: '',
-      });
+      throw new Error(CustomFirebaseErrorCodes.imageFileWrongType);
     }
 
     try {
@@ -75,6 +68,6 @@ export const updatePhotoProduct =
         companyUid,
       });
     } catch (error: any) {
-      throw new FirebaseAuthenticationError(error);
+      throw new Error(error);
     }
   };

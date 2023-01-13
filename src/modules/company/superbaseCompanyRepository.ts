@@ -4,7 +4,7 @@ import axios from 'axios';
 import CompanyEntity from './CompanyEntity';
 import { CompanyRepository } from './companyRepository';
 
-class FirebaseCompanyRepository extends CompanyRepository {
+class SuperbaseCompanyRepository extends CompanyRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 
   async getById(uid: string): Promise<CompanyEntity> {
@@ -89,4 +89,4 @@ class FirebaseCompanyRepository extends CompanyRepository {
   }
 }
 
-export default FirebaseCompanyRepository;
+export default SuperbaseCompanyRepository;

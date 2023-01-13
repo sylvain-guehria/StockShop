@@ -6,7 +6,7 @@ import InventoryEntity from './InventoryEntity';
 import type { DeleteInventoryParams } from './inventoryRepository';
 import { InventoryRepository } from './inventoryRepository';
 
-class FirebaseInventoryRepository extends InventoryRepository {
+class SuperbaseInventoryRepository extends InventoryRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 
   async getById(uid: string): Promise<InventoryEntity> {
@@ -116,4 +116,4 @@ class FirebaseInventoryRepository extends InventoryRepository {
   }
 }
 
-export default FirebaseInventoryRepository;
+export default SuperbaseInventoryRepository;

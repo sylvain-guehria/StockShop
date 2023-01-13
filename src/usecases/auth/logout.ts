@@ -1,16 +1,13 @@
-import type { Auth } from 'firebase/auth';
-import { sessionCookieName } from 'firebaseFolder/constant';
-import { FirebaseAuthenticationError } from 'firebaseFolder/errorCodes';
 import Cookies from 'js-cookie';
+import { sessionCookieName } from 'superbase/constant';
 
 type LoginWithEmailParamsType = {
-  signOut: (auth: Auth) => Promise<void>;
-  auth: Auth;
+  signOut: any;
 };
 
 export const logout =
   () =>
-  async ({ signOut, auth }: LoginWithEmailParamsType) => {
+  async ({ signOut }: LoginWithEmailParamsType) => {
     try {
       const cookies = Cookies.get();
       const sessionCookie = cookies ? cookies[sessionCookieName] : '';
@@ -24,11 +21,8 @@ export const logout =
           },
         });
       }
-      return await signOut(auth);
+      return signOut();
     } catch (error: any) {
-      throw new FirebaseAuthenticationError({
-        errorCode: error.code,
-        message: error.message,
-      });
+      return null;
     }
   };

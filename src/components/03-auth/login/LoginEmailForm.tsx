@@ -2,13 +2,13 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
-import { auth, signInWithEmailAndPassword } from 'firebaseFolder/clientApp';
-import { AuthFirebaseErrorCodes } from 'firebaseFolder/errorCodes';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import { signInWithEmailAndPassword } from 'superbase/clientApp';
+import { SuperbaseAuthenticationError } from 'superbase/errorCodes';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
@@ -46,16 +46,15 @@ const LoginEmailForm = () => {
         signInWithEmailAndPassword,
         email,
         password,
-        auth,
         axios,
       });
       setUser(user);
       router.push(mainRoutes.home.path);
     } catch (error: any) {
       if (
-        error.errorCode === AuthFirebaseErrorCodes.WrongPassword ||
-        error.errorCode === AuthFirebaseErrorCodes.UserNotFound ||
-        error.errorCode === AuthFirebaseErrorCodes.InvalidEmail
+        error.errorCode === SuperbaseAuthenticationError.WrongPassword ||
+        error.errorCode === SuperbaseAuthenticationError.UserNotFound ||
+        error.errorCode === SuperbaseAuthenticationError.InvalidEmail
       ) {
         setWrongEmailPasswordError(true);
       } else {

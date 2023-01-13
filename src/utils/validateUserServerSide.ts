@@ -1,5 +1,5 @@
-import { sessionCookieName } from 'firebaseFolder/constant';
 import { cookies } from 'next/headers';
+import { sessionCookieName } from 'superbase/constant';
 
 export const validateUser = async () => {
   const sessionCookie = cookies().get(sessionCookieName)?.value;

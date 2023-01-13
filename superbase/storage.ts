@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
-import type { StorageFunctions } from './clientApp';
-import { storage } from './clientApp';
+import type { StorageFunctionsType } from './storageFunctions';
 
 interface UploadFileInterface {
   folderName: string;
@@ -21,7 +20,7 @@ interface HandleDownload {
 class StorageService {
   storageFunctions;
 
-  constructor(storageFunctions: StorageFunctions) {
+  constructor(storageFunctions: StorageFunctionsType) {
     this.storageFunctions = storageFunctions;
   }
 
@@ -33,7 +32,7 @@ class StorageService {
     if (!uploadedFile) return '';
     const fullPath = folderName + filename;
 
-    const storageRef = this.storageFunctions.ref(storage, fullPath);
+    const storageRef = this.storageFunctions.ref(fullPath);
     await this.storageFunctions.uploadBytesResumable(storageRef, uploadedFile);
     const downloadURL = await this.storageFunctions.getDownloadURL(storageRef);
     return downloadURL;
@@ -47,7 +46,7 @@ class StorageService {
 
     const fullPath = folderName + filename;
 
-    const pathReference = this.storageFunctions.ref(storage, fullPath);
+    const pathReference = this.storageFunctions.ref(fullPath);
     // Delete the file
     await this.storageFunctions.deleteObject(pathReference);
   }
@@ -59,10 +58,10 @@ class StorageService {
     if (!folderName || !filename) return;
     const fullPath = folderName + filename;
 
-    const pathReference = this.storageFunctions.ref(storage, fullPath);
+    const pathReference = this.storageFunctions.ref(fullPath);
     this.storageFunctions
       .getDownloadURL(pathReference)
-      .then((url) => {
+      .then((url: string) => {
         // `url` is the download URL for 'images/stars.jpg'
 
         // This can be downloaded directly:
@@ -74,7 +73,7 @@ class StorageService {
         xhr.open('GET', url);
         xhr.send();
       })
-      .catch((error) => {
+      .catch((error: any) => {
         // A full list of error codes is available at
         // https://firebase.google.com/docs/storage/web/handle-errors
         switch (error.code) {

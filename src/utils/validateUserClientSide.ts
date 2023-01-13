@@ -1,4 +1,4 @@
-import { sessionCookieName } from 'firebaseFolder/constant';
+import { sessionCookieName } from 'superbase/constant';
 
 export const validateUserClientSide = async (sessionCookie: string) => {
   try {
