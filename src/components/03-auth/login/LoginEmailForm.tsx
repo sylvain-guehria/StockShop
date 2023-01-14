@@ -7,8 +7,8 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { signInWithEmailAndPassword } from 'superbase/clientApp';
-import { SuperbaseAuthenticationError } from 'superbase/errorCodes';
+import { signInWithEmailAndPassword } from 'supabase/client/clientApp';
+import { SupabaseAuthenticationError } from 'supabase/errorCodes';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
@@ -52,9 +52,9 @@ const LoginEmailForm = () => {
       router.push(mainRoutes.home.path);
     } catch (error: any) {
       if (
-        error.errorCode === SuperbaseAuthenticationError.WrongPassword ||
-        error.errorCode === SuperbaseAuthenticationError.UserNotFound ||
-        error.errorCode === SuperbaseAuthenticationError.InvalidEmail
+        error.errorCode === SupabaseAuthenticationError.WrongPassword ||
+        error.errorCode === SupabaseAuthenticationError.UserNotFound ||
+        error.errorCode === SupabaseAuthenticationError.InvalidEmail
       ) {
         setWrongEmailPasswordError(true);
       } else {

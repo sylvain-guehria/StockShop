@@ -12,7 +12,7 @@ import type {
 } from './productRepository';
 import { ProductRepository } from './productRepository';
 
-class SuperbaseProductRepository extends ProductRepository {
+class SupabaseProductRepository extends ProductRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 
   async getById({
@@ -233,4 +233,4 @@ class SuperbaseProductRepository extends ProductRepository {
   }
 }
 
-export default SuperbaseProductRepository;
+export default SupabaseProductRepository;

@@ -3,7 +3,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { sendPasswordResetEmail } from 'superbase/clientApp';
+import { sendPasswordResetEmail } from 'supabase/client/clientApp';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';

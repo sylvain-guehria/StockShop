@@ -1,6 +1,6 @@
 import { setCookie } from 'cookies-next';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { sessionCookieName } from 'superbase/constant';
+import { sessionCookieName } from 'supabase/constant';
 
 const sessionInit = async (req: NextApiRequest, res: NextApiResponse) => {
   const towWeeksInMillisSeconds = 14 * 24 * 60 * 60 * 1000;

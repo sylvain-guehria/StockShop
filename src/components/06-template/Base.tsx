@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import screenShot from '../../../public/assets/images/capture-inventory-market.png';
+import { supabase } from '../../../supabase/client/clientApp';
 import { Background } from '../04-lib/background/Background';
 import NewsBanner from '../04-lib/banner/NewsBanner';
 import Section from '../04-lib/layout/Section';
@@ -15,6 +16,14 @@ import Incentive from './Incentive';
 
 const Base = () => {
   const [isBetaBannerOpen, setIsBetaBannerOpen] = useState(true);
+  useEffect(() => {
+    const getSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      console.log('in home---------------------------', { data, error });
+    };
+    getSession();
+  }, []);
+
   return (
     <div className="bg-white text-gray-600 antialiased">
       {isBetaBannerOpen && (

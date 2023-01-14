@@ -3,7 +3,7 @@
 // import '../styles/global.css';
 
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { Session, SessionContextProvider } from '@supabase/auth-helpers-react';
+import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
@@ -18,7 +18,7 @@ const queryClient = new QueryClient();
 const Providers = ({ children }: { children: ReactNode }) => {
   const [supabase] = useState(() => createBrowserSupabaseClient());
   return (
-    <SessionContextProvider supabaseClient={supabase} initialSession={Session}>
+    <SessionContextProvider supabaseClient={supabase}>
       <QueryClientProvider client={queryClient}>
         <AuthContextProvider>
           <ToastProvider>

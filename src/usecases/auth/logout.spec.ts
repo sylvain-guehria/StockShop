@@ -1,6 +1,6 @@
 import type { Auth } from 'firebase/auth';
 import Cookie from 'js-cookie';
-import { sessionCookieName } from 'superbase/constant';
+import { sessionCookieName } from 'supabase/constant';
 
 import { logout } from './logout';
 

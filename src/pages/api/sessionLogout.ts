@@ -1,6 +1,6 @@
 import { getCookie, setCookie } from 'cookies-next';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { sessionCookieName } from 'superbase/constant';
+import { sessionCookieName } from 'supabase/constant';
 
 const sessionLogout = async (req: NextApiRequest, res: NextApiResponse) => {
   const sessionCookie = getCookie(sessionCookieName, { req, res });

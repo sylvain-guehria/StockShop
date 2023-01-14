@@ -1,13 +1,14 @@
+import { createMiddlewareSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import type { NextRequest as NextRequestType } from 'next/server';
 import { NextResponse } from 'next/server';
-import { sessionCookieName } from 'superbase/constant';
+import { sessionCookieName } from 'supabase/constant';
 
 import { inventoryManagementRoutes } from './routes/inventoryManagementRoutes';
 import { mainRoutes } from './routes/mainRoutes';
 
-export function middleware(request: NextRequestType) {
-  const sessionCookie = request.cookies.get(sessionCookieName);
-  const { pathname } = request.nextUrl;
+export async function middleware(req: NextRequestType) {
+  const sessionCookie = req.cookies.get(sessionCookieName);
+  const { pathname } = req.nextUrl;
 
   // LOGGEDIN USER
   if (sessionCookie) {
@@ -15,16 +16,30 @@ export function middleware(request: NextRequestType) {
       pathname === mainRoutes.login.path ||
       pathname === mainRoutes.register.path
     ) {
-      return NextResponse.redirect(new URL(mainRoutes.home.path, request.url));
+      return NextResponse.redirect(new URL(mainRoutes.home.path, req.url));
     }
   }
 
   // VISITOR USER
   if (!sessionCookie) {
     if (pathname.includes(inventoryManagementRoutes.dashboard.path)) {
-      return NextResponse.redirect(new URL(mainRoutes.login.path, request.url));
+      return NextResponse.redirect(new URL(mainRoutes.login.path, req.url));
     }
   }
+  const res = NextResponse.next();
 
-  return NextResponse.next();
+  const supabase = createMiddlewareSupabaseClient({ req, res });
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  // Set the session cookie, is this necessary ??
+  res.cookies.set(sessionCookieName, session?.access_token || '');
+
+  return res;
 }
+
+// export const config = {
+//   matcher: ['/optional-session', '/required-session', '/realtime'],
+// }

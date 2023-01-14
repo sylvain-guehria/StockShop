@@ -1,8 +1,8 @@
 import {
   CustomFirebaseErrorCodes,
   StorageFirebaseErrorCodes,
-} from 'superbase/errorCodes';
-import type StorageService from 'superbase/storage';
+} from 'supabase/errorCodes';
+import type StorageService from 'supabase/storage';
 
 import {
   authorizedFileTypes,

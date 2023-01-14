@@ -1,4 +1,4 @@
-import { sessionCookieName } from 'superbase/constant';
+import { sessionCookieName } from 'supabase/constant';
 
 export const validateUserClientSide = async (sessionCookie: string) => {
   try {

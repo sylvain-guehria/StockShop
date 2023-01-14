@@ -6,7 +6,7 @@ import UserEntity from './UserEntity';
 import { UserRepository } from './userRepository';
 import type { User } from './userType';
 
-class SuperbaseUserRepository extends UserRepository {
+class SupabaseUserRepository extends UserRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 
   async getById(uid: string): Promise<UserEntity> {
@@ -100,4 +100,4 @@ class SuperbaseUserRepository extends UserRepository {
   }
 }
 
-export default SuperbaseUserRepository;
+export default SupabaseUserRepository;

@@ -1,4 +1,4 @@
-const SuperbaseAuthenticationError = {
+const SupabaseAuthenticationError = {
   'auth/invalid-email': 'Invalid email address',
   WrongPassword: 'Wrong password',
   UserNotFound: 'User not found',
@@ -17,5 +17,5 @@ const StorageFirebaseErrorCodes = {
 export {
   CustomFirebaseErrorCodes,
   StorageFirebaseErrorCodes,
-  SuperbaseAuthenticationError,
+  SupabaseAuthenticationError,
 };

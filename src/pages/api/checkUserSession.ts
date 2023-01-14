@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import { getCookie, setCookie } from 'cookies-next';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { sessionCookieName } from 'superbase/constant';
-import { SuperbaseAuthenticationError } from 'superbase/errorCodes';
+import { sessionCookieName } from 'supabase/constant';
+import { SupabaseAuthenticationError } from 'supabase/errorCodes';
 
 const checkUserSession = async (req: NextApiRequest, res: NextApiResponse) => {
   const sessionCookie = getCookie(sessionCookieName, { req, res });
@@ -13,7 +13,7 @@ const checkUserSession = async (req: NextApiRequest, res: NextApiResponse) => {
     const decodedClaims = { uid: 'uid' };
     return res.status(200).json(decodedClaims.uid);
   } catch (error: any) {
-    if (error.code === SuperbaseAuthenticationError.SessionCookieRevoked) {
+    if (error.code === SupabaseAuthenticationError.SessionCookieRevoked) {
       // TODO : Session cookie is revoked. cannot be set ATM, waiting for vercel to add the ability to do it.
       setCookie(sessionCookieName, null, { req, res });
     }

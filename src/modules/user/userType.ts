@@ -50,8 +50,8 @@ export enum SUBROLES {
 }
 
 export enum PROVIDERS {
-  FACEBOOK = 'facebook.com',
-  GOOGLE = 'google.com',
+  FACEBOOK = 'facebook',
+  GOOGLE = 'google',
   PASSWORD = 'password',
   NOTKNOWN = 'notKnown',
 }

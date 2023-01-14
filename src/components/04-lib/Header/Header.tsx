@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import inventoryMarketLogo from 'public/assets/images/inventoryMarket.png';
 import { Fragment } from 'react';
-import { auth, signOut } from 'superbase/clientApp';
+import { supabase } from 'supabase/client/clientApp';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
@@ -25,7 +25,7 @@ const Header = () => {
 
   const handleSingOut = async () => {
     try {
-      await logoutUseCase({ auth, signOut });
+      await logoutUseCase({ supabase });
       router.push(mainRoutes.home.path);
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);

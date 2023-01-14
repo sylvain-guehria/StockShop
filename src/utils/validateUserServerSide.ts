@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import { sessionCookieName } from 'superbase/constant';
+import { sessionCookieName } from 'supabase/constant';
 
 export const validateUser = async () => {
   const sessionCookie = cookies().get(sessionCookieName)?.value;

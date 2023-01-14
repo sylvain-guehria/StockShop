@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { supabase } from 'supabase/client/clientApp';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
@@ -15,7 +16,7 @@ const LoginOtherPlatformForm = () => {
   const router = useRouter();
   const handleLoginGoogle = async () => {
     try {
-      const user = await loginWithGoogleUseCase({});
+      const user = await loginWithGoogleUseCase({ supabase });
       setUser(user);
       router.push(mainRoutes.home.path);
     } catch (e: any) {

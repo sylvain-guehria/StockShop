@@ -1,13 +1,14 @@
+import type { SupabaseClient } from '@supabase/supabase-js';
 import Cookies from 'js-cookie';
-import { sessionCookieName } from 'superbase/constant';
+import { sessionCookieName } from 'supabase/constant';
 
 type LoginWithEmailParamsType = {
-  signOut: any;
+  supabase: SupabaseClient<any, 'public', any>;
 };
 
 export const logout =
   () =>
-  async ({ signOut }: LoginWithEmailParamsType) => {
+  async ({ supabase }: LoginWithEmailParamsType) => {
     try {
       const cookies = Cookies.get();
       const sessionCookie = cookies ? cookies[sessionCookieName] : '';
@@ -21,7 +22,7 @@ export const logout =
           },
         });
       }
-      return signOut();
+      return await supabase.auth.signOut();
     } catch (error: any) {
       return null;
     }
