@@ -35,7 +35,7 @@ export async function middleware(req: NextRequestType) {
   } = await supabase.auth.getSession();
 
   // Set the session cookie, is this necessary ??
-  res.cookies.set(sessionCookieName, session?.access_token || '');
+  // res.cookies.set(sessionCookieName, session?.access_token || '');
 
   return res;
 }
