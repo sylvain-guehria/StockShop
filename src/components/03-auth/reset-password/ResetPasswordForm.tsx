@@ -7,6 +7,7 @@ import supabase from 'supabase/client/supabase-browser';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
+import Providers from '@/layouts/Providers';
 
 import { validationSchema } from './ResetPasswordFormValidation';
 
@@ -31,7 +32,9 @@ const ResetPasswordForm = () => {
   ) => {
     const { email } = data;
     try {
-      await supabase.auth.resetPasswordForEmail(email);
+      const response = await supabase.auth.resetPasswordForEmail(email);
+      // eslint-disable-next-line no-console
+      console.log('response ResetPasswordForm', response);
       toast(ToasterTypeEnum.SUCCESS, 'Email envoyé');
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);
@@ -70,4 +73,11 @@ const ResetPasswordForm = () => {
     </form>
   );
 };
-export default ResetPasswordForm;
+
+const ResetPasswordFormWithProviders = () => (
+  <Providers>
+    <ResetPasswordForm />
+  </Providers>
+);
+
+export default ResetPasswordFormWithProviders;
