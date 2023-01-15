@@ -3,6 +3,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import supabase from 'supabase/client/supabase-browser';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
@@ -30,8 +31,7 @@ const ResetPasswordForm = () => {
   ) => {
     const { email } = data;
     try {
-      // eslint-disable-next-line no-console
-      console.log('email', email);
+      await supabase.auth.resetPasswordForEmail(email);
       toast(ToasterTypeEnum.SUCCESS, 'Email envoyé');
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);

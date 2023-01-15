@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import supabase from 'supabase/client/supabase-browser';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import Providers from '@/layouts/Providers';
 import { mainRoutes } from '@/routes/mainRoutes';
@@ -12,20 +11,22 @@ import { loginWithGoogleUseCase } from '@/usecases/usecases';
 
 const LoginOtherPlatformForm = () => {
   const toast = useToast(4000);
-  const { setUser } = useAuth();
   const router = useRouter();
   const handleLoginGoogle = async () => {
     try {
-      const user = await loginWithGoogleUseCase({ supabase });
-      setUser(user);
+      const response = await loginWithGoogleUseCase({ supabase });
+      // eslint-disable-next-line no-console
+      console.log('response LoginOtherPlatformForm', response);
       router.push(mainRoutes.home.path);
-    } catch (e: any) {
-      toast(ToasterTypeEnum.ERROR, e.message);
+    } catch (error: any) {
+      // eslint-disable-next-line no-console
+      console.log('error LoginOtherPlatformForm', error);
+      toast(ToasterTypeEnum.ERROR, error.message);
     }
   };
   return (
-    <div className="mt-6 grid grid-cols-3 gap-3">
-      <div>
+    <div className="mt-6 grid grid-cols-1 gap-3">
+      {/* <div>
         <a
           href="#"
           className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
@@ -45,9 +46,9 @@ const LoginOtherPlatformForm = () => {
             />
           </svg>
         </a>
-      </div>
+      </div> */}
 
-      <div>
+      {/* <div>
         <a
           href="#"
           className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
@@ -65,7 +66,7 @@ const LoginOtherPlatformForm = () => {
             />
           </svg>
         </a>
-      </div>
+      </div> */}
 
       <div>
         <div

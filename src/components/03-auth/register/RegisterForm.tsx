@@ -2,12 +2,11 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import supabase from 'supabase/client/supabase-browser';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import Providers from '@/layouts/Providers';
 import { mainRoutes } from '@/routes/mainRoutes';
@@ -23,9 +22,7 @@ interface RegisterFormType {
 }
 const RegisterForm = () => {
   const router = useRouter();
-  const { setUser } = useAuth();
   const toast = useToast(4000);
-  const [errorMessage, setErrorMessage] = useState('');
 
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -40,18 +37,18 @@ const RegisterForm = () => {
   ) => {
     const { email, password } = data;
     try {
-      const user = await registerWithEmailUseCase({
+      const response = await registerWithEmailUseCase({
         email,
         password,
+        supabase,
       });
-      setUser(user);
+      // eslint-disable-next-line no-console
+      console.log('response RegisterForm', response);
       router.push(mainRoutes.home.path);
     } catch (error: any) {
-      if (error.errorCode === 'EmailAlreadyInUse') {
-        setErrorMessage(error.message);
-      } else {
-        toast(ToasterTypeEnum.ERROR, error.message);
-      }
+      // eslint-disable-next-line no-console
+      console.error('error RegisterForm', error);
+      toast(ToasterTypeEnum.ERROR, error.message);
     }
   };
 
@@ -115,10 +112,10 @@ const RegisterForm = () => {
           {errors.confirmPassword?.message}
         </div>
       </div>
-
+      {/* 
       {errorMessage && (
         <div className="text-sm text-red-600">{errorMessage}</div>
-      )}
+      )} */}
 
       <div className="flex items-center justify-between">
         <div className="flex items-center">

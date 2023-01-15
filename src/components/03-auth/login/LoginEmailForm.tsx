@@ -1,13 +1,11 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { SupabaseAuthenticationError } from 'supabase/errorCodes';
+import supabase from 'supabase/client/supabase-browser';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
@@ -23,7 +21,6 @@ interface LoginFormType {
 }
 
 const LoginEmailForm = () => {
-  const [wrongEmailPasswordError, setWrongEmailPasswordError] = useState(false);
   const toast = useToast(4000);
   const router = useRouter();
   const formOptions = { resolver: yupResolver(validationSchema) };
@@ -39,23 +36,18 @@ const LoginEmailForm = () => {
   ) => {
     const { email, password } = data;
     try {
-      await loginWithEmailUseCase({
-        signInWithEmailAndPassword: () => null,
+      const response = await loginWithEmailUseCase({
         email,
         password,
-        axios,
+        supabase,
       });
+      // eslint-disable-next-line no-console
+      console.log('response LoginEmailForm', response);
       router.push(mainRoutes.home.path);
     } catch (error: any) {
-      if (
-        error.errorCode === SupabaseAuthenticationError.WrongPassword ||
-        error.errorCode === SupabaseAuthenticationError.UserNotFound ||
-        error.errorCode === SupabaseAuthenticationError.InvalidEmail
-      ) {
-        setWrongEmailPasswordError(true);
-      } else {
-        toast(ToasterTypeEnum.ERROR, error.message);
-      }
+      // eslint-disable-next-line no-console
+      console.error('error LoginEmailForm', error);
+      toast(ToasterTypeEnum.ERROR, error.message);
     }
   };
 
@@ -97,11 +89,6 @@ const LoginEmailForm = () => {
           />
         </div>
         <div className="text-sm text-red-600">{errors.password?.message}</div>
-        {wrongEmailPasswordError && (
-          <div className="text-sm text-red-600">
-            L&apos;email et le password ne match pas.
-          </div>
-        )}
       </div>
 
       <div className="flex items-center justify-between">
