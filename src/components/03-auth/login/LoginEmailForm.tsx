@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { signInWithEmailAndPassword } from 'supabase/client/clientApp';
 import { SupabaseAuthenticationError } from 'supabase/errorCodes';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
@@ -41,7 +40,7 @@ const LoginEmailForm = () => {
     const { email, password } = data;
     try {
       await loginWithEmailUseCase({
-        signInWithEmailAndPassword,
+        signInWithEmailAndPassword: () => null,
         email,
         password,
         axios,
