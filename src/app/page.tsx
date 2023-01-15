@@ -10,21 +10,7 @@ const HomePage = async () => {
   const supabase = createServerSupabaseClient();
   const user = await supabase.auth.getSession();
 
-  // const uid = await validateUser();
-
-  // if (uid) {
-  //   const user = await userRepository.getById(uid);
-  //   if (user.needToSeeFirstConnectionModal()) {
-  //     return <FirstConnectionModalWithProviders user={{ ...user }} />;
-  //   }
-  //   if (user.isSeller()) {
-  //     redirect(inventoryManagementRoutes.myInventory.path);
-  //   }
-  //   redirect(marketplaceRoutes.marketplace.path);
-  // }
-
-  // await adminAuthClient.getUserById()
-
+  // eslint-disable-next-line no-console
   console.log('in home SSR--------------------------- user', user);
 
   return (

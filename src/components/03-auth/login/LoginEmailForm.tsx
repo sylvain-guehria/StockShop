@@ -11,7 +11,6 @@ import { signInWithEmailAndPassword } from 'supabase/client/clientApp';
 import { SupabaseAuthenticationError } from 'supabase/errorCodes';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { loginWithEmailUseCase } from '@/usecases/usecases';
@@ -27,7 +26,6 @@ interface LoginFormType {
 const LoginEmailForm = () => {
   const [wrongEmailPasswordError, setWrongEmailPasswordError] = useState(false);
   const toast = useToast(4000);
-  const { setUser } = useAuth();
   const router = useRouter();
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -42,13 +40,12 @@ const LoginEmailForm = () => {
   ) => {
     const { email, password } = data;
     try {
-      const user = await loginWithEmailUseCase({
+      await loginWithEmailUseCase({
         signInWithEmailAndPassword,
         email,
         password,
         axios,
       });
-      setUser(user);
       router.push(mainRoutes.home.path);
     } catch (error: any) {
       if (

@@ -1,7 +1,6 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
@@ -44,7 +43,6 @@ const RegisterForm = () => {
       const user = await registerWithEmailUseCase({
         email,
         password,
-        axios,
       });
       setUser(user);
       router.push(mainRoutes.home.path);

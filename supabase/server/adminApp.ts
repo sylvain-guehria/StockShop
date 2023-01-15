@@ -11,4 +11,4 @@ const supabase = createClient(
   }
 );
 
-export const adminAuthClient = supabase.auth.admin;
+export const supabaseAdmin = supabase.auth.admin;

@@ -19,13 +19,14 @@ import ServicesButton from '../Popovers/ServicesButton';
 import { services } from './services';
 
 const Header = () => {
-  const { user } = useAuth();
+  const { user, reinitializeUser } = useAuth();
   const router = useRouter();
   const toast = useToast(4000);
 
   const handleSingOut = async () => {
     try {
       await logoutUseCase({ supabase });
+      reinitializeUser();
       router.push(mainRoutes.home.path);
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);

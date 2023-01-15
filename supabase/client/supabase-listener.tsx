@@ -13,12 +13,13 @@ export default function SupabaseListener({
   const router = useRouter();
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((_event, session) => {
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.access_token !== accessToken) {
         console.log('access token changed, refreshing...');
         router.refresh();
       }
     });
+    return () => data.subscription.unsubscribe();
   }, [accessToken]);
 
   return null;

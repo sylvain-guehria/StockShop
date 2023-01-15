@@ -8,7 +8,7 @@ export type LoginWithGoogleParamsType = {
 };
 
 export const loginWithGoogle =
-  (userRepository: UserRepository) =>
+  (_userRepository: UserRepository) =>
   async ({ supabase }: LoginWithGoogleParamsType): Promise<any> => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: PROVIDERS.GOOGLE,

@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import type { StorageFunctionsType } from './storageFunctions';
 
 interface UploadFileInterface {
   folderName: string;
@@ -20,7 +19,7 @@ interface HandleDownload {
 class StorageService {
   storageFunctions;
 
-  constructor(storageFunctions: StorageFunctionsType) {
+  constructor(storageFunctions: any) {
     this.storageFunctions = storageFunctions;
   }
 
