@@ -1,23 +1,19 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import supabase from 'supabase/client/supabase-browser';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import Providers from '@/layouts/Providers';
-import { mainRoutes } from '@/routes/mainRoutes';
 import { loginWithGoogleUseCase } from '@/usecases/usecases';
 
 const LoginOtherPlatformForm = () => {
   const toast = useToast(4000);
-  const router = useRouter();
   const handleLoginGoogle = async () => {
     try {
       const response = await loginWithGoogleUseCase({ supabase });
       // eslint-disable-next-line no-console
       console.log('response LoginOtherPlatformForm', response);
-      router.push(mainRoutes.home.path);
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log('error LoginOtherPlatformForm', error);
