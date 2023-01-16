@@ -1,16 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const getCompanyByUserUid = async (
+const getCompanyByUserId = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
   const {
-    query: { userUid },
+    query: { userId },
     method,
   } = req;
 
-  if (!userUid) {
-    res.status(400).end('User uid is mandatory');
+  if (!userId) {
+    res.status(400).end('User id is mandatory');
     return;
   }
 
@@ -30,4 +30,4 @@ const getCompanyByUserUid = async (
   }
 };
 
-export default getCompanyByUserUid;
+export default getCompanyByUserId;

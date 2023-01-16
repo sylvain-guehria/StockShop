@@ -6,8 +6,8 @@ export enum ORDER {
 }
 
 export type FilterPropertyType = {
-  [ProductAttributes.CATEGORY_UID]?: string;
-  [ProductAttributes.SUB_CATEGORY_UID]?: string;
+  [ProductAttributes.CATEGORY_ID]?: string;
+  [ProductAttributes.SUB_CATEGORY_ID]?: string;
   [ProductAttributes.TO_BUY]?: 'true' | 'false';
   [ProductAttributes.IS_PUBLIC]?: 'true' | 'false';
 };
@@ -18,8 +18,8 @@ export type SorterType = {
 };
 
 export type AuthorizedFilterProperty =
-  | ProductAttributes.CATEGORY_UID
-  | ProductAttributes.SUB_CATEGORY_UID
+  | ProductAttributes.CATEGORY_ID
+  | ProductAttributes.SUB_CATEGORY_ID
   | ProductAttributes.TO_BUY
   | ProductAttributes.IS_PUBLIC;
 
@@ -55,8 +55,8 @@ export type FiltersActionsType = {
 };
 
 export const initialFilters = {
-  [ProductAttributes.CATEGORY_UID]: undefined,
-  [ProductAttributes.SUB_CATEGORY_UID]: undefined,
+  [ProductAttributes.CATEGORY_ID]: undefined,
+  [ProductAttributes.SUB_CATEGORY_ID]: undefined,
   [ProductAttributes.TO_BUY]: undefined,
   [ProductAttributes.IS_PUBLIC]: undefined,
   [ProductAttributes.CONDITION]: undefined,

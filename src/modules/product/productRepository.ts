@@ -20,82 +20,82 @@ export abstract class ProductRepository {
   }
 
   getById({
-    productUid,
-    userUid,
-    companyUid,
-    inventoryUid,
+    productId,
+    userId,
+    companyId,
+    inventoryId,
   }: GetProduct): Promise<ProductEntity> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
-        productUid,
-        userUid,
-        companyUid,
-        inventoryUid,
+        productId,
+        userId,
+        companyId,
+        inventoryId,
       }}`
     );
   }
 
   async add({
     product,
-    userUid,
-    companyUid,
+    userId,
+    companyId,
   }: AddProduct): Promise<ProductEntity> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
         product,
-        userUid,
-        companyUid,
+        userId,
+        companyId,
       }}`
     );
   }
 
   async delete({
-    productUid,
-    userUid,
-    companyUid,
-    inventoryUid,
+    productId,
+    userId,
+    companyId,
+    inventoryId,
   }: DeleteProduct): Promise<void> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
-        userUid,
-        companyUid,
-        inventoryUid,
-        productUid,
+        userId,
+        companyId,
+        inventoryId,
+        productId,
       }}`
     );
   }
 
   async update({
     product,
-    userUid,
-    companyUid,
+    userId,
+    companyId,
   }: UpdateProduct): Promise<ProductEntity> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
         product,
-        userUid,
-        companyUid,
+        userId,
+        companyId,
       }}`
     );
   }
 
-  async getProductsByUserUidCompanyUidInventoryUid({
-    userUid,
-    inventoryUid,
-    companyUid,
+  async getProductsByUserIdCompanyIdInventoryId({
+    userId,
+    inventoryId,
+    companyId,
     currentPage,
     numberOfProductsPerPage,
     sorter,
     filters,
-  }: GetProductsByUserUidCompanyUidInventoryUid): Promise<{
+  }: GetProductsByUserIdCompanyIdInventoryId): Promise<{
     count: number;
     products: ProductEntity[];
   }> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
-        userUid,
-        inventoryUid,
-        companyUid,
+        userId,
+        inventoryId,
+        companyId,
         currentPage,
         numberOfProductsPerPage,
         sorter,
@@ -109,34 +109,34 @@ export default ProductRepository;
 
 export interface AddProduct {
   product: ProductEntity;
-  userUid: string;
-  companyUid: string;
+  userId: string;
+  companyId: string;
 }
 
 export interface UpdateProduct {
   product: ProductEntity;
-  userUid: string;
-  companyUid: string;
+  userId: string;
+  companyId: string;
 }
 
 export interface DeleteProduct {
-  productUid: string;
-  inventoryUid: string;
-  userUid: string;
-  companyUid: string;
+  productId: string;
+  inventoryId: string;
+  userId: string;
+  companyId: string;
 }
 
 export interface GetProduct {
-  productUid: string;
-  inventoryUid: string;
-  userUid: string;
-  companyUid: string;
+  productId: string;
+  inventoryId: string;
+  userId: string;
+  companyId: string;
 }
 
-export interface GetProductsByUserUidCompanyUidInventoryUid {
-  userUid: string;
-  inventoryUid: string;
-  companyUid: string;
+export interface GetProductsByUserIdCompanyIdInventoryId {
+  userId: string;
+  inventoryId: string;
+  companyId: string;
   currentPage: number;
   numberOfProductsPerPage: number;
   sorter: SorterType;

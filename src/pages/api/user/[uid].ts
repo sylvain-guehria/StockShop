@@ -1,18 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const userByUid = async (req: NextApiRequest, res: NextApiResponse) => {
+const userById = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
-    query: { uid },
+    query: { id },
     method,
   } = req;
 
   try {
     switch (method) {
       case 'GET':
-        res.status(200).json({ uid });
+        res.status(200).json({ id });
         return;
       case 'PUT':
-        res.status(200).json({ uid });
+        res.status(200).json({ id });
         return;
       default:
         res.setHeader('Allow', ['GET', 'PUT']);
@@ -25,4 +25,4 @@ const userByUid = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default userByUid;
+export default userById;

@@ -9,7 +9,7 @@ import {
 } from './sportSubcategories';
 
 export const sportCategory: Category = {
-  uid: CategoryId.SPORTS_AND_OUTDOORS,
+  id: CategoryId.SPORTS_AND_OUTDOORS,
   label: CategoryLabel.SPORTS_AND_OUTDOORS,
   subCatgories: [
     subcategorieClothes,

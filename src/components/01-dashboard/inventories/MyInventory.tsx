@@ -25,28 +25,28 @@ const Inventories: FC = () => {
   const { user } = useAuth();
   const oneHourInMilliseconds = 1000 * 60 * 60;
 
-  const [currentInventoryUid, setCurrentInventoryUid] = useState('');
+  const [currentInventoryId, setCurrentInventoryId] = useState('');
   const [isInventoriesDropdownOpen, setIsInventoriesDropdownOpen] =
     useState(true);
 
   const { data: inventories = [], isLoading: isLoadingInventory } = useQuery({
     queryKey: [ApiRequestEnums.GetInventories],
     queryFn: () => getUserInventoriesUseCase(user),
-    enabled: !!user.uid,
+    enabled: !!user.id,
     onSuccess: (data) => {
-      if (!currentInventoryUid && data.length > 0) {
-        const defaultInventoryUid =
-          data.find((inventory) => inventory.getIsDefaultInventory())?.uid ||
+      if (!currentInventoryId && data.length > 0) {
+        const defaultInventoryId =
+          data.find((inventory) => inventory.getIsDefaultInventory())?.id ||
           '';
-        const firstInventoryUid = data[0]?.getUid() || '';
-        setCurrentInventoryUid(defaultInventoryUid || firstInventoryUid);
+        const firstInventoryId = data[0]?.getId() || '';
+        setCurrentInventoryId(defaultInventoryId || firstInventoryId);
       }
     },
     staleTime: oneHourInMilliseconds,
   });
 
-  const onSelectInventory = (inventoryUid: string) => {
-    setCurrentInventoryUid(inventoryUid);
+  const onSelectInventory = (inventoryId: string) => {
+    setCurrentInventoryId(inventoryId);
   };
 
   return (
@@ -95,7 +95,7 @@ const Inventories: FC = () => {
                       key: 'create-product',
                       render: (
                         <CreateProductButton
-                          currentInventoryUid={currentInventoryUid}
+                          currentInventoryId={currentInventoryId}
                         />
                       ),
                     },
@@ -106,7 +106,7 @@ const Inventories: FC = () => {
             <div className="mt-6 px-4 sm:px-6 lg:px-8">
               {isInventoriesDropdownOpen && (
                 <PinnedInventories
-                  currentInventoryUid={currentInventoryUid}
+                  currentInventoryId={currentInventoryId}
                   onSelectInventory={onSelectInventory}
                   inventories={inventories}
                   isLoadingInventory={isLoadingInventory}
@@ -130,7 +130,7 @@ const Inventories: FC = () => {
               </div>
             </div>
             {/* <MobileProductTable /> */}
-            <ProductTable currentInventoryUid={currentInventoryUid} />
+            <ProductTable currentInventoryId={currentInventoryId} />
           </main>
         </div>
       </div>

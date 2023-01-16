@@ -10,13 +10,13 @@ class CompanyService {
     this.companyRepository = companyRepository;
   }
 
-  async createCompanyByUserId(userUid: string): Promise<CompanyEntity> {
+  async createCompanyByUserId(userId: string): Promise<CompanyEntity> {
     const company = CompanyEntity.new({
-      uid: uuidV4(),
+      id: uuidV4(),
       name: 'Mon entreprise',
     });
 
-    return this.companyRepository.add(company, userUid);
+    return this.companyRepository.add(company, userId);
   }
 }
 

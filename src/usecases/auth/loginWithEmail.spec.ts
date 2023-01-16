@@ -33,7 +33,7 @@ it('Login in firebase client', async () => {
   const password: string = 'password';
 
   (signInWithEmailAndPassword as jest.Mock).mockResolvedValue({
-    user: { uid: 'uid-123', getIdToken: () => 'sessionToken' },
+    user: { id: 'id-123', getIdToken: () => 'sessionToken' },
   });
 
   await loginWithEmail(userRepository)({
@@ -58,7 +58,7 @@ it('Login the session', async () => {
   const password: string = 'password';
 
   (signInWithEmailAndPassword as jest.Mock).mockResolvedValue({
-    user: { uid: 'uid-123', getIdToken: () => 'sessionToken' },
+    user: { id: 'id-123', getIdToken: () => 'sessionToken' },
   });
 
   await loginWithEmail(userRepository)({

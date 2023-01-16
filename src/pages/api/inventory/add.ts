@@ -2,9 +2,9 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 const addInventory = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { inventory, userUid, companyUid } = req.body;
+    const { inventory, userId, companyId } = req.body;
 
-    res.status(200).json({ inventory, userUid, companyUid });
+    res.status(200).json({ inventory, userId, companyId });
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error('error when adding inventory', e);

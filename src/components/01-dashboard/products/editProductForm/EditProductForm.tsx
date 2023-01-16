@@ -27,8 +27,8 @@ export interface EditProductFormType {
   [ProductAttributes.BUYING_PRICE]?: number;
   [ProductAttributes.SELLING_PRICE]?: number;
   [ProductAttributes.DESCRIPTION]?: string;
-  [ProductAttributes.CATEGORY_UID]?: string;
-  [ProductAttributes.SUB_CATEGORY_UID]?: string;
+  [ProductAttributes.CATEGORY_ID]?: string;
+  [ProductAttributes.SUB_CATEGORY_ID]?: string;
   [ProductAttributes.IS_PUBLIC]?: boolean;
   [ProductAttributes.TVA]?: number;
   [ProductAttributes.PUBLIC_DISPONIBILITY]?: string;
@@ -60,8 +60,8 @@ const EditProductForm: FC<Props> = ({
       [ProductAttributes.BUYING_PRICE]: product.buyingPrice,
       [ProductAttributes.SELLING_PRICE]: product.sellingPrice,
       [ProductAttributes.TVA]: product.tva,
-      [ProductAttributes.CATEGORY_UID]: product.categoryUid,
-      [ProductAttributes.SUB_CATEGORY_UID]: product.subCategoryUid,
+      [ProductAttributes.CATEGORY_ID]: product.categoryId,
+      [ProductAttributes.SUB_CATEGORY_ID]: product.subCategoryId,
       [ProductAttributes.IS_PUBLIC]: product.isPublic,
       [ProductAttributes.DESCRIPTION]: product.description,
       [ProductAttributes.PUBLIC_DISPONIBILITY]: product.publicDisponibility,
@@ -88,8 +88,8 @@ const EditProductForm: FC<Props> = ({
           ...product,
           ...data,
         },
-        userUid: user.getUid(),
-        companyUid: user.getCompanyUid(),
+        userId: user.getId(),
+        companyId: user.getCompanyId(),
       });
       queryClient.invalidateQueries({ queryKey: [ApiRequestEnums.GetProduct] });
     } catch (e: any) {

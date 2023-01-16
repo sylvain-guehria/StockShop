@@ -1,20 +1,20 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const getProductsByUserUidAndInventoryUid = async (
+const getProductsByUserIdAndInventoryId = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
   const {
     query: {
-      userUid,
-      inventoryUid,
-      companyUid,
+      userId,
+      inventoryId,
+      companyId,
       currentPage,
       numberOfProductsPerPage,
       sorterField,
       sorterOrder,
-      filterCategoryUid,
-      filterSubCategoryUid,
+      filterCategoryId,
+      filterSubCategoryId,
       filterToBuy,
       filterIsPublic,
     },
@@ -25,15 +25,15 @@ const getProductsByUserUidAndInventoryUid = async (
     switch (method) {
       case 'GET':
         res.status(200).json({
-          userUid,
-          inventoryUid,
-          companyUid,
+          userId,
+          inventoryId,
+          companyId,
           currentPage,
           numberOfProductsPerPage,
           sorterField,
           sorterOrder,
-          filterCategoryUid,
-          filterSubCategoryUid,
+          filterCategoryId,
+          filterSubCategoryId,
           filterToBuy,
           filterIsPublic,
         });
@@ -49,4 +49,4 @@ const getProductsByUserUidAndInventoryUid = async (
   }
 };
 
-export default getProductsByUserUidAndInventoryUid;
+export default getProductsByUserIdAndInventoryId;

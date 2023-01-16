@@ -6,7 +6,7 @@ type Props = {
   numberOfResultsPerPage: number;
   currentPage: number;
   setCurrentPage: (page: number) => void;
-  currentInventoryUid: string;
+  currentInventoryId: string;
 };
 
 const Pagination: FC<Props> = ({
@@ -14,7 +14,7 @@ const Pagination: FC<Props> = ({
   numberOfResultsPerPage = 10,
   currentPage,
   setCurrentPage,
-  currentInventoryUid,
+  currentInventoryId,
 }) => {
   const totalPages = Math.ceil(totalResults / numberOfResultsPerPage);
 
@@ -54,7 +54,7 @@ const Pagination: FC<Props> = ({
           <p className="text-sm text-gray-700">
             {' '}
             <span className="font-medium">
-              {currentInventoryUid
+              {currentInventoryId
                 ? 'Aucun résultat'
                 : 'Veuillez sélectionner un inventaire'}
             </span>

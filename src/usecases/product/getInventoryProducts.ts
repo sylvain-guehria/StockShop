@@ -9,9 +9,9 @@ import { ProductAttributes } from '@/modules/product/productType';
 import { getKeysWithValues } from '@/utils/objectUtils';
 
 type GetInventoryProductsParamsType = {
-  userUid: string;
-  companyUid: string;
-  inventoryUid: string;
+  userId: string;
+  companyId: string;
+  inventoryId: string;
   currentPage: number;
   filters?: FilterPropertyType;
   sorter?: SorterType;
@@ -20,9 +20,9 @@ type GetInventoryProductsParamsType = {
 export const getInventoryProducts =
   (productRepository: ProductRepository) =>
   async ({
-    userUid,
-    inventoryUid,
-    companyUid,
+    userId,
+    inventoryId,
+    companyId,
     currentPage: currentPageFromParams,
     sorter,
     filters,
@@ -33,19 +33,19 @@ export const getInventoryProducts =
     const currentPage = currentPageFromParams || 1;
     const numberOfProductsPerPage = 10;
     try {
-      if (!userUid) {
-        throw new Error('userUid is required to get user inventoriy products');
+      if (!userId) {
+        throw new Error('userId is required to get user inventoriy products');
       }
 
-      if (!companyUid) {
+      if (!companyId) {
         throw new Error(
-          'companyUid is required to get user inventoriy products'
+          'companyId is required to get user inventoriy products'
         );
       }
 
-      if (!inventoryUid) {
+      if (!inventoryId) {
         throw new Error(
-          'inventoryUid is required to get user inventoriy products'
+          'inventoryId is required to get user inventoriy products'
         );
       }
 
@@ -60,10 +60,10 @@ export const getInventoryProducts =
       }
 
       const response =
-        await productRepository.getProductsByUserUidCompanyUidInventoryUid({
-          userUid,
-          inventoryUid,
-          companyUid,
+        await productRepository.getProductsByUserIdCompanyIdInventoryId({
+          userId,
+          inventoryId,
+          companyId,
           currentPage,
           numberOfProductsPerPage,
           sorter: {

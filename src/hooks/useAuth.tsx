@@ -8,7 +8,7 @@ type ContextType = {
   user: UserEntity;
   setUser: (user: UserEntity) => void;
   reinitializeUser: () => void;
-  // setUserUid: (userUid: string) => void;
+  // setUserId: (userId: string) => void;
   // isUserLoading: boolean;
 };
 
@@ -16,7 +16,7 @@ const AuthContext = createContext<ContextType>({
   user: UserEntity.new(),
   setUser: () => {},
   reinitializeUser: () => {},
-  // setUserUid: () => {},
+  // setUserId: () => {},
   // isUserLoading: false,
 });
 
@@ -32,12 +32,12 @@ export const AuthContextProvider = ({
   const reinitializeUser = () => {
     setUser(UserEntity.new());
   };
-  // const [userUid, setUserUid] = useState<string>('');
+  // const [userId, setUserId] = useState<string>('');
 
   // const { isLoading: isUserLoading } = useQuery({
-  //   queryKey: [ApiRequestEnums.GetUser, { userUid }],
-  //   queryFn: () => userRepository.getById(userUid),
-  //   enabled: !!userUid,
+  //   queryKey: [ApiRequestEnums.GetUser, { userId }],
+  //   queryFn: () => userRepository.getById(userId),
+  //   enabled: !!userId,
   //   onSuccess: (retrievedUser) => {
   //     setUser(retrievedUser);
   //   },

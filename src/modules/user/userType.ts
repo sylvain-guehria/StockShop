@@ -1,5 +1,5 @@
 export enum UserEnum {
-  UID = 'uid',
+  ID = 'id',
   EMAIL = 'email',
   USERNAME = 'username',
   PROVIDER = 'provider',
@@ -11,11 +11,11 @@ export enum UserEnum {
   HAS_INVENTORY_MANAGEMENT_SERVICE_ACTIVATED = 'hasInventoryManagementServiceActivated',
   HAS_SEEN_FIRST_CONNECTION_MODAL = 'hasSeenFirstConnectionModal',
   LOCALE = 'locale',
-  COMPANY_UID = 'companyUid',
+  COMPANY_ID = 'companyId',
 }
 
 export interface User {
-  [UserEnum.UID]?: string;
+  [UserEnum.ID]?: string;
   [UserEnum.EMAIL]?: string;
   [UserEnum.USERNAME]?: string;
   [UserEnum.PROVIDER]?: ProviderType;
@@ -27,7 +27,7 @@ export interface User {
   [UserEnum.HAS_INVENTORY_MANAGEMENT_SERVICE_ACTIVATED]?: boolean;
   [UserEnum.HAS_SEEN_FIRST_CONNECTION_MODAL]?: boolean;
   [UserEnum.LOCALE]?: LocaleType;
-  [UserEnum.COMPANY_UID]?: string;
+  [UserEnum.COMPANY_ID]?: string;
 }
 
 export enum ROLES {

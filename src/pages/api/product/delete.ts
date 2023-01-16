@@ -2,14 +2,14 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
-    query: { userUid, companyUid, inventoryUid, productUid },
+    query: { userId, companyId, inventoryId, productId },
     method,
   } = req;
 
   try {
     switch (method) {
       case 'DELETE':
-        res.status(200).end({ userUid, companyUid, inventoryUid, productUid });
+        res.status(200).end({ userId, companyId, inventoryId, productId });
         return;
       default:
         res.setHeader('Allow', ['GET', 'PUT']);

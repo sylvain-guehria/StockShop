@@ -9,9 +9,9 @@ import type { User } from './userType';
 class SupabaseUserRepository extends UserRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 
-  async getById(uid: string): Promise<UserEntity> {
-    console.info('get user in db with uid: ', uid);
-    const response = await axios.get(`${this.baseUrl}/api/user/${uid}`);
+  async getById(id: string): Promise<UserEntity> {
+    console.info('get user in db with id: ', id);
+    const response = await axios.get(`${this.baseUrl}/api/user/${id}`);
     const {
       email,
       username,
@@ -23,11 +23,11 @@ class SupabaseUserRepository extends UserRepository {
       provider,
       hasInventoryManagementServiceActivated,
       hasSeenFirstConnectionModal,
-      companyUid,
+      companyId,
     } = response.data;
 
     return UserEntity.new({
-      uid,
+      id,
       email,
       username,
       firstName,
@@ -38,27 +38,27 @@ class SupabaseUserRepository extends UserRepository {
       provider,
       hasInventoryManagementServiceActivated,
       hasSeenFirstConnectionModal,
-      companyUid,
+      companyId,
     });
   }
 
   async add(user: UserEntity): Promise<UserEntity> {
     console.info('adding user in db...');
     const res = await axios.post(`${this.baseUrl}/api/user/add`, {
-      uid: user.getUid(),
+      id: user.getId(),
       email: user.getEmail(),
       provider: user.getProvider(),
       role: user.getRole(),
       locale: user.getLocale(),
     });
-    console.info('User added in DB, uid: ', user.getUid());
+    console.info('User added in DB, id: ', user.getId());
 
     return UserEntity.new(res.data ? { ...res.data } : {});
   }
 
-  async delete(uid: string): Promise<void> {
-    console.info(`Deleting user with uid ${uid} in db...`);
-    return axios.post(`${this.baseUrl}/api/user/delete`, { uid });
+  async delete(id: string): Promise<void> {
+    console.info(`Deleting user with id ${id} in db...`);
+    return axios.post(`${this.baseUrl}/api/user/delete`, { id });
   }
 
   async getAll(): Promise<UserEntity[]> {
@@ -67,7 +67,7 @@ class SupabaseUserRepository extends UserRepository {
     return response.data.map(
       (user: UserEntity) =>
         new UserEntity({
-          uid: user.uid,
+          id: user.id,
           email: user.email,
           provider: user.provider,
           username: user.username,
@@ -81,9 +81,9 @@ class SupabaseUserRepository extends UserRepository {
   }
 
   async update(user: UserEntity): Promise<User> {
-    console.info('update user uid: ', user.getUid());
+    console.info('update user id: ', user.getId());
     const response = await axios.put(
-      `${this.baseUrl}/api/user/${user.getUid()}`,
+      `${this.baseUrl}/api/user/${user.getId()}`,
       {
         email: user.getEmail(),
         username: user.getUsername(),

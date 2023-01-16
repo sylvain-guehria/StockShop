@@ -1,7 +1,7 @@
 import type { Address, Company } from './companyType';
 
 class CompanyEntity implements Company {
-  uid: string;
+  id: string;
 
   name: string;
 
@@ -14,18 +14,18 @@ class CompanyEntity implements Company {
   }
 
   constructor(company: Company) {
-    this.uid = company.uid || '';
+    this.id = company.id || '';
     this.name = company.name || '';
     this.vat = company.vat || '';
     this.address = company.address || {};
   }
 
-  getUid(): string {
-    return this.uid;
+  getId(): string {
+    return this.id;
   }
 
-  setUid(uid: string): CompanyEntity {
-    this.uid = uid;
+  setId(id: string): CompanyEntity {
+    this.id = id;
     return this;
   }
 

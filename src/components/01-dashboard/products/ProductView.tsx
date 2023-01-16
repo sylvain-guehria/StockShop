@@ -10,9 +10,9 @@ import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import type { CategoryInput } from '@/modules/category/categoryType';
 import {
-  getCategoryByUid,
+  getCategoryById,
   getCategoryInputFromDatabase,
-  getSubCategoryByUid,
+  getSubCategoryById,
   getSubCategoryInputsFromDatabase,
 } from '@/modules/category/categoryUtils';
 import {
@@ -23,34 +23,34 @@ import {
 import { classNames } from '@/utils/tailwindUtils';
 
 type Props = {
-  productUid: string;
-  inventoryUid: string;
+  productId: string;
+  inventoryId: string;
 };
 
-const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
+const ProductView: FC<Props> = ({ productId, inventoryId }) => {
   const { user } = useAuth();
 
   const { data: product } = useQuery({
-    queryKey: [ApiRequestEnums.GetProduct, { productUid }],
+    queryKey: [ApiRequestEnums.GetProduct, { productId }],
     queryFn: () =>
       productRepository.getById({
-        productUid,
-        userUid: user.getUid(),
-        companyUid: user.getCompanyUid(),
-        inventoryUid,
+        productId,
+        userId: user.getId(),
+        companyId: user.getCompanyId(),
+        inventoryId,
       }),
-    enabled: !!productUid,
+    enabled: !!productId,
     staleTime: 30000,
   });
 
   if (!product) return null;
 
   const categoryInputs = getCategoryInputFromDatabase(
-    product.getCategoryUid() as string
+    product.getCategoryId() as string
   );
   const subCategoryInputs = getSubCategoryInputsFromDatabase(
-    product.getCategoryUid() as string,
-    product.getSubCategoryUid() as string
+    product.getCategoryId() as string,
+    product.getSubCategoryId() as string
   );
 
   const allCategoryInputs = [...categoryInputs, ...subCategoryInputs];
@@ -149,9 +149,9 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
                 <div className="mt-1">
                   <Input
                     type="text"
-                    name={ProductAttributes.CATEGORY_UID}
-                    label={ProductLabels[ProductAttributes.CATEGORY_UID]}
-                    value={getCategoryByUid(product.getCategoryUid()).label}
+                    name={ProductAttributes.CATEGORY_ID}
+                    label={ProductLabels[ProductAttributes.CATEGORY_ID]}
+                    value={getCategoryById(product.getCategoryId()).label}
                     disabled={true}
                   />
                 </div>
@@ -160,12 +160,12 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
                 <div className="mt-1">
                   <Input
                     type="text"
-                    name={ProductAttributes.SUB_CATEGORY_UID}
-                    label={ProductLabels[ProductAttributes.SUB_CATEGORY_UID]}
+                    name={ProductAttributes.SUB_CATEGORY_ID}
+                    label={ProductLabels[ProductAttributes.SUB_CATEGORY_ID]}
                     value={
-                      getSubCategoryByUid(
-                        product.getCategoryUid(),
-                        product.getSubCategoryUid()
+                      getSubCategoryById(
+                        product.getCategoryId(),
+                        product.getSubCategoryId()
                       ).label
                     }
                     disabled={true}
@@ -189,25 +189,25 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
                 {allCategoryInputs.map((input: CategoryInput) => {
                   if (input.inputType === 'select') {
                     return (
-                      <div className="sm:col-span-2" key={input.uid}>
+                      <div className="sm:col-span-2" key={input.id}>
                         <InputSelect
                           label={input.label}
-                          name={input.uid}
+                          name={input.id}
                           options={input.options || []}
                           disabled={true}
-                          value={product.getCatSubcatAttributes()[input.uid]}
+                          value={product.getCatSubcatAttributes()[input.id]}
                         />
                       </div>
                     );
                   }
 
                   return (
-                    <div className="sm:col-span-2" key={input.uid}>
+                    <div className="sm:col-span-2" key={input.id}>
                       <Input
                         type="text"
                         label={input.label}
-                        name={input.uid}
-                        value={product.getCatSubcatAttributes()[input.uid]}
+                        name={input.id}
+                        value={product.getCatSubcatAttributes()[input.id]}
                         disabled={true}
                       />
                     </div>

@@ -8,13 +8,13 @@ import { CategoryRepository } from './categoryRepository';
 class FirebaseCategoryRepository extends CategoryRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 
-  async getById(uid: string): Promise<CategoryEntity> {
-    console.info('get category in db with uid: ', uid);
-    const response = await axios.get(`${this.baseUrl}/api/category/${uid}`);
+  async getById(id: string): Promise<CategoryEntity> {
+    console.info('get category in db with id: ', id);
+    const response = await axios.get(`${this.baseUrl}/api/category/${id}`);
     const { label, inputs } = response.data;
 
     return CategoryEntity.new({
-      uid,
+      id,
       label,
       inputs,
     });
@@ -23,17 +23,17 @@ class FirebaseCategoryRepository extends CategoryRepository {
   async add(category: CategoryEntity): Promise<string> {
     console.info('adding category in db...');
     const res = await axios.post(`${this.baseUrl}/api/category/add`, {
-      uid: category.getUid(),
+      id: category.getId(),
       label: category.getLabel(),
       inputs: category.getInputs(),
     });
-    console.info('Category added in DB, uid: ', category.getUid());
+    console.info('Category added in DB, id: ', category.getId());
     return res.data;
   }
 
-  async delete(uid: string): Promise<void> {
-    console.info(`Deleting category with uid ${uid} in db...`);
-    return axios.post(`${this.baseUrl}/api/category/delete`, { uid });
+  async delete(id: string): Promise<void> {
+    console.info(`Deleting category with id ${id} in db...`);
+    return axios.post(`${this.baseUrl}/api/category/delete`, { id });
   }
 
   async getAll(): Promise<CategoryEntity[]> {
@@ -42,7 +42,7 @@ class FirebaseCategoryRepository extends CategoryRepository {
     return response.data.map(
       (category: CategoryEntity) =>
         new CategoryEntity({
-          uid: category.uid,
+          id: category.id,
           label: category.label,
           inputs: category.inputs,
         })
@@ -50,9 +50,9 @@ class FirebaseCategoryRepository extends CategoryRepository {
   }
 
   async update(category: CategoryEntity): Promise<void> {
-    console.info('update category uid: ', category.getUid());
-    await axios.put(`${this.baseUrl}/api/category/${category.getUid()}`, {
-      uid: category.getUid(),
+    console.info('update category id: ', category.getId());
+    await axios.put(`${this.baseUrl}/api/category/${category.getId()}`, {
+      id: category.getId(),
       label: category.getLabel(),
       inputs: category.getInputs(),
     });

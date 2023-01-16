@@ -13,23 +13,23 @@ import {
 import { jewleryMaterial } from './reusableOptions';
 
 export const jewleryAndWatchesCategory: Category = {
-  uid: CategoryId.JEWELRY_AND_WATCHES,
+  id: CategoryId.JEWELRY_AND_WATCHES,
   label: CategoryLabel.JEWELRY_AND_WATCHES,
   inputs: [
     {
-      uid: 'sex',
+      id: 'sex',
       label: 'Sexe',
       inputType: AttributeInputTypes.SELECT,
       options: sexOptions,
     },
     {
-      uid: 'color',
+      id: 'color',
       label: 'Couleur',
       inputType: AttributeInputTypes.SELECT,
       options: [...colorOptions],
     },
     {
-      uid: 'material',
+      id: 'material',
       label: 'Matière principale',
       inputType: AttributeInputTypes.SELECT,
       options: jewleryMaterial,

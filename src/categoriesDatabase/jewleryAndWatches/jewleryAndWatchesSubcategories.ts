@@ -9,48 +9,48 @@ import {
 } from './reusableOptions';
 
 export const subcategorieNeckless = {
-  uid: 'neckless',
+  id: 'neckless',
   label: 'Colliers',
   inputs: [
     {
-      uid: 'manufacturer',
+      id: 'manufacturer',
       label: 'Fabricant',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'titration',
+      id: 'titration',
       label: 'Titrage matière',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'weight',
+      id: 'weight',
       label: 'Poids (gr)',
       inputType: AttributeInputTypes.NUMBER,
     },
     {
-      uid: 'length',
+      id: 'length',
       label: 'Longueur (cm)',
       inputType: AttributeInputTypes.NUMBER,
     },
     {
-      uid: 'width',
+      id: 'width',
       label: 'Largeur',
       inputType: AttributeInputTypes.SELECT,
       options: meshWidth,
     },
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type de maille',
       inputType: AttributeInputTypes.SELECT,
       options: meshType,
     },
     {
-      uid: 'pendant',
+      id: 'pendant',
       label: 'Pendentif',
       inputType: AttributeInputTypes.SELECT,
       options: [...jewleryMaterial, ...stoneMaterial],
@@ -59,48 +59,48 @@ export const subcategorieNeckless = {
 };
 
 export const subcategorieRing = {
-  uid: 'ring',
+  id: 'ring',
   label: 'Bagues',
   inputs: [
     {
-      uid: 'manufacturer',
+      id: 'manufacturer',
       label: 'Fabricant',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'titration',
+      id: 'titration',
       label: 'Titrage matière',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'weight',
+      id: 'weight',
       label: 'Poids (gr)',
       inputType: AttributeInputTypes.NUMBER,
     },
     {
-      uid: 'length',
+      id: 'length',
       label: 'Longueur (cm)',
       inputType: AttributeInputTypes.NUMBER,
     },
     {
-      uid: 'width',
+      id: 'width',
       label: 'Largeur',
       inputType: AttributeInputTypes.SELECT,
       options: meshWidth,
     },
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type de maille',
       inputType: AttributeInputTypes.SELECT,
       options: meshType,
     },
     {
-      uid: 'stone',
+      id: 'stone',
       label: 'Pierre',
       inputType: AttributeInputTypes.SELECT,
       options: stoneMaterial,
@@ -109,42 +109,42 @@ export const subcategorieRing = {
 };
 
 export const subcategorieEaring = {
-  uid: 'earing',
+  id: 'earing',
   label: "Boucles d'oreilles",
   inputs: [
     {
-      uid: 'manufacturer',
+      id: 'manufacturer',
       label: 'Fabricant',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'titration',
+      id: 'titration',
       label: 'Titrage matière',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'weight',
+      id: 'weight',
       label: 'Poids (gr)',
       inputType: AttributeInputTypes.NUMBER,
     },
     {
-      uid: 'length',
+      id: 'length',
       label: 'Longueur (cm)',
       inputType: AttributeInputTypes.NUMBER,
     },
     {
-      uid: 'width',
+      id: 'width',
       label: 'Largeur',
       inputType: AttributeInputTypes.SELECT,
       options: meshWidth,
     },
     {
-      uid: 'diameter',
+      id: 'diameter',
       label: 'Diamètre Créoles',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -154,7 +154,7 @@ export const subcategorieEaring = {
       ],
     },
     {
-      uid: 'stone',
+      id: 'stone',
       label: 'Pierre',
       inputType: AttributeInputTypes.SELECT,
       options: stoneMaterial,
@@ -163,48 +163,48 @@ export const subcategorieEaring = {
 };
 
 export const subcategorieBracelet = {
-  uid: 'bracelet',
+  id: 'bracelet',
   label: 'Bracelets',
   inputs: [
     {
-      uid: 'manufacturer',
+      id: 'manufacturer',
       label: 'Fabricant',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'titration',
+      id: 'titration',
       label: 'Titrage matière',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'weight',
+      id: 'weight',
       label: 'Poids (gr)',
       inputType: AttributeInputTypes.NUMBER,
     },
     {
-      uid: 'length',
+      id: 'length',
       label: 'Longueur (cm)',
       inputType: AttributeInputTypes.NUMBER,
     },
     {
-      uid: 'width',
+      id: 'width',
       label: 'Largeur',
       inputType: AttributeInputTypes.SELECT,
       options: meshWidth,
     },
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type de maille',
       inputType: AttributeInputTypes.SELECT,
       options: meshType,
     },
     {
-      uid: 'stone',
+      id: 'stone',
       label: 'Pierre',
       inputType: AttributeInputTypes.SELECT,
       options: stoneMaterial,
@@ -213,11 +213,11 @@ export const subcategorieBracelet = {
 };
 
 export const subcategorieWatches = {
-  uid: 'watches',
+  id: 'watches',
   label: 'Montres',
   inputs: [
     {
-      uid: 'mecanisme',
+      id: 'mecanisme',
       label: 'Mécanisme',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -230,7 +230,7 @@ export const subcategorieWatches = {
       ],
     },
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -275,13 +275,13 @@ export const subcategorieWatches = {
       ],
     },
     {
-      uid: 'dialMaterial',
+      id: 'dialMaterial',
       label: 'Matière du cadran',
       inputType: AttributeInputTypes.SELECT,
       options: watchMaterial,
     },
     {
-      uid: 'braceletMaterial',
+      id: 'braceletMaterial',
       label: 'Matière du bracelet',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -296,7 +296,7 @@ export const subcategorieWatches = {
       ],
     },
     {
-      uid: 'dialDiameter',
+      id: 'dialDiameter',
       label: 'Diamètre du cadran',
       inputType: AttributeInputTypes.NUMBER,
     },

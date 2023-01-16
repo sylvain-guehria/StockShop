@@ -4,31 +4,31 @@ import { AttributeInputTypes } from '@/modules/category/categoryType';
 import { bookCategories } from './reusableOptions';
 
 export const subcategoriePaperbackBook: SubCategory = {
-  uid: 'paperbackBook',
+  id: 'paperbackBook',
   label: 'Livres brochés',
   inputs: [
     {
-      uid: 'releaseDate',
+      id: 'releaseDate',
       label: 'Date de parution',
       inputType: AttributeInputTypes.DATE,
     },
     {
-      uid: 'author',
+      id: 'author',
       label: 'Auteur',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'editor',
+      id: 'editor',
       label: 'Editeur',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'numberOfPages',
+      id: 'numberOfPages',
       label: 'Nombre de pages',
       inputType: AttributeInputTypes.NUMBER,
     },
     {
-      uid: 'format',
+      id: 'format',
       label: 'Format',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -38,7 +38,7 @@ export const subcategoriePaperbackBook: SubCategory = {
       ],
     },
     {
-      uid: 'category',
+      id: 'category',
       label: 'Catégorie',
       inputType: AttributeInputTypes.SELECT_WITH_SUB_OPTIONS,
       optionsWithSubOptions: bookCategories,

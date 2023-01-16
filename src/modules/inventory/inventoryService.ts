@@ -13,14 +13,14 @@ class InventoryService {
   }
 
   async createInventoryByUserIdAndCompanyId({
-    userUid,
-    companyUid,
+    userId,
+    companyId,
     isFirstInventory = false,
   }: CreateInventoryParams): Promise<InventoryEntity> {
-    const uid = uuidV4();
+    const id = uuidV4();
 
     const inventory = InventoryEntity.new({
-      uid,
+      id,
       name: 'Nouvel Inventaire',
       isPublic: false,
       isDefaultInventory: !!isFirstInventory,
@@ -30,24 +30,24 @@ class InventoryService {
         ],
     });
 
-    return this.inventoryRepository.add(inventory, userUid, companyUid);
+    return this.inventoryRepository.add(inventory, userId, companyId);
   }
 
   async updateInventory({
     inventory,
-    userUid,
-    companyUid,
+    userId,
+    companyId,
   }: UpdateInventoryParams): Promise<void> {
     return this.inventoryRepository.update(
       InventoryEntity.new({
-        uid: inventory.uid,
+        id: inventory.id,
         name: inventory.name,
         isPublic: inventory.isPublic,
         isDefaultInventory: inventory.isDefaultInventory,
         color: inventory.color,
       }),
-      userUid,
-      companyUid
+      userId,
+      companyId
     );
   }
 }
@@ -56,12 +56,12 @@ export default InventoryService;
 
 export interface UpdateInventoryParams {
   inventory: Inventory;
-  userUid: string;
-  companyUid: string;
+  userId: string;
+  companyId: string;
 }
 
 export interface CreateInventoryParams {
-  userUid: string;
-  companyUid: string;
+  userId: string;
+  companyId: string;
   isFirstInventory?: boolean;
 }

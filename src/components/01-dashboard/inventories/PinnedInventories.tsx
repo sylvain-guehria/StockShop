@@ -36,14 +36,14 @@ const DynamicEditInventoryForm = dynamic(
 );
 
 type Props = {
-  currentInventoryUid: string;
+  currentInventoryId: string;
   inventories: InventoryEntity[];
   isLoadingInventory: boolean;
-  onSelectInventory: (inventoryUid: string) => void;
+  onSelectInventory: (inventoryId: string) => void;
 };
 
 const PinnedInventories: FC<Props> = ({
-  currentInventoryUid,
+  currentInventoryId,
   inventories,
   isLoadingInventory,
   onSelectInventory,
@@ -115,7 +115,7 @@ const PinnedInventories: FC<Props> = ({
   const handleClickSetDefaultInventory = (inventory: Inventory) => {
     setDaufltInventoryMutation.mutate({
       inventory,
-      userUid: user.uid,
+      userId: user.id,
     });
   };
 
@@ -141,9 +141,9 @@ const PinnedInventories: FC<Props> = ({
             inventory={selectedInventory as unknown as Inventory}
             deleteInventory={(inventory) =>
               deleteInventoryMutation.mutate({
-                inventoryUid: inventory.uid as string,
-                userUid: user.getUid(),
-                companyUid: user.getCompanyUid(),
+                inventoryId: inventory.id as string,
+                userId: user.getId(),
+                companyId: user.getCompanyId(),
               })
             }
           />
@@ -158,13 +158,13 @@ const PinnedInventories: FC<Props> = ({
         ) : (
           inventories.map((inventory) => (
             <CardInventory
-              key={inventory.uid}
+              key={inventory.id}
               onSelectInventory={onSelectInventory}
               inventory={inventory}
               handleClickEditInventory={handleClickEditInventory}
               handleClickDeleteInventory={handleClickDeleteInventory}
               handleClickSetDefaultInventory={handleClickSetDefaultInventory}
-              isCurrentInventory={currentInventoryUid === inventory.uid}
+              isCurrentInventory={currentInventoryId === inventory.id}
             />
           ))
         )}

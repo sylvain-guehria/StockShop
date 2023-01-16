@@ -2,9 +2,9 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 const deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { uid } = req.body;
+    const { id } = req.body;
 
-    res.status(200).end({ uid });
+    res.status(200).end({ id });
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error('error when saving user', e);

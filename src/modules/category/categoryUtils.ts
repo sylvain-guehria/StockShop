@@ -2,86 +2,86 @@ import { categories as categorieFromDB } from '@/categoriesDatabase/categories';
 
 import type { Category, CategoryInput, SubCategory } from './categoryType';
 
-export const getSubCategoriesByCategoryUid = (
+export const getSubCategoriesByCategoryId = (
   categories: Category[],
-  categoryUid: string
+  categoryId: string
 ): SubCategory[] => {
-  if (!categoryUid) return [];
+  if (!categoryId) return [];
   if (!categories || !categories.length) return [];
-  const category = categories.find((cat) => cat.uid === categoryUid);
+  const category = categories.find((cat) => cat.id === categoryId);
   return category?.subCatgories || [];
 };
 
-export const getSubCategoriesByCategoryUidFromDatabase = (
-  categoryUid: string
+export const getSubCategoriesByCategoryIdFromDatabase = (
+  categoryId: string
 ): SubCategory[] => {
-  if (!categoryUid) return [];
-  return getSubCategoriesByCategoryUid(categorieFromDB, categoryUid);
+  if (!categoryId) return [];
+  return getSubCategoriesByCategoryId(categorieFromDB, categoryId);
 };
 
 export const getCategoryInput = (
   categories: Category[],
-  categoryUid: string
+  categoryId: string
 ): CategoryInput[] => {
   if (!categories || !categories.length) return [];
-  if (!categoryUid) return [];
+  if (!categoryId) return [];
   return (
-    categories.find((category) => category.uid === categoryUid)?.inputs || []
+    categories.find((category) => category.id === categoryId)?.inputs || []
   );
 };
 
 export const getSubCategoryInputs = (
   categories: Category[],
-  categoryUid: string,
-  subCategoryUid: string
+  categoryId: string,
+  subCategoryId: string
 ) => {
   if (!categories || !categories.length) return [];
-  if (!categoryUid || !subCategoryUid) return [];
+  if (!categoryId || !subCategoryId) return [];
   const category: Category = categories.find(
-    (cat) => cat.uid === categoryUid
+    (cat) => cat.id === categoryId
   ) as Category;
 
   if (!category) return [];
 
   const subCategory = category.subCatgories?.find(
-    (subCat) => subCat.uid === subCategoryUid
+    (subCat) => subCat.id === subCategoryId
   );
 
   return subCategory?.inputs || [];
 };
 
 export const getCategoryInputFromDatabase = (
-  categoryUid: string
+  categoryId: string
 ): CategoryInput[] => {
-  if (!categoryUid) return [];
-  return getCategoryInput(categorieFromDB, categoryUid);
+  if (!categoryId) return [];
+  return getCategoryInput(categorieFromDB, categoryId);
 };
 
 export const getSubCategoryInputsFromDatabase = (
-  categoryUid: string,
-  subCategoryUid: string
+  categoryId: string,
+  subCategoryId: string
 ) => {
-  if (!categoryUid || !subCategoryUid) return [];
-  return getSubCategoryInputs(categorieFromDB, categoryUid, subCategoryUid);
+  if (!categoryId || !subCategoryId) return [];
+  return getSubCategoryInputs(categorieFromDB, categoryId, subCategoryId);
 };
 
-export const getCategoryByUid = (categoryUid: string): Category => {
-  if (!categoryUid || !categorieFromDB || !categorieFromDB.length)
+export const getCategoryById = (categoryId: string): Category => {
+  if (!categoryId || !categorieFromDB || !categorieFromDB.length)
     return {} as Category;
   return (
-    categorieFromDB.find((category) => category.uid === categoryUid) ||
+    categorieFromDB.find((category) => category.id === categoryId) ||
     ({} as Category)
   );
 };
 
-export const getSubCategoryByUid = (
-  categoryUid: string,
-  subCategoryUid: string
+export const getSubCategoryById = (
+  categoryId: string,
+  subCategoryId: string
 ) => {
-  if (!categoryUid || !subCategoryUid) return {} as SubCategory;
-  const category = getCategoryByUid(categoryUid);
+  if (!categoryId || !subCategoryId) return {} as SubCategory;
+  const category = getCategoryById(categoryId);
   return (
-    category.subCatgories?.find((subCat) => subCat.uid === subCategoryUid) ||
+    category.subCatgories?.find((subCat) => subCat.id === subCategoryId) ||
     ({} as SubCategory)
   );
 };

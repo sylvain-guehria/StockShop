@@ -36,7 +36,7 @@ it('Open the firebase popup to signin the user', async () => {
   const provider = {} as AuthProvider;
 
   (signInWithPopup as jest.Mock).mockResolvedValue({
-    user: { uid: 'uid-123', getIdToken: () => 'sessionToken' },
+    user: { id: 'id-123', getIdToken: () => 'sessionToken' },
   });
 
   await loginWithGoogle(userRepository)({
@@ -56,7 +56,7 @@ it('Delete the firebase user if he is not added in DB', async () => {
   const auth = { name: 'auth' } as Auth;
   const provider = {} as AuthProvider;
 
-  const googeUser = { uid: 'uid-123', getIdToken: () => 'sessionToken' };
+  const googeUser = { id: 'id-123', getIdToken: () => 'sessionToken' };
 
   (signInWithPopup as jest.Mock).mockResolvedValue({
     user: googeUser,
@@ -94,7 +94,7 @@ it('Get the additionnal user information', async () => {
 
   const userCredential = {
     user: {
-      uid: 'uid-123',
+      id: 'id-123',
       getIdToken: () => 'sessionToken',
     },
   };
@@ -120,7 +120,7 @@ it('Add the user in the database if he is a new user', async () => {
 
   const userCredential = {
     user: {
-      uid: 'uid-123',
+      id: 'id-123',
       email: 'email@gmail.com',
       getIdToken: () => 'sessionToken',
     },
@@ -150,7 +150,7 @@ it('Add the user in the database if he is a new user', async () => {
   expect(userRepository.add).toHaveBeenCalledTimes(1);
   expect(userRepository.add).toHaveBeenCalledWith(
     UserEntity.new({
-      uid: 'uid-123',
+      id: 'id-123',
       email: 'email@gmail.com',
       firstName: 'given_name',
       lastName: 'family_name',
@@ -166,7 +166,7 @@ it('Do not add the user in the database if he is not a new user', async () => {
 
   const userCredential = {
     user: {
-      uid: 'uid-123',
+      id: 'id-123',
       email: 'email@gmail.com',
       getIdToken: () => 'sessionToken',
     },
@@ -202,7 +202,7 @@ it('Init the session', async () => {
 
   const userCredential = {
     user: {
-      uid: 'uid-123',
+      id: 'id-123',
       email: 'email@gmail.com',
       getIdToken: () => 'sessionToken',
     },

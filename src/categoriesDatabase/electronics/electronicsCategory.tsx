@@ -18,11 +18,11 @@ import {
 } from './electronicsSubcategories';
 
 export const electronicsCategory: Category = {
-  uid: CategoryId.ELECTRONICS,
+  id: CategoryId.ELECTRONICS,
   label: CategoryLabel.ELECTRONICS,
   inputs: [
     {
-      uid: 'color',
+      id: 'color',
       label: 'Couleur',
       inputType: AttributeInputTypes.SELECT,
       options: colorOptions,

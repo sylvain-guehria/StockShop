@@ -7,7 +7,7 @@ import type {
   AddProduct,
   DeleteProduct,
   GetProduct,
-  GetProductsByUserUidCompanyUidInventoryUid,
+  GetProductsByUserIdCompanyIdInventoryId,
   UpdateProduct,
 } from './productRepository';
 import { ProductRepository } from './productRepository';
@@ -16,19 +16,19 @@ class SupabaseProductRepository extends ProductRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 
   async getById({
-    productUid,
-    userUid,
-    companyUid,
-    inventoryUid,
+    productId,
+    userId,
+    companyId,
+    inventoryId,
   }: GetProduct): Promise<ProductEntity> {
-    console.info('get product in db with uid: ', productUid);
+    console.info('get product in db with id: ', productId);
     const response = await axios.get(
-      `${this.baseUrl}/api/product/${productUid}`,
+      `${this.baseUrl}/api/product/${productId}`,
       {
         params: {
-          userUid,
-          companyUid,
-          inventoryUid,
+          userId,
+          companyId,
+          inventoryId,
         },
       }
     );
@@ -42,8 +42,8 @@ class SupabaseProductRepository extends ProductRepository {
       toBuy,
       isPublic,
       tva,
-      categoryUid,
-      subCategoryUid,
+      categoryId,
+      subCategoryId,
       publicDisponibility,
       catSubcatAttributes,
       condition,
@@ -52,7 +52,7 @@ class SupabaseProductRepository extends ProductRepository {
     } = response.data;
 
     return ProductEntity.new({
-      uid: productUid,
+      id: productId,
       label,
       quantityInInventory,
       optimumQuantity,
@@ -62,10 +62,10 @@ class SupabaseProductRepository extends ProductRepository {
       toBuy,
       isPublic,
       tva,
-      categoryUid,
-      subCategoryUid,
+      categoryId,
+      subCategoryId,
       publicDisponibility,
-      inventoryUid,
+      inventoryId,
       catSubcatAttributes,
       condition,
       photoLink,
@@ -75,61 +75,61 @@ class SupabaseProductRepository extends ProductRepository {
 
   async add({
     product,
-    userUid,
-    companyUid,
+    userId,
+    companyId,
   }: AddProduct): Promise<ProductEntity> {
     console.info('adding product in db...');
     const res = await axios.post(`${this.baseUrl}/api/product/add`, {
-      userUid,
-      companyUid,
+      userId,
+      companyId,
       product: {
-        uid: product.getUid(),
+        id: product.getId(),
         label: product.getLabel(),
-        inventoryUid: product.getInventoryUid(),
+        inventoryId: product.getInventoryId(),
         creationDate: product.getCreationDate(),
       },
     });
-    console.info('Product added in DB, uid: ', product.getUid());
-    const { uid, label, inventoryUid, creationDate } = res.data;
+    console.info('Product added in DB, id: ', product.getId());
+    const { id, label, inventoryId, creationDate } = res.data;
     return ProductEntity.new({
-      uid,
+      id,
       label,
-      inventoryUid,
+      inventoryId,
       creationDate,
     });
   }
 
   async delete({
-    productUid,
-    userUid,
-    companyUid,
-    inventoryUid,
+    productId,
+    userId,
+    companyId,
+    inventoryId,
   }: DeleteProduct): Promise<void> {
-    console.info(`Deleting product with uid ${productUid} in db...`);
+    console.info(`Deleting product with id ${productId} in db...`);
     return axios.delete(`${this.baseUrl}/api/product/delete`, {
       params: {
-        productUid,
-        userUid,
-        companyUid,
-        inventoryUid,
+        productId,
+        userId,
+        companyId,
+        inventoryId,
       },
     });
   }
 
   async update({
     product,
-    userUid,
-    companyUid,
+    userId,
+    companyId,
   }: UpdateProduct): Promise<ProductEntity> {
-    console.info('update product uid: ', product.getUid());
+    console.info('update product id: ', product.getId());
     const { data } = await axios.put(
-      `${this.baseUrl}/api/product/${product.getUid()}`,
+      `${this.baseUrl}/api/product/${product.getId()}`,
       {
-        userUid,
-        companyUid,
-        inventoryUid: product.getInventoryUid(),
+        userId,
+        companyId,
+        inventoryId: product.getInventoryId(),
         product: {
-          uid: product.getUid(),
+          id: product.getId(),
           label: product.getLabel(),
           quantityInInventory: product.getQuantityInInventory(),
           optimumQuantity: product.getOptimumQuantity(),
@@ -139,8 +139,8 @@ class SupabaseProductRepository extends ProductRepository {
           toBuy: product.getToBuy(),
           isPublic: product.getIsPublic(),
           tva: product.getTva(),
-          categoryUid: product.getCategoryUid(),
-          subCategoryUid: product.getSubCategoryUid(),
+          categoryId: product.getCategoryId(),
+          subCategoryId: product.getSubCategoryId(),
           publicDisponibility: product.getPublicDisponibility(),
           catSubcatAttributes: product.getCatSubcatAttributes(),
           condition: product.getCondition(),
@@ -150,7 +150,7 @@ class SupabaseProductRepository extends ProductRepository {
       }
     );
     return ProductEntity.new({
-      uid: data.uid,
+      id: data.id,
       label: data.label,
       quantityInInventory: data.quantityInInventory,
       optimumQuantity: data.optimumQuantity,
@@ -160,10 +160,10 @@ class SupabaseProductRepository extends ProductRepository {
       toBuy: data.toBuy,
       isPublic: data.isPublic,
       tva: data.tva,
-      categoryUid: data.categoryUid,
-      subCategoryUid: data.subCategoryUid,
+      categoryId: data.categoryId,
+      subCategoryId: data.subCategoryId,
       publicDisponibility: data.publicDisponibility,
-      inventoryUid: data.inventoryUid,
+      inventoryId: data.inventoryId,
       catSubcatAttributes: data.catSubcatAttributes,
       condition: data.condition,
       photoLink: data.photoLink,
@@ -171,34 +171,34 @@ class SupabaseProductRepository extends ProductRepository {
     });
   }
 
-  async getProductsByUserUidCompanyUidInventoryUid({
-    userUid,
-    inventoryUid,
-    companyUid,
+  async getProductsByUserIdCompanyIdInventoryId({
+    userId,
+    inventoryId,
+    companyId,
     currentPage,
     numberOfProductsPerPage,
     sorter,
     filters,
-  }: GetProductsByUserUidCompanyUidInventoryUid): Promise<{
+  }: GetProductsByUserIdCompanyIdInventoryId): Promise<{
     count: number;
     products: ProductEntity[];
   }> {
     console.info(
-      'get all products by userUid, companyUid and inventoryUid in db'
+      'get all products by userId, companyId and inventoryId in db'
     );
     const response = await axios.get(
-      `${this.baseUrl}/api/product/getProductsByUserUidCompanyUidInventoryUid`,
+      `${this.baseUrl}/api/product/getProductsByUserIdCompanyIdInventoryId`,
       {
         params: {
-          userUid,
-          companyUid,
-          inventoryUid,
+          userId,
+          companyId,
+          inventoryId,
           currentPage,
           numberOfProductsPerPage,
           sorterField: sorter.field,
           sorterOrder: sorter.order,
-          filterCategoryUid: filters.categoryUid,
-          filterSubCategoryUid: filters.subCategoryUid,
+          filterCategoryId: filters.categoryId,
+          filterSubCategoryId: filters.subCategoryId,
           filterToBuy: filters.toBuy,
           filterIsPublic: filters.isPublic,
         },
@@ -209,7 +209,7 @@ class SupabaseProductRepository extends ProductRepository {
       products: response.data.results.map(
         (product: ProductEntity) =>
           new ProductEntity({
-            uid: product.uid,
+            id: product.id,
             label: product.label,
             quantityInInventory: product.quantityInInventory,
             optimumQuantity: product.optimumQuantity,
@@ -219,10 +219,10 @@ class SupabaseProductRepository extends ProductRepository {
             toBuy: product.toBuy,
             isPublic: product.isPublic,
             tva: product.tva,
-            categoryUid: product.categoryUid,
-            subCategoryUid: product.subCategoryUid,
+            categoryId: product.categoryId,
+            subCategoryId: product.subCategoryId,
             publicDisponibility: product.publicDisponibility,
-            inventoryUid: product.inventoryUid,
+            inventoryId: product.inventoryId,
             catSubcatAttributes: product.catSubcatAttributes,
             condition: product.condition,
             photoLink: product.photoLink,

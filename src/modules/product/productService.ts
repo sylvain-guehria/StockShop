@@ -11,38 +11,38 @@ class ProductService {
     this.productRepository = productRepository;
   }
 
-  async createProductByUserUidCompanyUidAndInventoryUid({
-    userUid,
-    companyUid,
-    inventoryUid,
+  async createProductByUserIdCompanyIdAndInventoryId({
+    userId,
+    companyId,
+    inventoryId,
   }: CreateProductParams): Promise<ProductEntity> {
-    const uid = uuidV4();
+    const id = uuidV4();
 
     const product = ProductEntity.new({
-      uid,
+      id,
       label: 'New product',
-      inventoryUid,
+      inventoryId,
       creationDate: Date.now(),
     });
 
     return this.productRepository.add({
       product,
-      userUid,
-      companyUid,
+      userId,
+      companyId,
     });
   }
 
   async updateProduct({
     product,
-    userUid,
-    companyUid,
+    userId,
+    companyId,
   }: UpdateProductParams): Promise<ProductEntity> {
     return this.productRepository.update({
       product: ProductEntity.new({
         ...product,
       }),
-      userUid,
-      companyUid,
+      userId,
+      companyId,
     });
   }
 }
@@ -50,13 +50,13 @@ class ProductService {
 export default ProductService;
 
 export interface UpdateProductParams {
-  userUid: string;
-  companyUid: string;
+  userId: string;
+  companyId: string;
   product: Product;
 }
 
 export interface CreateProductParams {
-  userUid: string;
-  companyUid: string;
-  inventoryUid: string;
+  userId: string;
+  companyId: string;
+  inventoryId: string;
 }

@@ -3,11 +3,11 @@ import { AttributeInputTypes } from '@/modules/category/categoryType';
 import { depth, height, volume, width } from '../reusableInputs';
 
 export const subcategorieCold = {
-  uid: 'cold',
+  id: 'cold',
   label: 'Froid',
   inputs: [
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -18,7 +18,7 @@ export const subcategorieCold = {
     },
     {
       label: 'Nombre de porte',
-      uid: 'numberOfDoors',
+      id: 'numberOfDoors',
       inputType: AttributeInputTypes.NUMBER,
     },
     width,
@@ -27,7 +27,7 @@ export const subcategorieCold = {
     volume,
     {
       label: 'Type de pose',
-      uid: 'typeOfInstallation',
+      id: 'typeOfInstallation',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { label: 'Encastrable', value: 'built-in' },
@@ -37,7 +37,7 @@ export const subcategorieCold = {
     },
     {
       label: 'Type de froid',
-      uid: 'typeOfCold',
+      id: 'typeOfCold',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { label: 'Froid ventilé', value: 'ventilated-cold' },
@@ -49,7 +49,7 @@ export const subcategorieCold = {
 };
 
 export const subcategorieWasching = {
-  uid: 'washing',
+  id: 'washing',
   label: 'Lavage',
   inputs: [
     width,
@@ -58,7 +58,7 @@ export const subcategorieWasching = {
     volume,
     {
       label: 'Capacité de séchage ou lavage (kg)',
-      uid: 'washingCapacity',
+      id: 'washingCapacity',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { label: '5 kg', value: '5kg' },
@@ -71,7 +71,7 @@ export const subcategorieWasching = {
       ],
     },
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type',
       inputType: AttributeInputTypes.SELECT_WITH_SUB_OPTIONS,
       optionsWithSubOptions: [
@@ -139,7 +139,7 @@ export const subcategorieWasching = {
 };
 
 export const subcategorieCooking = {
-  uid: 'cooking',
+  id: 'cooking',
   label: 'Cuisson',
   inputs: [
     width,
@@ -148,7 +148,7 @@ export const subcategorieCooking = {
     volume,
     {
       label: 'Type',
-      uid: 'type',
+      id: 'type',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { label: 'Four', value: 'oven' },
@@ -160,7 +160,7 @@ export const subcategorieCooking = {
     },
     {
       label: 'Type de cuisson',
-      uid: 'typeOfCooking',
+      id: 'typeOfCooking',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { label: 'Cuisson par induction', value: 'induction-cooking' },
@@ -170,12 +170,12 @@ export const subcategorieCooking = {
     },
     {
       label: 'Nombre de zones de cuisson',
-      uid: 'numberOfCookingZones',
+      id: 'numberOfCookingZones',
       inputType: AttributeInputTypes.NUMBER,
     },
     {
       label: 'Type de chaleur',
-      uid: 'typeOfHeat',
+      id: 'typeOfHeat',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { label: 'Chaleur tournante', value: 'rotating-heat' },
@@ -186,7 +186,7 @@ export const subcategorieCooking = {
     },
     {
       label: 'Revêtement',
-      uid: 'coating',
+      id: 'coating',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { label: 'Céramique', value: 'ceramic' },

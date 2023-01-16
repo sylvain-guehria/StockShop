@@ -4,39 +4,39 @@ import type { Inventory } from '@/modules/inventory/inventoryType';
 
 export type SetInventoryAsDefaultParams = {
   inventory: Inventory;
-  userUid: string;
+  userId: string;
 };
 
 export const setInventoryAsDefault =
   (inventoryRepository: InventoryRepository) =>
   async ({
-    userUid,
+    userId,
     inventory,
   }: SetInventoryAsDefaultParams): Promise<void> => {
-    if (!userUid)
-      throw new Error('userUid is required to set inventory as default');
+    if (!userId)
+      throw new Error('userId is required to set inventory as default');
     if (!inventory)
       throw new Error('inventory is required to set inventory as default');
 
     const inventoryEntity = InventoryEntity.new(inventory);
-    const companyUid = inventoryEntity.getCompanyUid();
+    const companyId = inventoryEntity.getCompanyId();
 
-    if (!companyUid)
+    if (!companyId)
       throw new Error(
-        'companyUid is required in the inventory to set inventory as default'
+        'companyId is required in the inventory to set inventory as default'
       );
 
     if (inventoryEntity.getIsDefaultInventory()) return;
 
     try {
       const inventories =
-        await inventoryRepository.getInventoriesByUserUidAndCompanyUid(
-          userUid,
-          companyUid
+        await inventoryRepository.getInventoriesByUserIdAndCompanyId(
+          userId,
+          companyId
         );
 
       inventoryEntity.setAsDefaultInventory();
-      await inventoryRepository.update(inventoryEntity, userUid, companyUid);
+      await inventoryRepository.update(inventoryEntity, userId, companyId);
 
       const formerDefaultInventory = inventories.find(
         (retrievedInventory) => retrievedInventory.isDefaultInventory
@@ -45,8 +45,8 @@ export const setInventoryAsDefault =
         formerDefaultInventory.setAsNotDefaultInventory();
         await inventoryRepository.update(
           formerDefaultInventory,
-          userUid,
-          companyUid
+          userId,
+          companyId
         );
       } else {
         // eslint-disable-next-line no-console

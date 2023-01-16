@@ -24,7 +24,7 @@ const Base = () => {
     const getSession = async () => {
       const { data } = await supabaseBrowser.auth.getSession();
       console.log('in home---------------------------', { data });
-      if (data.session?.access_token) setUser(UserEntity.new({ uid: '123' }));
+      if (data.session?.access_token) setUser(UserEntity.new({ id: '123' }));
     };
     getSession();
   }, []);

@@ -3,31 +3,31 @@ import { AttributeInputTypes } from '@/modules/category/categoryType';
 import { seasonOptions } from '../reusableOptions';
 
 export const subcategorieClothes = {
-  uid: 'clothes',
+  id: 'clothes',
   label: 'Vêtements',
   inputs: [
     {
-      uid: 'europeanSize',
+      id: 'europeanSize',
       label: 'Taille UE',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'americanSize',
+      id: 'americanSize',
       label: 'Taille US',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'material',
+      id: 'material',
       label: 'Matière',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -51,7 +51,7 @@ export const subcategorieClothes = {
       ],
     },
     {
-      uid: 'season',
+      id: 'season',
       label: 'Saison',
       inputType: AttributeInputTypes.SELECT,
       options: seasonOptions,
@@ -60,31 +60,31 @@ export const subcategorieClothes = {
 };
 
 export const subcategorieShoes = {
-  uid: 'shoes',
+  id: 'shoes',
   label: 'Chaussures',
   inputs: [
     {
-      uid: 'europeanSize',
+      id: 'europeanSize',
       label: 'Taille UE',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'americanSize',
+      id: 'americanSize',
       label: 'Taille US',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'material',
+      id: 'material',
       label: 'Matière',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -106,21 +106,21 @@ export const subcategorieShoes = {
 };
 
 export const subcategorieAccessories = {
-  uid: 'accessories',
+  id: 'accessories',
   label: 'Accessoires',
   inputs: [
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'material',
+      id: 'material',
       label: 'Matière',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type',
       inputType: AttributeInputTypes.SELECT,
       options: [

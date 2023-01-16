@@ -14,27 +14,27 @@ export abstract class InventoryRepository {
     }
   }
 
-  getById(uid: string): Promise<InventoryEntity> {
-    throw new Error(`You tried to call an abstract methode, arg: ${uid}`);
+  getById(id: string): Promise<InventoryEntity> {
+    throw new Error(`You tried to call an abstract methode, arg: ${id}`);
   }
 
   async add(
     inventory: InventoryEntity,
-    userUid: string,
-    companyUid: string
+    userId: string,
+    companyId: string
   ): Promise<InventoryEntity> {
     throw new Error(
-      `You tried to call an abstract methode, inventory: ${inventory}, userUid: ${userUid}, companyUid: ${companyUid}`
+      `You tried to call an abstract methode, inventory: ${inventory}, userId: ${userId}, companyId: ${companyId}`
     );
   }
 
   async delete({
-    userUid,
-    companyUid,
-    inventoryUid,
+    userId,
+    companyId,
+    inventoryId,
   }: DeleteInventoryParams): Promise<void> {
     throw new Error(
-      `You tried to call an abstract methode, arg inventoryUid ${inventoryUid} and userUid: ${userUid} and companyUid: ${companyUid}`
+      `You tried to call an abstract methode, arg inventoryId ${inventoryId} and userId: ${userId} and companyId: ${companyId}`
     );
   }
 
@@ -45,21 +45,21 @@ export abstract class InventoryRepository {
   async update(
     inventory: InventoryEntity,
     userId: string,
-    companyUid: string
+    companyId: string
   ): Promise<void> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
         inventory,
-      }} and userId: ${userId} and companyUid: ${companyUid}`
+      }} and userId: ${userId} and companyId: ${companyId}`
     );
   }
 
-  async getInventoriesByUserUidAndCompanyUid(
-    userUid: string,
-    companyUid: string
+  async getInventoriesByUserIdAndCompanyId(
+    userId: string,
+    companyId: string
   ): Promise<InventoryEntity[]> {
     throw new Error(
-      `You tried to call an abstract methode, arg: ${{ userUid, companyUid }}`
+      `You tried to call an abstract methode, arg: ${{ userId, companyId }}`
     );
   }
 }
@@ -67,7 +67,7 @@ export abstract class InventoryRepository {
 export default InventoryRepository;
 
 export type DeleteInventoryParams = {
-  inventoryUid: string;
-  companyUid: string;
-  userUid: string;
+  inventoryId: string;
+  companyId: string;
+  userId: string;
 };

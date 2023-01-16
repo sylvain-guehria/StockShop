@@ -34,7 +34,7 @@ const publicStates = [
 
 type Props = {
   inventory: Inventory;
-  onSubmit: ({ inventory, userUid, companyUid }: UpdateInventoryParams) => void;
+  onSubmit: ({ inventory, userId, companyId }: UpdateInventoryParams) => void;
 };
 
 const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
@@ -69,14 +69,14 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
     try {
       onSubmit({
         inventory: {
-          uid: inventory.uid,
+          id: inventory.id,
           name: data.name,
           isPublic: data.isPublic as unknown as boolean,
           color: data.color,
           isDefaultInventory: inventory.isDefaultInventory,
         },
-        userUid: user.uid,
-        companyUid: inventory.companyUid as string,
+        userId: user.id,
+        companyId: inventory.companyId as string,
       });
     } catch (e) {
       toast(

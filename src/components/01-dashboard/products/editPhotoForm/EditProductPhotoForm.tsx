@@ -27,8 +27,8 @@ const DynamicDeleteModal = dynamic(
 );
 
 type Props = {
-  productUid: string;
-  inventoryUid: string;
+  productId: string;
+  inventoryId: string;
 };
 
 interface PhotoAttributesType {
@@ -36,22 +36,22 @@ interface PhotoAttributesType {
   type: string;
 }
 
-const EditProductPhotoForm: FC<Props> = ({ productUid, inventoryUid }) => {
+const EditProductPhotoForm: FC<Props> = ({ productId, inventoryId }) => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const toast = useToast(5000);
   const [isDeletePhotoModalOpen, setIsDeletePhotoModalOpen] = useState(false);
 
   const { data: product, refetch } = useQuery({
-    queryKey: [ApiRequestEnums.GetProduct, { productUid }],
+    queryKey: [ApiRequestEnums.GetProduct, { productId }],
     queryFn: () =>
       productRepository.getById({
-        productUid,
-        userUid: user.getUid(),
-        companyUid: user.getCompanyUid(),
-        inventoryUid,
+        productId,
+        userId: user.getId(),
+        companyId: user.getCompanyId(),
+        inventoryId,
       }),
-    enabled: !!productUid,
+    enabled: !!productId,
     staleTime: 30000,
   });
 
@@ -75,8 +75,8 @@ const EditProductPhotoForm: FC<Props> = ({ productUid, inventoryUid }) => {
     if (!product) return;
     try {
       await updatePhotoProductUseCase({
-        userUid: user.getUid(),
-        companyUid: user.getCompanyUid(),
+        userId: user.getId(),
+        companyId: user.getCompanyId(),
         product,
         currentFile: file as File,
       });

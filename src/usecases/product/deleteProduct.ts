@@ -6,27 +6,27 @@ import type {
 export const deleteProduct =
   (productRepository: ProductRepository) =>
   async ({
-    productUid,
-    userUid,
-    companyUid,
-    inventoryUid,
+    productId,
+    userId,
+    companyId,
+    inventoryId,
   }: DeleteProduct): Promise<void> => {
     try {
-      if (!userUid)
-        throw new Error('userUid is required to delete the product');
-      if (!companyUid)
-        throw new Error('companyUid is required to delete the product');
-      if (!inventoryUid)
-        throw new Error('inventoryUid is required to delete the product');
+      if (!userId)
+        throw new Error('userId is required to delete the product');
+      if (!companyId)
+        throw new Error('companyId is required to delete the product');
+      if (!inventoryId)
+        throw new Error('inventoryId is required to delete the product');
 
-      if (!productUid)
-        throw new Error('productUid is required to delete the product');
+      if (!productId)
+        throw new Error('productId is required to delete the product');
 
       await productRepository.delete({
-        userUid,
-        companyUid,
-        inventoryUid,
-        productUid,
+        userId,
+        companyId,
+        inventoryId,
+        productId,
       });
     } catch (error: any) {
       // eslint-disable-next-line no-console

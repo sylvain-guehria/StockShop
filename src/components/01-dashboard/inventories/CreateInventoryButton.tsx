@@ -14,10 +14,10 @@ const CreateInventoryButton: FC = () => {
   const { user } = useAuth();
 
   const mutation = useMutation({
-    mutationFn: ({ userUid, companyUid }: CreateInventoryParams) =>
+    mutationFn: ({ userId, companyId }: CreateInventoryParams) =>
       inventoryServiceDi.createInventoryByUserIdAndCompanyId({
-        userUid,
-        companyUid,
+        userId,
+        companyId,
       }),
     onSuccess: () => {
       // Invalidate and refetch
@@ -28,13 +28,13 @@ const CreateInventoryButton: FC = () => {
   });
 
   const handleClickCreateInventory = () => {
-    const userId = user.uid;
-    const companyId = user.companyUid;
+    const userId = user.id;
+    const companyId = user.companyId;
 
     if (!userId || !companyId) return;
     mutation.mutate({
-      userUid: userId,
-      companyUid: companyId,
+      userId: userId,
+      companyId: companyId,
     });
   };
 

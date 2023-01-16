@@ -24,7 +24,7 @@ type Props = {
   handleClickDeleteInventory: (inventory: Inventory) => void;
   handleClickSetDefaultInventory: (inventory: Inventory) => void;
   isCurrentInventory: boolean;
-  onSelectInventory: (inventoryUid: string) => void;
+  onSelectInventory: (inventoryId: string) => void;
 };
 
 const CardInventory: FC<Props> = ({
@@ -41,14 +41,14 @@ const CardInventory: FC<Props> = ({
 
   return (
     <li
-      key={inventory.uid}
+      key={inventory.id}
       className={classNames(
         currentInventoryClassName,
         'relative col-span-1 flex cursor-pointer rounded-md shadow-sm hover:border hover:shadow-lg'
       )}
     >
       <div
-        onClick={() => onSelectInventory(inventory.uid)}
+        onClick={() => onSelectInventory(inventory.id)}
         className={classNames(
           `bg-${inventory.color ? inventory.color : 'primary-600'}`,
           'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
@@ -57,7 +57,7 @@ const CardInventory: FC<Props> = ({
       <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-y border-r border-gray-200 bg-white">
         <div
           className="flex-1 truncate px-4 py-2 text-sm"
-          onClick={() => onSelectInventory(inventory.uid)}
+          onClick={() => onSelectInventory(inventory.id)}
         >
           <div className="font-medium text-gray-900">{inventory.name}</div>
           <p className="text-gray-500">X Produit</p>

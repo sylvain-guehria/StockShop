@@ -1,5 +1,5 @@
 export enum CategoryEnum {
-  UID = 'uid',
+  ID = 'id',
   LABEL = 'label',
   INPUTS = 'inputs',
   SUB_CATEGORIES = 'subCatgories',
@@ -11,14 +11,14 @@ export enum CategoryEnum {
 }
 
 export interface Category {
-  [CategoryEnum.UID]: string;
+  [CategoryEnum.ID]: string;
   [CategoryEnum.LABEL]: string;
   [CategoryEnum.INPUTS]?: CategoryInput[];
   [CategoryEnum.SUB_CATEGORIES]?: SubCategory[];
 }
 
 export type SubCategory = {
-  [CategoryEnum.UID]: string;
+  [CategoryEnum.ID]: string;
   [CategoryEnum.LABEL]: string;
   [CategoryEnum.INPUTS]?: CategoryInput[];
 };
@@ -33,7 +33,7 @@ export type OptionWithSubOptions = Option & {
 };
 
 export type CategoryInput = {
-  [CategoryEnum.UID]: string;
+  [CategoryEnum.ID]: string;
   [CategoryEnum.LABEL]: string;
   [CategoryEnum.INPUT_TYPE]: AttributeInputTypes;
   [CategoryEnum.OPTIONS]?: Option[];

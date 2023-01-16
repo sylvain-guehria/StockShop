@@ -1,33 +1,33 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const inventoryByUid = async (req: NextApiRequest, res: NextApiResponse) => {
+const inventoryById = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
-    query: { uid },
+    query: { id },
     method,
   } = req;
 
-  const { userUid, companyUid } = req.body;
+  const { userId, companyId } = req.body;
 
   const inventory = {
-    uid: req.body.uid,
+    id: req.body.id,
     name: req.body.name,
     isPublic: req.body.isPublic,
     isDefaultInventory: req.body.isDefaultInventory,
     color: req.body.color,
   };
 
-  if (!uid) {
-    res.status(400).end('Inventory uid is mandatory to update an inventory');
+  if (!id) {
+    res.status(400).end('Inventory id is mandatory to update an inventory');
     return;
   }
 
-  if (!userUid) {
-    res.status(400).end('userUid is mandatory to update an inventory');
+  if (!userId) {
+    res.status(400).end('userId is mandatory to update an inventory');
     return;
   }
 
-  if (!companyUid) {
-    res.status(400).end('companyUid is mandatory to update an inventory');
+  if (!companyId) {
+    res.status(400).end('companyId is mandatory to update an inventory');
     return;
   }
 
@@ -50,4 +50,4 @@ const inventoryByUid = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default inventoryByUid;
+export default inventoryById;

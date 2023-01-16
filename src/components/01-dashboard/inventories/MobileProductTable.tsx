@@ -22,7 +22,7 @@ const MobileProductTable: FC<Props> = ({ products }) => {
         className="mt-3 divide-y divide-gray-100 border-t border-gray-200"
       >
         {products.map((product) => (
-          <li key={product.uid}>
+          <li key={product.id}>
             <a
               href="#"
               className="group flex items-center justify-between p-4 hover:bg-gray-50 sm:px-6"

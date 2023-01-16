@@ -7,7 +7,7 @@ class UserEntity implements User {
 
   username: string;
 
-  uid: string;
+  id: string;
 
   password: string;
 
@@ -27,7 +27,7 @@ class UserEntity implements User {
 
   locale: LocaleType;
 
-  companyUid: string;
+  companyId: string;
 
   static new(user?: User): UserEntity {
     return user
@@ -41,7 +41,7 @@ class UserEntity implements User {
     this.email = user.email || '';
     this.provider = user.provider || PROVIDERS.NOTKNOWN;
     this.username = user.username || '';
-    this.uid = user.uid || '';
+    this.id = user.id || '';
     this.password = user.password || '';
     this.firstName = user.firstName || '';
     this.lastName = user.lastName || '';
@@ -52,11 +52,11 @@ class UserEntity implements User {
       user.hasInventoryManagementServiceActivated || false;
     this.hasSeenFirstConnectionModal =
       user.hasSeenFirstConnectionModal || false;
-    this.companyUid = user.companyUid || '';
+    this.companyId = user.companyId || '';
   }
 
-  getUid(): string {
-    return this.uid;
+  getId(): string {
+    return this.id;
   }
 
   getProvider(): ProviderType {
@@ -145,7 +145,7 @@ class UserEntity implements User {
   }
 
   isLoggedIn(): boolean {
-    return !!this.uid;
+    return !!this.id;
   }
 
   isLoggedOut(): boolean {
@@ -175,13 +175,13 @@ class UserEntity implements User {
     return this;
   }
 
-  setCompanyUid(companyUid: string): UserEntity {
-    this.companyUid = companyUid;
+  setCompanyId(companyId: string): UserEntity {
+    this.companyId = companyId;
     return this;
   }
 
-  getCompanyUid(): string {
-    return this.companyUid;
+  getCompanyId(): string {
+    return this.companyId;
   }
 }
 

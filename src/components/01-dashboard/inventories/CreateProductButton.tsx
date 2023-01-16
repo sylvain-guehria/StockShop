@@ -11,19 +11,19 @@ import { useAuth } from '@/hooks/useAuth';
 import type { CreateProductParams } from '@/modules/product/productService';
 
 type Props = {
-  currentInventoryUid: string;
+  currentInventoryId: string;
 };
 
-const CreateProductButton: FC<Props> = ({ currentInventoryUid }) => {
+const CreateProductButton: FC<Props> = ({ currentInventoryId }) => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
 
   const { mutate } = useMutation({
-    mutationFn: ({ userUid, companyUid, inventoryUid }: CreateProductParams) =>
-      productServiceDi.createProductByUserUidCompanyUidAndInventoryUid({
-        userUid,
-        companyUid,
-        inventoryUid,
+    mutationFn: ({ userId, companyId, inventoryId }: CreateProductParams) =>
+      productServiceDi.createProductByUserIdCompanyIdAndInventoryId({
+        userId,
+        companyId,
+        inventoryId,
       }),
     onSuccess: (data) => {
       queryClient.invalidateQueries({
@@ -37,14 +37,14 @@ const CreateProductButton: FC<Props> = ({ currentInventoryUid }) => {
   });
 
   const handleClickCreateInventory = () => {
-    const userId = user.getUid();
-    const companyId = user.getCompanyUid();
+    const userId = user.getId();
+    const companyId = user.getCompanyId();
 
-    if (!userId || !companyId || !currentInventoryUid) return;
+    if (!userId || !companyId || !currentInventoryId) return;
     mutate({
-      userUid: userId,
-      companyUid: companyId,
-      inventoryUid: currentInventoryUid,
+      userId: userId,
+      companyId: companyId,
+      inventoryId: currentInventoryId,
     });
   };
 

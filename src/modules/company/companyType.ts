@@ -1,12 +1,12 @@
 export enum CompanyEnum {
-  UID = 'uid',
+  ID = 'id',
   NAME = 'name',
   VAT = 'vat',
   ADDRESS = 'address',
 }
 
 export interface Company {
-  [CompanyEnum.UID]?: string;
+  [CompanyEnum.ID]?: string;
   [CompanyEnum.NAME]?: string;
   [CompanyEnum.VAT]?: string;
   [CompanyEnum.ADDRESS]?: Address;

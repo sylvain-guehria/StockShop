@@ -1,18 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const getInventoriesByUserUidAndCompanyUid = async (
+const getInventoriesByUserIdAndCompanyId = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
   const {
-    query: { userUid, companyUid },
+    query: { userId, companyId },
     method,
   } = req;
 
   try {
     switch (method) {
       case 'GET':
-        res.status(200).json({ userUid, companyUid });
+        res.status(200).json({ userId, companyId });
         return;
       default:
         res.setHeader('Allow', ['GET']);
@@ -25,4 +25,4 @@ const getInventoriesByUserUidAndCompanyUid = async (
   }
 };
 
-export default getInventoriesByUserUidAndCompanyUid;
+export default getInventoriesByUserIdAndCompanyId;

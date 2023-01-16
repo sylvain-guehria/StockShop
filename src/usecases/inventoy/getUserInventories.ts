@@ -14,25 +14,25 @@ export const getUserInventories =
   ) =>
   async (user: UserEntity): Promise<InventoryEntity[]> => {
     try {
-      if (!user.getUid()) {
-        throw new Error('userUid is required to get user inventories');
+      if (!user.getId()) {
+        throw new Error('userId is required to get user inventories');
       }
 
-      let company = await companyRepository.getCompanyByUserUid(user.getUid());
+      let company = await companyRepository.getCompanyByUserId(user.getId());
       if (!company) {
-        company = await companyServiceDi.createCompanyByUserId(user.getUid());
-        user.setCompanyUid(company.uid);
+        company = await companyServiceDi.createCompanyByUserId(user.getId());
+        user.setCompanyId(company.id);
       }
       let inventories =
-        await inventoryRepository.getInventoriesByUserUidAndCompanyUid(
-          user.getUid(),
-          company.uid
+        await inventoryRepository.getInventoriesByUserIdAndCompanyId(
+          user.getId(),
+          company.id
         );
       if (!inventories || inventories.length === 0) {
         const inventory =
           await inventoryServiceDi.createInventoryByUserIdAndCompanyId({
-            userUid: user.getUid(),
-            companyUid: company.uid,
+            userId: user.getId(),
+            companyId: company.id,
             isFirstInventory: true,
           });
         inventories = [inventory];

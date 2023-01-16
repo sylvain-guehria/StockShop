@@ -5,14 +5,14 @@ import { ProductAttributes } from '@/modules/product/productType';
 import { getInventoryProducts } from './getInventoryProducts';
 
 const productRepository = {
-  getProductsByUserUidCompanyUidInventoryUid: jest.fn(),
+  getProductsByUserIdCompanyIdInventoryId: jest.fn(),
 };
 
 describe('getInventoryProducts', () => {
-  it('Should throw an error if userUid is not provided', async () => {
-    const userUid = '';
-    const companyUid = 'companyUid';
-    const inventoryUid = 'inventoryUid';
+  it('Should throw an error if userId is not provided', async () => {
+    const userId = '';
+    const companyId = 'companyId';
+    const inventoryId = 'inventoryId';
     const sorter = {
       field: ProductAttributes.LABEL as AuthorizedOrderProperty,
       order: ORDER.ASC,
@@ -22,27 +22,27 @@ describe('getInventoryProducts', () => {
 
     try {
       await getInventoryProducts(productRepository as any)({
-        userUid,
-        inventoryUid,
-        companyUid,
+        userId,
+        inventoryId,
+        companyId,
         currentPage: 1,
         sorter,
         filters,
       });
     } catch (error: any) {
       expect(
-        productRepository.getProductsByUserUidCompanyUidInventoryUid
+        productRepository.getProductsByUserIdCompanyIdInventoryId
       ).toHaveBeenCalledTimes(0);
       expect(error.message).toBe(
-        'userUid is required to get user inventoriy products'
+        'userId is required to get user inventoriy products'
       );
     }
   });
 
-  it('Should throw an error if companyUid is not provided', async () => {
-    const userUid = 'userUid';
-    const companyUid = '';
-    const inventoryUid = 'inventoryUid';
+  it('Should throw an error if companyId is not provided', async () => {
+    const userId = 'userId';
+    const companyId = '';
+    const inventoryId = 'inventoryId';
     const sorter = {
       field: ProductAttributes.LABEL as AuthorizedOrderProperty,
       order: ORDER.ASC,
@@ -52,26 +52,26 @@ describe('getInventoryProducts', () => {
 
     try {
       await getInventoryProducts(productRepository as any)({
-        userUid,
-        inventoryUid,
-        companyUid,
+        userId,
+        inventoryId,
+        companyId,
         currentPage: 1,
         sorter,
         filters,
       });
     } catch (error: any) {
       expect(
-        productRepository.getProductsByUserUidCompanyUidInventoryUid
+        productRepository.getProductsByUserIdCompanyIdInventoryId
       ).toHaveBeenCalledTimes(0);
       expect(error.message).toBe(
-        'companyUid is required to get user inventoriy products'
+        'companyId is required to get user inventoriy products'
       );
     }
   });
-  it('Should throw an error if inventoryUid is not provided', async () => {
-    const userUid = 'userUid';
-    const companyUid = 'companyUid';
-    const inventoryUid = '';
+  it('Should throw an error if inventoryId is not provided', async () => {
+    const userId = 'userId';
+    const companyId = 'companyId';
+    const inventoryId = '';
     const sorter = {
       field: ProductAttributes.LABEL as AuthorizedOrderProperty,
       order: ORDER.ASC,
@@ -81,26 +81,26 @@ describe('getInventoryProducts', () => {
 
     try {
       await getInventoryProducts(productRepository as any)({
-        userUid,
-        inventoryUid,
-        companyUid,
+        userId,
+        inventoryId,
+        companyId,
         currentPage: 1,
         sorter,
         filters,
       });
     } catch (error: any) {
       expect(
-        productRepository.getProductsByUserUidCompanyUidInventoryUid
+        productRepository.getProductsByUserIdCompanyIdInventoryId
       ).toHaveBeenCalledTimes(0);
       expect(error.message).toBe(
-        'inventoryUid is required to get user inventoriy products'
+        'inventoryId is required to get user inventoriy products'
       );
     }
   });
-  it('Should call productRepository.getProductsByUserUidCompanyUidInventoryUid with the right params', async () => {
-    const userUid = 'userUid';
-    const companyUid = 'companyUid';
-    const inventoryUid = 'inventoryUid';
+  it('Should call productRepository.getProductsByUserIdCompanyIdInventoryId with the right params', async () => {
+    const userId = 'userId';
+    const companyId = 'companyId';
+    const inventoryId = 'inventoryId';
     const sorter = {
       field: ProductAttributes.LABEL as AuthorizedOrderProperty,
       order: ORDER.ASC,
@@ -108,7 +108,7 @@ describe('getInventoryProducts', () => {
 
     const filters = {};
 
-    productRepository.getProductsByUserUidCompanyUidInventoryUid.mockResolvedValue(
+    productRepository.getProductsByUserIdCompanyIdInventoryId.mockResolvedValue(
       {
         products: [],
         count: 0,
@@ -116,23 +116,23 @@ describe('getInventoryProducts', () => {
     );
 
     await getInventoryProducts(productRepository as any)({
-      userUid,
-      inventoryUid,
-      companyUid,
+      userId,
+      inventoryId,
+      companyId,
       currentPage: 1,
       sorter,
       filters,
     });
 
     expect(
-      productRepository.getProductsByUserUidCompanyUidInventoryUid
+      productRepository.getProductsByUserIdCompanyIdInventoryId
     ).toHaveBeenCalledTimes(1);
     expect(
-      productRepository.getProductsByUserUidCompanyUidInventoryUid
+      productRepository.getProductsByUserIdCompanyIdInventoryId
     ).toHaveBeenCalledWith({
-      userUid,
-      companyUid,
-      inventoryUid,
+      userId,
+      companyId,
+      inventoryId,
       currentPage: 1,
       numberOfProductsPerPage: 10,
       sorter,
@@ -140,9 +140,9 @@ describe('getInventoryProducts', () => {
     });
   });
   it('Should change the sorter filed with creationDate if the sorter field is in the filters and has a value', async () => {
-    const userUid = 'userUid';
-    const companyUid = 'companyUid';
-    const inventoryUid = 'inventoryUid';
+    const userId = 'userId';
+    const companyId = 'companyId';
+    const inventoryId = 'inventoryId';
     const sorter = {
       field: ProductAttributes.TO_BUY as AuthorizedOrderProperty,
       order: ORDER.ASC,
@@ -152,7 +152,7 @@ describe('getInventoryProducts', () => {
       [ProductAttributes.TO_BUY]: 'true' as 'true' | 'false',
     };
 
-    productRepository.getProductsByUserUidCompanyUidInventoryUid.mockResolvedValue(
+    productRepository.getProductsByUserIdCompanyIdInventoryId.mockResolvedValue(
       {
         products: [],
         count: 0,
@@ -160,23 +160,23 @@ describe('getInventoryProducts', () => {
     );
 
     await getInventoryProducts(productRepository as any)({
-      userUid,
-      inventoryUid,
-      companyUid,
+      userId,
+      inventoryId,
+      companyId,
       currentPage: 1,
       sorter,
       filters,
     });
 
     expect(
-      productRepository.getProductsByUserUidCompanyUidInventoryUid
+      productRepository.getProductsByUserIdCompanyIdInventoryId
     ).toHaveBeenCalledTimes(1);
     expect(
-      productRepository.getProductsByUserUidCompanyUidInventoryUid
+      productRepository.getProductsByUserIdCompanyIdInventoryId
     ).toHaveBeenCalledWith({
-      userUid,
-      companyUid,
-      inventoryUid,
+      userId,
+      companyId,
+      inventoryId,
       currentPage: 1,
       numberOfProductsPerPage: 10,
       sorter: {

@@ -19,8 +19,8 @@ import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { CustomEvents } from '@/enums/eventEnums';
 import { useAuth } from '@/hooks/useAuth';
 import {
-  getCategoryByUid,
-  getSubCategoryByUid,
+  getCategoryById,
+  getSubCategoryById,
 } from '@/modules/category/categoryUtils';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { DeleteProduct } from '@/modules/product/productRepository';
@@ -71,10 +71,10 @@ const DynamicProductView = dynamic(() => import('./ProductView'), {
 });
 
 type Props = {
-  currentInventoryUid: string;
+  currentInventoryId: string;
 };
 
-const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
+const ProductTable: FC<Props> = ({ currentInventoryId }) => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
@@ -116,7 +116,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
     queryKey: [
       ApiRequestEnums.GetProducts,
       {
-        inventoryUid: currentInventoryUid,
+        inventoryId: currentInventoryId,
         currentPage,
         filters: filtersState.filters,
         sorterField: filtersState.sorter.field,
@@ -125,9 +125,9 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
     ],
     queryFn: () =>
       getInventoryProductsUseCase({
-        userUid: user.getUid(),
-        inventoryUid: currentInventoryUid,
-        companyUid: user.getCompanyUid(),
+        userId: user.getId(),
+        inventoryId: currentInventoryId,
+        companyId: user.getCompanyId(),
         currentPage,
         filters: filtersState.filters,
         sorter: {
@@ -136,9 +136,9 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
         },
       }),
     enabled: !!(
-      user.getUid() &&
-      currentInventoryUid &&
-      user.getCompanyUid() &&
+      user.getId() &&
+      currentInventoryId &&
+      user.getCompanyId() &&
       currentPage
     ),
     staleTime: oneHourInMilliseconds,
@@ -225,10 +225,10 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
           isLoading={deleteProductMutation.isLoading}
           onConfirm={() =>
             deleteProductMutation.mutate({
-              productUid: productToEdit?.getUid() as string,
-              userUid: user.getUid(),
-              companyUid: user.getCompanyUid(),
-              inventoryUid: productToEdit?.getInventoryUid() as string,
+              productId: productToEdit?.getId() as string,
+              userId: user.getId(),
+              companyId: user.getCompanyId(),
+              inventoryId: productToEdit?.getInventoryId() as string,
             }) as unknown as () => void
           }
         />
@@ -242,8 +242,8 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
         >
           {productToEdit && (
             <DynamicEditProductPhotoForm
-              productUid={productToEdit.getUid()}
-              inventoryUid={productToEdit.getInventoryUid()}
+              productId={productToEdit.getId()}
+              inventoryId={productToEdit.getInventoryId()}
             />
           )}
         </DynamicModal>
@@ -257,8 +257,8 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
         >
           {productToEdit && (
             <DynamicProductView
-              productUid={productToEdit.getUid()}
-              inventoryUid={productToEdit.getInventoryUid()}
+              productId={productToEdit.getId()}
+              inventoryId={productToEdit.getInventoryId()}
             />
           )}
         </DynamicModal>
@@ -317,14 +317,14 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                     (product.getQuantityInInventory() || 0) -
                     (product.getOptimumQuantity() || 0);
                   const categroyLabel =
-                    getCategoryByUid(product.getCategoryUid())?.label || '';
+                    getCategoryById(product.getCategoryId())?.label || '';
                   const subCategoryLabel =
-                    getSubCategoryByUid(
-                      product.getCategoryUid(),
-                      product.getSubCategoryUid()
+                    getSubCategoryById(
+                      product.getCategoryId(),
+                      product.getSubCategoryId()
                     )?.label || '';
                   return (
-                    <tr key={product.uid}>
+                    <tr key={product.id}>
                       <td className="whitespace-nowrap px-3 text-sm font-medium text-gray-900 sm:pl-6">
                         <div className="flex">
                           <div
@@ -403,8 +403,8 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                                   toBuy:
                                     product.toBuy > 0 ? product.toBuy - 1 : 0,
                                 },
-                                userUid: user.getUid(),
-                                companyUid: user.getCompanyUid(),
+                                userId: user.getId(),
+                                companyId: user.getCompanyId(),
                               })
                             }
                           />
@@ -420,8 +420,8 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                                   ...product,
                                   toBuy: product.toBuy + 1,
                                 },
-                                userUid: user.getUid(),
-                                companyUid: user.getCompanyUid(),
+                                userId: user.getId(),
+                                companyId: user.getCompanyId(),
                               })
                             }
                           />
@@ -483,7 +483,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
               numberOfResultsPerPage={10}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
-              currentInventoryUid={currentInventoryUid}
+              currentInventoryId={currentInventoryId}
             />
           )}
 

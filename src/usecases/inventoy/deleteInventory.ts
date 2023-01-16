@@ -6,21 +6,21 @@ import type {
 export const deleteInventory =
   (inventoryRepository: InventoryRepository) =>
   async ({
-    userUid,
-    companyUid,
-    inventoryUid,
+    userId,
+    companyId,
+    inventoryId,
   }: DeleteInventoryParams): Promise<void> => {
     try {
-      if (!userUid) throw new Error('userUid is required to delete inventory');
-      if (!companyUid)
-        throw new Error('companyUid is required to delete inventory');
-      if (!inventoryUid)
-        throw new Error('inventoryUid is required to delete inventory');
+      if (!userId) throw new Error('userId is required to delete inventory');
+      if (!companyId)
+        throw new Error('companyId is required to delete inventory');
+      if (!inventoryId)
+        throw new Error('inventoryId is required to delete inventory');
 
       const inventories =
-        await inventoryRepository.getInventoriesByUserUidAndCompanyUid(
-          userUid,
-          companyUid
+        await inventoryRepository.getInventoriesByUserIdAndCompanyId(
+          userId,
+          companyId
         );
 
       if (inventories && inventories.length <= 1) {
@@ -28,9 +28,9 @@ export const deleteInventory =
       }
 
       await inventoryRepository.delete({
-        userUid,
-        companyUid,
-        inventoryUid,
+        userId,
+        companyId,
+        inventoryId,
       });
     } catch (error: any) {
       throw new Error(error.message);

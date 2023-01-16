@@ -12,8 +12,8 @@ import type ProductEntity from '@/modules/product/ProductEntity';
 import type ProductService from '@/modules/product/productService';
 
 type UpdatePhotoProductInterface = {
-  userUid: string;
-  companyUid: string;
+  userId: string;
+  companyId: string;
   product: ProductEntity;
   currentFile: File;
 };
@@ -21,16 +21,16 @@ type UpdatePhotoProductInterface = {
 export const updatePhotoProduct =
   (productServiceDi: ProductService, storageServiceDi: StorageService) =>
   async ({
-    userUid,
-    companyUid,
+    userId,
+    companyId,
     product,
     currentFile,
   }: UpdatePhotoProductInterface): Promise<ProductEntity> => {
-    if (!userUid)
-      throw new Error('userUid is required to update the photo of the product');
-    if (!companyUid)
+    if (!userId)
+      throw new Error('userId is required to update the photo of the product');
+    if (!companyId)
       throw new Error(
-        'companyUid is required to update the photo of the product'
+        'companyId is required to update the photo of the product'
       );
     if (!product)
       throw new Error('product is required to update the photo of the product');
@@ -45,27 +45,27 @@ export const updatePhotoProduct =
     try {
       if (currentFile) {
         const downloadURL = await storageServiceDi.handleUpload({
-          folderName: `/images/${userUid}`,
-          filename: `/${product.getUid()}`,
+          folderName: `/images/${userId}`,
+          filename: `/${product.getId()}`,
           uploadedFile: currentFile,
         });
 
         return await productServiceDi.updateProduct({
           product: product.setPhotoLink(downloadURL),
-          userUid,
-          companyUid,
+          userId,
+          companyId,
         });
       }
 
       await storageServiceDi.handleDelete({
-        folderName: `/images/${userUid}`,
-        filename: `/${product.getUid()}`,
+        folderName: `/images/${userId}`,
+        filename: `/${product.getId()}`,
       });
 
       return await productServiceDi.updateProduct({
         product: product.setPhotoLink(''),
-        userUid,
-        companyUid,
+        userId,
+        companyId,
       });
     } catch (error: any) {
       throw new Error(error);

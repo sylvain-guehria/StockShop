@@ -37,15 +37,15 @@ const SubFormCategory: FC<Props> = ({
   product,
   getValues,
 }) => {
-  const currentCategoryUid = watch(ProductAttributes.CATEGORY_UID);
-  const currentSubCategoryUid = watch(ProductAttributes.SUB_CATEGORY_UID);
+  const currentCategoryId = watch(ProductAttributes.CATEGORY_ID);
+  const currentSubCategoryId = watch(ProductAttributes.SUB_CATEGORY_ID);
 
   const categoryInputs = getCategoryInputFromDatabase(
-    currentCategoryUid as string
+    currentCategoryId as string
   );
   const subCategoryInputs = getSubCategoryInputsFromDatabase(
-    currentCategoryUid as string,
-    currentSubCategoryUid as string
+    currentCategoryId as string,
+    currentSubCategoryId as string
   );
 
   const allCategoryInputs = [...categoryInputs, ...subCategoryInputs];
@@ -55,8 +55,8 @@ const SubFormCategory: FC<Props> = ({
       getValues(ProductAttributes.CAT_SUBCAT_ATTRIBUTES) || {}
     );
     if (
-      !product.isSameCategory(currentCategoryUid || '') ||
-      !product.isSameSubCategory(currentSubCategoryUid || '')
+      !product.isSameCategory(currentCategoryId || '') ||
+      !product.isSameSubCategory(currentSubCategoryId || '')
     ) {
       fieldNames.forEach((fieldName) =>
         setValue(
@@ -65,7 +65,7 @@ const SubFormCategory: FC<Props> = ({
         )
       );
     }
-  }, [currentCategoryUid, currentSubCategoryUid]);
+  }, [currentCategoryId, currentSubCategoryId]);
 
   return (
     <>
@@ -85,14 +85,14 @@ const SubFormCategory: FC<Props> = ({
           const isSelectInput = isSelect;
 
           return (
-            <div className="sm:col-span-2" key={input.uid}>
+            <div className="sm:col-span-2" key={input.id}>
               {isInput && (
                 <Input
                   type={input.inputType as 'text' | 'number'}
                   label={input.label}
-                  name={input.uid}
+                  name={input.id}
                   register={register(
-                    `${ProductAttributes.CAT_SUBCAT_ATTRIBUTES}.${input.uid}`
+                    `${ProductAttributes.CAT_SUBCAT_ATTRIBUTES}.${input.id}`
                   )}
                 />
               )}
@@ -100,9 +100,9 @@ const SubFormCategory: FC<Props> = ({
                 <InputSelect
                   label={input.label}
                   options={[{ label: '', value: '' }, ...(input.options || [])]}
-                  name={input.uid}
+                  name={input.id}
                   register={register(
-                    `${ProductAttributes.CAT_SUBCAT_ATTRIBUTES}.${input.uid}`
+                    `${ProductAttributes.CAT_SUBCAT_ATTRIBUTES}.${input.id}`
                   )}
                   inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />

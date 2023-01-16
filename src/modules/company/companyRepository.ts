@@ -14,18 +14,18 @@ export abstract class CompanyRepository {
     }
   }
 
-  getById(uid: string): Promise<CompanyEntity> {
-    throw new Error(`You tried to call an abstract methode, arg: ${uid}`);
+  getById(id: string): Promise<CompanyEntity> {
+    throw new Error(`You tried to call an abstract methode, arg: ${id}`);
   }
 
-  async add(company: CompanyEntity, userUid: string): Promise<CompanyEntity> {
+  async add(company: CompanyEntity, userId: string): Promise<CompanyEntity> {
     throw new Error(
-      `You tried to call an abstract methode, arg: ${company}, userUid:${userUid}`
+      `You tried to call an abstract methode, arg: ${company}, userId:${userId}`
     );
   }
 
-  async delete(uid: string): Promise<void> {
-    throw new Error(`You tried to call an abstract methode, arg: ${uid}`);
+  async delete(id: string): Promise<void> {
+    throw new Error(`You tried to call an abstract methode, arg: ${id}`);
   }
 
   async getAll(): Promise<CompanyEntity[]> {
@@ -38,8 +38,8 @@ export abstract class CompanyRepository {
     );
   }
 
-  async getCompanyByUserUid(userUid: string): Promise<CompanyEntity | null> {
-    throw new Error(`You tried to call an abstract methode, arg: ${userUid}`);
+  async getCompanyByUserId(userId: string): Promise<CompanyEntity | null> {
+    throw new Error(`You tried to call an abstract methode, arg: ${userId}`);
   }
 }
 

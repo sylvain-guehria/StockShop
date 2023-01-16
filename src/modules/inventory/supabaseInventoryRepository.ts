@@ -9,13 +9,13 @@ import { InventoryRepository } from './inventoryRepository';
 class SupabaseInventoryRepository extends InventoryRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 
-  async getById(uid: string): Promise<InventoryEntity> {
-    console.info('get inventory in db with uid: ', uid);
-    const response = await axios.get(`${this.baseUrl}/api/inventory/${uid}`);
+  async getById(id: string): Promise<InventoryEntity> {
+    console.info('get inventory in db with id: ', id);
+    const response = await axios.get(`${this.baseUrl}/api/inventory/${id}`);
     const { name, isPublic, isDefaultInventory, color } = response.data;
 
     return InventoryEntity.new({
-      uid,
+      id,
       name,
       isPublic,
       isDefaultInventory,
@@ -25,37 +25,37 @@ class SupabaseInventoryRepository extends InventoryRepository {
 
   async add(
     inventory: InventoryEntity,
-    userUid: string,
-    companyUid: string
+    userId: string,
+    companyId: string
   ): Promise<InventoryEntity> {
     console.info('adding inventory in db...');
     const res = await axios.post(`${this.baseUrl}/api/inventory/add`, {
-      userUid,
-      companyUid,
+      userId,
+      companyId,
       inventory: {
-        uid: inventory.getUid(),
+        id: inventory.getId(),
         name: inventory.getName(),
         isPublic: inventory.getIsPublic(),
         isDefaultInventory: inventory.getIsDefaultInventory(),
         color: inventory.getColor(),
       },
     });
-    const { uid, name } = res.data;
-    console.info('Inventory added in DB, uid: ', inventory.getUid());
+    const { id, name } = res.data;
+    console.info('Inventory added in DB, id: ', inventory.getId());
     return InventoryEntity.new({
-      uid,
+      id,
       name,
     });
   }
 
   async delete({
-    userUid,
-    companyUid,
-    inventoryUid,
+    userId,
+    companyId,
+    inventoryId,
   }: DeleteInventoryParams): Promise<void> {
-    console.info(`Deleting inventory with uid ${inventoryUid} in db...`);
+    console.info(`Deleting inventory with id ${inventoryId} in db...`);
     axios.delete(`${this.baseUrl}/api/inventory/delete`, {
-      params: { userUid, companyUid, inventoryUid },
+      params: { userId, companyId, inventoryId },
     });
   }
 
@@ -65,7 +65,7 @@ class SupabaseInventoryRepository extends InventoryRepository {
     return response.data.map(
       (inventory: InventoryEntity) =>
         new InventoryEntity({
-          uid: inventory.uid,
+          id: inventory.id,
           name: inventory.name,
           isPublic: inventory.isPublic,
           isDefaultInventory: inventory.isDefaultInventory,
@@ -76,14 +76,14 @@ class SupabaseInventoryRepository extends InventoryRepository {
 
   async update(
     inventory: InventoryEntity,
-    userUid: string,
-    companyUid: string
+    userId: string,
+    companyId: string
   ): Promise<void> {
-    console.info('update inventory uid: ', inventory.getUid());
-    await axios.put(`/api/inventory/${inventory.getUid()}`, {
-      userUid,
-      companyUid,
-      uid: inventory.getUid(),
+    console.info('update inventory id: ', inventory.getId());
+    await axios.put(`/api/inventory/${inventory.getId()}`, {
+      userId,
+      companyId,
+      id: inventory.getId(),
       name: inventory.getName(),
       isPublic: inventory.getIsPublic(),
       isDefaultInventory: inventory.getIsDefaultInventory(),
@@ -91,26 +91,26 @@ class SupabaseInventoryRepository extends InventoryRepository {
     });
   }
 
-  async getInventoriesByUserUidAndCompanyUid(
-    userUid: string,
-    companyUid: string
+  async getInventoriesByUserIdAndCompanyId(
+    userId: string,
+    companyId: string
   ): Promise<InventoryEntity[]> {
-    console.info('get inventories by userUid and companyUid in db');
+    console.info('get inventories by userId and companyId in db');
     const response = await axios.get(
-      `${this.baseUrl}/api/inventory/getInventoriesByUserUidAndCompanyUid`,
+      `${this.baseUrl}/api/inventory/getInventoriesByUserIdAndCompanyId`,
       {
-        params: { userUid, companyUid },
+        params: { userId, companyId },
       }
     );
     return response.data.map(
       (inventory: InventoryEntity) =>
         new InventoryEntity({
-          uid: inventory.uid,
+          id: inventory.id,
           name: inventory.name,
           isPublic: inventory.isPublic,
           isDefaultInventory: inventory.isDefaultInventory,
           color: inventory.color,
-          companyUid,
+          companyId,
         })
     );
   }

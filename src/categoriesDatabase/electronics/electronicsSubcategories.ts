@@ -26,28 +26,28 @@ import {
 } from './reusableOptions';
 
 export const subcategorieMobileAndTablets: SubCategory = {
-  uid: 'mobile-and-tablets',
+  id: 'mobile-and-tablets',
   label: 'Mobile and Tablets',
   inputs: [
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.SELECT,
       options: phoneBrands,
     },
     {
-      uid: 'model',
+      id: 'model',
       label: 'Modèle',
       inputType: AttributeInputTypes.TEXT,
     },
     {
       label: 'Fréquence de rafraîchissement',
-      uid: 'refresh-rate',
+      id: 'refresh-rate',
       inputType: AttributeInputTypes.SELECT,
       options: refreshRate,
     },
     {
-      uid: 'network',
+      id: 'network',
       label: 'Réseau',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -58,7 +58,7 @@ export const subcategorieMobileAndTablets: SubCategory = {
       ],
     },
     {
-      uid: 'stockage',
+      id: 'stockage',
       label: 'Stockage',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -71,7 +71,7 @@ export const subcategorieMobileAndTablets: SubCategory = {
       ],
     },
     {
-      uid: 'ram',
+      id: 'ram',
       label: 'RAM',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -84,7 +84,7 @@ export const subcategorieMobileAndTablets: SubCategory = {
     },
 
     {
-      uid: 'os',
+      id: 'os',
       label: "Système d'exploitation",
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -95,7 +95,7 @@ export const subcategorieMobileAndTablets: SubCategory = {
       ],
     },
     {
-      uid: 'screen-size',
+      id: 'screen-size',
       label: "Taille d'écran",
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -113,20 +113,20 @@ export const subcategorieMobileAndTablets: SubCategory = {
       ],
     },
     {
-      uid: 'screen-resolution',
+      id: 'screen-resolution',
       label: "Résolution d'écran",
       inputType: AttributeInputTypes.SELECT,
       options: resolutionOptions,
     },
     {
-      uid: 'screen-type',
+      id: 'screen-type',
       label: "Type d'écran",
       inputType: AttributeInputTypes.SELECT,
       options: screenType,
     },
     {
       label: "Résolution de l'appareil photo face arrière",
-      uid: 'camera-resolution',
+      id: 'camera-resolution',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { value: '3mp-', label: '< 3 MP' },
@@ -138,7 +138,7 @@ export const subcategorieMobileAndTablets: SubCategory = {
     },
     {
       label: "Résolution de l'appareil photo face avant",
-      uid: 'front-camera-resolution',
+      id: 'front-camera-resolution',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { value: '3mp-', label: '< 3 MP' },
@@ -150,7 +150,7 @@ export const subcategorieMobileAndTablets: SubCategory = {
     },
     {
       label: 'Type de connecteur',
-      uid: 'connector-type',
+      id: 'connector-type',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { value: 'usb-c', label: 'USB-C' },
@@ -163,22 +163,22 @@ export const subcategorieMobileAndTablets: SubCategory = {
 };
 
 export const subcategorieLaptop: SubCategory = {
-  uid: 'laptop',
+  id: 'laptop',
   label: 'Ordinateur portable',
   inputs: [
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.SELECT,
       options: laptopManufacturerOptions,
     },
     {
-      uid: 'model',
+      id: 'model',
       label: 'Modèle',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'ram',
+      id: 'ram',
       label: 'RAM',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -191,19 +191,19 @@ export const subcategorieLaptop: SubCategory = {
       ],
     },
     {
-      uid: 'storage',
+      id: 'storage',
       label: 'Stockage',
       inputType: AttributeInputTypes.SELECT,
       options: storageOptions,
     },
     {
-      uid: 'storageType',
+      id: 'storageType',
       label: 'Type de stockage',
       inputType: AttributeInputTypes.SELECT,
       options: storageTypeOptions,
     },
     {
-      uid: 'screen-size',
+      id: 'screen-size',
       label: "Taille d'écran",
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -219,20 +219,20 @@ export const subcategorieLaptop: SubCategory = {
       ],
     },
     {
-      uid: 'screen-resolution',
+      id: 'screen-resolution',
       label: "Résolution d'écran",
       inputType: AttributeInputTypes.SELECT,
       options: resolutionOptions,
     },
     {
-      uid: 'screen-type',
+      id: 'screen-type',
       label: "Type d'écran",
       inputType: AttributeInputTypes.SELECT,
       options: screenType,
     },
     {
       label: 'Type',
-      uid: 'type',
+      id: 'type',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { value: 'ultrabook', label: 'Ultrabook' },
@@ -246,35 +246,35 @@ export const subcategorieLaptop: SubCategory = {
     },
     {
       label: 'Marque Processeur',
-      uid: 'processorType',
+      id: 'processorType',
       inputType: AttributeInputTypes.SELECT,
       options: processorOptions,
     },
     {
       label: 'Marque Carte graphique',
-      uid: 'graphics-card-brand',
+      id: 'graphics-card-brand',
       inputType: AttributeInputTypes.SELECT,
       options: graphicsCardOptions,
     },
     {
       label: 'Processeur',
-      uid: 'processor',
+      id: 'processor',
       inputType: AttributeInputTypes.TEXT,
     },
     {
       label: 'Carte graphique',
-      uid: 'graphics-card',
+      id: 'graphics-card',
       inputType: AttributeInputTypes.TEXT,
     },
     {
       label: "Système d'exploitation",
-      uid: 'os',
+      id: 'os',
       inputType: AttributeInputTypes.SELECT,
       options: osOptions,
     },
     {
       label: 'Poids',
-      uid: 'weight',
+      id: 'weight',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { value: '1kg-', label: '< 1 kg' },
@@ -285,7 +285,7 @@ export const subcategorieLaptop: SubCategory = {
     },
     {
       label: 'Fréquence de rafraîchissement',
-      uid: 'refresh-rate',
+      id: 'refresh-rate',
       inputType: AttributeInputTypes.SELECT,
       options: refreshRate,
     },
@@ -293,34 +293,34 @@ export const subcategorieLaptop: SubCategory = {
 };
 
 export const subcategorieComputer: SubCategory = {
-  uid: 'computer',
+  id: 'computer',
   label: 'Ordinateur de bureau',
   inputs: [
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.SELECT,
       options: laptopManufacturerOptions,
     },
     {
-      uid: 'model',
+      id: 'model',
       label: 'Modèle',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'ram',
+      id: 'ram',
       label: 'RAM',
       inputType: AttributeInputTypes.SELECT,
       options: ramOptions,
     },
     {
-      uid: 'storage',
+      id: 'storage',
       label: 'Stockage',
       inputType: AttributeInputTypes.SELECT,
       options: storageOptions,
     },
     {
-      uid: 'storageType',
+      id: 'storageType',
       label: 'Type de stockage',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -330,29 +330,29 @@ export const subcategorieComputer: SubCategory = {
     },
     {
       label: 'Marque Processeur',
-      uid: 'processorType',
+      id: 'processorType',
       inputType: AttributeInputTypes.SELECT,
       options: processorOptions,
     },
     {
       label: 'Marque Carte graphique',
-      uid: 'graphics-card-brand',
+      id: 'graphics-card-brand',
       inputType: AttributeInputTypes.SELECT,
       options: graphicsCardOptions,
     },
     {
       label: 'Processeur',
-      uid: 'processor',
+      id: 'processor',
       inputType: AttributeInputTypes.TEXT,
     },
     {
       label: 'Carte graphique',
-      uid: 'graphics-card',
+      id: 'graphics-card',
       inputType: AttributeInputTypes.TEXT,
     },
     {
       label: "Système d'exploitation",
-      uid: 'os',
+      id: 'os',
       inputType: AttributeInputTypes.SELECT,
       options: osOptions,
     },
@@ -360,28 +360,28 @@ export const subcategorieComputer: SubCategory = {
 };
 
 export const subcategorieStorage: SubCategory = {
-  uid: 'storage',
+  id: 'storage',
   label: 'Stockage',
   inputs: [
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.SELECT,
       options: storageManufacturerOptions,
     },
     {
-      uid: 'model',
+      id: 'model',
       label: 'Modèle',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'storage',
+      id: 'storage',
       label: 'Stockage',
       inputType: AttributeInputTypes.SELECT,
       options: storageOptions,
     },
     {
-      uid: 'storageType',
+      id: 'storageType',
       label: 'Type de stockage',
       inputType: AttributeInputTypes.SELECT,
       options: storageTypeOptions,
@@ -390,22 +390,22 @@ export const subcategorieStorage: SubCategory = {
 };
 
 export const subcategoriePrinterAndScanner: SubCategory = {
-  uid: 'printer-and-scanner',
+  id: 'printer-and-scanner',
   label: 'Imprimante et scanner',
   inputs: [
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.SELECT,
       options: printerAndScannerManufacturerOptions,
     },
     {
-      uid: 'model',
+      id: 'model',
       label: 'Modèle',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -415,7 +415,7 @@ export const subcategoriePrinterAndScanner: SubCategory = {
       ],
     },
     {
-      uid: 'max-scan-resolution',
+      id: 'max-scan-resolution',
       label: 'Résolution maximale de scan',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -428,7 +428,7 @@ export const subcategoriePrinterAndScanner: SubCategory = {
       ],
     },
     {
-      uid: 'print-speed',
+      id: 'print-speed',
       label: "Vitesse d'impression",
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -441,7 +441,7 @@ export const subcategoriePrinterAndScanner: SubCategory = {
       ],
     },
     {
-      uid: 'print-resolution',
+      id: 'print-resolution',
       label: "Résolution d'impression",
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -457,22 +457,22 @@ export const subcategoriePrinterAndScanner: SubCategory = {
 };
 
 export const subcategorieMonitor: SubCategory = {
-  uid: 'monitor',
+  id: 'monitor',
   label: 'Moniteur',
   inputs: [
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.SELECT,
       options: monitorManufacturerOptions,
     },
     {
-      uid: 'model',
+      id: 'model',
       label: 'Modèle',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'size',
+      id: 'size',
       label: 'Taille',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -484,7 +484,7 @@ export const subcategorieMonitor: SubCategory = {
       ],
     },
     {
-      uid: 'resolution',
+      id: 'resolution',
       label: 'Résolution',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -496,13 +496,13 @@ export const subcategorieMonitor: SubCategory = {
       ],
     },
     {
-      uid: 'refresh-rate',
+      id: 'refresh-rate',
       label: 'Taux de rafraîchissement',
       inputType: AttributeInputTypes.SELECT,
       options: refreshRate,
     },
     {
-      uid: 'response-time',
+      id: 'response-time',
       label: 'Temps de réponse',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -526,7 +526,7 @@ export const subcategorieMonitor: SubCategory = {
       ],
     },
     {
-      uid: 'panel-type',
+      id: 'panel-type',
       label: 'Type de panneau',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -537,7 +537,7 @@ export const subcategorieMonitor: SubCategory = {
       ],
     },
     {
-      uid: 'curved',
+      id: 'curved',
       label: 'Courbé',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -546,7 +546,7 @@ export const subcategorieMonitor: SubCategory = {
       ],
     },
     {
-      uid: 'g-sync',
+      id: 'g-sync',
       label: 'G-Sync',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -555,7 +555,7 @@ export const subcategorieMonitor: SubCategory = {
       ],
     },
     {
-      uid: 'free-sync',
+      id: 'free-sync',
       label: 'Free-Sync',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -564,7 +564,7 @@ export const subcategorieMonitor: SubCategory = {
       ],
     },
     {
-      uid: 'vrr',
+      id: 'vrr',
       label: 'VRR',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -573,7 +573,7 @@ export const subcategorieMonitor: SubCategory = {
       ],
     },
     {
-      uid: 'hdr',
+      id: 'hdr',
       label: 'HDR',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -585,23 +585,23 @@ export const subcategorieMonitor: SubCategory = {
 };
 
 export const subcategorieTelevision: SubCategory = {
-  uid: 'television',
+  id: 'television',
   label: 'Télévision',
   inputs: [
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.SELECT,
       options: televisionManufacturerOptions,
     },
     {
-      uid: 'model',
+      id: 'model',
       label: 'Modèle',
       inputType: AttributeInputTypes.TEXT,
     },
     {
       label: "Type d'écran",
-      uid: 'screen-type',
+      id: 'screen-type',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { value: 'oled', label: 'OLED' },
@@ -613,7 +613,7 @@ export const subcategorieTelevision: SubCategory = {
       ],
     },
     {
-      uid: 'size',
+      id: 'size',
       label: 'Taille',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -637,7 +637,7 @@ export const subcategorieTelevision: SubCategory = {
       ],
     },
     {
-      uid: 'resolution',
+      id: 'resolution',
       label: 'Résolution',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -648,23 +648,23 @@ export const subcategorieTelevision: SubCategory = {
       ],
     },
     {
-      uid: 'refresh-rate',
+      id: 'refresh-rate',
       label: 'Taux de rafraîchissement',
       inputType: AttributeInputTypes.SELECT,
       options: refreshRate,
     },
     {
-      uid: 'width',
+      id: 'width',
       label: 'Largeur cm',
       inputType: AttributeInputTypes.NUMBER,
     },
     {
-      uid: 'height',
+      id: 'height',
       label: 'Hauteur cm',
       inputType: AttributeInputTypes.NUMBER,
     },
     {
-      uid: 'incurved',
+      id: 'incurved',
       label: 'Incurvé',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -676,22 +676,22 @@ export const subcategorieTelevision: SubCategory = {
 };
 
 export const subcategorieSound: SubCategory = {
-  uid: 'sound',
+  id: 'sound',
   label: 'Son',
   inputs: [
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.SELECT,
       options: soundManufacturerOptions,
     },
     {
-      uid: 'model',
+      id: 'model',
       label: 'Modèle',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -709,7 +709,7 @@ export const subcategorieSound: SubCategory = {
     },
     {
       label: 'Sans fil',
-      uid: 'wireless',
+      id: 'wireless',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { value: 'yes', label: 'Oui' },
@@ -721,21 +721,21 @@ export const subcategorieSound: SubCategory = {
 
 export const subcategoriePhotoAndVideo: SubCategory = {
   label: 'Photo & Caméra',
-  uid: 'photo-video',
+  id: 'photo-video',
   inputs: [
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.SELECT,
       options: photoAndVideoManufacturerOptions,
     },
     {
-      uid: 'model',
+      id: 'model',
       label: 'Modèle',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -753,12 +753,12 @@ export const subcategoriePhotoAndVideo: SubCategory = {
     },
     {
       label: 'Résolution du capteur',
-      uid: 'sensor-resolution',
+      id: 'sensor-resolution',
       inputType: AttributeInputTypes.SELECT,
       options: sensorResolutionOptions,
     },
     {
-      uid: 'zoom',
+      id: 'zoom',
       label: 'Zoom',
       inputType: AttributeInputTypes.SELECT,
       options: opticalZoomOptions,
@@ -768,21 +768,21 @@ export const subcategoriePhotoAndVideo: SubCategory = {
 
 export const subcategorieComputerDevices: SubCategory = {
   label: 'Périphérique',
-  uid: 'computer-device',
+  id: 'computer-device',
   inputs: [
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.SELECT,
       options: computerDeviceOptions,
     },
     {
-      uid: 'model',
+      id: 'model',
       label: 'Modèle',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -801,21 +801,21 @@ export const subcategorieComputerDevices: SubCategory = {
 
 export const subcategorieComputerComponants: SubCategory = {
   label: 'Composant',
-  uid: 'computer-componant',
+  id: 'computer-componant',
   inputs: [
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.SELECT,
       options: computerComponantManufacturerOptions,
     },
     {
-      uid: 'model',
+      id: 'model',
       label: 'Modèle',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type',
       inputType: AttributeInputTypes.SELECT,
       options: [
