@@ -23,7 +23,7 @@ import { updatePhotoProduct } from './product/updatePhotoProduct';
 import { updateUser } from './user/updateUser';
 
 // AUTH
-export const registerWithEmailUseCase = registerWithEmail(userRepository);
+export const registerWithEmailUseCase = registerWithEmail();
 export const loginWithEmailUseCase = loginWithEmail();
 export const logoutUseCase = logout();
 export const loginWithGoogleUseCase = loginWithGoogle();

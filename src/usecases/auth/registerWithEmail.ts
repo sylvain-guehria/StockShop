@@ -1,7 +1,5 @@
 import type { AuthResponse, SupabaseClient } from '@supabase/supabase-js';
 
-import type { UserRepository } from '@/modules/user/userRepository';
-
 type RegisterWithEmailParams = {
   email: string;
   password: string;
@@ -9,7 +7,7 @@ type RegisterWithEmailParams = {
 };
 
 export const registerWithEmail =
-  (_userRepository: UserRepository) =>
+  () =>
   async ({
     email,
     password,
