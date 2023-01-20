@@ -26,7 +26,7 @@ import { updateUser } from './user/updateUser';
 export const registerWithEmailUseCase = registerWithEmail(userRepository);
 export const loginWithEmailUseCase = loginWithEmail();
 export const logoutUseCase = logout();
-export const loginWithGoogleUseCase = loginWithGoogle(userRepository);
+export const loginWithGoogleUseCase = loginWithGoogle();
 export const chooseSubRoleOnFirstConnectionUseCase =
   chooseSubRoleOnFirstConnection(userRepository);
 
