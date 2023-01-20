@@ -22,9 +22,9 @@ const Base = () => {
   const { setUser } = useAuth();
   useEffect(() => {
     const getSession = async () => {
-      const { data } = await supabaseBrowser.auth.getSession();
+      const { data } = await supabaseBrowser.auth.getUser();
       console.log('in home---------------------------', { data });
-      if (data.session?.access_token) setUser(UserEntity.new({ id: '123' }));
+      if (data.user?.id) setUser(UserEntity.new({ id: data.user.id }));
     };
     getSession();
   }, []);

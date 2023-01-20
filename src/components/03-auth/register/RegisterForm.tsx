@@ -1,7 +1,6 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useRouter } from 'next/navigation';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import supabase from 'supabase/client/supabase-browser';
@@ -9,7 +8,6 @@ import supabase from 'supabase/client/supabase-browser';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import Providers from '@/layouts/Providers';
-import { mainRoutes } from '@/routes/mainRoutes';
 import { registerWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './RegisterFormValidation';
@@ -21,7 +19,6 @@ interface RegisterFormType {
   acceptTerms: boolean;
 }
 const RegisterForm = () => {
-  const router = useRouter();
   const toast = useToast(4000);
 
   const formOptions = { resolver: yupResolver(validationSchema) };
@@ -42,9 +39,15 @@ const RegisterForm = () => {
         password,
         supabase,
       });
-      // eslint-disable-next-line no-console
-      console.log('response RegisterForm', response);
-      router.push(mainRoutes.home.path);
+      if (response.data.user) {
+        toast(
+          ToasterTypeEnum.SUCCESS,
+          'un email envoyé de confirmation vous  a été envoyé'
+        );
+      }
+      if (response.error) {
+        toast(ToasterTypeEnum.ERROR, response.error.message);
+      }
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.error('error RegisterForm', error);

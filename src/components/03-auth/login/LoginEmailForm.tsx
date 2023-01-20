@@ -42,9 +42,12 @@ const LoginEmailForm = () => {
         password,
         supabase,
       });
-      // eslint-disable-next-line no-console
-      console.log('response LoginEmailForm', response);
-      router.push(mainRoutes.home.path);
+      if (response.data.user) {
+        router.push(mainRoutes.home.path);
+      }
+      if (response.error) {
+        toast(ToasterTypeEnum.ERROR, response.error.message);
+      }
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.error('error LoginEmailForm', error);

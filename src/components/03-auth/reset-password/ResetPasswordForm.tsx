@@ -24,6 +24,7 @@ const ResetPasswordForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<LoginFormType>(formOptions);
 
@@ -33,10 +34,16 @@ const ResetPasswordForm = () => {
     const { email } = data;
     try {
       const response = await supabase.auth.resetPasswordForEmail(email);
-      // eslint-disable-next-line no-console
-      console.log('response ResetPasswordForm', response);
-      toast(ToasterTypeEnum.SUCCESS, 'Email envoyé');
+      if (response.data) {
+        toast(ToasterTypeEnum.SUCCESS, 'Email envoyé');
+        reset();
+      }
+      if (response.error) {
+        toast(ToasterTypeEnum.ERROR, response.error.message);
+      }
     } catch (error: any) {
+      // eslint-disable-next-line no-console
+      console.error('error ResetPasswordForm', error);
       toast(ToasterTypeEnum.ERROR, error.message);
     }
   };

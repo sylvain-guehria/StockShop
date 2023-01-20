@@ -1,4 +1,4 @@
-import type { SupabaseClient } from '@supabase/supabase-js';
+import type { AuthResponse, SupabaseClient } from '@supabase/supabase-js';
 
 import type { UserRepository } from '@/modules/user/userRepository';
 
@@ -14,6 +14,6 @@ export const registerWithEmail =
     email,
     password,
     supabase,
-  }: RegisterWithEmailParams): Promise<any> => {
+  }: RegisterWithEmailParams): Promise<AuthResponse> => {
     return supabase.auth.signUp({ email, password });
   };

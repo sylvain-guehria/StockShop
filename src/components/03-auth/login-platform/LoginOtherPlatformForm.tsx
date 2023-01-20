@@ -12,11 +12,12 @@ const LoginOtherPlatformForm = () => {
   const handleLoginGoogle = async () => {
     try {
       const response = await loginWithGoogleUseCase({ supabase });
-      // eslint-disable-next-line no-console
-      console.log('response LoginOtherPlatformForm', response);
+      if (response.error) {
+        toast(ToasterTypeEnum.ERROR, response.error.message);
+      }
     } catch (error: any) {
       // eslint-disable-next-line no-console
-      console.log('error LoginOtherPlatformForm', error);
+      console.error('error LoginOtherPlatformForm', error);
       toast(ToasterTypeEnum.ERROR, error.message);
     }
   };
