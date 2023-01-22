@@ -1,0 +1,15 @@
+export enum ProfileColumns {
+  id = 'id',
+  updatedAt = 'updated_at',
+  username = 'username',
+  firstName = 'first_name',
+  avatarUrl = 'avatar_url',
+  lastName = 'last_name',
+  phone = 'phone',
+  role = 'role',
+  locale = 'locale',
+  hasInventoryManagementServiceActivated = 'has_inventory_management_service_activated',
+  hasSeenFirstConnectionModal = 'has_seen_first_connection_modal',
+  email = 'email',
+  companyId = 'company_id',
+}

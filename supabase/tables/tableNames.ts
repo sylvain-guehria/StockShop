@@ -5,7 +5,3 @@ export enum TableNames {
   PRODUCTS = 'products',
   CATEGORIES = 'categories',
 }
-
-export enum UserAttibutes {
-  EMAIL = 'email',
-}
