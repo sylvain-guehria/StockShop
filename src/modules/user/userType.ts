@@ -6,7 +6,7 @@ export enum UserEnum {
   PASSWORD = 'password',
   FIRST_NAME = 'firstName',
   LAST_NAME = 'lastName',
-  PHONE_NUMBER = 'phoneNumber',
+  PHONE = 'phone',
   ROLE = 'role',
   HAS_INVENTORY_MANAGEMENT_SERVICE_ACTIVATED = 'hasInventoryManagementServiceActivated',
   HAS_SEEN_FIRST_CONNECTION_MODAL = 'hasSeenFirstConnectionModal',
@@ -22,7 +22,7 @@ export interface User {
   [UserEnum.PASSWORD]?: string;
   [UserEnum.FIRST_NAME]?: string;
   [UserEnum.LAST_NAME]?: string;
-  [UserEnum.PHONE_NUMBER]?: string;
+  [UserEnum.PHONE]?: string;
   [UserEnum.ROLE]?: RoleType;
   [UserEnum.HAS_INVENTORY_MANAGEMENT_SERVICE_ACTIVATED]?: boolean;
   [UserEnum.HAS_SEEN_FIRST_CONNECTION_MODAL]?: boolean;

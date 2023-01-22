@@ -15,7 +15,7 @@ class UserEntity implements User {
 
   lastName: string;
 
-  phoneNumber: string;
+  phone: string;
 
   role: RoleType;
 
@@ -45,7 +45,7 @@ class UserEntity implements User {
     this.password = user.password || '';
     this.firstName = user.firstName || '';
     this.lastName = user.lastName || '';
-    this.phoneNumber = user.phoneNumber || '';
+    this.phone = user.phone || '';
     this.role = user.role || ROLES.USER;
     this.locale = user.locale || LOCALES.FR;
     this.hasInventoryManagementServiceActivated =
@@ -127,13 +127,13 @@ class UserEntity implements User {
     return this;
   }
 
-  setPhoneNumber(phoneNumber: string): UserEntity {
-    this.phoneNumber = phoneNumber;
+  setPhoneNumber(phone: string): UserEntity {
+    this.phone = phone;
     return this;
   }
 
   getPhoneNumber(): string {
-    return this.phoneNumber;
+    return this.phone;
   }
 
   isAdmin(): boolean {
