@@ -1,10 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import supabaseBrowser from 'supabase/client/supabase-browser';
-
-import { useAuth } from '@/hooks/useAuth';
-import UserEntity from '@/modules/user/UserEntity';
+import { useState } from 'react';
 
 import screenShot from '../../../public/assets/images/capture-inventory-market.png';
 import { Background } from '../04-lib/background/Background';
@@ -19,15 +15,15 @@ import Incentive from './Incentive';
 
 const Base = () => {
   const [isBetaBannerOpen, setIsBetaBannerOpen] = useState(true);
-  const { setUser } = useAuth();
-  useEffect(() => {
-    const getSession = async () => {
-      const { data } = await supabaseBrowser.auth.getUser();
-      console.log('in home---------------------------', { data });
-      if (data.user?.id) setUser(UserEntity.new({ id: data.user.id }));
-    };
-    getSession();
-  }, []);
+  // const { setUser } = useAuth();
+  // useEffect(() => {
+  //   const getSession = async () => {
+  //     const { data } = await supabaseBrowser.auth.getUser();
+  //     console.log('in home---------------------------', { data });
+  //     if (data.user?.id) setUser(UserEntity.new({ id: data.user.id }));
+  //   };
+  //   getSession();
+  // }, []);
 
   return (
     <div className="bg-white text-gray-600 antialiased">

@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import supabase from 'supabase/client/supabase-browser';
 import { TableNames } from 'supabase/tables/tableNames';
 
 const userById = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -15,7 +16,6 @@ const userById = async (req: NextApiRequest, res: NextApiResponse) => {
       const { data: profile } = await supabase
         .from(TableNames.PROFILES)
         .select('*');
-      console.log('profile***********************', profile);
       res.status(200).json(profile);
       return;
     }

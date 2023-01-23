@@ -1,5 +1,5 @@
-import { userRepository } from 'di';
 import createServerSupabaseClient from 'supabase/server/supabase-server';
+import { TableNames } from 'supabase/tables/tableNames';
 
 import PublicLayout from '@/layouts/PublicLayout';
 
@@ -10,19 +10,18 @@ export const revalidate = 0;
 const HomePage = async () => {
   const supabase = createServerSupabaseClient();
   const { data } = await supabase.auth.getUser();
+  let userProfile = null;
 
-  // eslint-disable-next-line no-console
-  console.log('in home SSR--------------------------- user', data.user?.id);
   if (data.user?.id) {
-    const userProfile = await userRepository.getById(data.user?.id);
-    console.log(
-      'in home SSR--------------------------- userProfile',
-      userProfile
-    );
+    const { data: profileData } = await supabase
+      .from(TableNames.PROFILES)
+      .select('*')
+      .eq('id', data.user.id);
+    userProfile = profileData ? profileData[0] : null;
   }
 
   return (
-    <PublicLayout>
+    <PublicLayout userProfile={userProfile}>
       <Base />
     </PublicLayout>
   );
