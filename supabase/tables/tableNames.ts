@@ -4,4 +4,5 @@ export enum TableNames {
   INVENTORIES = 'inventories',
   PRODUCTS = 'products',
   CATEGORIES = 'categories',
+  PROFILES = 'profiles',
 }

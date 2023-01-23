@@ -12,6 +12,7 @@ class SupabaseUserRepository extends UserRepository {
   async getById(id: string): Promise<UserEntity> {
     console.info('get user in db with id: ', id);
     const response = await axios.get(`${this.baseUrl}/api/user/${id}`);
+    console.log('response', response.data);
     const {
       email,
       username,
@@ -24,7 +25,7 @@ class SupabaseUserRepository extends UserRepository {
       hasInventoryManagementServiceActivated,
       hasSeenFirstConnectionModal,
       companyId,
-    } = response.data;
+    } = response.data || {};
 
     return UserEntity.new({
       id,
@@ -89,7 +90,7 @@ class SupabaseUserRepository extends UserRepository {
         username: user.getUsername(),
         firstName: user.getFirstName(),
         lastName: user.getLastName(),
-        phone: user.getPhoneNumber(),
+        phoneNumber: user.getPhoneNumber(),
         role: user.getRole(),
         hasInventoryManagementServiceActivated: user.isSeller(),
         hasSeenFirstConnectionModal: user.hasSeenFirstConnectionModal,
