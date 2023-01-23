@@ -139,7 +139,7 @@ describe('getInventoryProducts', () => {
       filters,
     });
   });
-  it('Should change the sorter filed with creationDate if the sorter field is in the filters and has a value', async () => {
+  it('Should change the sorter filed with createdAt if the sorter field is in the filters and has a value', async () => {
     const userId = 'userId';
     const companyId = 'companyId';
     const inventoryId = 'inventoryId';
@@ -180,7 +180,7 @@ describe('getInventoryProducts', () => {
       currentPage: 1,
       numberOfProductsPerPage: 10,
       sorter: {
-        field: ProductAttributes.CREATION_DATE as AuthorizedOrderProperty,
+        field: ProductAttributes.UPDATED_AT as AuthorizedOrderProperty,
         order: ORDER.ASC,
       },
       filters,

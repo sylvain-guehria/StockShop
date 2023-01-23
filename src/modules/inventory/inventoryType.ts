@@ -3,6 +3,8 @@ export enum InventoryAttributes {
   NAME = 'name',
   IS_PUBLIC = 'isPublic',
   IS_DEFAULT_INVENTORY = 'isDefaultInventory',
+  CREATED_AT = 'createdAt',
+  UPDATED_AT = 'updatedAt',
   COLOR = 'color',
   COMPANY_ID = 'companyId',
 }

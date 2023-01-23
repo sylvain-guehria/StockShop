@@ -2,19 +2,14 @@ export enum CompanyEnum {
   ID = 'id',
   NAME = 'name',
   VAT = 'vat',
-  ADDRESS = 'address',
+  ADDRESS_ID = 'addressId',
+  CREATED_AT = 'createdAt',
+  UPDATED_AT = 'updatedAt',
 }
 
 export interface Company {
   [CompanyEnum.ID]?: string;
   [CompanyEnum.NAME]?: string;
   [CompanyEnum.VAT]?: string;
-  [CompanyEnum.ADDRESS]?: Address;
+  [CompanyEnum.ADDRESS_ID]?: string;
 }
-
-export type Address = {
-  street?: string;
-  city?: string;
-  zipCode?: string;
-  country?: string;
-};

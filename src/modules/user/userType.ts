@@ -12,6 +12,8 @@ export enum UserEnum {
   HAS_SEEN_FIRST_CONNECTION_MODAL = 'hasSeenFirstConnectionModal',
   LOCALE = 'locale',
   COMPANY_ID = 'companyId',
+  UPDATED_AT = 'updatedAt',
+  AVATAR_URL = 'avatarUrl',
 }
 
 export interface User {

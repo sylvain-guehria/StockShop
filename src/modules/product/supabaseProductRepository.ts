@@ -48,7 +48,7 @@ class SupabaseProductRepository extends ProductRepository {
       catSubcatAttributes,
       condition,
       photoLink,
-      creationDate,
+      createdAt,
     } = response.data;
 
     return ProductEntity.new({
@@ -69,7 +69,7 @@ class SupabaseProductRepository extends ProductRepository {
       catSubcatAttributes,
       condition,
       photoLink,
-      creationDate,
+      createdAt,
     });
   }
 
@@ -86,16 +86,16 @@ class SupabaseProductRepository extends ProductRepository {
         id: product.getId(),
         label: product.getLabel(),
         inventoryId: product.getInventoryId(),
-        creationDate: product.getCreationDate(),
+        createdAt: product.getCreationDate(),
       },
     });
     console.info('Product added in DB, id: ', product.getId());
-    const { id, label, inventoryId, creationDate } = res.data;
+    const { id, label, inventoryId, createdAt } = res.data;
     return ProductEntity.new({
       id,
       label,
       inventoryId,
-      creationDate,
+      createdAt,
     });
   }
 
@@ -145,7 +145,7 @@ class SupabaseProductRepository extends ProductRepository {
           catSubcatAttributes: product.getCatSubcatAttributes(),
           condition: product.getCondition(),
           photoLink: product.getPhotoLink(),
-          creationDate: product.getCreationDate(),
+          createdAt: product.getCreationDate(),
         },
       }
     );
@@ -167,7 +167,7 @@ class SupabaseProductRepository extends ProductRepository {
       catSubcatAttributes: data.catSubcatAttributes,
       condition: data.condition,
       photoLink: data.photoLink,
-      creationDate: data.creationDate,
+      createdAt: data.createdAt,
     });
   }
 
@@ -183,9 +183,7 @@ class SupabaseProductRepository extends ProductRepository {
     count: number;
     products: ProductEntity[];
   }> {
-    console.info(
-      'get all products by userId, companyId and inventoryId in db'
-    );
+    console.info('get all products by userId, companyId and inventoryId in db');
     const response = await axios.get(
       `${this.baseUrl}/api/product/getProductsByUserIdCompanyIdInventoryId`,
       {
@@ -226,7 +224,7 @@ class SupabaseProductRepository extends ProductRepository {
             catSubcatAttributes: product.catSubcatAttributes,
             condition: product.condition,
             photoLink: product.photoLink,
-            creationDate: product.creationDate,
+            createdAt: product.createdAt,
           })
       ),
     };

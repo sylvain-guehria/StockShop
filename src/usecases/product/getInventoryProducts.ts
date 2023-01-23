@@ -50,12 +50,12 @@ export const getInventoryProducts =
       }
 
       const filtersWithValue = getKeysWithValues(filters as FilterPropertyType);
-      let sorterField = sorter?.field || ProductAttributes.CREATION_DATE;
+      let sorterField = sorter?.field || ProductAttributes.UPDATED_AT;
 
       if (filtersWithValue.length > 0) {
         const sorterFieldIsInFilters = filtersWithValue.includes(sorterField);
         if (sorterFieldIsInFilters) {
-          sorterField = ProductAttributes.CREATION_DATE;
+          sorterField = ProductAttributes.UPDATED_AT;
         }
       }
 

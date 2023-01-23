@@ -25,7 +25,7 @@ export type AuthorizedFilterProperty =
 
 export type AuthorizedOrderProperty =
   | ProductAttributes.LABEL
-  | ProductAttributes.CREATION_DATE
+  | ProductAttributes.UPDATED_AT
   | ProductAttributes.QUANTITY_IN_INVENTORY
   | ProductAttributes.OPTIMUM_QUANTITY;
 
@@ -64,7 +64,7 @@ export const initialFilters = {
 
 export const initialFilterState: FiltersStateType = {
   sorter: {
-    field: ProductAttributes.CREATION_DATE,
+    field: ProductAttributes.UPDATED_AT,
     order: ORDER.DESC,
   },
   filters: initialFilters,

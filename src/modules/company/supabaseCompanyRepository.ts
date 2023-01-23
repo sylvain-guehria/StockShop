@@ -10,13 +10,13 @@ class SupabaseCompanyRepository extends CompanyRepository {
   async getById(id: string): Promise<CompanyEntity> {
     console.info('get company in db with id: ', id);
     const response = await axios.get(`${this.baseUrl}/api/company/${id}`);
-    const { name, vat, address } = response.data;
+    const { name, vat, addressId } = response.data;
 
     return CompanyEntity.new({
       id,
       name,
       vat,
-      address,
+      addressId,
     });
   }
 
@@ -28,7 +28,7 @@ class SupabaseCompanyRepository extends CompanyRepository {
         id: company.getId(),
         name: company.getName(),
         vat: company.getVat(),
-        address: company.getAddress(),
+        addressId: company.getAddressId(),
       },
     });
     const { id, name } = res.data;
@@ -53,7 +53,7 @@ class SupabaseCompanyRepository extends CompanyRepository {
           id: company.id,
           name: company.name,
           vat: company.vat,
-          address: company.address,
+          addressId: company.addressId,
         })
     );
   }
@@ -64,7 +64,7 @@ class SupabaseCompanyRepository extends CompanyRepository {
       id: company.getId(),
       name: company.getName(),
       vat: company.getVat(),
-      address: company.getAddress(),
+      addressId: company.getAddressId(),
     });
   }
 
@@ -76,14 +76,14 @@ class SupabaseCompanyRepository extends CompanyRepository {
         params: { userId },
       }
     );
-    const { name, vat, address, id } = response.data;
+    const { name, vat, addressId, id } = response.data;
 
     return id
       ? CompanyEntity.new({
           id,
           name,
           vat,
-          address,
+          addressId,
         })
       : null;
   }

@@ -31,8 +31,8 @@ import { ActionNamesEnum, initialFilters } from './ProductsFiltersReducer';
 const sortingOptions = [
   { value: ProductAttributes.LABEL, label: 'Ordre alphabétique' },
   {
-    value: ProductAttributes.CREATION_DATE,
-    label: ProductLabels[ProductAttributes.CREATION_DATE],
+    value: ProductAttributes.UPDATED_AT,
+    label: ProductLabels[ProductAttributes.UPDATED_AT],
   },
   // {
   //   value: ProductAttributes.SELLING_PRICE,

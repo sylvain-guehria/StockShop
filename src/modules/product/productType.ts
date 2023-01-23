@@ -16,7 +16,9 @@ export enum ProductAttributes {
   CAT_SUBCAT_ATTRIBUTES = 'catSubcatAttributes',
   CONDITION = 'condition',
   PHOTO_LINK = 'photoLink',
-  CREATION_DATE = 'creationDate',
+  MADE_IN = 'madeIn',
+  CREATED_AT = 'createdAt',
+  UPDATED_AT = 'updatedAt',
 }
 
 export const ProductLabels = {
@@ -37,7 +39,8 @@ export const ProductLabels = {
   [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]: 'Attributs',
   [ProductAttributes.CONDITION]: 'Etat',
   [ProductAttributes.PHOTO_LINK]: 'Photo',
-  [ProductAttributes.CREATION_DATE]: 'Date de création',
+  [ProductAttributes.UPDATED_AT]: 'Date de création',
+  [ProductAttributes.CREATED_AT]: 'Date de modification',
 } as const;
 
 export enum ConditionTypeEnum {
@@ -70,5 +73,6 @@ export interface Product {
   [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]?: Record<string, any>;
   [ProductAttributes.CONDITION]?: ConditionTypeEnum;
   [ProductAttributes.PHOTO_LINK]?: string;
-  [ProductAttributes.CREATION_DATE]?: number;
+  [ProductAttributes.UPDATED_AT]?: number;
+  [ProductAttributes.CREATED_AT]?: number;
 }

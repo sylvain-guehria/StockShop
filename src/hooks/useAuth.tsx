@@ -22,7 +22,7 @@ export const AuthContextProvider = ({
   userProfile,
 }: {
   children: React.ReactNode;
-  userProfile: User;
+  userProfile?: User;
 }) => {
   const [user, setUser] = useState<UserEntity>(UserEntity.new(userProfile));
 

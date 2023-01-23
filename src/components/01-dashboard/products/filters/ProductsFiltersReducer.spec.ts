@@ -13,7 +13,7 @@ import {
 
 const initialFiltersState: FiltersStateType = {
   sorter: {
-    field: ProductAttributes.CREATION_DATE,
+    field: ProductAttributes.UPDATED_AT,
     order: ORDER.DESC,
   },
   filters: {

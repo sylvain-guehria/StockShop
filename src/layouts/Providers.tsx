@@ -16,7 +16,7 @@ const Providers = ({
   userProfile,
 }: {
   children: ReactNode;
-  userProfile: User;
+  userProfile?: User;
 }) => {
   return (
     <QueryClientProvider client={queryClient}>

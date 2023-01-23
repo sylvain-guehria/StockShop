@@ -1,4 +1,4 @@
-import type { Address, Company } from './companyType';
+import type { Company } from './companyType';
 
 class CompanyEntity implements Company {
   id: string;
@@ -7,7 +7,7 @@ class CompanyEntity implements Company {
 
   vat: string;
 
-  address: Address;
+  addressId: string;
 
   static new(company?: Company): CompanyEntity {
     return new CompanyEntity(company || {});
@@ -17,7 +17,7 @@ class CompanyEntity implements Company {
     this.id = company.id || '';
     this.name = company.name || '';
     this.vat = company.vat || '';
-    this.address = company.address || {};
+    this.addressId = company.addressId || '';
   }
 
   getId(): string {
@@ -47,12 +47,12 @@ class CompanyEntity implements Company {
     return this;
   }
 
-  getAddress(): Address {
-    return this.address;
+  getAddressId(): string {
+    return this.addressId;
   }
 
-  setAddress(address: Address): CompanyEntity {
-    this.address = address;
+  setAddressId(addressId: string): CompanyEntity {
+    this.addressId = addressId;
     return this;
   }
 }
