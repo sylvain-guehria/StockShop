@@ -29,6 +29,8 @@ class UserEntity implements User {
 
   companyId: string;
 
+  avatarUrl: string;
+
   static new(user?: User): UserEntity {
     return user
       ? new UserEntity({
@@ -53,6 +55,7 @@ class UserEntity implements User {
     this.hasSeenFirstConnectionModal =
       user.hasSeenFirstConnectionModal || false;
     this.companyId = user.companyId || '';
+    this.avatarUrl = user.avatarUrl || '';
   }
 
   getId(): string {
@@ -182,6 +185,35 @@ class UserEntity implements User {
 
   getCompanyId(): string {
     return this.companyId;
+  }
+
+  setAvatarUrl(avatarUrl: string): UserEntity {
+    this.avatarUrl = avatarUrl;
+    return this;
+  }
+
+  getAvatarUrl(): string {
+    return this.avatarUrl;
+  }
+
+  toJson(): User {
+    return {
+      email: this.email,
+      username: this.username,
+      id: this.id,
+      password: this.password,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      phone: this.phone,
+      role: this.role,
+      provider: this.provider,
+      hasInventoryManagementServiceActivated:
+        this.hasInventoryManagementServiceActivated,
+      hasSeenFirstConnectionModal: this.hasSeenFirstConnectionModal,
+      locale: this.locale,
+      companyId: this.companyId,
+      avatarUrl: this.avatarUrl,
+    };
   }
 }
 

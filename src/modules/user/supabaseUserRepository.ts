@@ -86,15 +86,17 @@ class SupabaseUserRepository extends UserRepository {
     const response = await axios.put(
       `${this.baseUrl}/api/user/${user.getId()}`,
       {
+        updatedAt: new Date().toISOString(),
         email: user.getEmail(),
         username: user.getUsername(),
         firstName: user.getFirstName(),
         lastName: user.getLastName(),
-        phoneNumber: user.getPhoneNumber(),
+        phone: user.getPhoneNumber(),
         role: user.getRole(),
         hasInventoryManagementServiceActivated: user.isSeller(),
         hasSeenFirstConnectionModal: user.hasSeenFirstConnectionModal,
         locale: user.getLocale(),
+        avatarUrl: user.getAvatarUrl(),
       }
     );
     return response.data;

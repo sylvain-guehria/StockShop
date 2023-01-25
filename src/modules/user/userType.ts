@@ -30,6 +30,7 @@ export interface User {
   [UserEnum.HAS_SEEN_FIRST_CONNECTION_MODAL]?: boolean;
   [UserEnum.LOCALE]?: LocaleType;
   [UserEnum.COMPANY_ID]?: string;
+  [UserEnum.AVATAR_URL]?: string;
 }
 
 export enum ROLES {
