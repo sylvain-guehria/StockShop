@@ -5,7 +5,7 @@ import { LOCALES, PROVIDERS, ROLES } from './userType';
 class UserEntity implements User {
   email: string;
 
-  username: string;
+  username?: string;
 
   id: string;
 
@@ -42,7 +42,7 @@ class UserEntity implements User {
   constructor(user: User) {
     this.email = user.email || '';
     this.provider = user.provider || PROVIDERS.NOTKNOWN;
-    this.username = user.username || '';
+    this.username = user.username || undefined;
     this.id = user.id || '';
     this.password = user.password || '';
     this.firstName = user.firstName || '';
@@ -121,7 +121,7 @@ class UserEntity implements User {
     return this.email;
   }
 
-  getUsername(): string {
+  getUsername(): string | undefined {
     return this.username;
   }
 

@@ -4,10 +4,10 @@ import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-next
 import { cookies, headers } from 'next/headers';
 import type { Database } from 'src/types/supabase';
 
-const createServerSupabaseClient = () =>
+const createServerCompSupabaseClient = () =>
   createServerComponentSupabaseClient<Database>({
     headers,
     cookies,
   });
 
-export default createServerSupabaseClient;
+export default createServerCompSupabaseClient;

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import supabase from 'supabase/client/supabase-browser';
+import createServerSupabaseSSRClient from 'supabase/server/supabase-ssr';
 import { TableNames } from 'supabase/tables/tableNames';
 
 const userById = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -11,29 +11,40 @@ const userById = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  try {
-    if (method === 'GET') {
-      const { data: profile } = await supabase
-        .from(TableNames.PROFILES)
-        .select('*');
-      res.status(200).json(profile);
-      return;
-    }
-    if (method === 'PUT') {
-      const { data: profile } = await supabase
-        .from(TableNames.PROFILES)
-        .update({ ...req.body });
-      res.status(200).json(profile);
-      return;
-    }
+  const supabaseSsr = createServerSupabaseSSRClient({ req, res });
 
-    res.setHeader('Allow', ['GET', 'PUT']);
-    res.status(405).end(`Method ${method} Not Allowed`);
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error('error when getting user profile', e);
-    res.status(400).end();
+  if (method === 'GET') {
+    const { data: profile, error } = await supabaseSsr
+      .from(TableNames.PROFILES)
+      .select('*');
+
+    if (error) {
+      // eslint-disable-next-line no-console
+      console.error('error when getting or updating user profile', error);
+      res.status(400).end();
+      return;
+    }
+    res.status(200).json(profile);
+    return;
   }
+  if (method === 'PUT') {
+    const { error } = await supabaseSsr
+      .from(TableNames.PROFILES)
+      .update({ ...req.body })
+      .eq('id', id)
+      .single();
+    if (error) {
+      // eslint-disable-next-line no-console
+      console.error('error when getting or updating user profile', error);
+      res.status(400).end();
+      return;
+    }
+    res.status(200).json(true);
+    return;
+  }
+
+  res.setHeader('Allow', ['GET', 'PUT']);
+  res.status(405).end(`Method ${method} Not Allowed`);
 };
 
 export default userById;

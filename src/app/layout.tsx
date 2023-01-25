@@ -4,7 +4,7 @@ import '../styles/global.css';
 import type { JSXElementConstructor, ReactElement } from 'react';
 import React from 'react';
 import SupabaseListener from 'supabase/client/supabase-listener';
-import createServerSupabaseClient from 'supabase/server/supabase-server';
+import createServerCompSupabaseClient from 'supabase/server/supabase-server';
 
 // We don't want Next.js to cache this session value
 export const revalidate = 0;
@@ -14,7 +14,7 @@ const RootLayout = async ({
 }: {
   children: ReactElement<any, string | JSXElementConstructor<any>>;
 }) => {
-  const supabase = createServerSupabaseClient();
+  const supabase = createServerCompSupabaseClient();
 
   const {
     data: { session },

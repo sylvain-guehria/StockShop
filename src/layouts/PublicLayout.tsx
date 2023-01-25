@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from 'react';
-import createServerSupabaseClient from 'supabase/server/supabase-server';
+import createServerCompSupabaseClient from 'supabase/server/supabase-server';
 import { TableNames } from 'supabase/tables/tableNames';
 
 import Header from '@/components/04-lib/Header/Header';
@@ -15,7 +15,7 @@ type Props = {
 
 // @ts-ignore
 const PublicLayout: FC<Props> = async ({ children }) => {
-  const supabase = createServerSupabaseClient();
+  const supabase = createServerCompSupabaseClient();
   const { data } = await supabase.auth.getUser();
   let userProfile = null;
 

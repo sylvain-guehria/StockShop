@@ -4,7 +4,6 @@ import axios from 'axios';
 
 import UserEntity from './UserEntity';
 import { UserRepository } from './userRepository';
-import type { User } from './userType';
 
 class SupabaseUserRepository extends UserRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
@@ -81,9 +80,9 @@ class SupabaseUserRepository extends UserRepository {
     );
   }
 
-  async update(user: UserEntity): Promise<User> {
+  async update(user: UserEntity): Promise<boolean> {
     console.info('update user id: ', user.getId());
-    const response = await axios.put(
+    const success = await axios.put(
       `${this.baseUrl}/api/user/${user.getId()}`,
       {
         updatedAt: new Date().toISOString(),
@@ -99,7 +98,8 @@ class SupabaseUserRepository extends UserRepository {
         avatarUrl: user.getAvatarUrl(),
       }
     );
-    return response.data;
+    if (success) return true;
+    return false;
   }
 }
 

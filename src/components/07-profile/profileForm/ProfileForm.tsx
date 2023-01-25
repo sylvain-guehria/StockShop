@@ -54,8 +54,8 @@ const ProfileForm: FC<Props> = () => {
     user.setUserName(username);
 
     try {
-      const updatedUser = await updateUserUseCase(user);
-      setUser(UserEntity.new({ ...updatedUser }));
+      const success = await updateUserUseCase(user);
+      if (success) setUser(UserEntity.new(user));
       toast(ToasterTypeEnum.SUCCESS, 'Vos informations ont été mises à jour');
     } catch (error: any) {
       if (error.message === 'UserName already exists') {

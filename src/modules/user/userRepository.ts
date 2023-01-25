@@ -1,7 +1,6 @@
 /* eslint-disable class-methods-use-this */
 
 import type UserEntity from './UserEntity';
-import type { User } from './userType';
 
 /**
  * @abstract
@@ -31,7 +30,7 @@ export abstract class UserRepository {
     throw new Error(`You tried to call an abstract methode, arg`);
   }
 
-  async update(user: UserEntity): Promise<User> {
+  async update(user: UserEntity): Promise<boolean> {
     throw new Error(`You tried to call an abstract methode, arg: ${{ user }}`);
   }
 }

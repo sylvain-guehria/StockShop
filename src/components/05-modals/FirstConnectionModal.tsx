@@ -32,11 +32,14 @@ const FirstConnectionModal: FC<Props> = ({ user }) => {
     chooseSubRoleOnFirstConnectionUseCase(
       UserEntity.new({ ...user }),
       subrole
-    ).then(() => {
-      if (subrole === SUBROLES.BUYER)
+    ).then((success) => {
+      if (!success) return;
+      if (subrole === SUBROLES.BUYER) {
         router.push(marketplaceRoutes.marketplace.path);
-      if (subrole === SUBROLES.SELLER)
+      }
+      if (subrole === SUBROLES.SELLER) {
         router.push(inventoryManagementRoutes.myInventory.path);
+      }
       setOpen(false);
     });
   };
