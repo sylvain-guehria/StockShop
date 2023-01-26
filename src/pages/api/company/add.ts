@@ -5,6 +5,8 @@ import { TableNames } from 'supabase/tables/tableNames';
 const addCompany = async (req: NextApiRequest, res: NextApiResponse) => {
   const { company } = req.body;
 
+  if (!company) throw new Error('company is required to add company');
+
   const supabaseSsr = createServerSupabaseSSRClient({ req, res });
 
   const { error } = await supabaseSsr

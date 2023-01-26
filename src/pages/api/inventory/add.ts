@@ -1,15 +1,28 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import createServerSupabaseSSRClient from 'supabase/server/supabase-ssr';
+import { TableNames } from 'supabase/tables/tableNames';
 
 const addInventory = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const { inventory, userId, companyId } = req.body;
+  const { inventory } = req.body;
 
-    res.status(200).json({ inventory, userId, companyId });
-  } catch (e) {
+  if (!inventory) throw new Error('inventory is required to add inventory');
+
+  if (!inventory.companyId)
+    throw new Error('companyId is required to add inventory');
+
+  const supabaseSsr = createServerSupabaseSSRClient({ req, res });
+
+  const { error } = await supabaseSsr
+    .from(TableNames.INVENTORIES)
+    .insert(inventory);
+
+  if (error) {
     // eslint-disable-next-line no-console
-    console.error('error when adding inventory', e);
+    console.error('error when adding a company', error);
     res.status(400).end();
+    return;
   }
+  res.status(200).json(true);
 };
 
 export default addInventory;
