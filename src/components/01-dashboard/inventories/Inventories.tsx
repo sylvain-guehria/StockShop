@@ -12,7 +12,7 @@ import { useState } from 'react';
 
 import Dropdown from '@/components/04-lib/dropdown/Dropdown';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
-import { useAuth } from '@/hooks/useAuth';
+import type { User } from '@/modules/user/userType';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { getUserInventoriesUseCase } from '@/usecases/usecases';
 
@@ -21,13 +21,19 @@ import CreateInventoryButton from './CreateInventoryButton';
 import CreateProductButton from './CreateProductButton';
 import PinnedInventories from './PinnedInventories';
 
-const Inventories: FC = () => {
-  const { user } = useAuth();
+type Props = {
+  user?: User;
+};
+
+const Inventories: FC<Props> = ({ user = {} }) => {
   const oneHourInMilliseconds = 1000 * 60 * 60;
 
   const [currentInventoryId, setCurrentInventoryId] = useState('');
   const [isInventoriesDropdownOpen, setIsInventoriesDropdownOpen] =
     useState(true);
+
+  console.log('currentInventoryId', currentInventoryId);
+  console.log('user', user);
 
   const { data: inventories = [], isLoading: isLoadingInventory } = useQuery({
     queryKey: [ApiRequestEnums.GetInventories],

@@ -1,6 +1,5 @@
 import type { FC, ReactNode } from 'react';
-import createServerCompSupabaseClient from 'supabase/server/supabase-server';
-import { TableNames } from 'supabase/tables/tableNames';
+import { getUserInServerComponant } from 'supabase/getUserInServerComponant';
 
 import Header from '@/components/04-lib/Header/Header';
 import FirstConnectionModal from '@/components/05-modals/FirstConnectionModal';
@@ -15,18 +14,7 @@ type Props = {
 
 // @ts-ignore
 const PublicLayout: FC<Props> = async ({ children }) => {
-  const supabase = createServerCompSupabaseClient();
-  const { data } = await supabase.auth.getUser();
-  let userProfile = null;
-
-  if (data.user?.id) {
-    const { data: profileData } = await supabase
-      .from(TableNames.PROFILES)
-      .select('*')
-      .eq('id', data.user.id)
-      .single();
-    userProfile = profileData || null;
-  }
+  const userProfile = await getUserInServerComponant();
 
   if (userProfile && !userProfile.hasSeenFirstConnectionModal) {
     return <FirstConnectionModal user={userProfile as User} />;
