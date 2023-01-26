@@ -1,19 +1,23 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import createServerSupabaseSSRClient from 'supabase/server/supabase-ssr';
+import { TableNames } from 'supabase/tables/tableNames';
 
 const addCompany = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const { userId, company } = req.body;
+  const { company } = req.body;
 
-    if (!userId) {
-      return res.status(400).end('User id is mandatory to add a company');
-    }
+  const supabaseSsr = createServerSupabaseSSRClient({ req, res });
 
-    return res.status(200).json(company);
-  } catch (e) {
+  const { error } = await supabaseSsr
+    .from(TableNames.COMPANIES)
+    .insert(company);
+
+  if (error) {
     // eslint-disable-next-line no-console
-    console.error('error when adding company', e);
-    return res.status(400).end(e);
+    console.error('error when adding a company', error);
+    res.status(400).end();
+    return;
   }
+  res.status(200).json(true);
 };
 
 export default addCompany;

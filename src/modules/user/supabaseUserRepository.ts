@@ -96,6 +96,7 @@ class SupabaseUserRepository extends UserRepository {
         hasSeenFirstConnectionModal: user.hasSeenFirstConnectionModal,
         locale: user.getLocale(),
         avatarUrl: user.getAvatarUrl(),
+        companyId: user.getCompanyId(),
       }
     );
     if (success) return true;

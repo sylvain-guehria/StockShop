@@ -17,7 +17,6 @@ export const getUserInventories =
       if (!user.getId()) {
         throw new Error('userId is required to get user inventories');
       }
-
       const userCompanyId = user.getCompanyId();
 
       if (!userCompanyId) {
