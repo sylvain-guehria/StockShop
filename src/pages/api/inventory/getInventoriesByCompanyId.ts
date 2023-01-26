@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const getInventoriesByUserIdAndCompanyId = async (
+const getInventoriesByCompanyId = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
@@ -25,4 +25,4 @@ const getInventoriesByUserIdAndCompanyId = async (
   }
 };
 
-export default getInventoriesByUserIdAndCompanyId;
+export default getInventoriesByCompanyId;

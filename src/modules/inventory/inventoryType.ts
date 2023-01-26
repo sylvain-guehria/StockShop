@@ -16,6 +16,8 @@ export interface Inventory {
   [InventoryAttributes.IS_DEFAULT_INVENTORY]?: boolean;
   [InventoryAttributes.COLOR]?: InventoryColor;
   [InventoryAttributes.COMPANY_ID]?: string;
+  [InventoryAttributes.CREATED_AT]?: string;
+  [InventoryAttributes.UPDATED_AT]?: string;
 }
 
 export const InventoryColors = {

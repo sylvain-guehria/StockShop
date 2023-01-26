@@ -5,6 +5,7 @@ import axios from 'axios';
 import InventoryEntity from './InventoryEntity';
 import type { DeleteInventoryParams } from './inventoryRepository';
 import { InventoryRepository } from './inventoryRepository';
+import type { Inventory } from './inventoryType';
 
 class SupabaseInventoryRepository extends InventoryRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
@@ -23,29 +24,17 @@ class SupabaseInventoryRepository extends InventoryRepository {
     });
   }
 
-  async add(
-    inventory: InventoryEntity,
-    userId: string,
-    companyId: string
-  ): Promise<InventoryEntity> {
+  async add(inventory: Inventory): Promise<InventoryEntity | null> {
     console.info('adding inventory in db...');
     const res = await axios.post(`${this.baseUrl}/api/inventory/add`, {
-      userId,
-      companyId,
-      inventory: {
-        id: inventory.getId(),
-        name: inventory.getName(),
-        isPublic: inventory.getIsPublic(),
-        isDefaultInventory: inventory.getIsDefaultInventory(),
-        color: inventory.getColor(),
-      },
+      inventory,
     });
-    const { id, name } = res.data;
-    console.info('Inventory added in DB, id: ', inventory.getId());
-    return InventoryEntity.new({
-      id,
-      name,
-    });
+    const success = res.status === 200;
+    if (success) {
+      console.info('Inventory added in DB, id: ', inventory.id);
+      return InventoryEntity.new({ ...inventory });
+    }
+    return null;
   }
 
   async delete({
@@ -91,15 +80,14 @@ class SupabaseInventoryRepository extends InventoryRepository {
     });
   }
 
-  async getInventoriesByUserIdAndCompanyId(
-    userId: string,
+  async getInventoriesByCompanyId(
     companyId: string
   ): Promise<InventoryEntity[]> {
     console.info('get inventories by userId and companyId in db');
     const response = await axios.get(
-      `${this.baseUrl}/api/inventory/getInventoriesByUserIdAndCompanyId`,
+      `${this.baseUrl}/api/inventory/getInventoriesByCompanyId`,
       {
-        params: { userId, companyId },
+        params: { companyId },
       }
     );
     return response.data.map(

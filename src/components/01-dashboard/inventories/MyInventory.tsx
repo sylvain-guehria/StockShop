@@ -36,8 +36,7 @@ const Inventories: FC = () => {
     onSuccess: (data) => {
       if (!currentInventoryId && data.length > 0) {
         const defaultInventoryId =
-          data.find((inventory) => inventory.getIsDefaultInventory())?.id ||
-          '';
+          data.find((inventory) => inventory.getIsDefaultInventory())?.id || '';
         const firstInventoryId = data[0]?.getId() || '';
         setCurrentInventoryId(defaultInventoryId || firstInventoryId);
       }

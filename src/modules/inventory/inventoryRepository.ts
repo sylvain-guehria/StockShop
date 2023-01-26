@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 
 import type InventoryEntity from './InventoryEntity';
+import type { Inventory } from './inventoryType';
 
 /**
  * @abstract
@@ -18,13 +19,9 @@ export abstract class InventoryRepository {
     throw new Error(`You tried to call an abstract methode, arg: ${id}`);
   }
 
-  async add(
-    inventory: InventoryEntity,
-    userId: string,
-    companyId: string
-  ): Promise<InventoryEntity> {
+  async add(inventory: Inventory): Promise<InventoryEntity | null> {
     throw new Error(
-      `You tried to call an abstract methode, inventory: ${inventory}, userId: ${userId}, companyId: ${companyId}`
+      `You tried to call an abstract methode, inventory: ${inventory}`
     );
   }
 
@@ -54,12 +51,11 @@ export abstract class InventoryRepository {
     );
   }
 
-  async getInventoriesByUserIdAndCompanyId(
-    userId: string,
+  async getInventoriesByCompanyId(
     companyId: string
   ): Promise<InventoryEntity[]> {
     throw new Error(
-      `You tried to call an abstract methode, arg: ${{ userId, companyId }}`
+      `You tried to call an abstract methode, arg: ${{ companyId }}`
     );
   }
 }
