@@ -5,19 +5,21 @@ import { useState } from 'react';
 
 import InventoryManagementHeader from '@/components/01-dashboard/header/InventoryManagementHeader';
 import InventoryManagementSideBar from '@/components/01-dashboard/sidebar/InventoryManagementSideBar';
+import type { User } from '@/modules/user/userType';
 
 import Providers from './Providers';
 
 type Props = {
   children: ReactNode;
+  userProfile: User;
 };
 
-const InventoryManagementLayout: FC<Props> = ({ children }) => {
+const InventoryManagementLayout: FC<Props> = ({ children, userProfile }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sideBarMini, setSideBarMini] = useState(false);
 
   return (
-    <Providers>
+    <Providers userProfile={userProfile}>
       <div className="h-screen bg-gray-100">
         <div className="min-h-full">
           <InventoryManagementSideBar
