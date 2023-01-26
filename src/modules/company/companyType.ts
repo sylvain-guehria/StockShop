@@ -12,4 +12,6 @@ export interface Company {
   [CompanyEnum.NAME]?: string;
   [CompanyEnum.VAT]?: string;
   [CompanyEnum.ADDRESS_ID]?: string;
+  [CompanyEnum.CREATED_AT]?: string;
+  [CompanyEnum.UPDATED_AT]?: string;
 }

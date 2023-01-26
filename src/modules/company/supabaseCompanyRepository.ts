@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import CompanyEntity from './CompanyEntity';
 import { CompanyRepository } from './companyRepository';
+import type { Company } from './companyType';
 
 class SupabaseCompanyRepository extends CompanyRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
@@ -20,23 +21,18 @@ class SupabaseCompanyRepository extends CompanyRepository {
     });
   }
 
-  async add(company: CompanyEntity, userId: string): Promise<CompanyEntity> {
+  async add(company: Company): Promise<CompanyEntity | null> {
     console.info('adding company in db...');
+
     const res = await axios.post(`${this.baseUrl}/api/company/add`, {
-      userId,
-      company: {
-        id: company.getId(),
-        name: company.getName(),
-        vat: company.getVat(),
-        addressId: company.getAddressId(),
-      },
+      company,
     });
-    const { id, name } = res.data;
-    console.info('Company added in DB, id: ', company.getId());
-    return CompanyEntity.new({
-      id,
-      name,
-    });
+    const success = res.status === 200;
+    if (success) {
+      console.info('Company added in DB, id: ', company.id);
+      return CompanyEntity.new({ ...company });
+    }
+    return null;
   }
 
   async delete(id: string): Promise<void> {

@@ -1,5 +1,4 @@
 import {
-  companyRepository,
   companyServiceDi,
   inventoryRepository,
   inventoryServiceDi,
@@ -32,10 +31,10 @@ export const chooseSubRoleOnFirstConnectionUseCase =
 
 // INVENTORY
 export const getUserInventoriesUseCase = getUserInventories(
-  companyRepository,
   inventoryRepository,
   companyServiceDi,
-  inventoryServiceDi
+  inventoryServiceDi,
+  userRepository
 );
 export const deleteInventoryUseCase = deleteInventory(inventoryRepository);
 export const setInventoryAsDefaultUseCase =
