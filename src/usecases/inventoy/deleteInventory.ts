@@ -17,11 +17,9 @@ export const deleteInventory =
       if (!inventoryId)
         throw new Error('inventoryId is required to delete inventory');
 
-      const inventories =
-        await inventoryRepository.getInventoriesByUserIdAndCompanyId(
-          userId,
-          companyId
-        );
+      const inventories = await inventoryRepository.getInventoriesByCompanyId(
+        companyId
+      );
 
       if (inventories && inventories.length <= 1) {
         throw new Error('Vous ne pouvez pas supprimer le dernier inventaire');

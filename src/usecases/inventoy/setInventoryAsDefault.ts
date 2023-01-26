@@ -9,10 +9,7 @@ export type SetInventoryAsDefaultParams = {
 
 export const setInventoryAsDefault =
   (inventoryRepository: InventoryRepository) =>
-  async ({
-    userId,
-    inventory,
-  }: SetInventoryAsDefaultParams): Promise<void> => {
+  async ({ userId, inventory }: SetInventoryAsDefaultParams): Promise<void> => {
     if (!userId)
       throw new Error('userId is required to set inventory as default');
     if (!inventory)
@@ -29,11 +26,9 @@ export const setInventoryAsDefault =
     if (inventoryEntity.getIsDefaultInventory()) return;
 
     try {
-      const inventories =
-        await inventoryRepository.getInventoriesByUserIdAndCompanyId(
-          userId,
-          companyId
-        );
+      const inventories = await inventoryRepository.getInventoriesByCompanyId(
+        companyId
+      );
 
       inventoryEntity.setAsDefaultInventory();
       await inventoryRepository.update(inventoryEntity, userId, companyId);

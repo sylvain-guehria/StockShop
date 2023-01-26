@@ -63,26 +63,6 @@ class SupabaseCompanyRepository extends CompanyRepository {
       addressId: company.getAddressId(),
     });
   }
-
-  async getCompanyByUserId(userId: string): Promise<CompanyEntity | null> {
-    console.info('get company in db with userId: ', userId);
-    const response = await axios.get(
-      `${this.baseUrl}/api/company/getCompanyByUserId`,
-      {
-        params: { userId },
-      }
-    );
-    const { name, vat, addressId, id } = response.data;
-
-    return id
-      ? CompanyEntity.new({
-          id,
-          name,
-          vat,
-          addressId,
-        })
-      : null;
-  }
 }
 
 export default SupabaseCompanyRepository;
