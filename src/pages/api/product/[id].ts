@@ -32,7 +32,7 @@ const productById = async (req: NextApiRequest, res: NextApiResponse) => {
   if (method === 'PUT') {
     const { error } = await supabaseSsr
       .from(TableNames.PRODUCTS)
-      .update({ ...req.body })
+      .update(req.body.product)
       .eq('id', id)
       .single();
     if (error) {

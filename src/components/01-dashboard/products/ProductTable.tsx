@@ -205,7 +205,7 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
           width="w-full"
         >
           <DynamicEditProductForm
-            product={productToEdit as unknown as ProductEntity}
+            product={productToEdit as ProductEntity}
             handleCloseModal={handleCloseModal}
             onSubmitEditForm={updateProductMutation.mutate}
           />
