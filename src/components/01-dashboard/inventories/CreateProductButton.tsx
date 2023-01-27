@@ -42,8 +42,8 @@ const CreateProductButton: FC<Props> = ({ currentInventoryId }) => {
 
     if (!userId || !companyId || !currentInventoryId) return;
     mutate({
-      userId: userId,
-      companyId: companyId,
+      userId,
+      companyId,
       inventoryId: currentInventoryId,
     });
   };

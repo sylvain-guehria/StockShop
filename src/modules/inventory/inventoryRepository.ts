@@ -39,15 +39,11 @@ export abstract class InventoryRepository {
     throw new Error(`You tried to call an abstract methode, arg`);
   }
 
-  async update(
-    inventory: InventoryEntity,
-    userId: string,
-    companyId: string
-  ): Promise<void> {
+  async update(inventory: InventoryEntity): Promise<void> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
         inventory,
-      }} and userId: ${userId} and companyId: ${companyId}`
+      }} `
     );
   }
 

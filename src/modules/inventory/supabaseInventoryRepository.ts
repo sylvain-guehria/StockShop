@@ -63,15 +63,9 @@ class SupabaseInventoryRepository extends InventoryRepository {
     );
   }
 
-  async update(
-    inventory: InventoryEntity,
-    userId: string,
-    companyId: string
-  ): Promise<void> {
+  async update(inventory: InventoryEntity): Promise<void> {
     console.info('update inventory id: ', inventory.getId());
     await axios.put(`/api/inventory/${inventory.getId()}`, {
-      userId,
-      companyId,
       id: inventory.getId(),
       name: inventory.getName(),
       isPublic: inventory.getIsPublic(),

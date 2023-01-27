@@ -31,18 +31,14 @@ export const setInventoryAsDefault =
       );
 
       inventoryEntity.setAsDefaultInventory();
-      await inventoryRepository.update(inventoryEntity, userId, companyId);
+      await inventoryRepository.update(inventoryEntity);
 
       const formerDefaultInventory = inventories.find(
         (retrievedInventory) => retrievedInventory.isDefaultInventory
       );
       if (formerDefaultInventory) {
         formerDefaultInventory.setAsNotDefaultInventory();
-        await inventoryRepository.update(
-          formerDefaultInventory,
-          userId,
-          companyId
-        );
+        await inventoryRepository.update(formerDefaultInventory);
       } else {
         // eslint-disable-next-line no-console
         console.log('No former default inventory founed');

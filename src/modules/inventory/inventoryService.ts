@@ -36,11 +36,7 @@ class InventoryService {
     return createdInventory as InventoryEntity;
   }
 
-  async updateInventory({
-    inventory,
-    userId,
-    companyId,
-  }: UpdateInventoryParams): Promise<void> {
+  async updateInventory({ inventory }: UpdateInventoryParams): Promise<void> {
     return this.inventoryRepository.update(
       InventoryEntity.new({
         id: inventory.id,
@@ -48,9 +44,7 @@ class InventoryService {
         isPublic: inventory.isPublic,
         isDefaultInventory: inventory.isDefaultInventory,
         color: inventory.color,
-      }),
-      userId,
-      companyId
+      })
     );
   }
 }
@@ -59,8 +53,6 @@ export default InventoryService;
 
 export interface UpdateInventoryParams {
   inventory: Inventory;
-  userId: string;
-  companyId: string;
 }
 
 export interface CreateInventoryParams {

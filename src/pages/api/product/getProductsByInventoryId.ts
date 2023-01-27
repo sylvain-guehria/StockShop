@@ -2,7 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import createServerSupabaseSSRClient from 'supabase/server/supabase-ssr';
 import { TableNames } from 'supabase/tables/tableNames';
 
-import type { ORDER } from '@/components/01-dashboard/products/filters/ProductsFiltersReducer';
+import { ProductAttributes } from '@/modules/product/productType';
+import { parseBoolean } from '@/utils/primitiveUtils';
 
 export const getPagination = (page: number | string, size: number | string) => {
   const pageNumber = parseInt(page as string, 10);
@@ -40,16 +41,20 @@ const getProductsByUserIdAndInventoryId = async (
     numberOfProductsPerPage as string
   );
 
+  const boolIsPublic = parseBoolean(filterIsPublic as string);
+
   const { error, data } = await supabaseSsr
     .from(TableNames.PRODUCTS)
     .select('*')
-    .eq('inventoryId', inventoryId)
-    .eq('categoryId', filterCategoryId)
-    .eq('subCategoryId', filterSubCategoryId)
-    .eq('toBuy', parseInt(filterToBuy as string, 10))
-    .eq('isPublic', filterIsPublic === 'true')
+    .match({
+      inventoryId,
+      categoryId: filterCategoryId,
+      subCategoryId: filterSubCategoryId,
+      isPublic: boolIsPublic,
+    })
+    .gt(filterToBuy === 'true' ? ProductAttributes.TO_BUY : '', 0)
     .order(sorterField as any, {
-      ascending: (sorterOrder as ORDER) === 'asc',
+      ascending: sorterOrder === 'asc',
     })
     .range(from, to);
 

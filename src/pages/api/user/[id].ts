@@ -16,11 +16,13 @@ const userById = async (req: NextApiRequest, res: NextApiResponse) => {
   if (method === 'GET') {
     const { data: profile, error } = await supabaseSsr
       .from(TableNames.PROFILES)
-      .select('*');
+      .select('*')
+      .eq('id', id)
+      .single();
 
     if (error) {
       // eslint-disable-next-line no-console
-      console.error('error when getting or updating user profile', error);
+      console.error('error when getting user profile', error);
       res.status(400).end();
       return;
     }
@@ -35,7 +37,7 @@ const userById = async (req: NextApiRequest, res: NextApiResponse) => {
       .single();
     if (error) {
       // eslint-disable-next-line no-console
-      console.error('error when getting or updating user profile', error);
+      console.error('error when updating user profile', error);
       res.status(400).end();
       return;
     }
