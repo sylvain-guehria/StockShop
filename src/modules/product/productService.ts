@@ -11,25 +11,17 @@ class ProductService {
     this.productRepository = productRepository;
   }
 
-  async createProductByUserIdCompanyIdAndInventoryId({
-    userId,
-    companyId,
-    inventoryId,
-  }: CreateProductParams): Promise<ProductEntity> {
+  async createProductInInventory(inventoryId: string): Promise<ProductEntity> {
     const id = uuidV4();
 
     const product = ProductEntity.new({
       id,
       label: 'New product',
       inventoryId,
-      createdAt: Date.now(),
+      createdAt: new Date().toISOString(),
     });
 
-    return this.productRepository.add({
-      product,
-      userId,
-      companyId,
-    });
+    return this.productRepository.add(product);
   }
 
   async updateProduct({
@@ -53,10 +45,4 @@ export interface UpdateProductParams {
   userId: string;
   companyId: string;
   product: Product;
-}
-
-export interface CreateProductParams {
-  userId: string;
-  companyId: string;
-  inventoryId: string;
 }

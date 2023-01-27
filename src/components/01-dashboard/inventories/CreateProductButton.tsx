@@ -8,7 +8,6 @@ import type { FC } from 'react';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { CustomEvents } from '@/enums/eventEnums';
 import { useAuth } from '@/hooks/useAuth';
-import type { CreateProductParams } from '@/modules/product/productService';
 
 type Props = {
   currentInventoryId: string;
@@ -19,12 +18,8 @@ const CreateProductButton: FC<Props> = ({ currentInventoryId }) => {
   const { user } = useAuth();
 
   const { mutate } = useMutation({
-    mutationFn: ({ userId, companyId, inventoryId }: CreateProductParams) =>
-      productServiceDi.createProductByUserIdCompanyIdAndInventoryId({
-        userId,
-        companyId,
-        inventoryId,
-      }),
+    mutationFn: (inventoryId: string) =>
+      productServiceDi.createProductInInventory(inventoryId),
     onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: [ApiRequestEnums.GetProducts],
@@ -36,21 +31,17 @@ const CreateProductButton: FC<Props> = ({ currentInventoryId }) => {
     },
   });
 
-  const handleClickCreateInventory = () => {
+  const handleClickCreateProduct = () => {
     const userId = user.getId();
     const companyId = user.getCompanyId();
 
     if (!userId || !companyId || !currentInventoryId) return;
-    mutate({
-      userId,
-      companyId,
-      inventoryId: currentInventoryId,
-    });
+    mutate(currentInventoryId);
   };
 
   return (
     <div
-      onClick={handleClickCreateInventory}
+      onClick={handleClickCreateProduct}
       className="mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent py-2 px-4 text-base font-medium text-primary-500 "
     >
       <DocumentPlusIcon className="mr-3 h-6 w-6 shrink-0 text-primary-500" />

@@ -4,7 +4,6 @@ import axios from 'axios';
 
 import ProductEntity from './ProductEntity';
 import type {
-  AddProduct,
   DeleteProduct,
   GetProduct,
   GetProductsByInventoryId,
@@ -73,15 +72,9 @@ class SupabaseProductRepository extends ProductRepository {
     });
   }
 
-  async add({
-    product,
-    userId,
-    companyId,
-  }: AddProduct): Promise<ProductEntity> {
+  async add(product: ProductEntity): Promise<ProductEntity> {
     console.info('adding product in db...');
     const res = await axios.post(`${this.baseUrl}/api/product/add`, {
-      userId,
-      companyId,
       product: {
         id: product.getId(),
         label: product.getLabel(),

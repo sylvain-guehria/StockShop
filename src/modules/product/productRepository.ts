@@ -35,16 +35,10 @@ export abstract class ProductRepository {
     );
   }
 
-  async add({
-    product,
-    userId,
-    companyId,
-  }: AddProduct): Promise<ProductEntity> {
+  async add(product: ProductEntity): Promise<ProductEntity> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
         product,
-        userId,
-        companyId,
       }}`
     );
   }
@@ -102,12 +96,6 @@ export abstract class ProductRepository {
 }
 
 export default ProductRepository;
-
-export interface AddProduct {
-  product: ProductEntity;
-  userId: string;
-  companyId: string;
-}
 
 export interface UpdateProduct {
   product: ProductEntity;

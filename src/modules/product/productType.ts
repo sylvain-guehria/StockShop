@@ -73,6 +73,6 @@ export interface Product {
   [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]?: Record<string, any>;
   [ProductAttributes.CONDITION]?: ConditionTypeEnum;
   [ProductAttributes.PHOTO_LINK]?: string;
-  [ProductAttributes.UPDATED_AT]?: number;
-  [ProductAttributes.CREATED_AT]?: number;
+  [ProductAttributes.UPDATED_AT]?: string;
+  [ProductAttributes.CREATED_AT]?: string;
 }
