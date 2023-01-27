@@ -80,6 +80,7 @@ class SupabaseProductRepository extends ProductRepository {
         label: product.getLabel(),
         inventoryId: product.getInventoryId(),
         createdAt: product.getCreationDate(),
+        isPublic: product.getIsPublic(),
       },
     });
     console.info('Product added in DB, id: ', product.getId());

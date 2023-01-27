@@ -53,8 +53,7 @@ class ProductEntity implements Product {
     this.sellingPrice = product.sellingPrice || 0;
     this.description = product.description || '';
     this.toBuy = product.toBuy || 0;
-    // @ts-ignore
-    this.isPublic = product.isPublic ? parseBoolean(product.isPublic) : false;
+    this.isPublic = parseBoolean(product.isPublic);
     this.tva = product.tva || 0;
     this.categoryId = product.categoryId || '';
     this.subCategoryId = product.subCategoryId || '';

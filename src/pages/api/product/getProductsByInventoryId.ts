@@ -3,18 +3,9 @@ import createServerSupabaseSSRClient from 'supabase/server/supabase-ssr';
 import { TableNames } from 'supabase/tables/tableNames';
 
 import { ProductAttributes } from '@/modules/product/productType';
+import { getPagination } from '@/utils/apiUtils';
+import { removeKeysWithNoValues } from '@/utils/objectUtils';
 import { parseBoolean } from '@/utils/primitiveUtils';
-
-export const getPagination = (page: number | string, size: number | string) => {
-  const pageNumber = parseInt(page as string, 10);
-  const sizeNumber = parseInt(size as string, 10);
-
-  const limit = size ? +size : 3;
-  const from = pageNumber ? pageNumber * limit : 0;
-  const to = pageNumber ? from + sizeNumber - 1 : sizeNumber - 1;
-
-  return { from, to };
-};
 
 const getProductsByUserIdAndInventoryId = async (
   req: NextApiRequest,
@@ -43,15 +34,19 @@ const getProductsByUserIdAndInventoryId = async (
 
   const boolIsPublic = parseBoolean(filterIsPublic as string);
 
+  let match: any = {
+    inventoryId,
+    categoryId: filterCategoryId,
+    subCategoryId: filterSubCategoryId,
+    isPublic: boolIsPublic,
+  };
+
+  match = removeKeysWithNoValues(match);
+
   const { error, data } = await supabaseSsr
     .from(TableNames.PRODUCTS)
     .select('*')
-    .match({
-      inventoryId,
-      categoryId: filterCategoryId,
-      subCategoryId: filterSubCategoryId,
-      isPublic: boolIsPublic,
-    })
+    .match(match)
     .gt(filterToBuy === 'true' ? ProductAttributes.TO_BUY : '', 0)
     .order(sorterField as any, {
       ascending: sorterOrder === 'asc',
@@ -64,7 +59,10 @@ const getProductsByUserIdAndInventoryId = async (
     res.status(400).end();
     return [];
   }
-  return res.status(200).json(data);
+  return res.status(200).json({
+    count: data.length,
+    results: data,
+  });
 };
 
 export default getProductsByUserIdAndInventoryId;

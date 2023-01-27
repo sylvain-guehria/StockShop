@@ -1,4 +1,4 @@
-export const parseBoolean = (value: string | boolean): boolean | undefined => {
+export const parseBoolean = (value: any): boolean => {
   if (typeof value === 'boolean') {
     return value;
   }
