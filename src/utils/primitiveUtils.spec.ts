@@ -11,9 +11,9 @@ describe('parseBoolean', () => {
     expect(result).toBe(false);
   });
 
-  test('returns undefined when the input is not "true" or "false"', () => {
+  test('returns false when the input is not "true" or "false"', () => {
     const result = parseBoolean('foo');
-    expect(result).toBeUndefined();
+    expect(result).toBe(false);
   });
 
   test('returns the original boolean value when the input is a boolean', () => {
