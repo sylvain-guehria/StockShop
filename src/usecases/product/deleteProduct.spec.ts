@@ -39,9 +39,7 @@ describe('deleteInventory', () => {
       });
     } catch (error: any) {
       expect(productRepository.delete).toHaveBeenCalledTimes(0);
-      expect(error.message).toBe(
-        'companyId is required to delete the product'
-      );
+      expect(error.message).toBe('companyId is required to delete the product');
     }
   });
 
@@ -81,9 +79,7 @@ describe('deleteInventory', () => {
       });
     } catch (error: any) {
       expect(productRepository.delete).toHaveBeenCalledTimes(0);
-      expect(error.message).toBe(
-        'productId is required to delete the product'
-      );
+      expect(error.message).toBe('productId is required to delete the product');
     }
   });
 

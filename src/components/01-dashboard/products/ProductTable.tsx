@@ -24,7 +24,7 @@ import {
 } from '@/modules/category/categoryUtils';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { DeleteProduct } from '@/modules/product/productRepository';
-import type { UpdateProductParams } from '@/modules/product/productService';
+import type { Product } from '@/modules/product/productType';
 import {
   deleteProductUseCase,
   getInventoryProductsUseCase,
@@ -143,8 +143,7 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
   });
 
   const updateProductMutation = useMutation({
-    mutationFn: (params: UpdateProductParams) =>
-      productServiceDi.updateProduct(params),
+    mutationFn: (params: Product) => productServiceDi.updateProduct(params),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({
@@ -239,10 +238,7 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
           width="w-full"
         >
           {productToEdit && (
-            <DynamicEditProductPhotoForm
-              productId={productToEdit.getId()}
-              inventoryId={productToEdit.getInventoryId()}
-            />
+            <DynamicEditProductPhotoForm productId={productToEdit.getId()} />
           )}
         </DynamicModal>
       )}
@@ -254,10 +250,7 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
           width="w-full"
         >
           {productToEdit && (
-            <DynamicProductView
-              productId={productToEdit.getId()}
-              inventoryId={productToEdit.getInventoryId()}
-            />
+            <DynamicProductView productId={productToEdit.getId()} />
           )}
         </DynamicModal>
       )}
@@ -396,13 +389,9 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
                             aria-hidden="true"
                             onClick={() =>
                               updateProductMutation.mutate({
-                                product: {
-                                  ...product,
-                                  toBuy:
-                                    product.toBuy > 0 ? product.toBuy - 1 : 0,
-                                },
-                                userId: user.getId(),
-                                companyId: user.getCompanyId(),
+                                ...product,
+                                toBuy:
+                                  product.toBuy > 0 ? product.toBuy - 1 : 0,
                               })
                             }
                           />
@@ -414,12 +403,8 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
                             aria-hidden="true"
                             onClick={() =>
                               updateProductMutation.mutate({
-                                product: {
-                                  ...product,
-                                  toBuy: product.toBuy + 1,
-                                },
-                                userId: user.getId(),
-                                companyId: user.getCompanyId(),
+                                ...product,
+                                toBuy: product.toBuy + 1,
                               })
                             }
                           />

@@ -5,31 +5,17 @@ import axios from 'axios';
 import ProductEntity from './ProductEntity';
 import type {
   DeleteProduct,
-  GetProduct,
   GetProductsByInventoryId,
-  UpdateProduct,
 } from './productRepository';
 import { ProductRepository } from './productRepository';
 
 class SupabaseProductRepository extends ProductRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 
-  async getById({
-    productId,
-    userId,
-    companyId,
-    inventoryId,
-  }: GetProduct): Promise<ProductEntity> {
+  async getById(productId: string): Promise<ProductEntity> {
     console.info('get product in db with id: ', productId);
     const response = await axios.get(
-      `${this.baseUrl}/api/product/${productId}`,
-      {
-        params: {
-          userId,
-          companyId,
-          inventoryId,
-        },
-      }
+      `${this.baseUrl}/api/product/${productId}`
     );
     const {
       label,
@@ -48,6 +34,7 @@ class SupabaseProductRepository extends ProductRepository {
       condition,
       photoLink,
       createdAt,
+      inventoryId,
     } = response.data;
 
     return ProductEntity.new({
@@ -110,18 +97,11 @@ class SupabaseProductRepository extends ProductRepository {
     });
   }
 
-  async update({
-    product,
-    userId,
-    companyId,
-  }: UpdateProduct): Promise<ProductEntity> {
+  async update(product: ProductEntity): Promise<ProductEntity> {
     console.info('update product id: ', product.getId());
     const { data } = await axios.put(
       `${this.baseUrl}/api/product/${product.getId()}`,
       {
-        userId,
-        companyId,
-        inventoryId: product.getInventoryId(),
         product: {
           id: product.getId(),
           label: product.getLabel(),
@@ -192,7 +172,6 @@ class SupabaseProductRepository extends ProductRepository {
         },
       }
     );
-    console.log('response.data: ', response.data);
     return {
       count: response.data.count,
       products: response.data.results.map(

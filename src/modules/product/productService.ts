@@ -24,25 +24,13 @@ class ProductService {
     return this.productRepository.add(product);
   }
 
-  async updateProduct({
-    product,
-    userId,
-    companyId,
-  }: UpdateProductParams): Promise<ProductEntity> {
-    return this.productRepository.update({
-      product: ProductEntity.new({
+  async updateProduct(product: Product): Promise<ProductEntity> {
+    return this.productRepository.update(
+      ProductEntity.new({
         ...product,
-      }),
-      userId,
-      companyId,
-    });
+      })
+    );
   }
 }
 
 export default ProductService;
-
-export interface UpdateProductParams {
-  userId: string;
-  companyId: string;
-  product: Product;
-}

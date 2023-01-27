@@ -50,11 +50,9 @@ export const updatePhotoProduct =
           uploadedFile: currentFile,
         });
 
-        return await productServiceDi.updateProduct({
-          product: product.setPhotoLink(downloadURL),
-          userId,
-          companyId,
-        });
+        return await productServiceDi.updateProduct(
+          product.setPhotoLink(downloadURL)
+        );
       }
 
       await storageServiceDi.handleDelete({
@@ -62,11 +60,7 @@ export const updatePhotoProduct =
         filename: `/${product.getId()}`,
       });
 
-      return await productServiceDi.updateProduct({
-        product: product.setPhotoLink(''),
-        userId,
-        companyId,
-      });
+      return await productServiceDi.updateProduct(product.setPhotoLink(''));
     } catch (error: any) {
       throw new Error(error);
     }

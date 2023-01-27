@@ -7,7 +7,6 @@ import InputSelect from '@/components/04-lib/inputs/InputSelect';
 import InputTextArea from '@/components/04-lib/inputs/InputTextArea';
 import NextImage from '@/components/04-lib/nextImage/NextImage';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
-import { useAuth } from '@/hooks/useAuth';
 import type { CategoryInput } from '@/modules/category/categoryType';
 import {
   getCategoryById,
@@ -24,21 +23,12 @@ import { classNames } from '@/utils/tailwindUtils';
 
 type Props = {
   productId: string;
-  inventoryId: string;
 };
 
-const ProductView: FC<Props> = ({ productId, inventoryId }) => {
-  const { user } = useAuth();
-
+const ProductView: FC<Props> = ({ productId }) => {
   const { data: product } = useQuery({
     queryKey: [ApiRequestEnums.GetProduct, { productId }],
-    queryFn: () =>
-      productRepository.getById({
-        productId,
-        userId: user.getId(),
-        companyId: user.getCompanyId(),
-        inventoryId,
-      }),
+    queryFn: () => productRepository.getById(productId),
     enabled: !!productId,
     staleTime: 30000,
   });

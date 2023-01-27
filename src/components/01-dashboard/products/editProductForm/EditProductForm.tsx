@@ -9,11 +9,9 @@ import { useForm } from 'react-hook-form';
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import type ProductEntity from '@/modules/product/ProductEntity';
-import type { UpdateProductParams } from '@/modules/product/productService';
-import type { ConditionTypeEnum } from '@/modules/product/productType';
+import type { ConditionTypeEnum, Product } from '@/modules/product/productType';
 import { ProductAttributes } from '@/modules/product/productType';
 
 import { validationSchema } from './EditProductFormValidation';
@@ -39,7 +37,7 @@ export interface EditProductFormType {
 type Props = {
   product: ProductEntity;
   handleCloseModal: () => void;
-  onSubmitEditForm: (params: UpdateProductParams) => void;
+  onSubmitEditForm: (params: Product) => void;
 };
 
 const EditProductForm: FC<Props> = ({
@@ -48,7 +46,6 @@ const EditProductForm: FC<Props> = ({
   onSubmitEditForm,
 }) => {
   const toast = useToast(10000);
-  const { user } = useAuth();
   const queryClient = useQueryClient();
 
   const formOptions = {
@@ -84,12 +81,8 @@ const EditProductForm: FC<Props> = ({
   ) => {
     try {
       await onSubmitEditForm({
-        product: {
-          ...product,
-          ...data,
-        },
-        userId: user.getId(),
-        companyId: user.getCompanyId(),
+        ...product,
+        ...data,
       });
       queryClient.invalidateQueries({ queryKey: [ApiRequestEnums.GetProduct] });
     } catch (e: any) {

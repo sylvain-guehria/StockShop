@@ -12,8 +12,7 @@ export const deleteProduct =
     inventoryId,
   }: DeleteProduct): Promise<void> => {
     try {
-      if (!userId)
-        throw new Error('userId is required to delete the product');
+      if (!userId) throw new Error('userId is required to delete the product');
       if (!companyId)
         throw new Error('companyId is required to delete the product');
       if (!inventoryId)

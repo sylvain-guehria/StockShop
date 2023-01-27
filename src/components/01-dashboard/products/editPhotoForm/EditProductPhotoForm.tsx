@@ -28,7 +28,6 @@ const DynamicDeleteModal = dynamic(
 
 type Props = {
   productId: string;
-  inventoryId: string;
 };
 
 interface PhotoAttributesType {
@@ -36,7 +35,7 @@ interface PhotoAttributesType {
   type: string;
 }
 
-const EditProductPhotoForm: FC<Props> = ({ productId, inventoryId }) => {
+const EditProductPhotoForm: FC<Props> = ({ productId }) => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const toast = useToast(5000);
@@ -44,13 +43,7 @@ const EditProductPhotoForm: FC<Props> = ({ productId, inventoryId }) => {
 
   const { data: product, refetch } = useQuery({
     queryKey: [ApiRequestEnums.GetProduct, { productId }],
-    queryFn: () =>
-      productRepository.getById({
-        productId,
-        userId: user.getId(),
-        companyId: user.getCompanyId(),
-        inventoryId,
-      }),
+    queryFn: () => productRepository.getById(productId),
     enabled: !!productId,
     staleTime: 30000,
   });
