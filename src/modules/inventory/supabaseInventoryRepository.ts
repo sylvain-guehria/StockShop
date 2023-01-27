@@ -83,7 +83,7 @@ class SupabaseInventoryRepository extends InventoryRepository {
   async getInventoriesByCompanyId(
     companyId: string
   ): Promise<InventoryEntity[]> {
-    console.info('get inventories by userId and companyId in db');
+    console.info('get inventories by companyId in db');
     const response = await axios.get(
       `${this.baseUrl}/api/inventory/getInventoriesByCompanyId`,
       {

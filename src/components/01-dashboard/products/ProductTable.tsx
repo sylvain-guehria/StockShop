@@ -125,9 +125,7 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
     ],
     queryFn: () =>
       getInventoryProductsUseCase({
-        userId: user.getId(),
         inventoryId: currentInventoryId,
-        companyId: user.getCompanyId(),
         currentPage,
         filters: filtersState.filters,
         sorter: {

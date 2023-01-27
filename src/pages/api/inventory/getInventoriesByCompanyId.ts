@@ -24,7 +24,7 @@ const getInventoriesByCompanyId = async (
 
   if (error) {
     // eslint-disable-next-line no-console
-    console.error('error when adding a company', error);
+    console.error('error when getting inventory by company id', error);
     res.status(400).end();
     return [];
   }

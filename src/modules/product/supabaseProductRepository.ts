@@ -7,7 +7,7 @@ import type {
   AddProduct,
   DeleteProduct,
   GetProduct,
-  GetProductsByUserIdCompanyIdInventoryId,
+  GetProductsByInventoryId,
   UpdateProduct,
 } from './productRepository';
 import { ProductRepository } from './productRepository';
@@ -171,25 +171,21 @@ class SupabaseProductRepository extends ProductRepository {
     });
   }
 
-  async getProductsByUserIdCompanyIdInventoryId({
-    userId,
+  async getProductsByInventoryId({
     inventoryId,
-    companyId,
     currentPage,
     numberOfProductsPerPage,
     sorter,
     filters,
-  }: GetProductsByUserIdCompanyIdInventoryId): Promise<{
+  }: GetProductsByInventoryId): Promise<{
     count: number;
     products: ProductEntity[];
   }> {
     console.info('get all products by userId, companyId and inventoryId in db');
     const response = await axios.get(
-      `${this.baseUrl}/api/product/getProductsByUserIdCompanyIdInventoryId`,
+      `${this.baseUrl}/api/product/getProductsByInventoryId`,
       {
         params: {
-          userId,
-          companyId,
           inventoryId,
           currentPage,
           numberOfProductsPerPage,
@@ -202,6 +198,7 @@ class SupabaseProductRepository extends ProductRepository {
         },
       }
     );
+    console.log('response.data: ', response.data);
     return {
       count: response.data.count,
       products: response.data.results.map(

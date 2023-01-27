@@ -79,23 +79,19 @@ export abstract class ProductRepository {
     );
   }
 
-  async getProductsByUserIdCompanyIdInventoryId({
-    userId,
+  async getProductsByInventoryId({
     inventoryId,
-    companyId,
     currentPage,
     numberOfProductsPerPage,
     sorter,
     filters,
-  }: GetProductsByUserIdCompanyIdInventoryId): Promise<{
+  }: GetProductsByInventoryId): Promise<{
     count: number;
     products: ProductEntity[];
   }> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
-        userId,
         inventoryId,
-        companyId,
         currentPage,
         numberOfProductsPerPage,
         sorter,
@@ -133,10 +129,8 @@ export interface GetProduct {
   companyId: string;
 }
 
-export interface GetProductsByUserIdCompanyIdInventoryId {
-  userId: string;
+export interface GetProductsByInventoryId {
   inventoryId: string;
-  companyId: string;
   currentPage: number;
   numberOfProductsPerPage: number;
   sorter: SorterType;

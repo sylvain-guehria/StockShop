@@ -10,8 +10,6 @@ const productRepository = {
 
 describe('getInventoryProducts', () => {
   it('Should throw an error if userId is not provided', async () => {
-    const userId = '';
-    const companyId = 'companyId';
     const inventoryId = 'inventoryId';
     const sorter = {
       field: ProductAttributes.LABEL as AuthorizedOrderProperty,
@@ -22,9 +20,7 @@ describe('getInventoryProducts', () => {
 
     try {
       await getInventoryProducts(productRepository as any)({
-        userId,
         inventoryId,
-        companyId,
         currentPage: 1,
         sorter,
         filters,
@@ -40,8 +36,6 @@ describe('getInventoryProducts', () => {
   });
 
   it('Should throw an error if companyId is not provided', async () => {
-    const userId = 'userId';
-    const companyId = '';
     const inventoryId = 'inventoryId';
     const sorter = {
       field: ProductAttributes.LABEL as AuthorizedOrderProperty,
@@ -52,9 +46,7 @@ describe('getInventoryProducts', () => {
 
     try {
       await getInventoryProducts(productRepository as any)({
-        userId,
         inventoryId,
-        companyId,
         currentPage: 1,
         sorter,
         filters,
@@ -69,8 +61,6 @@ describe('getInventoryProducts', () => {
     }
   });
   it('Should throw an error if inventoryId is not provided', async () => {
-    const userId = 'userId';
-    const companyId = 'companyId';
     const inventoryId = '';
     const sorter = {
       field: ProductAttributes.LABEL as AuthorizedOrderProperty,
@@ -81,9 +71,7 @@ describe('getInventoryProducts', () => {
 
     try {
       await getInventoryProducts(productRepository as any)({
-        userId,
         inventoryId,
-        companyId,
         currentPage: 1,
         sorter,
         filters,
@@ -116,9 +104,7 @@ describe('getInventoryProducts', () => {
     );
 
     await getInventoryProducts(productRepository as any)({
-      userId,
       inventoryId,
-      companyId,
       currentPage: 1,
       sorter,
       filters,
@@ -160,9 +146,7 @@ describe('getInventoryProducts', () => {
     );
 
     await getInventoryProducts(productRepository as any)({
-      userId,
       inventoryId,
-      companyId,
       currentPage: 1,
       sorter,
       filters,
