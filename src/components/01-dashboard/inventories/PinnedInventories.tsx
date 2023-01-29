@@ -22,7 +22,6 @@ import {
 } from '@/usecases/usecases';
 
 import CardInventory from './CardInventory';
-import DeleteInventoryForm from './deleteInventoryForm/DeleteInventoryForm';
 
 const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
   suspense: true,
@@ -30,6 +29,13 @@ const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
 
 const DynamicEditInventoryForm = dynamic(
   () => import('./editInventoryForm/EditInventoryForm'),
+  {
+    suspense: true,
+  }
+);
+
+const DynamicDeleteInventoryForm = dynamic(
+  () => import('./deleteInventoryForm/DeleteInventoryForm'),
   {
     suspense: true,
   }
@@ -72,7 +78,8 @@ const PinnedInventories: FC<Props> = ({
       deleteInventoryUseCase(params),
     onSuccess: () => {
       handleCloseModal();
-      queryClient.refetchQueries({
+      toast(ToasterTypeEnum.SUCCESS, 'Linventaire a été supprimé avec succès');
+      queryClient.invalidateQueries({
         queryKey: [ApiRequestEnums.GetProducts],
       });
       queryClient.invalidateQueries({
@@ -137,7 +144,7 @@ const PinnedInventories: FC<Props> = ({
           open={isDeleteModalOpen}
           handleCloseModal={handleCloseModal}
         >
-          <DeleteInventoryForm
+          <DynamicDeleteInventoryForm
             inventory={selectedInventory as unknown as Inventory}
             deleteInventory={(inventory) =>
               deleteInventoryMutation.mutate({

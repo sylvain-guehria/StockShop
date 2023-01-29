@@ -51,15 +51,15 @@ export default function Toast({ type, message, id }: ToastType) {
                     dispatch({ type: ToasterActionsEnum.DELETE_TOAST, id });
                   }}
                   className={classNames(
-                    'inline-flex rounded-md focus:outline-none  focus:ring-offset-2 cursor-pointer',
+                    'inline-flex rounded-md focus:outline-none focus:ring-offset-2 cursor-pointer',
                     type === ToasterTypeEnum.SUCCESS
-                      ? 'bg-green-50 text-green-500, hover:bg-green-100,  focus:ring-green-600 focus:ring-offset-green-50'
+                      ? 'bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:ring-green-600 focus:ring-offset-green-50'
                       : '',
                     type === ToasterTypeEnum.ERROR
-                      ? 'bg-red-50 p-1.5 text-red-500 hover:bg-red-100  focus:ring-red-600 focus:ring-offset-red-50'
+                      ? 'bg-red-50 p-1.5 text-red-500 hover:bg-red-100 focus:ring-red-600 focus:ring-offset-red-50'
                       : '',
                     type === ToasterTypeEnum.INFO
-                      ? 'bg-blue-50 p-1.5 text-blue-500 hover:bg-blue-100  focus:ring-blue-600 focus:ring-offset-blue-50'
+                      ? 'bg-blue-50 p-1.5 text-blue-500 hover:bg-blue-100 focus:ring-blue-600 focus:ring-offset-blue-50'
                       : ''
                   )}
                 >
