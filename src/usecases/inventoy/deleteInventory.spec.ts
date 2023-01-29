@@ -7,13 +7,11 @@ const inventoryRepository = {
 
 describe('deleteInventory', () => {
   it('Do not delete the inventory if the userId is not provided', async () => {
-    const userId = '';
     const companyId = 'companyId';
     const inventoryId = 'inventoryId';
 
     try {
       await deleteInventory(inventoryRepository as any)({
-        userId,
         companyId,
         inventoryId,
       });
@@ -24,13 +22,11 @@ describe('deleteInventory', () => {
   });
 
   it('Do not delete the inventory if the companyId is not provided', async () => {
-    const userId = 'userId';
     const companyId = '';
     const inventoryId = 'inventoryId';
 
     try {
       await deleteInventory(inventoryRepository as any)({
-        userId,
         companyId,
         inventoryId,
       });
@@ -41,21 +37,17 @@ describe('deleteInventory', () => {
   });
 
   it('Do not delete the inventory if the inventoryId is not provided', async () => {
-    const userId = 'userId';
     const companyId = 'companyId';
     const inventoryId = '';
 
     try {
       await deleteInventory(inventoryRepository as any)({
-        userId,
         companyId,
         inventoryId,
       });
     } catch (error: any) {
       expect(inventoryRepository.delete).toHaveBeenCalledTimes(0);
-      expect(error.message).toBe(
-        'inventoryId is required to delete inventory'
-      );
+      expect(error.message).toBe('inventoryId is required to delete inventory');
     }
   });
 
@@ -65,7 +57,6 @@ describe('deleteInventory', () => {
     const inventoryId = 'inventoryId';
 
     await deleteInventory(inventoryRepository as any)({
-      userId,
       companyId,
       inventoryId,
     });

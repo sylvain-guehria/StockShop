@@ -25,13 +25,9 @@ export abstract class InventoryRepository {
     );
   }
 
-  async delete({
-    userId,
-    companyId,
-    inventoryId,
-  }: DeleteInventoryParams): Promise<void> {
+  async delete(inventoryId: string): Promise<void> {
     throw new Error(
-      `You tried to call an abstract methode, arg inventoryId ${inventoryId} and userId: ${userId} and companyId: ${companyId}`
+      `You tried to call an abstract methode, arg inventoryId ${inventoryId}`
     );
   }
 
@@ -57,9 +53,3 @@ export abstract class InventoryRepository {
 }
 
 export default InventoryRepository;
-
-export type DeleteInventoryParams = {
-  inventoryId: string;
-  companyId: string;
-  userId: string;
-};

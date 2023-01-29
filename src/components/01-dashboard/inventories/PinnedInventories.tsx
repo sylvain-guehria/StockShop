@@ -12,9 +12,9 @@ import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import type InventoryEntity from '@/modules/inventory/InventoryEntity';
-import type { DeleteInventoryParams } from '@/modules/inventory/inventoryRepository';
 import type { UpdateInventoryParams } from '@/modules/inventory/inventoryService';
 import type { Inventory } from '@/modules/inventory/inventoryType';
+import type { DeleteInventoryParams } from '@/usecases/inventoy/deleteInventory';
 import type { SetInventoryAsDefaultParams } from '@/usecases/inventoy/setInventoryAsDefault';
 import {
   deleteInventoryUseCase,
@@ -142,7 +142,6 @@ const PinnedInventories: FC<Props> = ({
             deleteInventory={(inventory) =>
               deleteInventoryMutation.mutate({
                 inventoryId: inventory.id as string,
-                userId: user.getId(),
                 companyId: user.getCompanyId(),
               })
             }

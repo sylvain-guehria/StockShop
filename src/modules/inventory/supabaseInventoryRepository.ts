@@ -3,7 +3,6 @@
 import axios from 'axios';
 
 import InventoryEntity from './InventoryEntity';
-import type { DeleteInventoryParams } from './inventoryRepository';
 import { InventoryRepository } from './inventoryRepository';
 import type { Inventory } from './inventoryType';
 
@@ -37,14 +36,10 @@ class SupabaseInventoryRepository extends InventoryRepository {
     return null;
   }
 
-  async delete({
-    userId,
-    companyId,
-    inventoryId,
-  }: DeleteInventoryParams): Promise<void> {
+  async delete(inventoryId: string): Promise<void> {
     console.info(`Deleting inventory with id ${inventoryId} in db...`);
     axios.delete(`${this.baseUrl}/api/inventory/delete`, {
-      params: { userId, companyId, inventoryId },
+      params: { inventoryId },
     });
   }
 
