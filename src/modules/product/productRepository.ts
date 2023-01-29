@@ -23,7 +23,7 @@ export abstract class ProductRepository {
     throw new Error(`You tried to call an abstract methode, arg: ${productId}`);
   }
 
-  async add(product: ProductEntity): Promise<ProductEntity> {
+  async add(product: ProductEntity): Promise<ProductEntity | null> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
         product,

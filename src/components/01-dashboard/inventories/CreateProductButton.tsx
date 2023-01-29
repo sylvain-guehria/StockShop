@@ -5,9 +5,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { productServiceDi } from 'di';
 import type { FC } from 'react';
 
+import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { CustomEvents } from '@/enums/eventEnums';
 import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
 
 type Props = {
   currentInventoryId: string;
@@ -16,6 +18,7 @@ type Props = {
 const CreateProductButton: FC<Props> = ({ currentInventoryId }) => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
+  const toast = useToast(5000);
 
   const { mutate } = useMutation({
     mutationFn: (inventoryId: string) =>
@@ -28,6 +31,12 @@ const CreateProductButton: FC<Props> = ({ currentInventoryId }) => {
         detail: data,
       });
       window.dispatchEvent(event);
+    },
+    onError: () => {
+      toast(
+        ToasterTypeEnum.ERROR,
+        'Erreur lors de la création du produit, veuillez réessayer.'
+      );
     },
   });
 

@@ -149,6 +149,7 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
       queryClient.invalidateQueries({
         queryKey: [ApiRequestEnums.GetProducts],
       });
+      queryClient.invalidateQueries({ queryKey: [ApiRequestEnums.GetProduct] });
       setIsEditProductModalOpen(false);
       setProductToEdit(null);
     },

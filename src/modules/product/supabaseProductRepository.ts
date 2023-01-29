@@ -59,7 +59,7 @@ class SupabaseProductRepository extends ProductRepository {
     });
   }
 
-  async add(product: ProductEntity): Promise<ProductEntity> {
+  async add(product: ProductEntity): Promise<ProductEntity | null> {
     console.info('adding product in db...');
     const res = await axios.post(`${this.baseUrl}/api/product/add`, {
       product: {
@@ -70,14 +70,12 @@ class SupabaseProductRepository extends ProductRepository {
         isPublic: product.getIsPublic(),
       },
     });
-    console.info('Product added in DB, id: ', product.getId());
-    const { id, label, inventoryId, createdAt } = res.data;
-    return ProductEntity.new({
-      id,
-      label,
-      inventoryId,
-      createdAt,
-    });
+    const success = res.status === 200;
+    if (success) {
+      console.info('Product added in DB, id: ', product.getId());
+      return product;
+    }
+    return null;
   }
 
   async delete({

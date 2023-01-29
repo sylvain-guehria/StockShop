@@ -14,14 +14,18 @@ class ProductService {
   async createProductInInventory(inventoryId: string): Promise<ProductEntity> {
     const id = uuidV4();
 
-    const product = ProductEntity.new({
-      id,
-      label: 'New product',
-      inventoryId,
-      createdAt: new Date().toISOString(),
-    });
+    const createdProduct = await this.productRepository.add(
+      ProductEntity.new({
+        id,
+        label: 'New product',
+        inventoryId,
+        createdAt: new Date().toISOString(),
+      })
+    );
 
-    return this.productRepository.add(product);
+    if (!createdProduct) throw new Error('Product not created');
+
+    return createdProduct as ProductEntity;
   }
 
   async updateProduct(product: Product): Promise<ProductEntity> {

@@ -5,13 +5,16 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { inventoryServiceDi } from 'di';
 import type { FC } from 'react';
 
+import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
 import type { CreateInventoryParams } from '@/modules/inventory/inventoryService';
 
 const CreateInventoryButton: FC = () => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
+  const toast = useToast(5000);
 
   const mutation = useMutation({
     mutationFn: ({ companyId }: CreateInventoryParams) =>
@@ -23,6 +26,12 @@ const CreateInventoryButton: FC = () => {
       queryClient.invalidateQueries({
         queryKey: [ApiRequestEnums.GetInventories],
       });
+    },
+    onError: () => {
+      toast(
+        ToasterTypeEnum.ERROR,
+        "Erreur lors de la création de l'inventaire, veuillez réessayer."
+      );
     },
   });
 
