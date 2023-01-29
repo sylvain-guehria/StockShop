@@ -26,7 +26,7 @@ const deleteInventory = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (error) {
     // eslint-disable-next-line no-console
-    console.error('error when adding an inventory', error);
+    console.error('error when deleting an inventory', error);
     res.status(400).end();
     return;
   }

@@ -23,7 +23,6 @@ import {
   getSubCategoryById,
 } from '@/modules/category/categoryUtils';
 import type ProductEntity from '@/modules/product/ProductEntity';
-import type { DeleteProduct } from '@/modules/product/productRepository';
 import type { Product } from '@/modules/product/productType';
 import {
   deleteProductUseCase,
@@ -156,7 +155,7 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
   });
 
   const deleteProductMutation = useMutation({
-    mutationFn: (params: DeleteProduct) => deleteProductUseCase(params),
+    mutationFn: (productId: string) => deleteProductUseCase(productId),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({
@@ -222,12 +221,7 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
           description={`Êtes-vous sûr de vouloir supprimer le produit : ${productToEdit?.getLabel()} ?`}
           isLoading={deleteProductMutation.isLoading}
           onConfirm={() =>
-            deleteProductMutation.mutate({
-              productId: productToEdit?.getId() as string,
-              userId: user.getId(),
-              companyId: user.getCompanyId(),
-              inventoryId: productToEdit?.getInventoryId() as string,
-            }) as unknown as () => void
+            deleteProductMutation.mutate(productToEdit?.getId() as string)
           }
         />
       )}

@@ -31,20 +31,8 @@ export abstract class ProductRepository {
     );
   }
 
-  async delete({
-    productId,
-    userId,
-    companyId,
-    inventoryId,
-  }: DeleteProduct): Promise<void> {
-    throw new Error(
-      `You tried to call an abstract methode, arg: ${{
-        userId,
-        companyId,
-        inventoryId,
-        productId,
-      }}`
-    );
+  async delete(productId: string): Promise<void> {
+    throw new Error(`You tried to call an abstract methode, arg: ${productId}`);
   }
 
   async update(product: ProductEntity): Promise<ProductEntity> {
@@ -78,13 +66,6 @@ export abstract class ProductRepository {
 }
 
 export default ProductRepository;
-
-export interface DeleteProduct {
-  productId: string;
-  inventoryId: string;
-  userId: string;
-  companyId: string;
-}
 
 export interface GetProductsByInventoryId {
   inventoryId: string;

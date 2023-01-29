@@ -3,10 +3,7 @@
 import axios from 'axios';
 
 import ProductEntity from './ProductEntity';
-import type {
-  DeleteProduct,
-  GetProductsByInventoryId,
-} from './productRepository';
+import type { GetProductsByInventoryId } from './productRepository';
 import { ProductRepository } from './productRepository';
 
 class SupabaseProductRepository extends ProductRepository {
@@ -78,19 +75,11 @@ class SupabaseProductRepository extends ProductRepository {
     return null;
   }
 
-  async delete({
-    productId,
-    userId,
-    companyId,
-    inventoryId,
-  }: DeleteProduct): Promise<void> {
+  async delete(productId: string): Promise<void> {
     console.info(`Deleting product with id ${productId} in db...`);
     return axios.delete(`${this.baseUrl}/api/product/delete`, {
       params: {
         productId,
-        userId,
-        companyId,
-        inventoryId,
       },
     });
   }

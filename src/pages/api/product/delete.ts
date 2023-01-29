@@ -1,25 +1,36 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import createServerSupabaseSSRClient from 'supabase/server/supabase-ssr';
+import { TableNames } from 'supabase/tables/tableNames';
 
 const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
-    query: { userId, companyId, inventoryId, productId },
+    query: { productId },
     method,
   } = req;
 
-  try {
-    switch (method) {
-      case 'DELETE':
-        res.status(200).end({ userId, companyId, inventoryId, productId });
-        return;
-      default:
-        res.setHeader('Allow', ['GET', 'PUT']);
-        res.status(405).end(`Method ${method} Not Allowed`);
-    }
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(e);
-    res.status(400).end();
+  if (!productId)
+    throw new Error('productId is required to delete the product');
+
+  if (method !== 'DELETE') {
+    res.setHeader('Allow', ['DELETE']);
+    res.status(405).end(`Method ${method} Not Allowed`);
+    return;
   }
+
+  const supabaseSsr = createServerSupabaseSSRClient({ req, res });
+
+  const { error } = await supabaseSsr
+    .from(TableNames.PRODUCTS)
+    .delete()
+    .eq('id', productId);
+
+  if (error) {
+    // eslint-disable-next-line no-console
+    console.error('error when deleting a product', error);
+    res.status(400).end();
+    return;
+  }
+  res.status(200).json(true);
 };
 
 export default deleteProduct;
