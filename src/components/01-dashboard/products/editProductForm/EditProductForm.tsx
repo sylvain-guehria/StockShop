@@ -73,6 +73,7 @@ const EditProductForm: FC<Props> = ({
     watch,
     setValue,
     getValues,
+    control,
     formState: { errors },
   } = useForm<EditProductFormType>(formOptions);
 
@@ -97,8 +98,7 @@ const EditProductForm: FC<Props> = ({
           <SubFormGeneral
             register={register}
             errors={errors}
-            watch={watch}
-            setValue={setValue}
+            control={control}
           />
         </div>
 
