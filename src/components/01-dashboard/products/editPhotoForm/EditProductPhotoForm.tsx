@@ -68,7 +68,6 @@ const EditProductPhotoForm: FC<Props> = ({ productId }) => {
     if (!product) return;
     try {
       await updatePhotoProductUseCase({
-        userId: user.getId(),
         companyId: user.getCompanyId(),
         product,
         currentFile: file as File,

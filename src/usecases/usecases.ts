@@ -4,9 +4,9 @@ import {
   inventoryServiceDi,
   productRepository,
   productServiceDi,
-  storageServiceDi,
   userRepository,
 } from 'di';
+import supabase from 'supabase/client/supabase-browser';
 
 import { chooseSubRoleOnFirstConnection } from './auth/chooseSubRoleOnFirstConnection';
 import { loginWithEmail } from './auth/loginWithEmail';
@@ -46,7 +46,7 @@ export const getInventoryProductsUseCase =
 export const deleteProductUseCase = deleteProduct(productRepository);
 export const updatePhotoProductUseCase = updatePhotoProduct(
   productServiceDi,
-  storageServiceDi
+  supabase.storage
 );
 
 // USER
