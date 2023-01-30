@@ -16,7 +16,11 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['assets.vercel.com', 'images.unsplash.com'],
+    domains: [
+      'assets.vercel.com',
+      'images.unsplash.com',
+      `${process.env.PROJECT_ID}.supabase.co`,
+    ],
   },
   async redirects() {
     return [

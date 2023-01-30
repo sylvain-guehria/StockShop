@@ -44,14 +44,18 @@ export const updatePhotoProduct =
 
     try {
       if (currentFile) {
-        const { data, error } = await supabaseStorage
+        const { error } = await supabaseStorage
           .from(BucketNames.PRODUCTS)
           .upload(`${companyId}/${product.getId()}`, currentFile);
 
         if (error) throw new Error(error.message);
 
+        const { data } = supabaseStorage
+          .from(BucketNames.PRODUCTS)
+          .getPublicUrl(`${companyId}/${product.getId()}`);
+
         return await productServiceDi.updateProduct(
-          product.setPhotoLink(data.path)
+          product.setPhotoLink(data.publicUrl)
         );
       }
 
