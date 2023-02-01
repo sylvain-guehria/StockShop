@@ -45,6 +45,9 @@ const ProductView: FC<Props> = ({ productId }) => {
 
   const allCategoryInputs = [...categoryInputs, ...subCategoryInputs];
   const hasCategoryInputs = allCategoryInputs.length > 0;
+
+  // ADD a timestamp to the image src to force nextjs to reload the image without cache
+  const timeStamp = new Date().getTime();
   return (
     <>
       <div className="lg:flex">
@@ -253,7 +256,7 @@ const ProductView: FC<Props> = ({ productId }) => {
                 <div className="space-y-1 text-center">
                   {product.getPhotoLink() ? (
                     <NextImage
-                      src={product.getPhotoLink()}
+                      src={`${product?.getPhotoLink()}?${timeStamp}`}
                       alt="current product photo"
                       width={200}
                       height={200}

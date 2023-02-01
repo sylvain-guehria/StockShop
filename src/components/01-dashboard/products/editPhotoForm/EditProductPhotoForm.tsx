@@ -110,6 +110,9 @@ const EditProductPhotoForm: FC<Props> = ({ productId }) => {
     setIsDeletePhotoModalOpen(true);
   };
 
+  // ADD a timestamp to the image src to force nextjs to reload the image without cache
+  const timeStamp = new Date().getTime();
+
   return (
     <div>
       {isDeletePhotoModalOpen && (
@@ -135,7 +138,7 @@ const EditProductPhotoForm: FC<Props> = ({ productId }) => {
               <div className="mb-3">
                 {product?.getPhotoLink() ? (
                   <NextImage
-                    src={product?.getPhotoLink()}
+                    src={`${product?.getPhotoLink()}?${timeStamp}`}
                     alt="current product photo"
                     width={200}
                     height={200}
