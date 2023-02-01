@@ -43,16 +43,17 @@ export const updatePhotoProduct =
     }
 
     try {
+      const filePath = `${companyId}/${product.getId()}`;
       if (currentFile) {
         const { error } = await supabaseStorage
           .from(BucketNames.PRODUCTS)
-          .upload(`${companyId}/${product.getId()}`, currentFile);
+          .upload(`${filePath}`, currentFile);
 
         if (error) throw new Error(error.message);
 
         const { data } = supabaseStorage
           .from(BucketNames.PRODUCTS)
-          .getPublicUrl(`${companyId}/${product.getId()}`);
+          .getPublicUrl(`${filePath}`);
 
         return await productServiceDi.updateProduct(
           product.setPhotoLink(data.publicUrl)
@@ -61,7 +62,7 @@ export const updatePhotoProduct =
 
       const { error } = await supabaseStorage
         .from(BucketNames.PRODUCTS)
-        .remove([`${companyId}/${product.getId()}`]);
+        .remove([`${filePath}`]);
 
       if (error) throw new Error(error.message);
 
