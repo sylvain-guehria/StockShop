@@ -15,7 +15,6 @@ import type InventoryEntity from '@/modules/inventory/InventoryEntity';
 import type { UpdateInventoryParams } from '@/modules/inventory/inventoryService';
 import type { Inventory } from '@/modules/inventory/inventoryType';
 import type { DeleteInventoryParams } from '@/usecases/inventoy/deleteInventory';
-import type { SetInventoryAsDefaultParams } from '@/usecases/inventoy/setInventoryAsDefault';
 import {
   deleteInventoryUseCase,
   setInventoryAsDefaultUseCase,
@@ -93,8 +92,8 @@ const PinnedInventories: FC<Props> = ({
   });
 
   const setDaufltInventoryMutation = useMutation({
-    mutationFn: (params: SetInventoryAsDefaultParams) =>
-      setInventoryAsDefaultUseCase(params),
+    mutationFn: (inventory: Inventory) =>
+      setInventoryAsDefaultUseCase(inventory),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({
@@ -120,10 +119,7 @@ const PinnedInventories: FC<Props> = ({
   };
 
   const handleClickSetDefaultInventory = (inventory: Inventory) => {
-    setDaufltInventoryMutation.mutate({
-      inventory,
-      userId: user.id,
-    });
+    setDaufltInventoryMutation.mutate(inventory);
   };
 
   return (

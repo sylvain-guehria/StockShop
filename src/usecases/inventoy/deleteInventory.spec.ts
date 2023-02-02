@@ -1,7 +1,7 @@
 import { deleteInventory } from './deleteInventory';
 
 const inventoryRepository = {
-  getInventoriesByUserIdAndCompanyId: jest.fn(),
+  getInventoriesByCompanyId: jest.fn(),
   delete: jest.fn(),
 };
 
@@ -51,10 +51,35 @@ describe('deleteInventory', () => {
     }
   });
 
-  it('Delete the inventory if the userId, companyId and inventoryId are provided', async () => {
-    const userId = 'userId';
+  it('User cannot delete the last inventory', async () => {
     const companyId = 'companyId';
     const inventoryId = 'inventoryId';
+
+    inventoryRepository.getInventoriesByCompanyId.mockResolvedValue([
+      { id: 'inventoryId' },
+    ]);
+
+    try {
+      await deleteInventory(inventoryRepository as any)({
+        companyId,
+        inventoryId,
+      });
+    } catch (error: any) {
+      expect(inventoryRepository.delete).toHaveBeenCalledTimes(0);
+      expect(error.message).toBe(
+        'Vous ne pouvez pas supprimer le dernier inventaire'
+      );
+    }
+  });
+
+  it('Delete the inventory if the userId, companyId and inventoryId are provided', async () => {
+    const companyId = 'companyId';
+    const inventoryId = 'inventoryId';
+
+    inventoryRepository.getInventoriesByCompanyId.mockResolvedValue([
+      { id: 'inventoryId' },
+      { id: 'inventoryId2' },
+    ]);
 
     await deleteInventory(inventoryRepository as any)({
       companyId,
@@ -62,10 +87,6 @@ describe('deleteInventory', () => {
     });
 
     expect(inventoryRepository.delete).toHaveBeenCalledTimes(1);
-    expect(inventoryRepository.delete).toHaveBeenCalledWith({
-      userId,
-      companyId,
-      inventoryId,
-    });
+    expect(inventoryRepository.delete).toHaveBeenCalledWith(inventoryId);
   });
 });

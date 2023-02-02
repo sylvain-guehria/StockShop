@@ -4,20 +4,16 @@ import type { Inventory } from '@/modules/inventory/inventoryType';
 import { setInventoryAsDefault } from './setInventoryAsDefault';
 
 const inventoryRepository = {
-  getInventoriesByUserIdAndCompanyId: jest.fn(),
+  getInventoriesByCompanyId: jest.fn(),
   update: jest.fn(),
 };
 
 describe('deleteInventory', () => {
   it('Do not set the inventory as default if the userId is not provided', async () => {
-    const userId = '';
     const inventory = { companyId: 'companyId', id: 'inventoryId' };
 
     try {
-      await setInventoryAsDefault(inventoryRepository as any)({
-        userId,
-        inventory,
-      });
+      await setInventoryAsDefault(inventoryRepository as any)(inventory);
     } catch (error: any) {
       expect(inventoryRepository.update).toHaveBeenCalledTimes(0);
       expect(error.message).toBe(
@@ -26,14 +22,10 @@ describe('deleteInventory', () => {
     }
   });
   it('Do not set the inventory as default if the inventory is not provided', async () => {
-    const userId = 'userId';
     const inventory = null as unknown as Inventory;
 
     try {
-      await setInventoryAsDefault(inventoryRepository as any)({
-        userId,
-        inventory,
-      });
+      await setInventoryAsDefault(inventoryRepository as any)(inventory);
     } catch (error: any) {
       expect(inventoryRepository.update).toHaveBeenCalledTimes(0);
       expect(error.message).toBe(
@@ -42,14 +34,10 @@ describe('deleteInventory', () => {
     }
   });
   it('Do not set the inventory as default if the inventory companyId is not provided', async () => {
-    const userId = 'userId';
     const inventory = { companyId: '', id: 'inventoryId' };
 
     try {
-      await setInventoryAsDefault(inventoryRepository as any)({
-        userId,
-        inventory,
-      });
+      await setInventoryAsDefault(inventoryRepository as any)(inventory);
     } catch (error: any) {
       expect(inventoryRepository.update).toHaveBeenCalledTimes(0);
       expect(error.message).toBe(
@@ -58,71 +46,56 @@ describe('deleteInventory', () => {
     }
   });
   it('Do not set the inventory as default if the inventory is already the default one', async () => {
-    const userId = 'userId';
     const inventory = {
       companyId: 'companyId',
       id: 'inventoryId',
       isDefaultInventory: true,
     };
 
-    await setInventoryAsDefault(inventoryRepository as any)({
-      userId,
-      inventory,
-    });
+    await setInventoryAsDefault(inventoryRepository as any)(inventory);
 
     expect(inventoryRepository.update).toHaveBeenCalledTimes(0);
   });
   it('Do not get the inventories if the inventory is already the default one', async () => {
-    const userId = 'userId';
     const inventory = {
       companyId: 'companyId',
       id: 'inventoryId',
       isDefaultInventory: true,
     };
 
-    await setInventoryAsDefault(inventoryRepository as any)({
-      userId,
-      inventory,
-    });
+    await setInventoryAsDefault(inventoryRepository as any)(inventory);
 
-    expect(
-      inventoryRepository.getInventoriesByUserIdAndCompanyId
-    ).toHaveBeenCalledTimes(0);
+    expect(inventoryRepository.getInventoriesByCompanyId).toHaveBeenCalledTimes(
+      0
+    );
   });
 
   it('Should get the user inventories', async () => {
-    const userId = 'userId';
     const inventory = {
       companyId: 'companyId-2',
       id: 'inventory',
       isDefaultInventory: false,
     };
 
-    inventoryRepository.getInventoriesByUserIdAndCompanyId.mockResolvedValueOnce(
-      [
-        InventoryEntity.new({
-          companyId: 'companyId-1',
-          id: 'inventory',
-          isDefaultInventory: true,
-        }),
-      ]
+    inventoryRepository.getInventoriesByCompanyId.mockResolvedValueOnce([
+      InventoryEntity.new({
+        companyId: 'companyId-1',
+        id: 'inventory',
+        isDefaultInventory: true,
+      }),
+    ]);
+
+    await setInventoryAsDefault(inventoryRepository as any)(inventory);
+
+    expect(inventoryRepository.getInventoriesByCompanyId).toHaveBeenCalledTimes(
+      1
     );
-
-    await setInventoryAsDefault(inventoryRepository as any)({
-      userId,
-      inventory,
-    });
-
-    expect(
-      inventoryRepository.getInventoriesByUserIdAndCompanyId
-    ).toHaveBeenCalledTimes(1);
-    expect(
-      inventoryRepository.getInventoriesByUserIdAndCompanyId
-    ).toHaveBeenCalledWith(userId, inventory.companyId);
+    expect(inventoryRepository.getInventoriesByCompanyId).toHaveBeenCalledWith(
+      inventory.companyId
+    );
   });
 
   it('Should unset the default inventory as default and set the new inventory as default', async () => {
-    const userId = 'userId';
     const companyId = 'companyId';
     const inventoryToSetAsDefault = {
       companyId,
@@ -140,28 +113,21 @@ describe('deleteInventory', () => {
       inventoryToSetAsDefault
     );
 
-    inventoryRepository.getInventoriesByUserIdAndCompanyId.mockResolvedValueOnce(
-      [defaultInventory]
-    );
+    inventoryRepository.getInventoriesByCompanyId.mockResolvedValueOnce([
+      defaultInventory,
+    ]);
 
-    await setInventoryAsDefault(inventoryRepository as any)({
-      userId,
-      inventory: inventoryToSetAsDefault,
-    });
+    await setInventoryAsDefault(inventoryRepository as any)(
+      inventoryToSetAsDefault
+    );
 
     defaultInventory.setAsNotDefaultInventory();
     entityInventoryToSetAsDefault.setAsDefaultInventory();
 
     expect(inventoryRepository.update).toHaveBeenCalledTimes(2);
     expect(inventoryRepository.update).toHaveBeenCalledWith(
-      entityInventoryToSetAsDefault,
-      userId,
-      companyId
+      entityInventoryToSetAsDefault
     );
-    expect(inventoryRepository.update).toHaveBeenCalledWith(
-      defaultInventory,
-      userId,
-      companyId
-    );
+    expect(inventoryRepository.update).toHaveBeenCalledWith(defaultInventory);
   });
 });

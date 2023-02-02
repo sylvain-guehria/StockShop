@@ -63,7 +63,7 @@ class InventoryEntity implements Inventory {
     return this;
   }
 
-  getIsDefaultInventory(): boolean {
+  isDefault(): boolean {
     return this.isDefaultInventory;
   }
 

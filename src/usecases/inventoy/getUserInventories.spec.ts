@@ -2,18 +2,20 @@ import UserEntity from '@/modules/user/UserEntity';
 
 import { getUserInventories } from './getUserInventories';
 
-const companyRepository = {
-  getCompanyByUserId: jest.fn(),
-};
 const inventoryRepository = {
-  getInventoriesByUserIdAndCompanyId: jest.fn(),
+  getInventoriesByCompanyId: jest.fn(),
 };
 const companyService = {
-  createCompanyByUserId: jest.fn(),
+  createCompany: jest.fn(),
 };
 const inventoryService = {
-  createInventoryByUserIdAndCompanyId: jest.fn(),
+  createInventoryWithCompanyId: jest.fn(),
   getInventoriesByUserIdAndCompanyId: jest.fn(),
+};
+
+const userRepository = {
+  getCompanyByUserId: jest.fn(),
+  update: jest.fn(),
 };
 
 describe('getUserInventories', () => {
@@ -21,7 +23,7 @@ describe('getUserInventories', () => {
     const user = UserEntity.new({ id: '' });
 
     const inventories = await getUserInventories(
-      companyRepository as any,
+      userRepository as any,
       inventoryRepository as any,
       companyService as any,
       inventoryService as any
@@ -33,143 +35,110 @@ describe('getUserInventories', () => {
     expect(inventories).toEqual([]);
   });
 
-  it('Get the company of the current user', async () => {
-    const user = UserEntity.new({ id: 'userId' });
-
-    await getUserInventories(
-      companyRepository as any,
-      inventoryRepository as any,
-      companyService as any,
-      inventoryService as any
-    )(user);
-
-    expect(companyRepository.getCompanyByUserId).toHaveBeenCalledTimes(1);
-    expect(companyRepository.getCompanyByUserId).toBeCalledWith(user.getId());
-  });
   it('Create a company if the user does have one', async () => {
     const user = UserEntity.new({ id: 'userId' });
 
-    companyRepository.getCompanyByUserId.mockResolvedValue(null);
-
     await getUserInventories(
-      companyRepository as any,
       inventoryRepository as any,
       companyService as any,
-      inventoryService as any
+      inventoryService as any,
+      userRepository as any
     )(user);
 
-    expect(companyService.createCompanyByUserId).toHaveBeenCalledTimes(1);
-    expect(companyService.createCompanyByUserId).toBeCalledWith(user.getId());
+    expect(companyService.createCompany).toHaveBeenCalledTimes(1);
   });
   it('Do not create a company if the user has one', async () => {
     const user = UserEntity.new({ id: 'userId' });
-    const company = { id: 'companyId' };
-
-    companyRepository.getCompanyByUserId.mockResolvedValue(company);
 
     await getUserInventories(
-      companyRepository as any,
       inventoryRepository as any,
       companyService as any,
-      inventoryService as any
+      inventoryService as any,
+      userRepository as any
     )(user);
 
-    expect(companyService.createCompanyByUserId).toHaveBeenCalledTimes(0);
+    expect(companyService.createCompany).toHaveBeenCalledTimes(0);
   });
-  it('Get the user inventories', async () => {
-    const user = UserEntity.new({ id: 'userId' });
-    const company = { id: 'companyId' };
-
-    companyRepository.getCompanyByUserId.mockResolvedValue(company);
+  it('Get the inventories of the user company', async () => {
+    const user = UserEntity.new({ id: 'userId', companyId: 'companyId' });
 
     await getUserInventories(
-      companyRepository as any,
       inventoryRepository as any,
       companyService as any,
-      inventoryService as any
+      inventoryService as any,
+      userRepository as any
     )(user);
 
-    expect(
-      inventoryRepository.getInventoriesByUserIdAndCompanyId
-    ).toHaveBeenCalledTimes(1);
-    expect(
-      inventoryRepository.getInventoriesByUserIdAndCompanyId
-    ).toBeCalledWith(user.getId(), company.id);
+    expect(inventoryRepository.getInventoriesByCompanyId).toHaveBeenCalledTimes(
+      1
+    );
+    expect(inventoryRepository.getInventoriesByCompanyId).toBeCalledWith(
+      'companyId'
+    );
   });
   it('Create his first inventory if the user does not have one', async () => {
     const user = UserEntity.new({ id: 'userId' });
-    const company = { id: 'companyId' };
 
-    companyRepository.getCompanyByUserId.mockResolvedValue(company);
-    inventoryRepository.getInventoriesByUserIdAndCompanyId.mockResolvedValue(
-      null
-    );
+    companyService.createCompany.mockResolvedValue('newCompanyId');
+    inventoryRepository.getInventoriesByCompanyId.mockResolvedValue(null);
 
     await getUserInventories(
-      companyRepository as any,
       inventoryRepository as any,
       companyService as any,
-      inventoryService as any
+      inventoryService as any,
+      userRepository as any
     )(user);
 
-    expect(
-      inventoryService.createInventoryByUserIdAndCompanyId
-    ).toHaveBeenCalledTimes(1);
-    expect(inventoryService.createInventoryByUserIdAndCompanyId).toBeCalledWith(
-      {
-        userId: user.getId(),
-        companyId: company.id,
-        isFirstInventory: true,
-      }
+    expect(userRepository.update).toHaveBeenCalledTimes(1);
+    expect(userRepository.update).toBeCalledWith(
+      user.setCompanyId('newCompanyId')
     );
+    expect(inventoryService.createInventoryWithCompanyId).toHaveBeenCalledTimes(
+      1
+    );
+    expect(inventoryService.createInventoryWithCompanyId).toBeCalledWith({
+      companyId: 'newCompanyId',
+      isFirstInventory: true,
+    });
   });
   it('Do not get create an inventory if the user have one', async () => {
-    const user = UserEntity.new({ id: 'userId' });
-    const company = { id: 'companyId' };
+    const user = UserEntity.new({ id: 'userId', companyId: 'companyId' });
     const inventories = [{ id: 'inventoryId' }];
 
-    companyRepository.getCompanyByUserId.mockResolvedValue(company);
-    inventoryRepository.getInventoriesByUserIdAndCompanyId.mockResolvedValue(
+    inventoryRepository.getInventoriesByCompanyId.mockResolvedValue(
       inventories
     );
 
     await getUserInventories(
-      companyRepository as any,
       inventoryRepository as any,
       companyService as any,
-      inventoryService as any
+      inventoryService as any,
+      userRepository as any
     )(user);
 
-    expect(
-      inventoryService.createInventoryByUserIdAndCompanyId
-    ).toHaveBeenCalledTimes(0);
+    expect(inventoryService.createInventoryWithCompanyId).toHaveBeenCalledTimes(
+      0
+    );
   });
 
   it('Should return inventories', async () => {
     const user = UserEntity.new({ id: 'userId' });
-    const companyId = 'companyId';
     const inventoryId = 'inventoryId';
-    const company = {
-      id: companyId,
-    };
+
     const inventory = {
       id: inventoryId,
     };
 
-    companyRepository.getCompanyByUserId.mockResolvedValue(company);
-    inventoryRepository.getInventoriesByUserIdAndCompanyId.mockResolvedValue([
+    inventoryRepository.getInventoriesByCompanyId.mockResolvedValue([
       inventory,
     ]);
-    companyService.createCompanyByUserId.mockResolvedValue(company);
-    inventoryService.createInventoryByUserIdAndCompanyId.mockResolvedValue(
-      inventory
-    );
+    inventoryService.createInventoryWithCompanyId.mockResolvedValue(inventory);
 
     const inventories = await getUserInventories(
-      companyRepository as any,
       inventoryRepository as any,
       companyService as any,
-      inventoryService as any
+      inventoryService as any,
+      userRepository as any
     )(user);
     expect(inventories).toEqual([inventory]);
   });

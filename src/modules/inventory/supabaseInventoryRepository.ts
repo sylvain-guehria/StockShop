@@ -64,7 +64,7 @@ class SupabaseInventoryRepository extends InventoryRepository {
       id: inventory.getId(),
       name: inventory.getName(),
       isPublic: inventory.getIsPublic(),
-      isDefaultInventory: inventory.getIsDefaultInventory(),
+      isDefaultInventory: inventory.isDefault(),
       color: inventory.getColor(),
     });
   }
