@@ -1,8 +1,4 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import {
-  CustomFirebaseErrorCodes,
-  StorageFirebaseErrorCodes,
-} from 'supabase/errorCodes';
 import { BucketNames } from 'supabase/tables/bucketNames';
 
 import {
@@ -35,15 +31,19 @@ export const updatePhotoProduct =
     if (!product)
       throw new Error('product is required to update the photo of the product');
 
-    if (currentFile && currentFile.size > twoMegaBits)
-      throw new Error(StorageFirebaseErrorCodes.fileWrongSize);
+    if (!product.getInventoryId())
+      throw new Error('product must be in an inventoryId');
 
+    if (currentFile && currentFile.size > twoMegaBits)
+      throw new Error('Le fichier ne doit pas dépasser 2 Mo');
     if (currentFile && !authorizedFileTypes.includes(currentFile.type)) {
-      throw new Error(CustomFirebaseErrorCodes.imageFileWrongType);
+      throw new Error(
+        'Le fichier doit être une image au format png, jpg ou jpeg'
+      );
     }
 
     try {
-      const filePath = `${companyId}/${product.getId()}`;
+      const filePath = `${companyId}/${product.getInventoryId()}/${product.getId()}`;
       if (currentFile) {
         const { error } = await supabaseStorage
           .from(BucketNames.PRODUCTS)
@@ -51,7 +51,7 @@ export const updatePhotoProduct =
 
         if (error) throw new Error(error.message);
 
-        const { data } = supabaseStorage
+        const { data } = await supabaseStorage
           .from(BucketNames.PRODUCTS)
           .getPublicUrl(`${filePath}`);
 
@@ -60,11 +60,18 @@ export const updatePhotoProduct =
         );
       }
 
-      const { error } = await supabaseStorage
+      const { error, data } = await supabaseStorage
         .from(BucketNames.PRODUCTS)
         .remove([`${filePath}`]);
 
+      const isDeleted =
+        data?.length === 1 && data[0]?.metadata?.httpStatusCode === 200;
+
       if (error) throw new Error(error.message);
+      if (!isDeleted)
+        throw new Error(
+          "Le fichier n'a pas pu être supprimé, veuillez réessayer"
+        );
 
       return await productServiceDi.updateProduct(product.setPhotoLink(''));
     } catch (error: any) {
