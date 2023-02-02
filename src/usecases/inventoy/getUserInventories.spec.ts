@@ -1,3 +1,4 @@
+import CompanyEntity from '@/modules/company/CompanyEntity';
 import UserEntity from '@/modules/user/UserEntity';
 
 import { getUserInventories } from './getUserInventories';
@@ -48,7 +49,7 @@ describe('getUserInventories', () => {
     expect(companyService.createCompany).toHaveBeenCalledTimes(1);
   });
   it('Do not create a company if the user has one', async () => {
-    const user = UserEntity.new({ id: 'userId' });
+    const user = UserEntity.new({ id: 'userId', companyId: 'companyId' });
 
     await getUserInventories(
       inventoryRepository as any,
@@ -76,10 +77,11 @@ describe('getUserInventories', () => {
       'companyId'
     );
   });
-  it('Create his first inventory if the user does not have one', async () => {
+  it('Create his first inventory when creating a company for the user', async () => {
     const user = UserEntity.new({ id: 'userId' });
+    const company = CompanyEntity.new({ id: 'newCompanyId' });
 
-    companyService.createCompany.mockResolvedValue('newCompanyId');
+    companyService.createCompany.mockResolvedValue(company);
     inventoryRepository.getInventoriesByCompanyId.mockResolvedValue(null);
 
     await getUserInventories(

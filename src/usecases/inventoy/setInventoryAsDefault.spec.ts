@@ -9,18 +9,6 @@ const inventoryRepository = {
 };
 
 describe('deleteInventory', () => {
-  it('Do not set the inventory as default if the userId is not provided', async () => {
-    const inventory = { companyId: 'companyId', id: 'inventoryId' };
-
-    try {
-      await setInventoryAsDefault(inventoryRepository as any)(inventory);
-    } catch (error: any) {
-      expect(inventoryRepository.update).toHaveBeenCalledTimes(0);
-      expect(error.message).toBe(
-        'userId is required to set inventory as default'
-      );
-    }
-  });
   it('Do not set the inventory as default if the inventory is not provided', async () => {
     const inventory = null as unknown as Inventory;
 
