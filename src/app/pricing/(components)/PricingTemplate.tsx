@@ -1,7 +1,7 @@
 import { CheckIcon as CheckIconMini } from '@heroicons/react/20/solid';
 import { CheckIcon as CheckIconOutline } from '@heroicons/react/24/outline';
 
-import Section from '../../../components/04-lib/layout/Section';
+import Section from '../../../components/lib/layout/Section';
 
 const tiers = [
   {

@@ -9,20 +9,17 @@ import Link from 'next/link';
 import type { FC } from 'react';
 import { Suspense, useState } from 'react';
 
-import NextImage from '@/components/04-lib/nextImage/NextImage';
+import NextImage from '@/components/lib/nextImage/NextImage';
 import { useAuth } from '@/hooks/useAuth';
 import { mainRoutes } from '@/routes/mainRoutes';
 
-import ServicesButton from '../../../../components/04-lib/Popovers/ServicesButton';
+import ServicesButton from '../../../../components/lib/Popovers/ServicesButton';
 import inventoryMarketLogo from '../../../../public/assets/images/inventoryMarket.png';
 import ProfileDropdown from '../../../profile/(components)/ProfileDropdown';
 
-const SearchBarModal = dynamic(
-  () => import('../../../../components/05-modals/SearchBarModal'),
-  {
-    suspense: true,
-  }
-);
+const SearchBarModal = dynamic(() => import('./SearchBarModal'), {
+  suspense: true,
+});
 
 type Props = {
   setMobileMenuOpen: (value: boolean) => void;

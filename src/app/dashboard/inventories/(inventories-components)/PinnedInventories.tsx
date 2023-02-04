@@ -6,8 +6,8 @@ import dynamic from 'next/dynamic';
 import type { FC } from 'react';
 import { useState } from 'react';
 
-import Spinner from '@/components/04-lib/spinner/Spinner';
-import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import Spinner from '@/components/lib/spinner/Spinner';
+import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
@@ -22,19 +22,22 @@ import {
 
 import CardInventory from './CardInventory';
 
-const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
-  suspense: true,
-});
+const DynamicModal = dynamic(
+  () => import('../../../../components/lib/modal/Modal'),
+  {
+    suspense: true,
+  }
+);
 
 const DynamicEditInventoryForm = dynamic(
-  () => import('./editInventoryForm/EditInventoryForm'),
+  () => import('./(editInventoryForm)/EditInventoryForm'),
   {
     suspense: true,
   }
 );
 
 const DynamicDeleteInventoryForm = dynamic(
-  () => import('./deleteInventoryForm/DeleteInventoryForm'),
+  () => import('./(deleteInventoryForm)/DeleteInventoryForm'),
   {
     suspense: true,
   }

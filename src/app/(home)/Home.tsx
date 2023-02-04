@@ -5,10 +5,10 @@ import { useState } from 'react';
 import NewsLetterIncentiveForm from '@/app/(home)/(NewsLetterIncentive)/NewsLetterIncentiveForm';
 
 import screenShot from '../../../public/assets/images/capture-inventory-market.png';
-import { Background } from '../../components/04-lib/background/Background';
-import NewsBanner from '../../components/04-lib/banner/NewsBanner';
-import Section from '../../components/04-lib/layout/Section';
-import NextImage from '../../components/04-lib/nextImage/NextImage';
+import { Background } from '../../components/lib/background/Background';
+import NewsBanner from '../../components/lib/banner/NewsBanner';
+import Section from '../../components/lib/layout/Section';
+import NextImage from '../../components/lib/nextImage/NextImage';
 import { Banner } from './Banner';
 import { FAQ } from './FAQ';
 import Hero from './Hero';

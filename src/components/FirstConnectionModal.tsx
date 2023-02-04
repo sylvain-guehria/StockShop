@@ -14,7 +14,7 @@ import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { marketplaceRoutes } from '@/routes/marketplaceRoutes';
 import { chooseSubRoleOnFirstConnectionUseCase } from '@/usecases/usecases';
 
-import NextImage from '../04-lib/nextImage/NextImage';
+import NextImage from './lib/nextImage/NextImage';
 
 type Props = {
   user: User;

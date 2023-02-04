@@ -12,8 +12,8 @@ import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { logoutUseCase } from '@/usecases/usecases';
 
-import NextImage from '../../../components/04-lib/nextImage/NextImage';
-import { ToasterTypeEnum } from '../../../components/08-toaster/toasterEnum';
+import NextImage from '../../../components/lib/nextImage/NextImage';
+import { ToasterTypeEnum } from '../../../components/toaster/toasterEnum';
 import avatarImg from '../../../public/assets/images/defaultAvatar.png';
 
 type Props = {

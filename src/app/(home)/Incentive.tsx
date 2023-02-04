@@ -4,8 +4,8 @@ import {
   CubeIcon,
 } from '@heroicons/react/20/solid';
 
-import { Background } from '@/components/04-lib/background/Background';
-import Section from '@/components/04-lib/layout/Section';
+import { Background } from '@/components/lib/background/Background';
+import Section from '@/components/lib/layout/Section';
 
 const incentives = [
   {

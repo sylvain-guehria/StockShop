@@ -4,13 +4,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
-import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
-import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import LinkButton from '@/components/lib/LinkButton/LinkButton';
+import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import { addressEmails } from '@/sendinblue/emailConfig';
 import { sendContactUsEmail } from '@/sendinblue/sender';
 
-import Input from '../../../components/04-lib/inputs/Input';
+import Input from '../../../components/lib/inputs/Input';
 import { validationSchema } from './ContactFormValidation';
 
 interface ContactFormType {

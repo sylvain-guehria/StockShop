@@ -1,12 +1,16 @@
+import dynamic from 'next/dynamic';
 import type { FC, ReactNode } from 'react';
 import { getUserInServerComponant } from 'supabase/getUserInServerComponant';
 
-import Header from '@/components/04-lib/Header/Header';
-import FirstConnectionModal from '@/components/05-modals/FirstConnectionModal';
-import Footer from '@/components/06-template/Footer';
+import Header from '@/components/lib/Header/Header';
 import type { User } from '@/modules/user/userType';
 
+import Footer from './Footer';
 import Providers from './Providers';
+
+const DynamicFirstConnectionModal = dynamic(
+  () => import('../FirstConnectionModal')
+);
 
 type Props = {
   children: ReactNode;
@@ -17,7 +21,7 @@ const PublicLayout: FC<Props> = async ({ children }) => {
   const userProfile = await getUserInServerComponant();
 
   if (userProfile && !userProfile.hasSeenFirstConnectionModal) {
-    return <FirstConnectionModal user={userProfile as User} />;
+    return <DynamicFirstConnectionModal user={userProfile as User} />;
   }
 
   return (

@@ -1,8 +1,8 @@
 import { v4 as uuidV4 } from 'uuid';
 
-import { useToastDispatchContext } from '@/components/08-toaster/ToastContext';
-import type { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
-import { ToasterActionsEnum } from '@/components/08-toaster/toasterEnum';
+import { useToastDispatchContext } from '@/components/toaster/ToastContext';
+import type { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
+import { ToasterActionsEnum } from '@/components/toaster/toasterEnum';
 
 export function useToast(delay: number) {
   const dispatch = useToastDispatchContext();

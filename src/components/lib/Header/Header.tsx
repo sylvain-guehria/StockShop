@@ -8,7 +8,7 @@ import inventoryMarketLogo from 'public/assets/images/inventoryMarket.png';
 import { Fragment } from 'react';
 import supabase from 'supabase/client/supabase-browser';
 
-import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { headerRoutes, mainRoutes } from '@/routes/mainRoutes';

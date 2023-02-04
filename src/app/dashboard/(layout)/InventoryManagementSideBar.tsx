@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { FC } from 'react';
 
-import NextImage from '@/components/04-lib/nextImage/NextImage';
+import NextImage from '@/components/lib/nextImage/NextImage';
 import { mainRoutes } from '@/routes/mainRoutes';
 
 import inventoryMarketLogo from '../../../../public/assets/images/inventoryMarket.png';

@@ -3,24 +3,24 @@
 import { PlusCircleIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { productRepository } from 'di';
 import dynamic from 'next/dynamic';
 import type { ChangeEvent, FC } from 'react';
 import { createRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
-import NextImage from '@/components/04-lib/nextImage/NextImage';
-import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import LinkButton from '@/components/lib/LinkButton/LinkButton';
+import NextImage from '@/components/lib/nextImage/NextImage';
+import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { updatePhotoProductUseCase } from '@/usecases/usecases';
 
-import { productRepository } from '../../../../../di';
 import { validationSchema } from './EditProductFormValidation';
 
 const DynamicDeleteModal = dynamic(
-  () => import('../../../04-lib/modal/DeleteModal'),
+  () => import('../../../../../components/lib/modal/DeleteModal'),
   {
     suspense: true,
   }

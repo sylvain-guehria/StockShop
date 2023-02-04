@@ -5,8 +5,8 @@ import type { FC } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
-import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
-import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import LinkButton from '@/components/lib/LinkButton/LinkButton';
+import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { ConditionTypeEnum, Product } from '@/modules/product/productType';

@@ -2,8 +2,8 @@
 
 import supabase from 'supabase/client/supabase-browser';
 
-import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import Providers from '@/components/layouts/Providers';
+import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import { loginWithGoogleUseCase } from '@/usecases/usecases';
 
@@ -103,8 +103,8 @@ const LoginOtherPlatformForm = () => {
 
 const LoginOtherPlatformFormWithProviders = () => (
   <Providers>
-    <LoginOtherPlatformFormWithProviders />
+    <LoginOtherPlatformForm />
   </Providers>
 );
 
-export default LoginOtherPlatformForm;
+export default LoginOtherPlatformFormWithProviders;

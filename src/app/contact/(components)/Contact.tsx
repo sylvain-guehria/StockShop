@@ -5,7 +5,7 @@ import ContactImg from 'public/assets/images/contact.png';
 
 import { addressEmails } from '@/sendinblue/emailConfig';
 
-import Section from '../../../components/04-lib/layout/Section';
+import Section from '../../../components/lib/layout/Section';
 import ContactForm from './ContactForm';
 
 const Contact = () => {

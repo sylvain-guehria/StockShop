@@ -9,8 +9,8 @@ import type {
   UseFormWatch,
 } from 'react-hook-form';
 
-import Input from '@/components/04-lib/inputs/Input';
-import InputSelect from '@/components/04-lib/inputs/InputSelect';
+import Input from '@/components/lib/inputs/Input';
+import InputSelect from '@/components/lib/inputs/InputSelect';
 import type { CategoryInput } from '@/modules/category/categoryType';
 import { AttributeInputTypes } from '@/modules/category/categoryType';
 import {

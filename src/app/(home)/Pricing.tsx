@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
-import { Background } from '@/components/04-lib/background/Background';
-import Section from '@/components/04-lib/layout/Section';
-import { PricingCard } from '@/components/04-lib/pricing/PricingCard';
-import { PricingFeature } from '@/components/04-lib/pricing/PricingFeature';
+import { Background } from '@/components/lib/background/Background';
+import Section from '@/components/lib/layout/Section';
+import { PricingCard } from '@/components/lib/pricing/PricingCard';
+import { PricingFeature } from '@/components/lib/pricing/PricingFeature';
 
 const Pricing = () => (
   <Background color="bg-gray-200">

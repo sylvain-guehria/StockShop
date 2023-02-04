@@ -6,8 +6,8 @@ import type { FC } from 'react';
 import { Fragment } from 'react';
 import supabase from 'supabase/client/supabase-browser';
 
-import MobileServicesButton from '@/components/04-lib/Popovers/MobileServicesButton';
-import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import MobileServicesButton from '@/components/lib/Popovers/MobileServicesButton';
+import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';

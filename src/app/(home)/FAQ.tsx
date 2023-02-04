@@ -2,7 +2,7 @@ import { Disclosure } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
-import Section from '@/components/04-lib/layout/Section';
+import Section from '@/components/lib/layout/Section';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { classNames } from '@/utils/tailwindUtils';
 

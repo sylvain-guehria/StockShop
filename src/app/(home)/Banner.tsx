@@ -1,7 +1,7 @@
 import { mainRoutes } from '@/routes/mainRoutes';
 
-import Section from '../../components/04-lib/layout/Section';
-import LinkButton from '../../components/04-lib/LinkButton/LinkButton';
+import Section from '../../components/lib/layout/Section';
+import LinkButton from '../../components/lib/LinkButton/LinkButton';
 
 const Banner = () => (
   <Section yPadding="pb-16">

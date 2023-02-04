@@ -3,8 +3,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { ReactNode } from 'react';
 
-import ToastContainer from '@/components/08-toaster/ToastContainer';
-import { ToastProvider } from '@/components/08-toaster/ToastContext';
+import ToastContainer from '@/components/toaster/ToastContainer';
+import { ToastProvider } from '@/components/toaster/ToastContext';
 import { AuthContextProvider } from '@/hooks/useAuth';
 import type { User } from '@/modules/user/userType';
 

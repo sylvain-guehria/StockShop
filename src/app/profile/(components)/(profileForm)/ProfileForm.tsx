@@ -4,9 +4,9 @@ import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
-import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
-import NextImage from '@/components/04-lib/nextImage/NextImage';
-import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import LinkButton from '@/components/lib/LinkButton/LinkButton';
+import NextImage from '@/components/lib/nextImage/NextImage';
+import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import UserEntity from '@/modules/user/UserEntity';

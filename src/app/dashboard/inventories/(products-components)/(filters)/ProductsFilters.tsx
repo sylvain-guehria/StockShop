@@ -11,8 +11,8 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import { categories } from '@/categoriesDatabase/categories';
-import InputSelect from '@/components/04-lib/inputs/InputSelect';
-import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
+import InputSelect from '@/components/lib/inputs/InputSelect';
+import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { getSubCategoriesByCategoryIdFromDatabase } from '@/modules/category/categoryUtils';
 import {
   ProductAttributes,

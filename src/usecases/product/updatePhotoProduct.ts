@@ -4,7 +4,7 @@ import { BucketNames } from 'supabase/enums/bucketNames';
 import {
   authorizedFileTypes,
   twoMegaBits,
-} from '@/components/01-dashboard/products/editPhotoForm/EditProductFormValidation';
+} from '@/app/dashboard/inventories/(products-components)/(editPhotoForm)/EditProductFormValidation';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type ProductService from '@/modules/product/productService';
 

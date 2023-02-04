@@ -1,6 +1,6 @@
-import { Background } from '@/components/04-lib/background/Background';
-import Section from '@/components/04-lib/layout/Section';
-import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
+import { Background } from '@/components/lib/background/Background';
+import Section from '@/components/lib/layout/Section';
+import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { mainRoutes } from '@/routes/mainRoutes';
 
 const Hero = () => (

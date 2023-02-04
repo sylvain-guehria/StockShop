@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
-import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import { addContact } from '@/sendinblue/SendinblueService';
 

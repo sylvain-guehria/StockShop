@@ -1,5 +1,5 @@
-import Section from '@/components/04-lib/layout/Section';
-import { TestimonialCard } from '@/components/04-lib/testimonial/TestimonialCard';
+import Section from '@/components/lib/layout/Section';
+import { TestimonialCard } from '@/components/lib/testimonial/TestimonialCard';
 
 const Testimonial = () => (
   <Section title="Customer's Review" subtitle="Testimonials">

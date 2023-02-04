@@ -8,8 +8,8 @@ import type {
   UseFormWatch,
 } from 'react-hook-form';
 
-import InputRadio from '@/components/04-lib/inputs/InputRadio';
-import InputTextArea from '@/components/04-lib/inputs/InputTextArea';
+import InputRadio from '@/components/lib/inputs/InputRadio';
+import InputTextArea from '@/components/lib/inputs/InputTextArea';
 import { ProductAttributes } from '@/modules/product/productType';
 
 import type { EditProductFormType } from './EditProductForm';

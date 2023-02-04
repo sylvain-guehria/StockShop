@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { FC, SVGProps } from 'react';
 
-import { Background } from '../04-lib/background/Background';
+import { Background } from '../lib/background/Background';
 
 const navigation = {
   main: [

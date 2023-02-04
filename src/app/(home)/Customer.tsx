@@ -1,6 +1,6 @@
-import { Background } from '../../components/04-lib/background/Background';
-import { CustomerLogo } from '../../components/04-lib/customer/CustomerLogo';
-import Section from '../../components/04-lib/layout/Section';
+import { Background } from '../../components/lib/background/Background';
+import { CustomerLogo } from '../../components/lib/customer/CustomerLogo';
+import Section from '../../components/lib/layout/Section';
 
 const Customer = () => (
   <Background color="bg-gray-200">

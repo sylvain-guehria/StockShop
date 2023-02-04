@@ -10,13 +10,13 @@ import { useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
 import { useState } from 'react';
 
-import Dropdown from '@/components/04-lib/dropdown/Dropdown';
+import Dropdown from '@/components/lib/dropdown/Dropdown';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { getUserInventoriesUseCase } from '@/usecases/usecases';
 
-import ProductTable from '../products/ProductTable';
+import ProductTable from '../(products-components)/ProductTable';
 import CreateInventoryButton from './CreateInventoryButton';
 import CreateProductButton from './CreateProductButton';
 import PinnedInventories from './PinnedInventories';

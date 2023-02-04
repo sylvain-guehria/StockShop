@@ -7,8 +7,8 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import supabase from 'supabase/client/supabase-browser';
 
-import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import Providers from '@/components/layouts/Providers';
+import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { loginWithEmailUseCase } from '@/usecases/usecases';

@@ -4,8 +4,8 @@ import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import Spinner from '@/components/04-lib/spinner/Spinner';
-import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import Spinner from '@/components/lib/spinner/Spinner';
+import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 

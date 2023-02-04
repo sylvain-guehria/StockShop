@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { productServiceDi } from 'di';
 import type { FC } from 'react';
 
-import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
+import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { CustomEvents } from '@/enums/eventEnums';
 import { useAuth } from '@/hooks/useAuth';

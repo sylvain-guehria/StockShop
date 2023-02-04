@@ -1,4 +1,4 @@
-import Section from '@/components/04-lib/layout/Section';
+import Section from '@/components/lib/layout/Section';
 
 const Marketplace = () => {
   return (

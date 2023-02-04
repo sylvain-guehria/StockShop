@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import Section from '@/components/04-lib/layout/Section';
+import Section from '@/components/lib/layout/Section';
 import { mainRoutes } from '@/routes/mainRoutes';
 
 import NewsLetterIncentiveForm from './NewsLetterIncentiveForm';

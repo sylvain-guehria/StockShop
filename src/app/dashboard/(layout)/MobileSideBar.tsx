@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import type { FC, SVGProps } from 'react';
 import { Fragment } from 'react';
 
-import NextImage from '@/components/04-lib/nextImage/NextImage';
+import NextImage from '@/components/lib/nextImage/NextImage';
 
 import inventoryMarketLogo from '../../../../public/assets/images/inventoryMarket.png';
 import { navigation, secondaryNavigation } from './navigations';

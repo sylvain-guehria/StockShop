@@ -1,8 +1,8 @@
 import type {
   FilterPropertyType,
   SorterType,
-} from '@/components/01-dashboard/products/filters/ProductsFiltersReducer';
-import { ORDER } from '@/components/01-dashboard/products/filters/ProductsFiltersReducer';
+} from '@/app/dashboard/inventories/(products-components)/(filters)/ProductsFiltersReducer';
+import { ORDER } from '@/app/dashboard/inventories/(products-components)/(filters)/ProductsFiltersReducer';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { ProductRepository } from '@/modules/product/productRepository';
 import { ProductAttributes } from '@/modules/product/productType';

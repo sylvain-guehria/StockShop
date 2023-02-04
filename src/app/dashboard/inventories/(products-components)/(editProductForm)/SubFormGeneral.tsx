@@ -9,8 +9,8 @@ import type {
 import { useWatch } from 'react-hook-form';
 
 import { categories } from '@/categoriesDatabase/categories';
-import Input from '@/components/04-lib/inputs/Input';
-import InputSelect from '@/components/04-lib/inputs/InputSelect';
+import Input from '@/components/lib/inputs/Input';
+import InputSelect from '@/components/lib/inputs/InputSelect';
 import { getSubCategoriesByCategoryIdFromDatabase } from '@/modules/category/categoryUtils';
 import {
   ConditionTypeEnum,

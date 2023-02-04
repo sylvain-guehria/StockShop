@@ -3,7 +3,7 @@
 import type {
   FilterPropertyType,
   SorterType,
-} from '@/components/01-dashboard/products/filters/ProductsFiltersReducer';
+} from '@/app/dashboard/inventories/(products-components)/(filters)/ProductsFiltersReducer';
 
 import type ProductEntity from './ProductEntity';
 

@@ -12,9 +12,9 @@ import dynamic from 'next/dynamic';
 import type { FC, Reducer } from 'react';
 import { useEffect, useReducer, useState } from 'react';
 
-import Pagination from '@/components/04-lib/pagination/Pagination';
-import Spinner from '@/components/04-lib/spinner/Spinner';
-import Tag from '@/components/04-lib/tag/Tag';
+import Pagination from '@/components/lib/pagination/Pagination';
+import Spinner from '@/components/lib/spinner/Spinner';
+import Tag from '@/components/lib/tag/Tag';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { CustomEvents } from '@/enums/eventEnums';
 import { useAuth } from '@/hooks/useAuth';
@@ -29,37 +29,40 @@ import {
   getInventoryProductsUseCase,
 } from '@/usecases/usecases';
 
-import Column from './ColumnProduct';
-import { ProductsFilters } from './filters/ProductsFilters';
+import { ProductsFilters } from './(filters)/ProductsFilters';
 import type {
   FiltersActionsType,
   FiltersStateType,
-} from './filters/ProductsFiltersReducer';
+} from './(filters)/ProductsFiltersReducer';
 import {
   initialFilterState,
   reducerFilters,
-} from './filters/ProductsFiltersReducer';
+} from './(filters)/ProductsFiltersReducer';
+import Column from './ColumnProduct';
 
-const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
-  suspense: true,
-});
+const DynamicModal = dynamic(
+  () => import('../../../../components/lib/modal/Modal'),
+  {
+    suspense: true,
+  }
+);
 
 const DynamicDeleteModal = dynamic(
-  () => import('../../04-lib/modal/DeleteModal'),
+  () => import('../../../../components/lib/modal/DeleteModal'),
   {
     suspense: true,
   }
 );
 
 const DynamicEditProductForm = dynamic(
-  () => import('./editProductForm/EditProductForm'),
+  () => import('./(editProductForm)/EditProductForm'),
   {
     suspense: true,
   }
 );
 
 const DynamicEditProductPhotoForm = dynamic(
-  () => import('./editPhotoForm/EditProductPhotoForm'),
+  () => import('./(editPhotoForm)/EditProductPhotoForm'),
   {
     suspense: true,
   }

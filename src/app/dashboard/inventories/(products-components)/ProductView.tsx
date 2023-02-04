@@ -2,10 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import { productRepository } from 'di';
 import type { FC } from 'react';
 
-import Input from '@/components/04-lib/inputs/Input';
-import InputSelect from '@/components/04-lib/inputs/InputSelect';
-import InputTextArea from '@/components/04-lib/inputs/InputTextArea';
-import NextImage from '@/components/04-lib/nextImage/NextImage';
+import Input from '@/components/lib/inputs/Input';
+import InputSelect from '@/components/lib/inputs/InputSelect';
+import InputTextArea from '@/components/lib/inputs/InputTextArea';
+import NextImage from '@/components/lib/nextImage/NextImage';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import type { CategoryInput } from '@/modules/category/categoryType';
 import {
