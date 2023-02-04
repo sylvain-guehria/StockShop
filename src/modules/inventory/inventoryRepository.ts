@@ -25,7 +25,7 @@ export abstract class InventoryRepository {
     );
   }
 
-  async delete(inventoryId: string): Promise<void> {
+  async delete(inventoryId: string): Promise<boolean> {
     throw new Error(
       `You tried to call an abstract methode, arg inventoryId ${inventoryId}`
     );

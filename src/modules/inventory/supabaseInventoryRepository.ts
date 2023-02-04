@@ -36,11 +36,18 @@ class SupabaseInventoryRepository extends InventoryRepository {
     return null;
   }
 
-  async delete(inventoryId: string): Promise<void> {
+  async delete(inventoryId: string): Promise<boolean> {
     console.info(`Deleting inventory with id ${inventoryId} in db...`);
-    return axios.delete(`${this.baseUrl}/api/inventory/delete`, {
+    const res = await axios.delete(`${this.baseUrl}/api/inventory/delete`, {
       params: { inventoryId },
     });
+    const success = res.status === 200;
+
+    if (success) {
+      console.info('Inventory deleted in DB, id: ', inventoryId);
+      return true;
+    }
+    return false;
   }
 
   async getAll(): Promise<InventoryEntity[]> {
