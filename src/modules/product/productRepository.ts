@@ -31,7 +31,7 @@ export abstract class ProductRepository {
     );
   }
 
-  async delete(productId: string): Promise<void> {
+  async delete(productId: string): Promise<boolean> {
     throw new Error(`You tried to call an abstract methode, arg: ${productId}`);
   }
 

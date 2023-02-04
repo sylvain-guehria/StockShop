@@ -75,13 +75,20 @@ class SupabaseProductRepository extends ProductRepository {
     return null;
   }
 
-  async delete(productId: string): Promise<void> {
+  async delete(productId: string): Promise<boolean> {
     console.info(`Deleting product with id ${productId} in db...`);
-    return axios.delete(`${this.baseUrl}/api/product/delete`, {
+    const res = await axios.delete(`${this.baseUrl}/api/product/delete`, {
       params: {
         productId,
       },
     });
+    const success = res.status === 200;
+
+    if (success) {
+      console.info('Product deleted in DB, id: ', productId);
+      return true;
+    }
+    return false;
   }
 
   async update(product: ProductEntity): Promise<ProductEntity> {
