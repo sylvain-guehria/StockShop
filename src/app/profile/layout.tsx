@@ -1,6 +1,6 @@
 import { getUserInServerComponant } from 'supabase/getUserInServerComponant';
 
-import MarketplaceLayout from '@/layouts/MarketplaceLayout';
+import MarketplaceLayout from '@/components/layouts/MarketplaceLayout';
 import type { User } from '@/modules/user/userType';
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {

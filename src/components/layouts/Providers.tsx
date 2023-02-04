@@ -5,9 +5,8 @@ import type { ReactNode } from 'react';
 
 import ToastContainer from '@/components/08-toaster/ToastContainer';
 import { ToastProvider } from '@/components/08-toaster/ToastContext';
+import { AuthContextProvider } from '@/hooks/useAuth';
 import type { User } from '@/modules/user/userType';
-
-import { AuthContextProvider } from '../hooks/useAuth';
 
 const queryClient = new QueryClient();
 
