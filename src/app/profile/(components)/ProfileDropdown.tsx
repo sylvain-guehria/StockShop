@@ -12,9 +12,9 @@ import { mainRoutes } from '@/routes/mainRoutes';
 import supabaseBrowser from '@/supabase/client/supabase-browser';
 import { logoutUseCase } from '@/usecases/usecases';
 
+import avatarImg from '../../../../public/assets/images/defaultAvatar.png';
 import NextImage from '../../../components/lib/nextImage/NextImage';
 import { ToasterTypeEnum } from '../../../components/toaster/toasterEnum';
-import avatarImg from '../../../public/assets/images/defaultAvatar.png';
 
 type Props = {
   logo?: React.ComponentProps<'svg'>;

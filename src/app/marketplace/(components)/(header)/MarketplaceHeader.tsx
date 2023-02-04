@@ -13,8 +13,8 @@ import NextImage from '@/components/lib/nextImage/NextImage';
 import { useAuth } from '@/hooks/useAuth';
 import { mainRoutes } from '@/routes/mainRoutes';
 
+import inventoryMarketLogo from '../../../../../public/assets/images/inventoryMarket.png';
 import ServicesButton from '../../../../components/lib/Popovers/ServicesButton';
-import inventoryMarketLogo from '../../../../public/assets/images/inventoryMarket.png';
 import ProfileDropdown from '../../../profile/(components)/ProfileDropdown';
 
 const SearchBarModal = dynamic(() => import('./SearchBarModal'), {

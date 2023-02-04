@@ -85,6 +85,7 @@ class SupabaseUserRepository extends UserRepository {
     const success = await axios.put(
       `${this.baseUrl}/api/user/${user.getId()}`,
       {
+        id: user.getId(),
         updatedAt: new Date().toISOString(),
         email: user.getEmail(),
         username: user.getUsername(),

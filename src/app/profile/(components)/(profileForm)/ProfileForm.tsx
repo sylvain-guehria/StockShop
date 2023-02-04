@@ -12,7 +12,7 @@ import { useToast } from '@/hooks/useToast';
 import UserEntity from '@/modules/user/UserEntity';
 import { updateUserUseCase } from '@/usecases/usecases';
 
-import defaultAvatar from '../../../../public/assets/images/defaultAvatar.png';
+import defaultAvatar from '../../../../../public/assets/images/defaultAvatar.png';
 import { validationSchema } from './ProfileFormValidation';
 
 type Props = {

@@ -12,6 +12,9 @@ const userById = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
+  console.log('userById', id);
+  console.log('{ ...req.body }', { ...req.body });
+
   const supabaseSsr = createServerSupabaseSSRClient({ req, res });
 
   if (method === 'GET') {
