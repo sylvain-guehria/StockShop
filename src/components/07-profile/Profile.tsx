@@ -81,8 +81,4 @@ const Profile = () => {
   );
 };
 
-const ProfileFormWith = () => {
-  return <Profile />;
-};
-
-export default ProfileFormWith;
+export default Profile;

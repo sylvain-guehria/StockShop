@@ -1,5 +1,16 @@
-import MarketplaceLayout from '@/layouts/MarketplaceLayout';
+import { getUserInServerComponant } from 'supabase/getUserInServerComponant';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  return <MarketplaceLayout>{children}</MarketplaceLayout>;
-}
+import MarketplaceLayout from '@/layouts/MarketplaceLayout';
+import type { User } from '@/modules/user/userType';
+
+const Layout = async ({ children }: { children: React.ReactNode }) => {
+  const userProfile = await getUserInServerComponant();
+
+  return (
+    <MarketplaceLayout userProfile={userProfile as User}>
+      {children}
+    </MarketplaceLayout>
+  );
+};
+
+export default Layout;
