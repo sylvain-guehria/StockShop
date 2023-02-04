@@ -36,7 +36,10 @@ export const getUserInventoriesUseCase = getUserInventories(
   inventoryServiceDi,
   userRepository
 );
-export const deleteInventoryUseCase = deleteInventory(inventoryRepository);
+export const deleteInventoryUseCase = deleteInventory(
+  inventoryRepository,
+  supabase.storage
+);
 export const setInventoryAsDefaultUseCase =
   setInventoryAsDefault(inventoryRepository);
 
