@@ -1,13 +1,19 @@
+import type ProductEntity from '@/modules/product/ProductEntity';
 import type { ProductRepository } from '@/modules/product/productRepository';
 
 export const deleteProduct =
   (productRepository: ProductRepository) =>
-  async (productId: string): Promise<void> => {
+  async (product: ProductEntity): Promise<void> => {
     try {
-      if (!productId)
+      if (!product)
+        throw new Error('product is required to delete the product');
+
+      if (!product.getId())
         throw new Error('productId is required to delete the product');
 
-      await productRepository.delete(productId);
+      const success = await productRepository.delete(product.getId());
+
+      if (!success) throw new Error('Error while deleting the product');
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log('error', error);

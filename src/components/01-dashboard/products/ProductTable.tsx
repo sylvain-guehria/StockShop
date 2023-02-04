@@ -155,7 +155,7 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
   });
 
   const deleteProductMutation = useMutation({
-    mutationFn: (productId: string) => deleteProductUseCase(productId),
+    mutationFn: (product: ProductEntity) => deleteProductUseCase(product),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({
@@ -221,7 +221,7 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
           description={`Êtes-vous sûr de vouloir supprimer le produit : ${productToEdit?.getLabel()} ?`}
           isLoading={deleteProductMutation.isLoading}
           onConfirm={() =>
-            deleteProductMutation.mutate(productToEdit?.getId() as string)
+            deleteProductMutation.mutate(productToEdit as ProductEntity)
           }
         />
       )}

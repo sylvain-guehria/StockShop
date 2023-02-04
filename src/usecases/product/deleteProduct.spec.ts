@@ -4,7 +4,7 @@ const productRepository = {
   delete: jest.fn(),
 };
 
-describe('deleteInventory', () => {
+describe('deleteProduct', () => {
   it('Do not delete the product if the productId is not provided', async () => {
     const productId = '';
 
@@ -16,7 +16,7 @@ describe('deleteInventory', () => {
     }
   });
 
-  it('Delete the inventory', async () => {
+  it('Delete the product', async () => {
     const productId = 'productId';
 
     await deleteProduct(productRepository as any)(productId);
