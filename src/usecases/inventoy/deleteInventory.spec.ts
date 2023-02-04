@@ -1,4 +1,4 @@
-import { BucketNames } from 'supabase/enums/bucketNames';
+import { BucketNames } from '@/supabase/enums/bucketNames';
 
 import { deleteInventory } from './deleteInventory';
 

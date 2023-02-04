@@ -1,6 +1,5 @@
-import { BucketNames } from 'supabase/enums/bucketNames';
-
 import ProductEntity from '@/modules/product/ProductEntity';
+import { BucketNames } from '@/supabase/enums/bucketNames';
 
 import { deleteProduct } from './deleteProduct';
 

@@ -3,11 +3,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import supabase from 'supabase/client/supabase-browser';
 
 import Providers from '@/components/layouts/Providers';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
+import supabase from '@/supabase/client/supabase-browser';
 
 import { validationSchema } from './ResetPasswordFormValidation';
 

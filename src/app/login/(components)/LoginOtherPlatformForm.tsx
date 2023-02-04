@@ -1,10 +1,9 @@
 'use client';
 
-import supabase from 'supabase/client/supabase-browser';
-
 import Providers from '@/components/layouts/Providers';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
+import supabase from '@/supabase/client/supabase-browser';
 import { loginWithGoogleUseCase } from '@/usecases/usecases';
 
 const LoginOtherPlatformForm = () => {

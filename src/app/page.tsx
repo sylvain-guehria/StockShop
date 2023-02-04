@@ -1,9 +1,9 @@
 import { redirect } from 'next/navigation';
-import { getUserInServerComponant } from 'supabase/getUserInServerComponant';
 
 import PublicLayout from '@/components/layouts/PublicLayout';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { marketplaceRoutes } from '@/routes/marketplaceRoutes';
+import { getUserInServerComponant } from '@/supabase/getUserInServerComponant';
 
 import Home from './(home)/Home';
 

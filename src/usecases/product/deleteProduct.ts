@@ -1,8 +1,8 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { BucketNames } from 'supabase/enums/bucketNames';
 
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { ProductRepository } from '@/modules/product/productRepository';
+import { BucketNames } from '@/supabase/enums/bucketNames';
 
 export const deleteProduct =
   (

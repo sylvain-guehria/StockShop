@@ -5,11 +5,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 import { Fragment } from 'react';
-import supabaseBrowser from 'supabase/client/supabase-browser';
 
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
+import supabaseBrowser from '@/supabase/client/supabase-browser';
 import { logoutUseCase } from '@/usecases/usecases';
 
 import NextImage from '../../../components/lib/nextImage/NextImage';

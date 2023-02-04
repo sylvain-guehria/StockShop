@@ -6,7 +6,8 @@ import {
   productServiceDi,
   userRepository,
 } from 'di';
-import supabase from 'supabase/client/supabase-browser';
+
+import supabase from '@/supabase/client/supabase-browser';
 
 import { chooseSubRoleOnFirstConnection } from './auth/chooseSubRoleOnFirstConnection';
 import { loginWithEmail } from './auth/loginWithEmail';

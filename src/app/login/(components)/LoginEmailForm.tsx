@@ -5,12 +5,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import supabase from 'supabase/client/supabase-browser';
 
 import Providers from '@/components/layouts/Providers';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
+import supabase from '@/supabase/client/supabase-browser';
 import { loginWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './LoginFormValidation';

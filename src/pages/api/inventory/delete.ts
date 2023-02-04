@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { TableNames } from 'supabase/enums/tableNames';
-import createServerSupabaseSSRClient from 'supabase/server/supabase-ssr';
+
+import { TableNames } from '@/supabase/enums/tableNames';
+import createServerSupabaseSSRClient from '@/supabase/server/supabase-ssr';
 
 const deleteInventory = async (req: NextApiRequest, res: NextApiResponse) => {
   const {

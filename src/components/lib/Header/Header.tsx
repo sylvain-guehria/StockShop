@@ -6,12 +6,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import inventoryMarketLogo from 'public/assets/images/inventoryMarket.png';
 import { Fragment } from 'react';
-import supabase from 'supabase/client/supabase-browser';
 
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { headerRoutes, mainRoutes } from '@/routes/mainRoutes';
+import supabase from '@/supabase/client/supabase-browser';
 import { logoutUseCase } from '@/usecases/usecases';
 
 import NextImage from '../nextImage/NextImage';

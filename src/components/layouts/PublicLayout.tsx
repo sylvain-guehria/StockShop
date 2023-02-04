@@ -1,9 +1,9 @@
 import dynamic from 'next/dynamic';
 import type { FC, ReactNode } from 'react';
-import { getUserInServerComponant } from 'supabase/getUserInServerComponant';
 
 import Header from '@/components/lib/Header/Header';
 import type { User } from '@/modules/user/userType';
+import { getUserInServerComponant } from '@/supabase/getUserInServerComponant';
 
 import Footer from './Footer';
 import Providers from './Providers';

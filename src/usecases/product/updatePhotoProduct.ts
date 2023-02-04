@@ -1,5 +1,4 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { BucketNames } from 'supabase/enums/bucketNames';
 
 import {
   authorizedFileTypes,
@@ -7,6 +6,7 @@ import {
 } from '@/app/dashboard/inventories/(products-components)/(editPhotoForm)/EditProductFormValidation';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type ProductService from '@/modules/product/productService';
+import { BucketNames } from '@/supabase/enums/bucketNames';
 
 type UpdatePhotoProductInterface = {
   companyId: string;
