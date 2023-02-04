@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from 'react';
 
-import MarketplaceHeaderAndDrawer from '@/components/02-marketplace/Header/MarketplaceHeaderAndDrawer';
-import MarketplaceFooter from '@/components/02-marketplace/MarketplaceFooter';
+import MarketplaceHeaderAndDrawer from '@/app/marketplace/(components)/(header)/MarketplaceHeaderAndDrawer';
+import MarketplaceFooter from '@/app/marketplace/(components)/MarketplaceFooter';
 import type { User } from '@/modules/user/userType';
 
 import Providers from './Providers';

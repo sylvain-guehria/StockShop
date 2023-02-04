@@ -1,4 +1,4 @@
-import Roadmap from '@/components/06-template/Roadmap';
+import Roadmap from '@/app/roadmap/(components)/Roadmap';
 
 const RoadmapPage = () => {
   return <Roadmap />;

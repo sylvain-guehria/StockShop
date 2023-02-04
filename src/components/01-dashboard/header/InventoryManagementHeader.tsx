@@ -5,7 +5,7 @@ import { UserIcon } from '@heroicons/react/24/outline';
 import type { FC } from 'react';
 import { useWindowSize } from 'usehooks-ts';
 
-import ProfileDropdown from '@/components/07-profile/ProfileDropdown';
+import ProfileDropdown from '@/app/profile/(components)/ProfileDropdown';
 import { getBreakpointValue } from '@/utils/tailwindUtils';
 
 type Props = {

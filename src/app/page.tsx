@@ -5,7 +5,7 @@ import PublicLayout from '@/layouts/PublicLayout';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { marketplaceRoutes } from '@/routes/marketplaceRoutes';
 
-import Base from '../components/06-template/Base';
+import Home from './(home)/Home';
 
 export const revalidate = 600;
 
@@ -22,7 +22,7 @@ const HomePage = async () => {
 
   return (
     <PublicLayout>
-      <Base />
+      <Home />
     </PublicLayout>
   );
 };

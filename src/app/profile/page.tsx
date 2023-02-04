@@ -1,4 +1,4 @@
-import Profile from '@/components/07-profile/Profile';
+import Profile from './(components)/Profile';
 
 const ProfilePage = async () => {
   return <Profile />;
