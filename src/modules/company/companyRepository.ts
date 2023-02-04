@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 
 import type CompanyEntity from './CompanyEntity';
+import type { Company } from './companyType';
 
 /**
  * @abstract
@@ -14,18 +15,16 @@ export abstract class CompanyRepository {
     }
   }
 
-  getById(uid: string): Promise<CompanyEntity> {
-    throw new Error(`You tried to call an abstract methode, arg: ${uid}`);
+  getById(id: string): Promise<CompanyEntity> {
+    throw new Error(`You tried to call an abstract methode, arg: ${id}`);
   }
 
-  async add(company: CompanyEntity, userUid: string): Promise<CompanyEntity> {
-    throw new Error(
-      `You tried to call an abstract methode, arg: ${company}, userUid:${userUid}`
-    );
+  async add(company: Company): Promise<CompanyEntity | null> {
+    throw new Error(`You tried to call an abstract methode, arg: ${company}`);
   }
 
-  async delete(uid: string): Promise<void> {
-    throw new Error(`You tried to call an abstract methode, arg: ${uid}`);
+  async delete(id: string): Promise<void> {
+    throw new Error(`You tried to call an abstract methode, arg: ${id}`);
   }
 
   async getAll(): Promise<CompanyEntity[]> {
@@ -36,10 +35,6 @@ export abstract class CompanyRepository {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{ company }}`
     );
-  }
-
-  async getCompanyByUserUid(userUid: string): Promise<CompanyEntity | null> {
-    throw new Error(`You tried to call an abstract methode, arg: ${userUid}`);
   }
 }
 

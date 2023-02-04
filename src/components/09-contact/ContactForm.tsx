@@ -89,7 +89,7 @@ const ContactForm = () => {
             name="email"
             label="Email"
             help="Obligatoire"
-            placeholder="emial@gmail.com"
+            placeholder="email@gmail.com"
             register={register('email')}
             error={errors.email?.message}
           />
@@ -100,7 +100,7 @@ const ContactForm = () => {
           <Input
             type="text"
             name="phone"
-            label="Phone"
+            label="Numéro de téléphone"
             aria-describedby="phone-description"
             register={register('phone')}
           />

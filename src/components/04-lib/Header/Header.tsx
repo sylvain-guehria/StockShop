@@ -2,11 +2,11 @@
 
 import { Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { auth, signOut } from 'firebaseFolder/clientApp';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import inventoryMarketLogo from 'public/assets/images/inventoryMarket.png';
 import { Fragment } from 'react';
+import supabase from 'supabase/client/supabase-browser';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
@@ -19,13 +19,14 @@ import ServicesButton from '../Popovers/ServicesButton';
 import { services } from './services';
 
 const Header = () => {
-  const { user } = useAuth();
+  const { user, reinitializeUser } = useAuth();
   const router = useRouter();
   const toast = useToast(4000);
 
   const handleSingOut = async () => {
     try {
-      await logoutUseCase({ auth, signOut });
+      await logoutUseCase({ supabase });
+      reinitializeUser();
       router.push(mainRoutes.home.path);
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);

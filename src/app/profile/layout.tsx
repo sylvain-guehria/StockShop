@@ -1,17 +1,16 @@
-import { redirect } from 'next/navigation';
+import { getUserInServerComponant } from 'supabase/getUserInServerComponant';
 
 import MarketplaceLayout from '@/layouts/MarketplaceLayout';
-import { mainRoutes } from '@/routes/mainRoutes';
-import { validateUser } from '@/utils/validateUserServerSide';
+import type { User } from '@/modules/user/userType';
 
-export default async function Layout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const uid = await validateUser();
-  if (!uid) {
-    redirect(mainRoutes.home.path);
-  }
-  return <MarketplaceLayout>{children}</MarketplaceLayout>;
-}
+const Layout = async ({ children }: { children: React.ReactNode }) => {
+  const userProfile = await getUserInServerComponant();
+
+  return (
+    <MarketplaceLayout userProfile={userProfile as User}>
+      {children}
+    </MarketplaceLayout>
+  );
+};
+
+export default Layout;

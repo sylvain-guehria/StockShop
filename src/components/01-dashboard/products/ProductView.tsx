@@ -7,12 +7,11 @@ import InputSelect from '@/components/04-lib/inputs/InputSelect';
 import InputTextArea from '@/components/04-lib/inputs/InputTextArea';
 import NextImage from '@/components/04-lib/nextImage/NextImage';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
-import { useAuth } from '@/hooks/useAuth';
 import type { CategoryInput } from '@/modules/category/categoryType';
 import {
-  getCategoryByUid,
+  getCategoryById,
   getCategoryInputFromDatabase,
-  getSubCategoryByUid,
+  getSubCategoryById,
   getSubCategoryInputsFromDatabase,
 } from '@/modules/category/categoryUtils';
 import {
@@ -23,38 +22,32 @@ import {
 import { classNames } from '@/utils/tailwindUtils';
 
 type Props = {
-  productUid: string;
-  inventoryUid: string;
+  productId: string;
 };
 
-const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
-  const { user } = useAuth();
-
+const ProductView: FC<Props> = ({ productId }) => {
   const { data: product } = useQuery({
-    queryKey: [ApiRequestEnums.GetProduct, { productUid }],
-    queryFn: () =>
-      productRepository.getById({
-        productUid,
-        userUid: user.getUid(),
-        companyUid: user.getCompanyUid(),
-        inventoryUid,
-      }),
-    enabled: !!productUid,
+    queryKey: [ApiRequestEnums.GetProduct, { productId }],
+    queryFn: () => productRepository.getById(productId),
+    enabled: !!productId,
     staleTime: 30000,
   });
 
   if (!product) return null;
 
   const categoryInputs = getCategoryInputFromDatabase(
-    product.getCategoryUid() as string
+    product.getCategoryId() as string
   );
   const subCategoryInputs = getSubCategoryInputsFromDatabase(
-    product.getCategoryUid() as string,
-    product.getSubCategoryUid() as string
+    product.getCategoryId() as string,
+    product.getSubCategoryId() as string
   );
 
   const allCategoryInputs = [...categoryInputs, ...subCategoryInputs];
   const hasCategoryInputs = allCategoryInputs.length > 0;
+
+  // ADD a timestamp to the image src to force nextjs to reload the image without cache
+  const timeStamp = new Date().getTime();
   return (
     <>
       <div className="lg:flex">
@@ -149,9 +142,9 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
                 <div className="mt-1">
                   <Input
                     type="text"
-                    name={ProductAttributes.CATEGORY_UID}
-                    label={ProductLabels[ProductAttributes.CATEGORY_UID]}
-                    value={getCategoryByUid(product.getCategoryUid()).label}
+                    name={ProductAttributes.CATEGORY_ID}
+                    label={ProductLabels[ProductAttributes.CATEGORY_ID]}
+                    value={getCategoryById(product.getCategoryId()).label}
                     disabled={true}
                   />
                 </div>
@@ -160,12 +153,12 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
                 <div className="mt-1">
                   <Input
                     type="text"
-                    name={ProductAttributes.SUB_CATEGORY_UID}
-                    label={ProductLabels[ProductAttributes.SUB_CATEGORY_UID]}
+                    name={ProductAttributes.SUB_CATEGORY_ID}
+                    label={ProductLabels[ProductAttributes.SUB_CATEGORY_ID]}
                     value={
-                      getSubCategoryByUid(
-                        product.getCategoryUid(),
-                        product.getSubCategoryUid()
+                      getSubCategoryById(
+                        product.getCategoryId(),
+                        product.getSubCategoryId()
                       ).label
                     }
                     disabled={true}
@@ -189,25 +182,25 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
                 {allCategoryInputs.map((input: CategoryInput) => {
                   if (input.inputType === 'select') {
                     return (
-                      <div className="sm:col-span-2" key={input.uid}>
+                      <div className="sm:col-span-2" key={input.id}>
                         <InputSelect
                           label={input.label}
-                          name={input.uid}
+                          name={input.id}
                           options={input.options || []}
                           disabled={true}
-                          value={product.getCatSubcatAttributes()[input.uid]}
+                          value={product.getCatSubcatAttributes()[input.id]}
                         />
                       </div>
                     );
                   }
 
                   return (
-                    <div className="sm:col-span-2" key={input.uid}>
+                    <div className="sm:col-span-2" key={input.id}>
                       <Input
                         type="text"
                         label={input.label}
-                        name={input.uid}
-                        value={product.getCatSubcatAttributes()[input.uid]}
+                        name={input.id}
+                        value={product.getCatSubcatAttributes()[input.id]}
                         disabled={true}
                       />
                     </div>
@@ -263,7 +256,7 @@ const ProductView: FC<Props> = ({ productUid, inventoryUid }) => {
                 <div className="space-y-1 text-center">
                   {product.getPhotoLink() ? (
                     <NextImage
-                      src={product.getPhotoLink()}
+                      src={`${product?.getPhotoLink()}?${timeStamp}`}
                       alt="current product photo"
                       width={200}
                       height={200}

@@ -27,8 +27,7 @@ const DynamicDeleteModal = dynamic(
 );
 
 type Props = {
-  productUid: string;
-  inventoryUid: string;
+  productId: string;
 };
 
 interface PhotoAttributesType {
@@ -36,22 +35,16 @@ interface PhotoAttributesType {
   type: string;
 }
 
-const EditProductPhotoForm: FC<Props> = ({ productUid, inventoryUid }) => {
+const EditProductPhotoForm: FC<Props> = ({ productId }) => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const toast = useToast(5000);
   const [isDeletePhotoModalOpen, setIsDeletePhotoModalOpen] = useState(false);
 
   const { data: product, refetch } = useQuery({
-    queryKey: [ApiRequestEnums.GetProduct, { productUid }],
-    queryFn: () =>
-      productRepository.getById({
-        productUid,
-        userUid: user.getUid(),
-        companyUid: user.getCompanyUid(),
-        inventoryUid,
-      }),
-    enabled: !!productUid,
+    queryKey: [ApiRequestEnums.GetProduct, { productId }],
+    queryFn: () => productRepository.getById(productId),
+    enabled: !!productId,
     staleTime: 30000,
   });
 
@@ -75,8 +68,7 @@ const EditProductPhotoForm: FC<Props> = ({ productUid, inventoryUid }) => {
     if (!product) return;
     try {
       await updatePhotoProductUseCase({
-        userUid: user.getUid(),
-        companyUid: user.getCompanyUid(),
+        companyId: user.getCompanyId(),
         product,
         currentFile: file as File,
       });
@@ -118,6 +110,9 @@ const EditProductPhotoForm: FC<Props> = ({ productUid, inventoryUid }) => {
     setIsDeletePhotoModalOpen(true);
   };
 
+  // ADD a timestamp to the image src to force nextjs to reload the image without cache
+  const timeStamp = new Date().getTime();
+
   return (
     <div>
       {isDeletePhotoModalOpen && (
@@ -143,7 +138,7 @@ const EditProductPhotoForm: FC<Props> = ({ productUid, inventoryUid }) => {
               <div className="mb-3">
                 {product?.getPhotoLink() ? (
                   <NextImage
-                    src={product?.getPhotoLink()}
+                    src={`${product?.getPhotoLink()}?${timeStamp}`}
                     alt="current product photo"
                     width={200}
                     height={200}

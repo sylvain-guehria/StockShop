@@ -15,6 +15,7 @@ import Incentive from './Incentive';
 
 const Base = () => {
   const [isBetaBannerOpen, setIsBetaBannerOpen] = useState(true);
+
   return (
     <div className="bg-white text-gray-600 antialiased">
       {isBetaBannerOpen && (

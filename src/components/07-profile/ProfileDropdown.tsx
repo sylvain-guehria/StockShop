@@ -1,11 +1,11 @@
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import classNames from 'classnames';
-import { auth, signOut } from 'firebaseFolder/clientApp';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 import { Fragment } from 'react';
+import supabaseBrowser from 'supabase/client/supabase-browser';
 
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
@@ -22,12 +22,14 @@ type Props = {
 
 const ProfileDropdown: FC<Props> = ({ logo }) => {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, reinitializeUser } = useAuth();
   const toast = useToast(4000);
 
   const handleSingOut = async () => {
     try {
-      await logoutUseCase({ auth, signOut });
+      await logoutUseCase({ supabase: supabaseBrowser });
+      reinitializeUser();
+
       router.push(mainRoutes.home.path);
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);

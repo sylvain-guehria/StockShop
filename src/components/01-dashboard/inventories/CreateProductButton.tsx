@@ -5,26 +5,24 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { productServiceDi } from 'di';
 import type { FC } from 'react';
 
+import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { CustomEvents } from '@/enums/eventEnums';
 import { useAuth } from '@/hooks/useAuth';
-import type { CreateProductParams } from '@/modules/product/productService';
+import { useToast } from '@/hooks/useToast';
 
 type Props = {
-  currentInventoryUid: string;
+  currentInventoryId: string;
 };
 
-const CreateProductButton: FC<Props> = ({ currentInventoryUid }) => {
+const CreateProductButton: FC<Props> = ({ currentInventoryId }) => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
+  const toast = useToast(5000);
 
   const { mutate } = useMutation({
-    mutationFn: ({ userUid, companyUid, inventoryUid }: CreateProductParams) =>
-      productServiceDi.createProductByUserUidCompanyUidAndInventoryUid({
-        userUid,
-        companyUid,
-        inventoryUid,
-      }),
+    mutationFn: (inventoryId: string) =>
+      productServiceDi.createProductInInventory(inventoryId),
     onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: [ApiRequestEnums.GetProducts],
@@ -34,23 +32,25 @@ const CreateProductButton: FC<Props> = ({ currentInventoryUid }) => {
       });
       window.dispatchEvent(event);
     },
+    onError: () => {
+      toast(
+        ToasterTypeEnum.ERROR,
+        'Erreur lors de la création du produit, veuillez réessayer.'
+      );
+    },
   });
 
-  const handleClickCreateInventory = () => {
-    const userId = user.getUid();
-    const companyId = user.getCompanyUid();
+  const handleClickCreateProduct = () => {
+    const userId = user.getId();
+    const companyId = user.getCompanyId();
 
-    if (!userId || !companyId || !currentInventoryUid) return;
-    mutate({
-      userUid: userId,
-      companyUid: companyId,
-      inventoryUid: currentInventoryUid,
-    });
+    if (!userId || !companyId || !currentInventoryId) return;
+    mutate(currentInventoryId);
   };
 
   return (
     <div
-      onClick={handleClickCreateInventory}
+      onClick={handleClickCreateProduct}
       className="mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent py-2 px-4 text-base font-medium text-primary-500 "
     >
       <DocumentPlusIcon className="mr-3 h-6 w-6 shrink-0 text-primary-500" />

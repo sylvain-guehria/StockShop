@@ -1,16 +1,7 @@
-import { redirect } from 'next/navigation';
-
-import { mainRoutes } from '@/routes/mainRoutes';
-import { validateUser } from '@/utils/validateUserServerSide';
-
-import ResetPasswordPage from './resetPasswordPage';
+import ResetPasswordComponant from '@/components/03-auth/reset-password/ResetPasswordComponant';
 
 const resetPassword = async () => {
-  const uid = await validateUser();
-  if (uid) {
-    redirect(mainRoutes.home.path);
-  }
-  return <ResetPasswordPage />;
+  return <ResetPasswordComponant />;
 };
 
 export default resetPassword;

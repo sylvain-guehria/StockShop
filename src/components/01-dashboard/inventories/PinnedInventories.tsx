@@ -12,17 +12,15 @@ import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import type InventoryEntity from '@/modules/inventory/InventoryEntity';
-import type { DeleteInventoryParams } from '@/modules/inventory/inventoryRepository';
 import type { UpdateInventoryParams } from '@/modules/inventory/inventoryService';
 import type { Inventory } from '@/modules/inventory/inventoryType';
-import type { SetInventoryAsDefaultParams } from '@/usecases/inventoy/setInventoryAsDefault';
+import type { DeleteInventoryParams } from '@/usecases/inventoy/deleteInventory';
 import {
   deleteInventoryUseCase,
   setInventoryAsDefaultUseCase,
 } from '@/usecases/usecases';
 
 import CardInventory from './CardInventory';
-import DeleteInventoryForm from './deleteInventoryForm/DeleteInventoryForm';
 
 const DynamicModal = dynamic(() => import('../../04-lib/modal/Modal'), {
   suspense: true,
@@ -35,15 +33,22 @@ const DynamicEditInventoryForm = dynamic(
   }
 );
 
+const DynamicDeleteInventoryForm = dynamic(
+  () => import('./deleteInventoryForm/DeleteInventoryForm'),
+  {
+    suspense: true,
+  }
+);
+
 type Props = {
-  currentInventoryUid: string;
+  currentInventoryId: string;
   inventories: InventoryEntity[];
   isLoadingInventory: boolean;
-  onSelectInventory: (inventoryUid: string) => void;
+  onSelectInventory: (inventoryId: string) => void;
 };
 
 const PinnedInventories: FC<Props> = ({
-  currentInventoryUid,
+  currentInventoryId,
   inventories,
   isLoadingInventory,
   onSelectInventory,
@@ -72,7 +77,8 @@ const PinnedInventories: FC<Props> = ({
       deleteInventoryUseCase(params),
     onSuccess: () => {
       handleCloseModal();
-      queryClient.refetchQueries({
+      toast(ToasterTypeEnum.SUCCESS, 'Linventaire a été supprimé avec succès');
+      queryClient.invalidateQueries({
         queryKey: [ApiRequestEnums.GetProducts],
       });
       queryClient.invalidateQueries({
@@ -86,8 +92,8 @@ const PinnedInventories: FC<Props> = ({
   });
 
   const setDaufltInventoryMutation = useMutation({
-    mutationFn: (params: SetInventoryAsDefaultParams) =>
-      setInventoryAsDefaultUseCase(params),
+    mutationFn: (inventory: Inventory) =>
+      setInventoryAsDefaultUseCase(inventory),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({
@@ -113,10 +119,7 @@ const PinnedInventories: FC<Props> = ({
   };
 
   const handleClickSetDefaultInventory = (inventory: Inventory) => {
-    setDaufltInventoryMutation.mutate({
-      inventory,
-      userUid: user.uid,
-    });
+    setDaufltInventoryMutation.mutate(inventory);
   };
 
   return (
@@ -137,13 +140,12 @@ const PinnedInventories: FC<Props> = ({
           open={isDeleteModalOpen}
           handleCloseModal={handleCloseModal}
         >
-          <DeleteInventoryForm
+          <DynamicDeleteInventoryForm
             inventory={selectedInventory as unknown as Inventory}
             deleteInventory={(inventory) =>
               deleteInventoryMutation.mutate({
-                inventoryUid: inventory.uid as string,
-                userUid: user.getUid(),
-                companyUid: user.getCompanyUid(),
+                inventoryId: inventory.id as string,
+                companyId: user.getCompanyId(),
               })
             }
           />
@@ -158,13 +160,13 @@ const PinnedInventories: FC<Props> = ({
         ) : (
           inventories.map((inventory) => (
             <CardInventory
-              key={inventory.uid}
+              key={inventory.id}
               onSelectInventory={onSelectInventory}
               inventory={inventory}
               handleClickEditInventory={handleClickEditInventory}
               handleClickDeleteInventory={handleClickDeleteInventory}
               handleClickSetDefaultInventory={handleClickSetDefaultInventory}
-              isCurrentInventory={currentInventoryUid === inventory.uid}
+              isCurrentInventory={currentInventoryId === inventory.id}
             />
           ))
         )}

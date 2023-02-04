@@ -13,12 +13,12 @@ import {
 
 const initialFiltersState: FiltersStateType = {
   sorter: {
-    field: ProductAttributes.CREATION_DATE,
+    field: ProductAttributes.UPDATED_AT,
     order: ORDER.DESC,
   },
   filters: {
-    [ProductAttributes.CATEGORY_UID]: 'cat_uid',
-    [ProductAttributes.SUB_CATEGORY_UID]: '67890',
+    [ProductAttributes.CATEGORY_ID]: 'cat_id',
+    [ProductAttributes.SUB_CATEGORY_ID]: '67890',
     [ProductAttributes.TO_BUY]: 'true',
     [ProductAttributes.IS_PUBLIC]: 'false',
   },
@@ -30,8 +30,8 @@ describe('reducerFilters', () => {
       type: ActionNamesEnum.SET_FILTER,
       payload: {
         filter: {
-          attribute: ProductAttributes.CATEGORY_UID,
-          value: 'updated_cat_uid',
+          attribute: ProductAttributes.CATEGORY_ID,
+          value: 'updated_cat_id',
         },
       },
     };
@@ -39,7 +39,7 @@ describe('reducerFilters', () => {
       ...initialFiltersState,
       filters: {
         ...initialFiltersState.filters,
-        [ProductAttributes.CATEGORY_UID]: 'updated_cat_uid',
+        [ProductAttributes.CATEGORY_ID]: 'updated_cat_id',
       },
     };
     expect(reducerFilters(initialFiltersState, action)).toEqual(expectedState);
@@ -50,8 +50,8 @@ describe('reducerFilters', () => {
       type: ActionNamesEnum.SET_FILTERS,
       payload: {
         filters: {
-          [ProductAttributes.CATEGORY_UID]: 'azertyui',
-          [ProductAttributes.SUB_CATEGORY_UID]: 'qsdfghj',
+          [ProductAttributes.CATEGORY_ID]: 'azertyui',
+          [ProductAttributes.SUB_CATEGORY_ID]: 'qsdfghj',
           [ProductAttributes.TO_BUY]: 'false',
           [ProductAttributes.IS_PUBLIC]: 'false',
         },
@@ -60,8 +60,8 @@ describe('reducerFilters', () => {
     const expectedState = {
       ...initialFiltersState,
       filters: {
-        [ProductAttributes.CATEGORY_UID]: 'azertyui',
-        [ProductAttributes.SUB_CATEGORY_UID]: 'qsdfghj',
+        [ProductAttributes.CATEGORY_ID]: 'azertyui',
+        [ProductAttributes.SUB_CATEGORY_ID]: 'qsdfghj',
         [ProductAttributes.TO_BUY]: 'false',
         [ProductAttributes.IS_PUBLIC]: 'false',
       },

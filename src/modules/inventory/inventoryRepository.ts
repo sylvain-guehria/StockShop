@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 
 import type InventoryEntity from './InventoryEntity';
+import type { Inventory } from './inventoryType';
 
 /**
  * @abstract
@@ -14,27 +15,19 @@ export abstract class InventoryRepository {
     }
   }
 
-  getById(uid: string): Promise<InventoryEntity> {
-    throw new Error(`You tried to call an abstract methode, arg: ${uid}`);
+  getById(id: string): Promise<InventoryEntity> {
+    throw new Error(`You tried to call an abstract methode, arg: ${id}`);
   }
 
-  async add(
-    inventory: InventoryEntity,
-    userUid: string,
-    companyUid: string
-  ): Promise<InventoryEntity> {
+  async add(inventory: Inventory): Promise<InventoryEntity | null> {
     throw new Error(
-      `You tried to call an abstract methode, inventory: ${inventory}, userUid: ${userUid}, companyUid: ${companyUid}`
+      `You tried to call an abstract methode, inventory: ${inventory}`
     );
   }
 
-  async delete({
-    userUid,
-    companyUid,
-    inventoryUid,
-  }: DeleteInventoryParams): Promise<void> {
+  async delete(inventoryId: string): Promise<boolean> {
     throw new Error(
-      `You tried to call an abstract methode, arg inventoryUid ${inventoryUid} and userUid: ${userUid} and companyUid: ${companyUid}`
+      `You tried to call an abstract methode, arg inventoryId ${inventoryId}`
     );
   }
 
@@ -42,32 +35,21 @@ export abstract class InventoryRepository {
     throw new Error(`You tried to call an abstract methode, arg`);
   }
 
-  async update(
-    inventory: InventoryEntity,
-    userId: string,
-    companyUid: string
-  ): Promise<void> {
+  async update(inventory: InventoryEntity): Promise<void> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
         inventory,
-      }} and userId: ${userId} and companyUid: ${companyUid}`
+      }} `
     );
   }
 
-  async getInventoriesByUserUidAndCompanyUid(
-    userUid: string,
-    companyUid: string
+  async getInventoriesByCompanyId(
+    companyId: string
   ): Promise<InventoryEntity[]> {
     throw new Error(
-      `You tried to call an abstract methode, arg: ${{ userUid, companyUid }}`
+      `You tried to call an abstract methode, arg: ${{ companyId }}`
     );
   }
 }
 
 export default InventoryRepository;
-
-export type DeleteInventoryParams = {
-  inventoryUid: string;
-  companyUid: string;
-  userUid: string;
-};

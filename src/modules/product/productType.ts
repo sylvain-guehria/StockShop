@@ -1,5 +1,5 @@
 export enum ProductAttributes {
-  UID = 'uid',
+  ID = 'id',
   LABEL = 'label',
   QUANTITY_IN_INVENTORY = 'quantityInInventory',
   OPTIMUM_QUANTITY = 'optimumQuantity',
@@ -9,18 +9,20 @@ export enum ProductAttributes {
   TO_BUY = 'toBuy',
   IS_PUBLIC = 'isPublic',
   TVA = 'tva',
-  CATEGORY_UID = 'categoryUid',
-  SUB_CATEGORY_UID = 'subCategoryUid',
+  CATEGORY_ID = 'categoryId',
+  SUB_CATEGORY_ID = 'subCategoryId',
   PUBLIC_DISPONIBILITY = 'publicDisponibility',
-  INVENTORY_UID = 'inventoryUid',
+  INVENTORY_ID = 'inventoryId',
   CAT_SUBCAT_ATTRIBUTES = 'catSubcatAttributes',
   CONDITION = 'condition',
   PHOTO_LINK = 'photoLink',
-  CREATION_DATE = 'creationDate',
+  MADE_IN = 'madeIn',
+  CREATED_AT = 'createdAt',
+  UPDATED_AT = 'updatedAt',
 }
 
 export const ProductLabels = {
-  [ProductAttributes.UID]: 'Uid',
+  [ProductAttributes.ID]: 'Id',
   [ProductAttributes.LABEL]: 'Label',
   [ProductAttributes.QUANTITY_IN_INVENTORY]: 'Quantité en stock',
   [ProductAttributes.OPTIMUM_QUANTITY]: 'Quantité optimale en stock',
@@ -30,14 +32,15 @@ export const ProductLabels = {
   [ProductAttributes.TO_BUY]: 'Quantité à acheter',
   [ProductAttributes.IS_PUBLIC]: 'Publique',
   [ProductAttributes.TVA]: 'TVA',
-  [ProductAttributes.CATEGORY_UID]: 'Catégorie',
-  [ProductAttributes.SUB_CATEGORY_UID]: 'Sous-catégorie',
+  [ProductAttributes.CATEGORY_ID]: 'Catégorie',
+  [ProductAttributes.SUB_CATEGORY_ID]: 'Sous-catégorie',
   [ProductAttributes.PUBLIC_DISPONIBILITY]: 'Disponibilité publique',
-  [ProductAttributes.INVENTORY_UID]: 'Inventaire',
+  [ProductAttributes.INVENTORY_ID]: 'Inventaire',
   [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]: 'Attributs',
   [ProductAttributes.CONDITION]: 'Etat',
   [ProductAttributes.PHOTO_LINK]: 'Photo',
-  [ProductAttributes.CREATION_DATE]: 'Date de création',
+  [ProductAttributes.UPDATED_AT]: 'Date de création',
+  [ProductAttributes.CREATED_AT]: 'Date de modification',
 } as const;
 
 export enum ConditionTypeEnum {
@@ -53,7 +56,7 @@ export const ConditionLabels = {
 };
 
 export interface Product {
-  [ProductAttributes.UID]?: string;
+  [ProductAttributes.ID]?: string;
   [ProductAttributes.LABEL]?: string;
   [ProductAttributes.QUANTITY_IN_INVENTORY]?: number;
   [ProductAttributes.OPTIMUM_QUANTITY]?: number;
@@ -63,12 +66,13 @@ export interface Product {
   [ProductAttributes.TO_BUY]?: number;
   [ProductAttributes.IS_PUBLIC]?: boolean;
   [ProductAttributes.TVA]?: number;
-  [ProductAttributes.CATEGORY_UID]?: string;
-  [ProductAttributes.SUB_CATEGORY_UID]?: string;
+  [ProductAttributes.CATEGORY_ID]?: string;
+  [ProductAttributes.SUB_CATEGORY_ID]?: string;
   [ProductAttributes.PUBLIC_DISPONIBILITY]?: string;
-  [ProductAttributes.INVENTORY_UID]?: string;
+  [ProductAttributes.INVENTORY_ID]?: string;
   [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]?: Record<string, any>;
   [ProductAttributes.CONDITION]?: ConditionTypeEnum;
   [ProductAttributes.PHOTO_LINK]?: string;
-  [ProductAttributes.CREATION_DATE]?: number;
+  [ProductAttributes.UPDATED_AT]?: string;
+  [ProductAttributes.CREATED_AT]?: string;
 }

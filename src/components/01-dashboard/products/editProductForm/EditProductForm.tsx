@@ -1,19 +1,15 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useQueryClient } from '@tanstack/react-query';
 import type { FC } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
-import { ApiRequestEnums } from '@/enums/apiRequestEnums';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import type ProductEntity from '@/modules/product/ProductEntity';
-import type { UpdateProductParams } from '@/modules/product/productService';
-import type { ConditionTypeEnum } from '@/modules/product/productType';
+import type { ConditionTypeEnum, Product } from '@/modules/product/productType';
 import { ProductAttributes } from '@/modules/product/productType';
 
 import { validationSchema } from './EditProductFormValidation';
@@ -27,8 +23,8 @@ export interface EditProductFormType {
   [ProductAttributes.BUYING_PRICE]?: number;
   [ProductAttributes.SELLING_PRICE]?: number;
   [ProductAttributes.DESCRIPTION]?: string;
-  [ProductAttributes.CATEGORY_UID]?: string;
-  [ProductAttributes.SUB_CATEGORY_UID]?: string;
+  [ProductAttributes.CATEGORY_ID]?: string;
+  [ProductAttributes.SUB_CATEGORY_ID]?: string;
   [ProductAttributes.IS_PUBLIC]?: boolean;
   [ProductAttributes.TVA]?: number;
   [ProductAttributes.PUBLIC_DISPONIBILITY]?: string;
@@ -39,7 +35,7 @@ export interface EditProductFormType {
 type Props = {
   product: ProductEntity;
   handleCloseModal: () => void;
-  onSubmitEditForm: (params: UpdateProductParams) => void;
+  onSubmitEditForm: (params: Product) => void;
 };
 
 const EditProductForm: FC<Props> = ({
@@ -48,8 +44,6 @@ const EditProductForm: FC<Props> = ({
   onSubmitEditForm,
 }) => {
   const toast = useToast(10000);
-  const { user } = useAuth();
-  const queryClient = useQueryClient();
 
   const formOptions = {
     resolver: yupResolver(validationSchema),
@@ -60,8 +54,8 @@ const EditProductForm: FC<Props> = ({
       [ProductAttributes.BUYING_PRICE]: product.buyingPrice,
       [ProductAttributes.SELLING_PRICE]: product.sellingPrice,
       [ProductAttributes.TVA]: product.tva,
-      [ProductAttributes.CATEGORY_UID]: product.categoryUid,
-      [ProductAttributes.SUB_CATEGORY_UID]: product.subCategoryUid,
+      [ProductAttributes.CATEGORY_ID]: product.categoryId,
+      [ProductAttributes.SUB_CATEGORY_ID]: product.subCategoryId,
       [ProductAttributes.IS_PUBLIC]: product.isPublic,
       [ProductAttributes.DESCRIPTION]: product.description,
       [ProductAttributes.PUBLIC_DISPONIBILITY]: product.publicDisponibility,
@@ -76,6 +70,7 @@ const EditProductForm: FC<Props> = ({
     watch,
     setValue,
     getValues,
+    control,
     formState: { errors },
   } = useForm<EditProductFormType>(formOptions);
 
@@ -84,14 +79,9 @@ const EditProductForm: FC<Props> = ({
   ) => {
     try {
       await onSubmitEditForm({
-        product: {
-          ...product,
-          ...data,
-        },
-        userUid: user.getUid(),
-        companyUid: user.getCompanyUid(),
+        ...product,
+        ...data,
       });
-      queryClient.invalidateQueries({ queryKey: [ApiRequestEnums.GetProduct] });
     } catch (e: any) {
       toast(ToasterTypeEnum.ERROR, e.message);
     }
@@ -104,8 +94,7 @@ const EditProductForm: FC<Props> = ({
           <SubFormGeneral
             register={register}
             errors={errors}
-            watch={watch}
-            setValue={setValue}
+            control={control}
           />
         </div>
 

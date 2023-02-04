@@ -19,7 +19,7 @@ const nextConfig = {
     domains: [
       'assets.vercel.com',
       'images.unsplash.com',
-      'firebasestorage.googleapis.com',
+      `${process.env.PROJECT_ID}.supabase.co`,
     ],
   },
   async redirects() {

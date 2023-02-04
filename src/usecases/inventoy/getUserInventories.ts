@@ -1,46 +1,44 @@
-import type { CompanyRepository } from '@/modules/company/companyRepository';
 import type CompanyService from '@/modules/company/companyService';
 import type InventoryEntity from '@/modules/inventory/InventoryEntity';
 import type { InventoryRepository } from '@/modules/inventory/inventoryRepository';
 import type InventoryService from '@/modules/inventory/inventoryService';
 import type UserEntity from '@/modules/user/UserEntity';
+import type { UserRepository } from '@/modules/user/userRepository';
 
 export const getUserInventories =
   (
-    companyRepository: CompanyRepository,
     inventoryRepository: InventoryRepository,
     companyServiceDi: CompanyService,
-    inventoryServiceDi: InventoryService
+    inventoryServiceDi: InventoryService,
+    userRepository: UserRepository
   ) =>
   async (user: UserEntity): Promise<InventoryEntity[]> => {
     try {
-      if (!user.getUid()) {
-        throw new Error('userUid is required to get user inventories');
+      if (!user.getId()) {
+        throw new Error('userId is required to get user inventories');
       }
+      const userCompanyId = user.getCompanyId();
 
-      let company = await companyRepository.getCompanyByUserUid(user.getUid());
-      if (!company) {
-        company = await companyServiceDi.createCompanyByUserId(user.getUid());
-        user.setCompanyUid(company.uid);
-      }
-      let inventories =
-        await inventoryRepository.getInventoriesByUserUidAndCompanyUid(
-          user.getUid(),
-          company.uid
-        );
-      if (!inventories || inventories.length === 0) {
-        const inventory =
-          await inventoryServiceDi.createInventoryByUserIdAndCompanyId({
-            userUid: user.getUid(),
-            companyUid: company.uid,
+      if (!userCompanyId) {
+        const newCompany = await companyServiceDi.createCompany();
+        user.setCompanyId(newCompany.getId());
+        await userRepository.update(user);
+        const newInventory =
+          await inventoryServiceDi.createInventoryWithCompanyId({
+            companyId: newCompany.getId(),
             isFirstInventory: true,
           });
-        inventories = [inventory];
+        return [newInventory];
       }
+
+      const inventories = await inventoryRepository.getInventoriesByCompanyId(
+        userCompanyId
+      );
+
       return inventories;
     } catch (error: any) {
       // eslint-disable-next-line no-console
-      console.log('error', error);
+      console.log('error when getting user inventories', error);
       return [];
     }
   };

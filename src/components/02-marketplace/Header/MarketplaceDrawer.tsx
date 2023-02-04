@@ -1,10 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/20/solid';
-import { auth, signOut } from 'firebaseFolder/clientApp';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 import { Fragment } from 'react';
+import supabase from 'supabase/client/supabase-browser';
 
 import MobileServicesButton from '@/components/04-lib/Popovers/MobileServicesButton';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
@@ -24,13 +24,14 @@ const MarketplaceDrawer: FC<Props> = ({
   mobileMenuOpen,
   setMobileMenuOpen,
 }) => {
-  const { user } = useAuth();
+  const { user, reinitializeUser } = useAuth();
   const router = useRouter();
   const toast = useToast(4000);
 
   const handleSingOut = async () => {
     try {
-      await logoutUseCase({ auth, signOut });
+      await logoutUseCase({ supabase });
+      reinitializeUser();
       router.push(mainRoutes.home.path);
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);

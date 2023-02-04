@@ -13,7 +13,7 @@ import { useForm } from 'react-hook-form';
 import { categories } from '@/categoriesDatabase/categories';
 import InputSelect from '@/components/04-lib/inputs/InputSelect';
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
-import { getSubCategoriesByCategoryUidFromDatabase } from '@/modules/category/categoryUtils';
+import { getSubCategoriesByCategoryIdFromDatabase } from '@/modules/category/categoryUtils';
 import {
   ProductAttributes,
   ProductLabels,
@@ -31,8 +31,8 @@ import { ActionNamesEnum, initialFilters } from './ProductsFiltersReducer';
 const sortingOptions = [
   { value: ProductAttributes.LABEL, label: 'Ordre alphabétique' },
   {
-    value: ProductAttributes.CREATION_DATE,
-    label: ProductLabels[ProductAttributes.CREATION_DATE],
+    value: ProductAttributes.UPDATED_AT,
+    label: ProductLabels[ProductAttributes.UPDATED_AT],
   },
   // {
   //   value: ProductAttributes.SELLING_PRICE,
@@ -72,7 +72,7 @@ export const ProductsFilters: FC<Props> = ({
   const { register, handleSubmit, watch, setValue, reset } =
     useForm<FilterPropertyType>(formOptions);
 
-  const watchCategoryUid = watch(ProductAttributes.CATEGORY_UID);
+  const watchCategoryId = watch(ProductAttributes.CATEGORY_ID);
 
   const onSubmitFilterForm: SubmitHandler<FilterPropertyType> = async (
     data: FilterPropertyType
@@ -84,8 +84,8 @@ export const ProductsFilters: FC<Props> = ({
   };
 
   useEffect(() => {
-    setValue(ProductAttributes.SUB_CATEGORY_UID, '');
-  }, [watchCategoryUid]);
+    setValue(ProductAttributes.SUB_CATEGORY_ID, '');
+  }, [watchCategoryId]);
 
   const resetFilters = () => {
     reset();
@@ -147,12 +147,12 @@ export const ProductsFilters: FC<Props> = ({
                     { label: '', value: '' },
                     ...categories.map((category) => ({
                       label: category.label,
-                      value: category.uid,
+                      value: category.id,
                     })),
                   ]}
                   label="Catégorie"
-                  name={ProductAttributes.CATEGORY_UID}
-                  register={register(ProductAttributes.CATEGORY_UID)}
+                  name={ProductAttributes.CATEGORY_ID}
+                  register={register(ProductAttributes.CATEGORY_ID)}
                   inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </fieldset>
@@ -161,17 +161,17 @@ export const ProductsFilters: FC<Props> = ({
                   <InputSelect
                     options={[
                       { label: '', value: '' },
-                      ...getSubCategoriesByCategoryUidFromDatabase(
-                        watchCategoryUid as string
+                      ...getSubCategoriesByCategoryIdFromDatabase(
+                        watchCategoryId as string
                       ).map((subcategory) => ({
                         label: subcategory.label,
-                        value: subcategory.uid,
+                        value: subcategory.id,
                       })),
                     ]}
                     label="Sous catégorie"
-                    disabled={!watchCategoryUid}
-                    name={ProductAttributes.SUB_CATEGORY_UID}
-                    register={register(ProductAttributes.SUB_CATEGORY_UID)}
+                    disabled={!watchCategoryId}
+                    name={ProductAttributes.SUB_CATEGORY_ID}
+                    register={register(ProductAttributes.SUB_CATEGORY_ID)}
                     inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>

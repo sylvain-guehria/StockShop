@@ -2,7 +2,7 @@ import type { Inventory, InventoryColor } from './inventoryType';
 import { arrayInventoryColors } from './inventoryType';
 
 class InventoryEntity implements Inventory {
-  uid: string;
+  id: string;
 
   name: string;
 
@@ -12,27 +12,27 @@ class InventoryEntity implements Inventory {
 
   color: InventoryColor;
 
-  companyUid: string;
+  companyId: string;
 
   static new(inventory?: Inventory): InventoryEntity {
     return new InventoryEntity(inventory || {});
   }
 
   constructor(inventory: Inventory) {
-    this.uid = inventory.uid || '';
+    this.id = inventory.id || '';
     this.name = inventory.name || '';
     this.isPublic = inventory.isPublic || false;
     this.isDefaultInventory = inventory.isDefaultInventory || false;
     this.color = inventory.color || (arrayInventoryColors[0] as InventoryColor);
-    this.companyUid = inventory.companyUid || '';
+    this.companyId = inventory.companyId || '';
   }
 
-  getUid(): string {
-    return this.uid;
+  getId(): string {
+    return this.id;
   }
 
-  setUid(uid: string): InventoryEntity {
-    this.uid = uid;
+  setId(id: string): InventoryEntity {
+    this.id = id;
     return this;
   }
 
@@ -63,16 +63,16 @@ class InventoryEntity implements Inventory {
     return this;
   }
 
-  getIsDefaultInventory(): boolean {
+  isDefault(): boolean {
     return this.isDefaultInventory;
   }
 
-  getCompanyUid(): string {
-    return this.companyUid;
+  getCompanyId(): string {
+    return this.companyId;
   }
 
-  setCompanyUid(companyUid: string): InventoryEntity {
-    this.companyUid = companyUid;
+  setCompanyId(companyId: string): InventoryEntity {
+    this.companyId = companyId;
     return this;
   }
 

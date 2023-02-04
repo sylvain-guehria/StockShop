@@ -1,23 +1,13 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
-import {
-  auth,
-  createUserWithEmailAndPassword,
-  deleteUser,
-  sendEmailVerification,
-} from 'firebaseFolder/clientApp';
-import { AuthFirebaseErrorCodes } from 'firebaseFolder/errorCodes';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import supabase from 'supabase/client/supabase-browser';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
-import { mainRoutes } from '@/routes/mainRoutes';
+import Providers from '@/layouts/Providers';
 import { registerWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './RegisterFormValidation';
@@ -29,10 +19,7 @@ interface RegisterFormType {
   acceptTerms: boolean;
 }
 const RegisterForm = () => {
-  const router = useRouter();
-  const { setUser } = useAuth();
   const toast = useToast(4000);
-  const [errorMessage, setErrorMessage] = useState('');
 
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -47,23 +34,24 @@ const RegisterForm = () => {
   ) => {
     const { email, password } = data;
     try {
-      const user = await registerWithEmailUseCase({
+      const response = await registerWithEmailUseCase({
         email,
         password,
-        createUserWithEmailAndPassword,
-        deleteUser,
-        auth,
-        sendEmailVerification,
-        axios,
+        supabase,
       });
-      setUser(user);
-      router.push(mainRoutes.home.path);
-    } catch (error: any) {
-      if (error.errorCode === AuthFirebaseErrorCodes.EmailAlreadyInUse) {
-        setErrorMessage(error.message);
-      } else {
-        toast(ToasterTypeEnum.ERROR, error.message);
+      if (response.data.user) {
+        toast(
+          ToasterTypeEnum.SUCCESS,
+          'un email envoyé de confirmation vous  a été envoyé'
+        );
       }
+      if (response.error) {
+        toast(ToasterTypeEnum.ERROR, response.error.message);
+      }
+    } catch (error: any) {
+      // eslint-disable-next-line no-console
+      console.error('error RegisterForm', error);
+      toast(ToasterTypeEnum.ERROR, error.message);
     }
   };
 
@@ -127,10 +115,10 @@ const RegisterForm = () => {
           {errors.confirmPassword?.message}
         </div>
       </div>
-
+      {/* 
       {errorMessage && (
         <div className="text-sm text-red-600">{errorMessage}</div>
-      )}
+      )} */}
 
       <div className="flex items-center justify-between">
         <div className="flex items-center">
@@ -160,4 +148,11 @@ const RegisterForm = () => {
     </form>
   );
 };
-export default RegisterForm;
+
+const RegisterFormWithProviders = () => (
+  <Providers>
+    <RegisterForm />
+  </Providers>
+);
+
+export default RegisterFormWithProviders;

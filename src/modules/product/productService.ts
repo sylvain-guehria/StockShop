@@ -11,52 +11,30 @@ class ProductService {
     this.productRepository = productRepository;
   }
 
-  async createProductByUserUidCompanyUidAndInventoryUid({
-    userUid,
-    companyUid,
-    inventoryUid,
-  }: CreateProductParams): Promise<ProductEntity> {
-    const uid = uuidV4();
+  async createProductInInventory(inventoryId: string): Promise<ProductEntity> {
+    const id = uuidV4();
 
-    const product = ProductEntity.new({
-      uid,
-      label: 'New product',
-      inventoryUid,
-      creationDate: Date.now(),
-    });
+    const createdProduct = await this.productRepository.add(
+      ProductEntity.new({
+        id,
+        label: 'New product',
+        inventoryId,
+        createdAt: new Date().toISOString(),
+      })
+    );
 
-    return this.productRepository.add({
-      product,
-      userUid,
-      companyUid,
-    });
+    if (!createdProduct) throw new Error('Product not created');
+
+    return createdProduct as ProductEntity;
   }
 
-  async updateProduct({
-    product,
-    userUid,
-    companyUid,
-  }: UpdateProductParams): Promise<ProductEntity> {
-    return this.productRepository.update({
-      product: ProductEntity.new({
+  async updateProduct(product: Product): Promise<ProductEntity> {
+    return this.productRepository.update(
+      ProductEntity.new({
         ...product,
-      }),
-      userUid,
-      companyUid,
-    });
+      })
+    );
   }
 }
 
 export default ProductService;
-
-export interface UpdateProductParams {
-  userUid: string;
-  companyUid: string;
-  product: Product;
-}
-
-export interface CreateProductParams {
-  userUid: string;
-  companyUid: string;
-  inventoryUid: string;
-}

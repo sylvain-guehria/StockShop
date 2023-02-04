@@ -4,7 +4,7 @@ import type { Product } from './productType';
 import { ConditionTypeEnum } from './productType';
 
 class ProductEntity implements Product {
-  uid: string;
+  id: string;
 
   label: string;
 
@@ -24,13 +24,13 @@ class ProductEntity implements Product {
 
   tva: number;
 
-  categoryUid: string;
+  categoryId: string;
 
-  subCategoryUid: string;
+  subCategoryId: string;
 
   publicDisponibility: string;
 
-  inventoryUid: string;
+  inventoryId: string;
 
   catSubcatAttributes: Record<string, any>;
 
@@ -38,14 +38,14 @@ class ProductEntity implements Product {
 
   photoLink: string;
 
-  creationDate: number;
+  createdAt: string;
 
   static new(product?: Product): ProductEntity {
     return new ProductEntity(product || ({} as Product));
   }
 
   constructor(product: Product) {
-    this.uid = product.uid || '';
+    this.id = product.id || '';
     this.label = product.label || '';
     this.quantityInInventory = product.quantityInInventory || 0;
     this.optimumQuantity = product.optimumQuantity || 0;
@@ -53,25 +53,24 @@ class ProductEntity implements Product {
     this.sellingPrice = product.sellingPrice || 0;
     this.description = product.description || '';
     this.toBuy = product.toBuy || 0;
-    // @ts-ignore
-    this.isPublic = product.isPublic ? parseBoolean(product.isPublic) : false;
+    this.isPublic = parseBoolean(product.isPublic);
     this.tva = product.tva || 0;
-    this.categoryUid = product.categoryUid || '';
-    this.subCategoryUid = product.subCategoryUid || '';
+    this.categoryId = product.categoryId || '';
+    this.subCategoryId = product.subCategoryId || '';
     this.publicDisponibility = product.publicDisponibility || '';
-    this.inventoryUid = product.inventoryUid || '';
+    this.inventoryId = product.inventoryId || '';
     this.catSubcatAttributes = product.catSubcatAttributes || {};
     this.condition = product.condition || ConditionTypeEnum.NEW;
     this.photoLink = product.photoLink || '';
-    this.creationDate = product.creationDate || Date.now();
+    this.createdAt = product.createdAt || new Date().toISOString();
   }
 
-  getCreationDate(): number {
-    return this.creationDate;
+  getCreationDate(): string {
+    return this.createdAt;
   }
 
-  setCreationDate(creationDate: number): ProductEntity {
-    this.creationDate = creationDate;
+  setCreationDate(createdAt: string): ProductEntity {
+    this.createdAt = createdAt;
     return this;
   }
 
@@ -91,21 +90,21 @@ class ProductEntity implements Product {
     return this;
   }
 
-  getInventoryUid(): string {
-    return this.inventoryUid;
+  getInventoryId(): string {
+    return this.inventoryId;
   }
 
-  setInventoryUid(inventoryUid: string): ProductEntity {
-    this.inventoryUid = inventoryUid;
+  setInventoryId(inventoryId: string): ProductEntity {
+    this.inventoryId = inventoryId;
     return this;
   }
 
-  getUid(): string {
-    return this.uid;
+  getId(): string {
+    return this.id;
   }
 
-  setUid(uid: string): ProductEntity {
-    this.uid = uid;
+  setId(id: string): ProductEntity {
+    this.id = id;
     return this;
   }
 
@@ -190,21 +189,21 @@ class ProductEntity implements Product {
     return this;
   }
 
-  getCategoryUid(): string {
-    return this.categoryUid;
+  getCategoryId(): string {
+    return this.categoryId;
   }
 
-  setCategoryUid(categoryUid: string): ProductEntity {
-    this.categoryUid = categoryUid;
+  setCategoryId(categoryId: string): ProductEntity {
+    this.categoryId = categoryId;
     return this;
   }
 
-  getSubCategoryUid(): string {
-    return this.subCategoryUid;
+  getSubCategoryId(): string {
+    return this.subCategoryId;
   }
 
-  setSubCategoryUid(subCategoryUid: string): ProductEntity {
-    this.subCategoryUid = subCategoryUid;
+  setSubCategoryId(subCategoryId: string): ProductEntity {
+    this.subCategoryId = subCategoryId;
     return this;
   }
 
@@ -233,12 +232,12 @@ class ProductEntity implements Product {
     return this;
   }
 
-  isSameCategory(categoryUid: string): boolean {
-    return this.categoryUid === categoryUid;
+  isSameCategory(categoryId: string): boolean {
+    return this.categoryId === categoryId;
   }
 
-  isSameSubCategory(subCategoryUid: string): boolean {
-    return this.subCategoryUid === subCategoryUid;
+  isSameSubCategory(subCategoryId: string): boolean {
+    return this.subCategoryId === subCategoryId;
   }
 
   getCondition(): ConditionTypeEnum {

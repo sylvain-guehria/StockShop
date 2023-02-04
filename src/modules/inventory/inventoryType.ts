@@ -1,19 +1,23 @@
 export enum InventoryAttributes {
-  UID = 'uid',
+  ID = 'id',
   NAME = 'name',
   IS_PUBLIC = 'isPublic',
   IS_DEFAULT_INVENTORY = 'isDefaultInventory',
+  CREATED_AT = 'createdAt',
+  UPDATED_AT = 'updatedAt',
   COLOR = 'color',
-  COMPANY_UID = 'companyUid',
+  COMPANY_ID = 'companyId',
 }
 
 export interface Inventory {
-  [InventoryAttributes.UID]?: string;
+  [InventoryAttributes.ID]?: string;
   [InventoryAttributes.NAME]?: string;
   [InventoryAttributes.IS_PUBLIC]?: boolean;
   [InventoryAttributes.IS_DEFAULT_INVENTORY]?: boolean;
   [InventoryAttributes.COLOR]?: InventoryColor;
-  [InventoryAttributes.COMPANY_UID]?: string;
+  [InventoryAttributes.COMPANY_ID]?: string;
+  [InventoryAttributes.CREATED_AT]?: string;
+  [InventoryAttributes.UPDATED_AT]?: string;
 }
 
 export const InventoryColors = {

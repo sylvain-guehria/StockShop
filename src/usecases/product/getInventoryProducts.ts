@@ -9,9 +9,7 @@ import { ProductAttributes } from '@/modules/product/productType';
 import { getKeysWithValues } from '@/utils/objectUtils';
 
 type GetInventoryProductsParamsType = {
-  userUid: string;
-  companyUid: string;
-  inventoryUid: string;
+  inventoryId: string;
   currentPage: number;
   filters?: FilterPropertyType;
   sorter?: SorterType;
@@ -20,9 +18,7 @@ type GetInventoryProductsParamsType = {
 export const getInventoryProducts =
   (productRepository: ProductRepository) =>
   async ({
-    userUid,
-    inventoryUid,
-    companyUid,
+    inventoryId,
     currentPage: currentPageFromParams,
     sorter,
     filters,
@@ -33,45 +29,32 @@ export const getInventoryProducts =
     const currentPage = currentPageFromParams || 1;
     const numberOfProductsPerPage = 10;
     try {
-      if (!userUid) {
-        throw new Error('userUid is required to get user inventoriy products');
-      }
-
-      if (!companyUid) {
+      if (!inventoryId) {
         throw new Error(
-          'companyUid is required to get user inventoriy products'
-        );
-      }
-
-      if (!inventoryUid) {
-        throw new Error(
-          'inventoryUid is required to get user inventoriy products'
+          'inventoryId is required to get user inventoriy products'
         );
       }
 
       const filtersWithValue = getKeysWithValues(filters as FilterPropertyType);
-      let sorterField = sorter?.field || ProductAttributes.CREATION_DATE;
+      let sorterField = sorter?.field || ProductAttributes.UPDATED_AT;
 
       if (filtersWithValue.length > 0) {
         const sorterFieldIsInFilters = filtersWithValue.includes(sorterField);
         if (sorterFieldIsInFilters) {
-          sorterField = ProductAttributes.CREATION_DATE;
+          sorterField = ProductAttributes.UPDATED_AT;
         }
       }
 
-      const response =
-        await productRepository.getProductsByUserUidCompanyUidInventoryUid({
-          userUid,
-          inventoryUid,
-          companyUid,
-          currentPage,
-          numberOfProductsPerPage,
-          sorter: {
-            field: sorterField,
-            order: sorter?.order || ORDER.DESC,
-          },
-          filters: filters as FilterPropertyType,
-        });
+      const response = await productRepository.getProductsByInventoryId({
+        inventoryId,
+        currentPage,
+        numberOfProductsPerPage,
+        sorter: {
+          field: sorterField,
+          order: sorter?.order || ORDER.DESC,
+        },
+        filters: filters as FilterPropertyType,
+      });
 
       return {
         count: response.count,

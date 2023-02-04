@@ -3,43 +3,43 @@ import { AttributeInputTypes } from '@/modules/category/categoryType';
 import { colorOptions, sexOptions } from '../reusableOptions';
 
 export const subcategorieClothes = {
-  uid: 'clothes',
+  id: 'clothes',
   label: 'Vêtements',
   inputs: [
     {
-      uid: 'sex',
+      id: 'sex',
       label: 'Sexe',
       inputType: AttributeInputTypes.SELECT,
       options: sexOptions,
     },
     {
-      uid: 'europeanSize',
+      id: 'europeanSize',
       label: 'Taille UE',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'americanSize',
+      id: 'americanSize',
       label: 'Taille US',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'color',
+      id: 'color',
       label: 'Couleur',
       inputType: AttributeInputTypes.SELECT,
       options: [...colorOptions],
     },
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'material',
+      id: 'material',
       label: 'Matière',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'activity',
+      id: 'activity',
       label: 'Activité',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -68,7 +68,7 @@ export const subcategorieClothes = {
       ],
     },
     {
-      uid: 'insideOrOutside',
+      id: 'insideOrOutside',
       label: 'Intérieur/extérieur',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -77,7 +77,7 @@ export const subcategorieClothes = {
       ],
     },
     {
-      uid: 'season',
+      id: 'season',
       label: 'Saison',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -89,7 +89,7 @@ export const subcategorieClothes = {
       ],
     },
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -108,43 +108,43 @@ export const subcategorieClothes = {
 };
 
 export const subcategorieShoes = {
-  uid: 'shoes',
+  id: 'shoes',
   label: 'Chaussures',
   inputs: [
     {
-      uid: 'sex',
+      id: 'sex',
       label: 'Sexe',
       inputType: AttributeInputTypes.SELECT,
       options: sexOptions,
     },
     {
-      uid: 'europeanSize',
+      id: 'europeanSize',
       label: 'Taille UE',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'americanSize',
+      id: 'americanSize',
       label: 'Taille US',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'color',
+      id: 'color',
       label: 'Couleur',
       inputType: AttributeInputTypes.SELECT,
       options: [...colorOptions],
     },
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'material',
+      id: 'material',
       label: 'Matière',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'activity',
+      id: 'activity',
       label: 'Activité',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -176,27 +176,27 @@ export const subcategorieShoes = {
 };
 
 export const subcategorieAccessories = {
-  uid: 'accessories',
+  id: 'accessories',
   label: 'Accessoires',
   inputs: [
     {
-      uid: 'color',
+      id: 'color',
       label: 'Couleur',
       inputType: AttributeInputTypes.SELECT,
       options: [...colorOptions],
     },
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'material',
+      id: 'material',
       label: 'Matière',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -216,16 +216,16 @@ export const subcategorieAccessories = {
 };
 
 export const subcategorieFoodAndDietsupplements = {
-  uid: 'foodAndDietsupplements',
+  id: 'foodAndDietsupplements',
   label: 'Alimentation et compléments alimentaires',
   inputs: [
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type',
       inputType: AttributeInputTypes.SELECT,
       options: [

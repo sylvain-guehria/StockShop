@@ -1,9 +1,5 @@
-import {
-  CustomFirebaseErrorCodes,
-  FirebaseAuthenticationError,
-  StorageFirebaseErrorCodes,
-} from 'firebaseFolder/errorCodes';
-import type StorageService from 'firebaseFolder/storage';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import { BucketNames } from 'supabase/enums/bucketNames';
 
 import {
   authorizedFileTypes,
@@ -13,68 +9,72 @@ import type ProductEntity from '@/modules/product/ProductEntity';
 import type ProductService from '@/modules/product/productService';
 
 type UpdatePhotoProductInterface = {
-  userUid: string;
-  companyUid: string;
+  companyId: string;
   product: ProductEntity;
   currentFile: File;
 };
 
 export const updatePhotoProduct =
-  (productServiceDi: ProductService, storageServiceDi: StorageService) =>
+  (
+    productServiceDi: ProductService,
+    supabaseStorage: SupabaseClient<any, 'public', any>['storage']
+  ) =>
   async ({
-    userUid,
-    companyUid,
+    companyId,
     product,
     currentFile,
   }: UpdatePhotoProductInterface): Promise<ProductEntity> => {
-    if (!userUid)
-      throw new Error('userUid is required to update the photo of the product');
-    if (!companyUid)
+    if (!companyId)
       throw new Error(
-        'companyUid is required to update the photo of the product'
+        'companyId is required to update the photo of the product'
       );
     if (!product)
       throw new Error('product is required to update the photo of the product');
 
-    if (currentFile && currentFile.size > twoMegaBits)
-      throw new FirebaseAuthenticationError({
-        errorCode: StorageFirebaseErrorCodes.fileWrongSize,
-        message: '',
-      });
+    if (!product.getInventoryId())
+      throw new Error('product must be in an inventoryId');
 
+    if (currentFile && currentFile.size > twoMegaBits)
+      throw new Error('Le fichier ne doit pas dépasser 2 Mo');
     if (currentFile && !authorizedFileTypes.includes(currentFile.type)) {
-      throw new FirebaseAuthenticationError({
-        errorCode: CustomFirebaseErrorCodes.imageFileWrongType,
-        message: '',
-      });
+      throw new Error(
+        'Le fichier doit être une image au format png, jpg ou jpeg'
+      );
     }
 
     try {
+      const filePath = `${companyId}/${product.getInventoryId()}/${product.getId()}`;
       if (currentFile) {
-        const downloadURL = await storageServiceDi.handleUpload({
-          folderName: `/images/${userUid}`,
-          filename: `/${product.getUid()}`,
-          uploadedFile: currentFile,
-        });
+        const { error } = await supabaseStorage
+          .from(BucketNames.PRODUCTS)
+          .upload(`${filePath}`, currentFile);
 
-        return await productServiceDi.updateProduct({
-          product: product.setPhotoLink(downloadURL),
-          userUid,
-          companyUid,
-        });
+        if (error) throw new Error(error.message);
+
+        const { data } = await supabaseStorage
+          .from(BucketNames.PRODUCTS)
+          .getPublicUrl(`${filePath}`);
+
+        return await productServiceDi.updateProduct(
+          product.setPhotoLink(data.publicUrl)
+        );
       }
 
-      await storageServiceDi.handleDelete({
-        folderName: `/images/${userUid}`,
-        filename: `/${product.getUid()}`,
-      });
+      const { error, data } = await supabaseStorage
+        .from(BucketNames.PRODUCTS)
+        .remove([`${filePath}`]);
 
-      return await productServiceDi.updateProduct({
-        product: product.setPhotoLink(''),
-        userUid,
-        companyUid,
-      });
+      const isDeleted =
+        data?.length === 1 && data[0]?.metadata?.httpStatusCode === 200;
+
+      if (error) throw new Error(error.message);
+      if (!isDeleted)
+        throw new Error(
+          "Le fichier n'a pas pu être supprimé, veuillez réessayer"
+        );
+
+      return await productServiceDi.updateProduct(product.setPhotoLink(''));
     } catch (error: any) {
-      throw new FirebaseAuthenticationError(error);
+      throw new Error(error.message);
     }
   };

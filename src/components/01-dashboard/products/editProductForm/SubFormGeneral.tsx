@@ -1,18 +1,17 @@
 'use client';
 
 import type { FC } from 'react';
-import { useEffect } from 'react';
 import type {
+  Control,
   FieldErrorsImpl,
   UseFormRegister,
-  UseFormSetValue,
-  UseFormWatch,
 } from 'react-hook-form';
+import { useWatch } from 'react-hook-form';
 
 import { categories } from '@/categoriesDatabase/categories';
 import Input from '@/components/04-lib/inputs/Input';
 import InputSelect from '@/components/04-lib/inputs/InputSelect';
-import { getSubCategoriesByCategoryUidFromDatabase } from '@/modules/category/categoryUtils';
+import { getSubCategoriesByCategoryIdFromDatabase } from '@/modules/category/categoryUtils';
 import {
   ConditionTypeEnum,
   ProductAttributes,
@@ -23,17 +22,15 @@ import type { EditProductFormType } from './EditProductForm';
 
 type Props = {
   register: UseFormRegister<EditProductFormType>;
-  watch: UseFormWatch<EditProductFormType>;
   errors: Partial<FieldErrorsImpl<EditProductFormType>>;
-  setValue: UseFormSetValue<EditProductFormType>;
+  control: Control<EditProductFormType, any>;
 };
 
-const SubFormGeneral: FC<Props> = ({ watch, register, errors, setValue }) => {
-  const watchCategoryUid = watch(ProductAttributes.CATEGORY_UID);
-
-  useEffect(() => {
-    setValue(ProductAttributes.SUB_CATEGORY_UID, '');
-  }, [watchCategoryUid]);
+const SubFormGeneral: FC<Props> = ({ register, errors, control }) => {
+  const watchCategoryId = useWatch({
+    control,
+    name: ProductAttributes.CATEGORY_ID,
+  });
 
   return (
     <>
@@ -139,13 +136,13 @@ const SubFormGeneral: FC<Props> = ({ watch, register, errors, setValue }) => {
                 { label: '', value: '' },
                 ...categories.map((category) => ({
                   label: category.label,
-                  value: category.uid,
+                  value: category.id,
                 })),
               ]}
-              name={ProductAttributes.CATEGORY_UID}
-              label={ProductLabels[ProductAttributes.CATEGORY_UID]}
-              register={register(ProductAttributes.CATEGORY_UID)}
-              error={errors[ProductAttributes.CATEGORY_UID]?.message}
+              name={ProductAttributes.CATEGORY_ID}
+              label={ProductLabels[ProductAttributes.CATEGORY_ID]}
+              register={register(ProductAttributes.CATEGORY_ID)}
+              error={errors[ProductAttributes.CATEGORY_ID]?.message}
               inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
           </div>
@@ -155,18 +152,18 @@ const SubFormGeneral: FC<Props> = ({ watch, register, errors, setValue }) => {
             <InputSelect
               options={[
                 { label: '', value: '' },
-                ...getSubCategoriesByCategoryUidFromDatabase(
-                  watchCategoryUid as string
+                ...getSubCategoriesByCategoryIdFromDatabase(
+                  watchCategoryId as string
                 ).map((subcategory) => ({
                   label: subcategory.label,
-                  value: subcategory.uid,
+                  value: subcategory.id,
                 })),
               ]}
-              disabled={!watchCategoryUid}
-              name={ProductAttributes.SUB_CATEGORY_UID}
-              label={ProductLabels[ProductAttributes.SUB_CATEGORY_UID]}
-              register={register(ProductAttributes.SUB_CATEGORY_UID)}
-              error={errors[ProductAttributes.SUB_CATEGORY_UID]?.message}
+              disabled={!watchCategoryId}
+              name={ProductAttributes.SUB_CATEGORY_ID}
+              label={ProductLabels[ProductAttributes.SUB_CATEGORY_ID]}
+              register={register(ProductAttributes.SUB_CATEGORY_ID)}
+              error={errors[ProductAttributes.SUB_CATEGORY_ID]?.message}
               inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
           </div>

@@ -1,68 +1,36 @@
-import { firestoreAdmin } from 'firebaseFolder/serverApp';
-import { TableNames } from 'firebaseFolder/tableNames';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-const { USERS, COMPANIES, INVENTORIES } = TableNames;
+import { TableNames } from 'supabase/enums/tableNames';
+import createServerSupabaseSSRClient from 'supabase/server/supabase-ssr';
 
 const deleteInventory = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
-    query: { userUid, companyUid, inventoryUid },
+    query: { inventoryId },
     method,
   } = req;
 
-  if (!inventoryUid) {
-    res.status(400).end('Inventory uid is mandatory to delete an inventory');
+  if (!inventoryId)
+    throw new Error('inventoryId is required to delete the inventory');
+
+  if (method !== 'DELETE') {
+    res.setHeader('Allow', ['DELETE']);
+    res.status(405).end(`Method ${method} Not Allowed`);
     return;
   }
 
-  if (!userUid) {
-    res.status(400).end('userUid is mandatory to delete an inventory');
-    return;
-  }
+  const supabaseSsr = createServerSupabaseSSRClient({ req, res });
 
-  if (!companyUid) {
-    res.status(400).end('companyUid is mandatory to delete an inventory');
-    return;
-  }
+  const { error } = await supabaseSsr
+    .from(TableNames.INVENTORIES)
+    .delete()
+    .eq('id', inventoryId);
 
-  const inventoryRef = await firestoreAdmin
-    .collection(USERS)
-    .doc(userUid as string)
-    .collection(COMPANIES)
-    .doc(companyUid as string)
-    .collection(INVENTORIES)
-    .doc(inventoryUid as string)
-    .get();
-
-  const inventoryDoc = await firestoreAdmin
-    .collection(USERS)
-    .doc(userUid as string)
-    .collection(COMPANIES)
-    .doc(companyUid as string)
-    .collection(INVENTORIES)
-    .doc(inventoryUid as string);
-
-  try {
-    switch (method) {
-      case 'DELETE':
-        if (!inventoryRef.exists) {
-          res
-            .status(400)
-            .end(`Inventory with uid ${inventoryUid} does not exist`);
-          return;
-        }
-        inventoryDoc.delete();
-        res.status(200).end();
-        return;
-      default:
-        res.setHeader('Allow', ['GET', 'PUT']);
-        res.status(405).end(`Method ${method} Not Allowed`);
-    }
-  } catch (e) {
+  if (error) {
     // eslint-disable-next-line no-console
-    console.error(e);
+    console.error('error when deleting an inventory', error);
     res.status(400).end();
+    return;
   }
+  res.status(200).json(true);
 };
 
 export default deleteInventory;

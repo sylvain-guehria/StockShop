@@ -12,42 +12,39 @@ class InventoryService {
     this.inventoryRepository = inventoryRepository;
   }
 
-  async createInventoryByUserIdAndCompanyId({
-    userUid,
-    companyUid,
+  async createInventoryWithCompanyId({
+    companyId,
     isFirstInventory = false,
   }: CreateInventoryParams): Promise<InventoryEntity> {
-    const uid = uuidV4();
-
-    const inventory = InventoryEntity.new({
-      uid,
+    const inventoryToAdd: Inventory = {
+      id: uuidV4(),
+      companyId,
       name: 'Nouvel Inventaire',
-      isPublic: false,
-      isDefaultInventory: !!isFirstInventory,
+      updatedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      isDefaultInventory: isFirstInventory,
       color:
         arrayInventoryColors[
           Math.floor(Math.random() * (Object.keys(InventoryColors).length - 1))
         ],
-    });
+    };
 
-    return this.inventoryRepository.add(inventory, userUid, companyUid);
+    const createdInventory = await this.inventoryRepository.add(inventoryToAdd);
+
+    if (!createdInventory) throw new Error('Inventory not created');
+
+    return createdInventory as InventoryEntity;
   }
 
-  async updateInventory({
-    inventory,
-    userUid,
-    companyUid,
-  }: UpdateInventoryParams): Promise<void> {
+  async updateInventory({ inventory }: UpdateInventoryParams): Promise<void> {
     return this.inventoryRepository.update(
       InventoryEntity.new({
-        uid: inventory.uid,
+        id: inventory.id,
         name: inventory.name,
         isPublic: inventory.isPublic,
         isDefaultInventory: inventory.isDefaultInventory,
         color: inventory.color,
-      }),
-      userUid,
-      companyUid
+      })
     );
   }
 }
@@ -56,12 +53,9 @@ export default InventoryService;
 
 export interface UpdateInventoryParams {
   inventory: Inventory;
-  userUid: string;
-  companyUid: string;
 }
 
 export interface CreateInventoryParams {
-  userUid: string;
-  companyUid: string;
+  companyId: string;
   isFirstInventory?: boolean;
 }

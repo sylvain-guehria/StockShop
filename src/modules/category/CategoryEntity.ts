@@ -1,7 +1,7 @@
 import type { Category, CategoryInput, SubCategory } from './categoryType';
 
 class CategoryEntity implements Category {
-  uid: string;
+  id: string;
 
   label: string;
 
@@ -14,18 +14,18 @@ class CategoryEntity implements Category {
   }
 
   constructor(category: Category) {
-    this.uid = category.uid || '';
+    this.id = category.id || '';
     this.label = category.label || '';
     this.inputs = category.inputs || [];
     this.subCatgories = category.subCatgories || [];
   }
 
-  getUid(): string {
-    return this.uid;
+  getId(): string {
+    return this.id;
   }
 
-  setUid(uid: string): CategoryEntity {
-    this.uid = uid;
+  setId(id: string): CategoryEntity {
+    this.id = id;
     return this;
   }
 

@@ -4,28 +4,28 @@ import { colorOptions } from './reusableOptions';
 
 export const width = {
   label: 'Largeur (cm)',
-  uid: 'width',
+  id: 'width',
   inputType: AttributeInputTypes.NUMBER,
 };
 export const height = {
   label: 'Hauteur (cm)',
-  uid: 'height',
+  id: 'height',
   inputType: AttributeInputTypes.NUMBER,
 };
 export const depth = {
   label: 'Profondeur (cm)',
-  uid: 'depth',
+  id: 'depth',
   inputType: AttributeInputTypes.NUMBER,
 };
 export const volume = {
   label: 'Volume (L)',
-  uid: 'volume',
+  id: 'volume',
   inputType: AttributeInputTypes.NUMBER,
 };
 
 export const colorsInput = {
   label: 'Couleur',
-  uid: 'color',
+  id: 'color',
   inputType: AttributeInputTypes.SELECT,
   options: colorOptions,
 };

@@ -9,11 +9,11 @@ import {
 } from './majorAppliancesSubcategories';
 
 export const majorAppliancesCategory: Category = {
-  uid: CategoryId.MAJOR_APPLIANCES,
+  id: CategoryId.MAJOR_APPLIANCES,
   label: CategoryLabel.MAJOR_APPLIANCES,
   inputs: [
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.SELECT,
       options: [
@@ -38,13 +38,13 @@ export const majorAppliancesCategory: Category = {
       ],
     },
     {
-      uid: 'model',
+      id: 'model',
       label: 'Modèle',
       inputType: AttributeInputTypes.TEXT,
     },
     {
       label: 'Classe énergétique',
-      uid: 'energyClass',
+      id: 'energyClass',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { value: 'a', label: 'A' },

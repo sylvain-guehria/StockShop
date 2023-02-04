@@ -5,35 +5,35 @@ import { colorOptions } from '../reusableOptions';
 import { gameConsoleOptions, gameManufacturerOptions } from './reusableOptions';
 
 export const subcategorieGameConsole: SubCategory = {
-  uid: 'gameConsole',
+  id: 'gameConsole',
   label: 'Console de jeux',
   inputs: [
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.SELECT,
       options: gameManufacturerOptions,
     },
     {
-      uid: 'model',
+      id: 'model',
       label: 'Modèle',
       inputType: AttributeInputTypes.TEXT,
     },
     {
-      uid: 'console',
+      id: 'console',
       label: 'Console',
       inputType: AttributeInputTypes.SELECT_WITH_SUB_OPTIONS,
       options: gameConsoleOptions,
     },
     {
-      uid: 'color',
+      id: 'color',
       label: 'Couleur',
       inputType: AttributeInputTypes.SELECT,
       options: colorOptions,
     },
     {
       label: 'Capacité de stockage',
-      uid: 'storageCapacity',
+      id: 'storageCapacity',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { value: '8go-', label: '< 8go' },
@@ -48,7 +48,7 @@ export const subcategorieGameConsole: SubCategory = {
     },
     {
       label: 'Connectivité sans fil',
-      uid: 'wirelessConnectivity',
+      id: 'wirelessConnectivity',
       inputType: AttributeInputTypes.MULTISELECT,
       options: [
         { value: 'wifi', label: 'Wifi' },
@@ -63,17 +63,17 @@ export const subcategorieGameConsole: SubCategory = {
 };
 
 export const subcategorieGameConsoleAccessories: SubCategory = {
-  uid: 'gameConsoleAccessories',
+  id: 'gameConsoleAccessories',
   label: 'Accessoires de console de jeux',
   inputs: [
     {
-      uid: 'brand',
+      id: 'brand',
       label: 'Marque',
       inputType: AttributeInputTypes.SELECT,
       options: gameManufacturerOptions,
     },
     {
-      uid: 'type',
+      id: 'type',
       label: 'Type',
       inputType: AttributeInputTypes.SELECT,
       options: [

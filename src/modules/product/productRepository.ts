@@ -19,83 +19,43 @@ export abstract class ProductRepository {
     }
   }
 
-  getById({
-    productUid,
-    userUid,
-    companyUid,
-    inventoryUid,
-  }: GetProduct): Promise<ProductEntity> {
-    throw new Error(
-      `You tried to call an abstract methode, arg: ${{
-        productUid,
-        userUid,
-        companyUid,
-        inventoryUid,
-      }}`
-    );
+  getById(productId: string): Promise<ProductEntity> {
+    throw new Error(`You tried to call an abstract methode, arg: ${productId}`);
   }
 
-  async add({
-    product,
-    userUid,
-    companyUid,
-  }: AddProduct): Promise<ProductEntity> {
+  async add(product: ProductEntity): Promise<ProductEntity | null> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
         product,
-        userUid,
-        companyUid,
       }}`
     );
   }
 
-  async delete({
-    productUid,
-    userUid,
-    companyUid,
-    inventoryUid,
-  }: DeleteProduct): Promise<void> {
-    throw new Error(
-      `You tried to call an abstract methode, arg: ${{
-        userUid,
-        companyUid,
-        inventoryUid,
-        productUid,
-      }}`
-    );
+  async delete(productId: string): Promise<boolean> {
+    throw new Error(`You tried to call an abstract methode, arg: ${productId}`);
   }
 
-  async update({
-    product,
-    userUid,
-    companyUid,
-  }: UpdateProduct): Promise<ProductEntity> {
+  async update(product: ProductEntity): Promise<ProductEntity> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
         product,
-        userUid,
-        companyUid,
       }}`
     );
   }
 
-  async getProductsByUserUidCompanyUidInventoryUid({
-    userUid,
-    inventoryUid,
-    companyUid,
+  async getProductsByInventoryId({
+    inventoryId,
     currentPage,
     numberOfProductsPerPage,
     sorter,
     filters,
-  }: GetProductsByUserUidCompanyUidInventoryUid): Promise<{
+  }: GetProductsByInventoryId): Promise<{
     count: number;
     products: ProductEntity[];
   }> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
-        userUid,
-        inventoryUid,
-        companyUid,
+        inventoryId,
         currentPage,
         numberOfProductsPerPage,
         sorter,
@@ -107,36 +67,8 @@ export abstract class ProductRepository {
 
 export default ProductRepository;
 
-export interface AddProduct {
-  product: ProductEntity;
-  userUid: string;
-  companyUid: string;
-}
-
-export interface UpdateProduct {
-  product: ProductEntity;
-  userUid: string;
-  companyUid: string;
-}
-
-export interface DeleteProduct {
-  productUid: string;
-  inventoryUid: string;
-  userUid: string;
-  companyUid: string;
-}
-
-export interface GetProduct {
-  productUid: string;
-  inventoryUid: string;
-  userUid: string;
-  companyUid: string;
-}
-
-export interface GetProductsByUserUidCompanyUidInventoryUid {
-  userUid: string;
-  inventoryUid: string;
-  companyUid: string;
+export interface GetProductsByInventoryId {
+  inventoryId: string;
   currentPage: number;
   numberOfProductsPerPage: number;
   sorter: SorterType;

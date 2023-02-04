@@ -1,31 +1,31 @@
-import type { Address, Company } from './companyType';
+import type { Company } from './companyType';
 
 class CompanyEntity implements Company {
-  uid: string;
+  id: string;
 
   name: string;
 
   vat: string;
 
-  address: Address;
+  addressId: string;
 
   static new(company?: Company): CompanyEntity {
     return new CompanyEntity(company || {});
   }
 
   constructor(company: Company) {
-    this.uid = company.uid || '';
+    this.id = company.id || '';
     this.name = company.name || '';
     this.vat = company.vat || '';
-    this.address = company.address || {};
+    this.addressId = company.addressId || '';
   }
 
-  getUid(): string {
-    return this.uid;
+  getId(): string {
+    return this.id;
   }
 
-  setUid(uid: string): CompanyEntity {
-    this.uid = uid;
+  setId(id: string): CompanyEntity {
+    this.id = id;
     return this;
   }
 
@@ -47,12 +47,12 @@ class CompanyEntity implements Company {
     return this;
   }
 
-  getAddress(): Address {
-    return this.address;
+  getAddressId(): string {
+    return this.addressId;
   }
 
-  setAddress(address: Address): CompanyEntity {
-    this.address = address;
+  setAddressId(addressId: string): CompanyEntity {
+    this.addressId = addressId;
     return this;
   }
 }

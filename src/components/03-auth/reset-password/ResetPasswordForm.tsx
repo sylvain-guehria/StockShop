@@ -1,12 +1,13 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { auth, sendPasswordResetEmail } from 'firebaseFolder/clientApp';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import supabase from 'supabase/client/supabase-browser';
 
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
+import Providers from '@/layouts/Providers';
 
 import { validationSchema } from './ResetPasswordFormValidation';
 
@@ -23,6 +24,7 @@ const ResetPasswordForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<LoginFormType>(formOptions);
 
@@ -31,9 +33,17 @@ const ResetPasswordForm = () => {
   ) => {
     const { email } = data;
     try {
-      await sendPasswordResetEmail(auth, email);
-      toast(ToasterTypeEnum.SUCCESS, 'Email envoyé');
+      const response = await supabase.auth.resetPasswordForEmail(email);
+      if (response.data) {
+        toast(ToasterTypeEnum.SUCCESS, 'Email envoyé');
+        reset();
+      }
+      if (response.error) {
+        toast(ToasterTypeEnum.ERROR, response.error.message);
+      }
     } catch (error: any) {
+      // eslint-disable-next-line no-console
+      console.error('error ResetPasswordForm', error);
       toast(ToasterTypeEnum.ERROR, error.message);
     }
   };
@@ -70,4 +80,11 @@ const ResetPasswordForm = () => {
     </form>
   );
 };
-export default ResetPasswordForm;
+
+const ResetPasswordFormWithProviders = () => (
+  <Providers>
+    <ResetPasswordForm />
+  </Providers>
+);
+
+export default ResetPasswordFormWithProviders;

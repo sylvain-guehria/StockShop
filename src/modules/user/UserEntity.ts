@@ -5,9 +5,9 @@ import { LOCALES, PROVIDERS, ROLES } from './userType';
 class UserEntity implements User {
   email: string;
 
-  username: string;
+  username?: string;
 
-  uid: string;
+  id: string;
 
   password: string;
 
@@ -15,7 +15,7 @@ class UserEntity implements User {
 
   lastName: string;
 
-  phoneNumber: string;
+  phone: string;
 
   role: RoleType;
 
@@ -27,7 +27,9 @@ class UserEntity implements User {
 
   locale: LocaleType;
 
-  companyUid: string;
+  companyId: string;
+
+  avatarUrl: string;
 
   static new(user?: User): UserEntity {
     return user
@@ -40,23 +42,24 @@ class UserEntity implements User {
   constructor(user: User) {
     this.email = user.email || '';
     this.provider = user.provider || PROVIDERS.NOTKNOWN;
-    this.username = user.username || '';
-    this.uid = user.uid || '';
+    this.username = user.username || undefined;
+    this.id = user.id || '';
     this.password = user.password || '';
     this.firstName = user.firstName || '';
     this.lastName = user.lastName || '';
-    this.phoneNumber = user.phoneNumber || '';
+    this.phone = user.phone || '';
     this.role = user.role || ROLES.USER;
     this.locale = user.locale || LOCALES.FR;
     this.hasInventoryManagementServiceActivated =
       user.hasInventoryManagementServiceActivated || false;
     this.hasSeenFirstConnectionModal =
       user.hasSeenFirstConnectionModal || false;
-    this.companyUid = user.companyUid || '';
+    this.companyId = user.companyId || '';
+    this.avatarUrl = user.avatarUrl || '';
   }
 
-  getUid(): string {
-    return this.uid;
+  getId(): string {
+    return this.id;
   }
 
   getProvider(): ProviderType {
@@ -118,7 +121,7 @@ class UserEntity implements User {
     return this.email;
   }
 
-  getUsername(): string {
+  getUsername(): string | undefined {
     return this.username;
   }
 
@@ -127,13 +130,13 @@ class UserEntity implements User {
     return this;
   }
 
-  setPhoneNumber(phoneNumber: string): UserEntity {
-    this.phoneNumber = phoneNumber;
+  setPhoneNumber(phone: string): UserEntity {
+    this.phone = phone;
     return this;
   }
 
   getPhoneNumber(): string {
-    return this.phoneNumber;
+    return this.phone;
   }
 
   isAdmin(): boolean {
@@ -145,7 +148,7 @@ class UserEntity implements User {
   }
 
   isLoggedIn(): boolean {
-    return !!this.uid;
+    return !!this.id;
   }
 
   isLoggedOut(): boolean {
@@ -175,13 +178,42 @@ class UserEntity implements User {
     return this;
   }
 
-  setCompanyUid(companyUid: string): UserEntity {
-    this.companyUid = companyUid;
+  setCompanyId(companyId: string): UserEntity {
+    this.companyId = companyId;
     return this;
   }
 
-  getCompanyUid(): string {
-    return this.companyUid;
+  getCompanyId(): string {
+    return this.companyId;
+  }
+
+  setAvatarUrl(avatarUrl: string): UserEntity {
+    this.avatarUrl = avatarUrl;
+    return this;
+  }
+
+  getAvatarUrl(): string {
+    return this.avatarUrl;
+  }
+
+  toJson(): User {
+    return {
+      email: this.email,
+      username: this.username,
+      id: this.id,
+      password: this.password,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      phone: this.phone,
+      role: this.role,
+      provider: this.provider,
+      hasInventoryManagementServiceActivated:
+        this.hasInventoryManagementServiceActivated,
+      hasSeenFirstConnectionModal: this.hasSeenFirstConnectionModal,
+      locale: this.locale,
+      companyId: this.companyId,
+      avatarUrl: this.avatarUrl,
+    };
   }
 }
 

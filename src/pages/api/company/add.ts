@@ -1,41 +1,25 @@
-import { firestoreAdmin } from 'firebaseFolder/serverApp';
-import { TableNames } from 'firebaseFolder/tableNames';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-const { USERS, COMPANIES } = TableNames;
+import { TableNames } from 'supabase/enums/tableNames';
+import createServerSupabaseSSRClient from 'supabase/server/supabase-ssr';
 
 const addCompany = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const { userUid, company } = req.body;
+  const { company } = req.body;
 
-    if (!userUid) {
-      res.status(400).end('User uid is mandatory to add a company');
-      return;
-    }
+  if (!company) throw new Error('company is required to add company');
 
-    const userRef = await firestoreAdmin
-      .collection(USERS)
-      .doc(userUid as string)
-      .get();
+  const supabaseSsr = createServerSupabaseSSRClient({ req, res });
 
-    if (!userRef.exists) {
-      res.status(404).end(`User with uid ${userUid} found`);
-      return;
-    }
+  const { error } = await supabaseSsr
+    .from(TableNames.COMPANIES)
+    .insert(company);
 
-    await firestoreAdmin
-      .collection(USERS)
-      .doc(userUid)
-      .collection(COMPANIES)
-      .doc(company.uid)
-      .set(company);
-
-    res.status(200).json(company);
-  } catch (e) {
+  if (error) {
     // eslint-disable-next-line no-console
-    console.error('error when adding company', e);
-    res.status(400).end(e);
+    console.error('error when adding a company', error);
+    res.status(400).end();
+    return;
   }
+  res.status(200).json(true);
 };
 
 export default addCompany;

@@ -1,80 +1,151 @@
+import { BucketNames } from 'supabase/enums/bucketNames';
+
 import { deleteInventory } from './deleteInventory';
 
 const inventoryRepository = {
-  getInventoriesByUserUidAndCompanyUid: jest.fn(),
+  getInventoriesByCompanyId: jest.fn(),
   delete: jest.fn(),
 };
 
+const supabaseStorage = {
+  from: jest.fn().mockReturnThis(),
+  remove: jest.fn().mockReturnThis(),
+  list: jest.fn().mockReturnThis(),
+};
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
 describe('deleteInventory', () => {
-  it('Do not delete the inventory if the userUid is not provided', async () => {
-    const userUid = '';
-    const companyUid = 'companyUid';
-    const inventoryUid = 'inventoryUid';
+  it('Do not delete the inventory if the companyId is not provided', async () => {
+    const companyId = '';
+    const inventoryId = 'inventoryId';
 
     try {
-      await deleteInventory(inventoryRepository as any)({
-        userUid,
-        companyUid,
-        inventoryUid,
+      await deleteInventory(
+        inventoryRepository as any,
+        supabaseStorage as any
+      )({
+        companyId,
+        inventoryId,
       });
     } catch (error: any) {
       expect(inventoryRepository.delete).toHaveBeenCalledTimes(0);
-      expect(error.message).toBe('userUid is required to delete inventory');
+      expect(error.message).toBe('companyId is required to delete inventory');
     }
   });
 
-  it('Do not delete the inventory if the companyUid is not provided', async () => {
-    const userUid = 'userUid';
-    const companyUid = '';
-    const inventoryUid = 'inventoryUid';
+  it('Do not delete the inventory if the inventoryId is not provided', async () => {
+    const companyId = 'companyId';
+    const inventoryId = '';
 
     try {
-      await deleteInventory(inventoryRepository as any)({
-        userUid,
-        companyUid,
-        inventoryUid,
+      await deleteInventory(
+        inventoryRepository as any,
+        supabaseStorage as any
+      )({
+        companyId,
+        inventoryId,
       });
     } catch (error: any) {
       expect(inventoryRepository.delete).toHaveBeenCalledTimes(0);
-      expect(error.message).toBe('companyUid is required to delete inventory');
+      expect(error.message).toBe('inventoryId is required to delete inventory');
     }
   });
 
-  it('Do not delete the inventory if the inventoryUid is not provided', async () => {
-    const userUid = 'userUid';
-    const companyUid = 'companyUid';
-    const inventoryUid = '';
+  it('User cannot delete the last inventory', async () => {
+    const companyId = 'companyId';
+    const inventoryId = 'inventoryId';
+
+    inventoryRepository.getInventoriesByCompanyId.mockResolvedValue([
+      { id: 'inventoryId' },
+    ]);
 
     try {
-      await deleteInventory(inventoryRepository as any)({
-        userUid,
-        companyUid,
-        inventoryUid,
+      await deleteInventory(
+        inventoryRepository as any,
+        supabaseStorage as any
+      )({
+        companyId,
+        inventoryId,
       });
     } catch (error: any) {
       expect(inventoryRepository.delete).toHaveBeenCalledTimes(0);
       expect(error.message).toBe(
-        'inventoryUid is required to delete inventory'
+        'Vous ne pouvez pas supprimer le dernier inventaire'
       );
     }
   });
 
-  it('Delete the inventory if the userUid, companyUid and inventoryUid are provided', async () => {
-    const userUid = 'userUid';
-    const companyUid = 'companyUid';
-    const inventoryUid = 'inventoryUid';
+  describe('The products have no photo', () => {
+    it('Delete the inventory', async () => {
+      const companyId = 'companyId';
+      const inventoryId = 'inventoryId';
 
-    await deleteInventory(inventoryRepository as any)({
-      userUid,
-      companyUid,
-      inventoryUid,
+      inventoryRepository.delete.mockResolvedValue(true);
+      inventoryRepository.getInventoriesByCompanyId.mockResolvedValue([
+        { id: 'inventoryId' },
+        { id: 'inventoryId2' },
+      ]);
+
+      supabaseStorage.from(BucketNames.PRODUCTS).list.mockResolvedValue({
+        data: null,
+      });
+
+      await deleteInventory(
+        inventoryRepository as any,
+        supabaseStorage as any
+      )({
+        companyId,
+        inventoryId,
+      });
+
+      expect(inventoryRepository.delete).toHaveBeenCalledTimes(1);
+      expect(inventoryRepository.delete).toHaveBeenCalledWith(inventoryId);
+
+      expect(supabaseStorage.remove).toHaveBeenCalledTimes(0);
     });
+  });
 
-    expect(inventoryRepository.delete).toHaveBeenCalledTimes(1);
-    expect(inventoryRepository.delete).toHaveBeenCalledWith({
-      userUid,
-      companyUid,
-      inventoryUid,
+  describe('The products have photos', () => {
+    it('Delete the inventory and delete the inventory folder in the storage', async () => {
+      const companyId = 'companyId';
+      const inventoryId = 'inventoryId';
+
+      inventoryRepository.delete.mockResolvedValue(true);
+      inventoryRepository.getInventoriesByCompanyId.mockResolvedValue([
+        { id: 'inventoryId' },
+        { id: 'inventoryId2' },
+      ]);
+
+      supabaseStorage.from(BucketNames.PRODUCTS).list.mockResolvedValue({
+        data: [
+          {
+            name: 'product1.jpg',
+          },
+          {
+            name: 'product2.jpg',
+          },
+        ],
+      });
+
+      await deleteInventory(
+        inventoryRepository as any,
+        supabaseStorage as any
+      )({
+        companyId,
+        inventoryId,
+      });
+
+      expect(inventoryRepository.delete).toHaveBeenCalledTimes(1);
+      expect(inventoryRepository.delete).toHaveBeenCalledWith(inventoryId);
+
+      expect(supabaseStorage.remove).toHaveBeenCalledTimes(1);
+      expect(supabaseStorage.remove).toHaveBeenCalledWith([
+        'companyId/inventoryId/product1.jpg',
+        'companyId/inventoryId/product2.jpg',
+      ]);
     });
   });
 });

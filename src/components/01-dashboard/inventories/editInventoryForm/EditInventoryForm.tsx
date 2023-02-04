@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form';
 
 import LinkButton from '@/components/04-lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/08-toaster/toasterEnum';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import type { UpdateInventoryParams } from '@/modules/inventory/inventoryService';
 import type {
@@ -34,12 +33,11 @@ const publicStates = [
 
 type Props = {
   inventory: Inventory;
-  onSubmit: ({ inventory, userUid, companyUid }: UpdateInventoryParams) => void;
+  onSubmit: ({ inventory }: UpdateInventoryParams) => void;
 };
 
 const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
   const toast = useToast(4000);
-  const { user } = useAuth();
   const formOptions = {
     resolver: yupResolver(validationSchema),
     defaultValues: {
@@ -69,14 +67,12 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
     try {
       onSubmit({
         inventory: {
-          uid: inventory.uid,
+          id: inventory.id,
           name: data.name,
           isPublic: data.isPublic as unknown as boolean,
           color: data.color,
           isDefaultInventory: inventory.isDefaultInventory,
         },
-        userUid: user.uid,
-        companyUid: inventory.companyUid as string,
       });
     } catch (e) {
       toast(

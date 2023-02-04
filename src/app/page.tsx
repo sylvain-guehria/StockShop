@@ -1,25 +1,22 @@
-import { userRepository } from 'di';
 import { redirect } from 'next/navigation';
+import { getUserInServerComponant } from 'supabase/getUserInServerComponant';
 
-import FirstConnectionModalWithProviders from '@/components/05-modals/FirstConnectionModal';
 import PublicLayout from '@/layouts/PublicLayout';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { marketplaceRoutes } from '@/routes/marketplaceRoutes';
-import { validateUser } from '@/utils/validateUserServerSide';
 
 import Base from '../components/06-template/Base';
 
-const HomePage = async () => {
-  const uid = await validateUser();
+export const revalidate = 600;
 
-  if (uid) {
-    const user = await userRepository.getById(uid);
-    if (user.needToSeeFirstConnectionModal()) {
-      return <FirstConnectionModalWithProviders user={{ ...user }} />;
-    }
-    if (user.isSeller()) {
-      redirect(inventoryManagementRoutes.myInventory.path);
-    }
+const HomePage = async () => {
+  const userProfile = await getUserInServerComponant();
+
+  if (userProfile && userProfile.hasInventoryManagementServiceActivated) {
+    redirect(inventoryManagementRoutes.dashboard.path);
+  }
+
+  if (userProfile && !userProfile.hasInventoryManagementServiceActivated) {
     redirect(marketplaceRoutes.marketplace.path);
   }
 

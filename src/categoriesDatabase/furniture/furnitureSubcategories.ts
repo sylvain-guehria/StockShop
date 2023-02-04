@@ -4,7 +4,7 @@ import { colorsInput, depth, height, width } from '../reusableInputs';
 import { materialOptions, styleOptions } from './reusableOptions';
 
 export const subcategorieTable = {
-  uid: 'table',
+  id: 'table',
   label: 'Table',
   inputs: [
     width,
@@ -12,22 +12,22 @@ export const subcategorieTable = {
     colorsInput,
     {
       label: 'Nombre de personnes',
-      uid: 'numberOfPeople',
+      id: 'numberOfPeople',
       inputType: AttributeInputTypes.NUMBER,
     },
     {
       label: 'Nombre de personnes avec rallonge',
-      uid: 'numberOfPeopleWithExtension',
+      id: 'numberOfPeopleWithExtension',
       inputType: AttributeInputTypes.NUMBER,
     },
     {
       label: 'Nombre de rallonges',
-      uid: 'numberOfExtensions',
+      id: 'numberOfExtensions',
       inputType: AttributeInputTypes.NUMBER,
     },
     {
       label: 'Finition',
-      uid: 'finish',
+      id: 'finish',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { label: 'bois', value: 'wood' },
@@ -43,19 +43,19 @@ export const subcategorieTable = {
     },
     {
       label: 'Matière plateau',
-      uid: 'material',
+      id: 'material',
       inputType: AttributeInputTypes.SELECT,
       options: materialOptions,
     },
     {
       label: 'Matière pieds',
-      uid: 'legsMaterial',
+      id: 'legsMaterial',
       inputType: AttributeInputTypes.SELECT,
       options: materialOptions,
     },
     {
       label: 'style',
-      uid: 'style',
+      id: 'style',
       inputType: AttributeInputTypes.SELECT,
       options: styleOptions,
     },
@@ -63,7 +63,7 @@ export const subcategorieTable = {
 };
 
 export const subcategorieChairAndStool = {
-  uid: 'chairAndStool',
+  id: 'chairAndStool',
   label: 'Chaise et tabouret',
   inputs: [
     width,
@@ -71,19 +71,19 @@ export const subcategorieChairAndStool = {
     colorsInput,
     {
       label: 'Matière assises',
-      uid: 'material',
+      id: 'material',
       inputType: AttributeInputTypes.SELECT,
       options: materialOptions,
     },
     {
       label: 'Matière pieds',
-      uid: 'legsMaterial',
+      id: 'legsMaterial',
       inputType: AttributeInputTypes.SELECT,
       options: materialOptions,
     },
     {
       label: 'type',
-      uid: 'type',
+      id: 'type',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { label: 'Chaise', value: 'chair' },
@@ -96,7 +96,7 @@ export const subcategorieChairAndStool = {
     },
     {
       label: 'style',
-      uid: 'style',
+      id: 'style',
       inputType: AttributeInputTypes.SELECT,
       options: styleOptions,
     },
@@ -104,13 +104,13 @@ export const subcategorieChairAndStool = {
 };
 
 export const subcategorieBed = {
-  uid: 'bed',
+  id: 'bed',
   label: 'Lit',
   inputs: [
     colorsInput,
     {
       label: 'Taille',
-      uid: 'size',
+      id: 'size',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { label: 'Simple 90*190 cm', value: 'single' },
@@ -123,7 +123,7 @@ export const subcategorieBed = {
     },
     {
       label: 'type',
-      uid: 'type',
+      id: 'type',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { label: 'Lit adulte', value: 'adult' },
@@ -142,7 +142,7 @@ export const subcategorieBed = {
     },
     {
       label: 'style',
-      uid: 'style',
+      id: 'style',
       inputType: AttributeInputTypes.SELECT,
       options: styleOptions,
     },
@@ -150,13 +150,13 @@ export const subcategorieBed = {
 };
 
 export const subcategorieAccessoriesBed = {
-  uid: 'accessoriesBed',
+  id: 'accessoriesBed',
   label: 'Accessoires de lit',
   inputs: [
     colorsInput,
     {
       label: 'type',
-      uid: 'type',
+      id: 'type',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { label: 'Pied de lit', value: 'bedFoot' },
@@ -172,7 +172,7 @@ export const subcategorieAccessoriesBed = {
 };
 
 export const subcategorieDesk = {
-  uid: 'desk',
+  id: 'desk',
   label: 'Bureau',
   inputs: [
     width,
@@ -180,19 +180,19 @@ export const subcategorieDesk = {
     colorsInput,
     {
       label: 'Matière plateau',
-      uid: 'material',
+      id: 'material',
       inputType: AttributeInputTypes.SELECT,
       options: materialOptions,
     },
     {
       label: 'Matière pieds',
-      uid: 'legsMaterial',
+      id: 'legsMaterial',
       inputType: AttributeInputTypes.SELECT,
       options: materialOptions,
     },
     {
       label: 'type',
-      uid: 'type',
+      id: 'type',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { label: 'Bureau', value: 'desk' },
@@ -205,7 +205,7 @@ export const subcategorieDesk = {
     },
     {
       label: 'style',
-      uid: 'style',
+      id: 'style',
       inputType: AttributeInputTypes.SELECT,
       options: styleOptions,
     },
@@ -213,7 +213,7 @@ export const subcategorieDesk = {
 };
 
 export const subcategorieSofaAndArmchair = {
-  uid: 'sofaAndArmchair',
+  id: 'sofaAndArmchair',
   label: 'Canapé et fauteuil',
   inputs: [
     width,
@@ -222,7 +222,7 @@ export const subcategorieSofaAndArmchair = {
     colorsInput,
     {
       label: 'Matière',
-      uid: 'material',
+      id: 'material',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { label: 'Cuir', value: 'leather' },
@@ -236,7 +236,7 @@ export const subcategorieSofaAndArmchair = {
     },
     {
       label: 'type',
-      uid: 'type',
+      id: 'type',
       inputType: AttributeInputTypes.SELECT,
       options: [
         { label: 'Canapé', value: 'sofa' },
@@ -249,13 +249,13 @@ export const subcategorieSofaAndArmchair = {
     },
     {
       label: 'style',
-      uid: 'style',
+      id: 'style',
       inputType: AttributeInputTypes.SELECT,
       options: styleOptions,
     },
     {
       label: 'Nombre de places',
-      uid: 'numberOfSeats',
+      id: 'numberOfSeats',
       inputType: AttributeInputTypes.NUMBER,
     },
   ],

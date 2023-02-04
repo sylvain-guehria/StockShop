@@ -1,22 +1,17 @@
-import { storageFunctions } from 'firebaseFolder/clientApp';
-import StorageService from 'firebaseFolder/storage';
-
 import CompanyService from '@/modules/company/companyService';
-import FirebaseCompanyRepository from '@/modules/company/firebaseCompanyRepository';
-import FirebaseInventoryRepository from '@/modules/inventory/firebaseInventoryRepository';
+import SupabaseCompanyRepository from '@/modules/company/supabaseCompanyRepository';
 import InventoryService from '@/modules/inventory/inventoryService';
-import FirebaseProductRepository from '@/modules/product/firebaseProductRepository';
+import SupabaseInventoryRepository from '@/modules/inventory/supabaseInventoryRepository';
 import ProductService from '@/modules/product/productService';
-import FirebaseUserRepository from '@/modules/user/firebaseUserRepository';
+import SupabaseProductRepository from '@/modules/product/supabaseProductRepository';
+import SupabaseUserRepository from '@/modules/user/supabaseUserRepository';
 import UserService from '@/modules/user/userService';
 
-export const userRepository = new FirebaseUserRepository();
+export const userRepository = new SupabaseUserRepository();
 export const userServiceDi = new UserService(userRepository);
-export const companyRepository = new FirebaseCompanyRepository();
+export const companyRepository = new SupabaseCompanyRepository();
 export const companyServiceDi = new CompanyService(companyRepository);
-export const inventoryRepository = new FirebaseInventoryRepository();
+export const inventoryRepository = new SupabaseInventoryRepository();
 export const inventoryServiceDi = new InventoryService(inventoryRepository);
-export const productRepository = new FirebaseProductRepository();
+export const productRepository = new SupabaseProductRepository();
 export const productServiceDi = new ProductService(productRepository);
-
-export const storageServiceDi = new StorageService(storageFunctions);

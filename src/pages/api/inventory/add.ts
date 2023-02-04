@@ -1,60 +1,28 @@
-import { firestoreAdmin } from 'firebaseFolder/serverApp';
-import { TableNames } from 'firebaseFolder/tableNames';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-const { USERS, COMPANIES, INVENTORIES } = TableNames;
+import { TableNames } from 'supabase/enums/tableNames';
+import createServerSupabaseSSRClient from 'supabase/server/supabase-ssr';
 
 const addInventory = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const { inventory, userUid, companyUid } = req.body;
+  const { inventory } = req.body;
 
-    if (!userUid) {
-      res.status(400).end('User uid is mandatory to add inventories');
-      return;
-    }
+  if (!inventory) throw new Error('inventory is required to add inventory');
 
-    if (!companyUid) {
-      res.status(400).end('Company uid is mandatory to add inventories');
-      return;
-    }
+  if (!inventory.companyId)
+    throw new Error('companyId is required to add inventory');
 
-    const userRef = await firestoreAdmin
-      .collection(USERS)
-      .doc(userUid as string)
-      .get();
+  const supabaseSsr = createServerSupabaseSSRClient({ req, res });
 
-    if (!userRef.exists) {
-      res.status(404).end(`User with uid ${userUid} found`);
-      return;
-    }
+  const { error } = await supabaseSsr
+    .from(TableNames.INVENTORIES)
+    .insert(inventory);
 
-    const companyRef = await firestoreAdmin
-      .collection(USERS)
-      .doc(userUid as string)
-      .collection(COMPANIES)
-      .doc(companyUid as string)
-      .get();
-
-    if (!companyRef.exists) {
-      res.status(404).end(`Company with uid ${companyUid} not found`);
-      return;
-    }
-
-    await firestoreAdmin
-      .collection(USERS)
-      .doc(userUid)
-      .collection(COMPANIES)
-      .doc(companyUid)
-      .collection(INVENTORIES)
-      .doc(inventory.uid)
-      .set(inventory);
-
-    res.status(200).json(inventory);
-  } catch (e) {
+  if (error) {
     // eslint-disable-next-line no-console
-    console.error('error when adding inventory', e);
+    console.error('error when adding an inventory', error);
     res.status(400).end();
+    return;
   }
+  res.status(200).json(true);
 };
 
 export default addInventory;

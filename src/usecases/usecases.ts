@@ -1,13 +1,12 @@
 import {
-  companyRepository,
   companyServiceDi,
   inventoryRepository,
   inventoryServiceDi,
   productRepository,
   productServiceDi,
-  storageServiceDi,
   userRepository,
 } from 'di';
+import supabase from 'supabase/client/supabase-browser';
 
 import { chooseSubRoleOnFirstConnection } from './auth/chooseSubRoleOnFirstConnection';
 import { loginWithEmail } from './auth/loginWithEmail';
@@ -23,31 +22,37 @@ import { updatePhotoProduct } from './product/updatePhotoProduct';
 import { updateUser } from './user/updateUser';
 
 // AUTH
-export const registerWithEmailUseCase = registerWithEmail(userRepository);
-export const loginWithEmailUseCase = loginWithEmail(userRepository);
+export const registerWithEmailUseCase = registerWithEmail();
+export const loginWithEmailUseCase = loginWithEmail();
 export const logoutUseCase = logout();
-export const loginWithGoogleUseCase = loginWithGoogle(userRepository);
+export const loginWithGoogleUseCase = loginWithGoogle();
 export const chooseSubRoleOnFirstConnectionUseCase =
   chooseSubRoleOnFirstConnection(userRepository);
 
 // INVENTORY
 export const getUserInventoriesUseCase = getUserInventories(
-  companyRepository,
   inventoryRepository,
   companyServiceDi,
-  inventoryServiceDi
+  inventoryServiceDi,
+  userRepository
 );
-export const deleteInventoryUseCase = deleteInventory(inventoryRepository);
+export const deleteInventoryUseCase = deleteInventory(
+  inventoryRepository,
+  supabase.storage
+);
 export const setInventoryAsDefaultUseCase =
   setInventoryAsDefault(inventoryRepository);
 
 // PRODUCT
 export const getInventoryProductsUseCase =
   getInventoryProducts(productRepository);
-export const deleteProductUseCase = deleteProduct(productRepository);
+export const deleteProductUseCase = deleteProduct(
+  productRepository,
+  supabase.storage
+);
 export const updatePhotoProductUseCase = updatePhotoProduct(
   productServiceDi,
-  storageServiceDi
+  supabase.storage
 );
 
 // USER

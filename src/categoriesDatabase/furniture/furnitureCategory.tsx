@@ -11,7 +11,7 @@ import {
 } from './furnitureSubcategories';
 
 export const furnitureCategory: Category = {
-  uid: CategoryId.FURNITURE,
+  id: CategoryId.FURNITURE,
   label: CategoryLabel.FURNITURE,
   subCatgories: [
     subcategorieTable,

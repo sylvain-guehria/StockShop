@@ -1,7 +1,8 @@
 import { v4 as uuidV4 } from 'uuid';
 
-import CompanyEntity from './CompanyEntity';
+import type CompanyEntity from './CompanyEntity';
 import type { CompanyRepository } from './companyRepository';
+import type { Company } from './companyType';
 
 class CompanyService {
   companyRepository;
@@ -10,13 +11,19 @@ class CompanyService {
     this.companyRepository = companyRepository;
   }
 
-  async createCompanyByUserId(userUid: string): Promise<CompanyEntity> {
-    const company = CompanyEntity.new({
-      uid: uuidV4(),
+  async createCompany(): Promise<CompanyEntity> {
+    const companyToAdd: Company = {
+      id: uuidV4(),
       name: 'Mon entreprise',
-    });
+      updatedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+    };
 
-    return this.companyRepository.add(company, userUid);
+    const createdCompany = await this.companyRepository.add(companyToAdd);
+
+    if (!createdCompany) throw new Error('Company not created');
+
+    return createdCompany as CompanyEntity;
   }
 }
 

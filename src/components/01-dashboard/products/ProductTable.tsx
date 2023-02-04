@@ -19,12 +19,11 @@ import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { CustomEvents } from '@/enums/eventEnums';
 import { useAuth } from '@/hooks/useAuth';
 import {
-  getCategoryByUid,
-  getSubCategoryByUid,
+  getCategoryById,
+  getSubCategoryById,
 } from '@/modules/category/categoryUtils';
 import type ProductEntity from '@/modules/product/ProductEntity';
-import type { DeleteProduct } from '@/modules/product/productRepository';
-import type { UpdateProductParams } from '@/modules/product/productService';
+import type { Product } from '@/modules/product/productType';
 import {
   deleteProductUseCase,
   getInventoryProductsUseCase,
@@ -71,10 +70,10 @@ const DynamicProductView = dynamic(() => import('./ProductView'), {
 });
 
 type Props = {
-  currentInventoryUid: string;
+  currentInventoryId: string;
 };
 
-const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
+const ProductTable: FC<Props> = ({ currentInventoryId }) => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
@@ -116,7 +115,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
     queryKey: [
       ApiRequestEnums.GetProducts,
       {
-        inventoryUid: currentInventoryUid,
+        inventoryId: currentInventoryId,
         currentPage,
         filters: filtersState.filters,
         sorterField: filtersState.sorter.field,
@@ -125,9 +124,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
     ],
     queryFn: () =>
       getInventoryProductsUseCase({
-        userUid: user.getUid(),
-        inventoryUid: currentInventoryUid,
-        companyUid: user.getCompanyUid(),
+        inventoryId: currentInventoryId,
         currentPage,
         filters: filtersState.filters,
         sorter: {
@@ -136,29 +133,30 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
         },
       }),
     enabled: !!(
-      user.getUid() &&
-      currentInventoryUid &&
-      user.getCompanyUid() &&
+      user.getId() &&
+      currentInventoryId &&
+      user.getCompanyId() &&
       currentPage
     ),
     staleTime: oneHourInMilliseconds,
   });
 
   const updateProductMutation = useMutation({
-    mutationFn: (params: UpdateProductParams) =>
-      productServiceDi.updateProduct(params),
+    mutationFn: (params: Product) => productServiceDi.updateProduct(params),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({
         queryKey: [ApiRequestEnums.GetProducts],
       });
+      queryClient.invalidateQueries({ queryKey: [ApiRequestEnums.GetProduct] });
       setIsEditProductModalOpen(false);
       setProductToEdit(null);
     },
   });
 
   const deleteProductMutation = useMutation({
-    mutationFn: (params: DeleteProduct) => deleteProductUseCase(params),
+    mutationFn: (product: ProductEntity) =>
+      deleteProductUseCase({ product, companyId: user.getCompanyId() }),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({
@@ -208,7 +206,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
           width="w-full"
         >
           <DynamicEditProductForm
-            product={productToEdit as unknown as ProductEntity}
+            product={productToEdit as ProductEntity}
             handleCloseModal={handleCloseModal}
             onSubmitEditForm={updateProductMutation.mutate}
           />
@@ -224,12 +222,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
           description={`Êtes-vous sûr de vouloir supprimer le produit : ${productToEdit?.getLabel()} ?`}
           isLoading={deleteProductMutation.isLoading}
           onConfirm={() =>
-            deleteProductMutation.mutate({
-              productUid: productToEdit?.getUid() as string,
-              userUid: user.getUid(),
-              companyUid: user.getCompanyUid(),
-              inventoryUid: productToEdit?.getInventoryUid() as string,
-            }) as unknown as () => void
+            deleteProductMutation.mutate(productToEdit as ProductEntity)
           }
         />
       )}
@@ -241,10 +234,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
           width="w-full"
         >
           {productToEdit && (
-            <DynamicEditProductPhotoForm
-              productUid={productToEdit.getUid()}
-              inventoryUid={productToEdit.getInventoryUid()}
-            />
+            <DynamicEditProductPhotoForm productId={productToEdit.getId()} />
           )}
         </DynamicModal>
       )}
@@ -256,10 +246,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
           width="w-full"
         >
           {productToEdit && (
-            <DynamicProductView
-              productUid={productToEdit.getUid()}
-              inventoryUid={productToEdit.getInventoryUid()}
-            />
+            <DynamicProductView productId={productToEdit.getId()} />
           )}
         </DynamicModal>
       )}
@@ -317,14 +304,14 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                     (product.getQuantityInInventory() || 0) -
                     (product.getOptimumQuantity() || 0);
                   const categroyLabel =
-                    getCategoryByUid(product.getCategoryUid())?.label || '';
+                    getCategoryById(product.getCategoryId())?.label || '';
                   const subCategoryLabel =
-                    getSubCategoryByUid(
-                      product.getCategoryUid(),
-                      product.getSubCategoryUid()
+                    getSubCategoryById(
+                      product.getCategoryId(),
+                      product.getSubCategoryId()
                     )?.label || '';
                   return (
-                    <tr key={product.uid}>
+                    <tr key={product.id}>
                       <td className="whitespace-nowrap px-3 text-sm font-medium text-gray-900 sm:pl-6">
                         <div className="flex">
                           <div
@@ -398,13 +385,9 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                             aria-hidden="true"
                             onClick={() =>
                               updateProductMutation.mutate({
-                                product: {
-                                  ...product,
-                                  toBuy:
-                                    product.toBuy > 0 ? product.toBuy - 1 : 0,
-                                },
-                                userUid: user.getUid(),
-                                companyUid: user.getCompanyUid(),
+                                ...product,
+                                toBuy:
+                                  product.toBuy > 0 ? product.toBuy - 1 : 0,
                               })
                             }
                           />
@@ -416,12 +399,8 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
                             aria-hidden="true"
                             onClick={() =>
                               updateProductMutation.mutate({
-                                product: {
-                                  ...product,
-                                  toBuy: product.toBuy + 1,
-                                },
-                                userUid: user.getUid(),
-                                companyUid: user.getCompanyUid(),
+                                ...product,
+                                toBuy: product.toBuy + 1,
                               })
                             }
                           />
@@ -483,7 +462,7 @@ const ProductTable: FC<Props> = ({ currentInventoryUid }) => {
               numberOfResultsPerPage={10}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
-              currentInventoryUid={currentInventoryUid}
+              currentInventoryId={currentInventoryId}
             />
           )}
 
