@@ -1,6 +1,3 @@
-import StorageService from 'supabase/storage';
-import { storageFunctions } from 'supabase/storageFunctions';
-
 import CompanyService from '@/modules/company/companyService';
 import SupabaseCompanyRepository from '@/modules/company/supabaseCompanyRepository';
 import InventoryService from '@/modules/inventory/inventoryService';
@@ -18,5 +15,3 @@ export const inventoryRepository = new SupabaseInventoryRepository();
 export const inventoryServiceDi = new InventoryService(inventoryRepository);
 export const productRepository = new SupabaseProductRepository();
 export const productServiceDi = new ProductService(productRepository);
-
-export const storageServiceDi = new StorageService(storageFunctions);

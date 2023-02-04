@@ -1,5 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { BucketNames } from 'supabase/tables/bucketNames';
+import { BucketNames } from 'supabase/enums/bucketNames';
 
 import {
   authorizedFileTypes,

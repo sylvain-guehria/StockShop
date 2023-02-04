@@ -1,5 +1,5 @@
+import { TableNames } from './enums/tableNames';
 import createServerCompSupabaseClient from './server/supabase-server';
-import { TableNames } from './tables/tableNames';
 
 export const getUserInServerComponant = async () => {
   const supabase = createServerCompSupabaseClient();

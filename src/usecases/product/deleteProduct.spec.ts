@@ -1,4 +1,4 @@
-import { BucketNames } from 'supabase/tables/bucketNames';
+import { BucketNames } from 'supabase/enums/bucketNames';
 
 import ProductEntity from '@/modules/product/ProductEntity';
 
