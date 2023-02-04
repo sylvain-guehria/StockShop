@@ -155,7 +155,8 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
   });
 
   const deleteProductMutation = useMutation({
-    mutationFn: (product: ProductEntity) => deleteProductUseCase(product),
+    mutationFn: (product: ProductEntity) =>
+      deleteProductUseCase({ product, companyId: user.getCompanyId() }),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({

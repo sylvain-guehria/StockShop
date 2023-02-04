@@ -43,7 +43,10 @@ export const setInventoryAsDefaultUseCase =
 // PRODUCT
 export const getInventoryProductsUseCase =
   getInventoryProducts(productRepository);
-export const deleteProductUseCase = deleteProduct(productRepository);
+export const deleteProductUseCase = deleteProduct(
+  productRepository,
+  supabase.storage
+);
 export const updatePhotoProductUseCase = updatePhotoProduct(
   productServiceDi,
   supabase.storage
