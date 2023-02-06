@@ -26,10 +26,6 @@ const Footer: FC = () => {
     <Background color="bg-gray-200">
       <footer>
         <div className="mx-auto max-w-7xl overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
-          <nav
-            className="-mx-5 -my-2 flex flex-wrap justify-center"
-            aria-label="Footer"
-          ></nav>
           <div className="mt-8 flex justify-center space-x-6">
             {navigation.social.map((item) => (
               <Link

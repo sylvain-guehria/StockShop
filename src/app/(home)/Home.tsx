@@ -2,13 +2,12 @@
 
 import { useState } from 'react';
 
-import NewsLetterIncentiveForm from '@/app/(home)/(NewsLetterIncentive)/NewsLetterIncentiveForm';
-
 import screenShot from '../../../public/assets/images/capture-inventory-market.png';
 import { Background } from '../../components/lib/background/Background';
 import NewsBanner from '../../components/lib/banner/NewsBanner';
 import Section from '../../components/lib/layout/Section';
 import NextImage from '../../components/lib/nextImage/NextImage';
+import NewsLetterIncentive from './(NewsLetterIncentive)/NewsLetterIncentive';
 import { Banner } from './Banner';
 import { FAQ } from './FAQ';
 import Hero from './Hero';
@@ -41,7 +40,7 @@ const Home = () => {
           </Section>
         </Background>
       </div>
-      <NewsLetterIncentiveForm />
+      <NewsLetterIncentive />
       {/* <Customer /> */}
       {/* <Features /> */}
       {/* <VerticalFeatures /> */}

@@ -5,7 +5,7 @@ import { mainRoutes } from '@/routes/mainRoutes';
 
 import NewsLetterIncentiveForm from './NewsLetterIncentiveForm';
 
-const GetEarlyAccessIncentive = () => {
+const NewsLetterIncentive = () => {
   return (
     <Section>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -55,4 +55,4 @@ const GetEarlyAccessIncentive = () => {
   );
 };
 
-export default GetEarlyAccessIncentive;
+export default NewsLetterIncentive;
