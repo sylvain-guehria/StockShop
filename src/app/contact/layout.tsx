@@ -1,4 +1,4 @@
-import PublicLayout from '@/layouts/PublicLayout';
+import PublicLayout from '@/components/layouts/PublicLayout';
 
 export default async function Layout({
   children,

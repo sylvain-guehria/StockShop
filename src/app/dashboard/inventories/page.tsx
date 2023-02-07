@@ -1,4 +1,4 @@
-import Inventories from '@/components/01-dashboard/inventories/Inventories';
+import Inventories from './(inventories-components)/Inventories';
 
 const InventoriesPages = async () => {
   return <Inventories />;

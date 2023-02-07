@@ -3,8 +3,9 @@ import '../styles/global.css';
 
 import type { JSXElementConstructor, ReactElement } from 'react';
 import React from 'react';
-import SupabaseListener from 'supabase/client/supabase-listener';
-import createServerCompSupabaseClient from 'supabase/server/supabase-server';
+
+import SupabaseListener from '@/supabase/client/supabase-listener';
+import createServerCompSupabaseClient from '@/supabase/server/supabase-server';
 
 // We don't want Next.js to cache this session value
 export const revalidate = 0;

@@ -28,7 +28,10 @@ export async function middleware(req: NextRequestType) {
 
   // VISITOR USER
   if (!user) {
-    if (pathname.startsWith(inventoryManagementRoutes.dashboard.path)) {
+    if (
+      pathname.startsWith(inventoryManagementRoutes.dashboard.path) ||
+      pathname.startsWith(mainRoutes.profile.path)
+    ) {
       return NextResponse.redirect(new URL(mainRoutes.login.path, req.url));
     }
   }

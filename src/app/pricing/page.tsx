@@ -1,4 +1,4 @@
-import PricingTemplate from '@/components/06-template/PricingTemplate';
+import PricingTemplate from './(components)/PricingTemplate';
 
 const PricingPage = () => {
   return <PricingTemplate />;

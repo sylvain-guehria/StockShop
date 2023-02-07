@@ -1,9 +1,9 @@
 import { redirect } from 'next/navigation';
-import { getUserInServerComponant } from 'supabase/getUserInServerComponant';
 
-import InventoryManagementLayout from '@/layouts/InventoryManagementLayout';
+import InventoryManagementLayout from '@/components/layouts/InventoryManagementLayout';
 import type { User } from '@/modules/user/userType';
 import { mainRoutes } from '@/routes/mainRoutes';
+import { getUserInServerComponant } from '@/supabase/getUserInServerComponant';
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
   const userProfile = await getUserInServerComponant();

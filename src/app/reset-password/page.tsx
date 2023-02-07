@@ -1,7 +1,7 @@
-import ResetPasswordComponant from '@/components/03-auth/reset-password/ResetPasswordComponant';
+import ResetPassword from './(components)/ResetPassword';
 
-const resetPassword = async () => {
-  return <ResetPasswordComponant />;
+const ResetPasswordPage = async () => {
+  return <ResetPassword />;
 };
 
-export default resetPassword;
+export default ResetPasswordPage;

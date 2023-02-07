@@ -1,5 +1,5 @@
-import type { AuthorizedOrderProperty } from '@/components/01-dashboard/products/filters/ProductsFiltersReducer';
-import { ORDER } from '@/components/01-dashboard/products/filters/ProductsFiltersReducer';
+import type { AuthorizedOrderProperty } from '@/app/dashboard/inventories/(products-components)/(filters)/ProductsFiltersReducer';
+import { ORDER } from '@/app/dashboard/inventories/(products-components)/(filters)/ProductsFiltersReducer';
 import { ProductAttributes } from '@/modules/product/productType';
 
 import { getInventoryProducts } from './getInventoryProducts';

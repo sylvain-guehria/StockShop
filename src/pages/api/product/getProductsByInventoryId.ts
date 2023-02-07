@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { TableNames } from 'supabase/enums/tableNames';
-import createServerSupabaseSSRClient from 'supabase/server/supabase-ssr';
 
 import { ProductAttributes } from '@/modules/product/productType';
+import { TableNames } from '@/supabase/enums/tableNames';
+import createServerSupabaseSSRClient from '@/supabase/server/supabase-ssr';
 import { getPagination } from '@/utils/apiUtils';
 import { removeKeysWithNoValues } from '@/utils/objectUtils';
 import { parseBoolean } from '@/utils/primitiveUtils';

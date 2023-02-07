@@ -1,7 +1,7 @@
-import RegisterComponant from '@/components/03-auth/register/RegisterComponant';
+import Register from './(components)/Register';
 
-const Register = () => {
-  return <RegisterComponant />;
+const RegisterPage = () => {
+  return <Register />;
 };
 
-export default Register;
+export default RegisterPage;

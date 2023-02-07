@@ -1,7 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { BucketNames } from 'supabase/enums/bucketNames';
 
 import type { InventoryRepository } from '@/modules/inventory/inventoryRepository';
+import { BucketNames } from '@/supabase/enums/bucketNames';
 
 export interface DeleteInventoryParams {
   companyId: string;

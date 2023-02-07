@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { TableNames } from 'supabase/enums/tableNames';
-import createServerSupabaseSSRClient from 'supabase/server/supabase-ssr';
+
+import { TableNames } from '@/supabase/enums/tableNames';
+import createServerSupabaseSSRClient from '@/supabase/server/supabase-ssr';
+import { removeKeysWithNoValues } from '@/utils/objectUtils';
 
 const userById = async (req: NextApiRequest, res: NextApiResponse) => {
   const { query, method } = req;
@@ -32,9 +34,8 @@ const userById = async (req: NextApiRequest, res: NextApiResponse) => {
   if (method === 'PUT') {
     const { error } = await supabaseSsr
       .from(TableNames.PROFILES)
-      .update({ ...req.body })
-      .eq('id', id)
-      .single();
+      .update(removeKeysWithNoValues(req.body))
+      .eq('id', id);
     if (error) {
       // eslint-disable-next-line no-console
       console.error('error when updating user profile', error);
