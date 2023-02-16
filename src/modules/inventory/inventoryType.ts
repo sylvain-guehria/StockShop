@@ -34,7 +34,7 @@ export const InventoryColors = {
 export const arrayInventoryColors = Object.values(InventoryColors);
 
 export type InventoryColor =
-  typeof InventoryColors[keyof typeof InventoryColors];
+  (typeof InventoryColors)[keyof typeof InventoryColors];
 
 export const hoverBorderColors = {
   'primary-600': 'hover:border-primary-600',
