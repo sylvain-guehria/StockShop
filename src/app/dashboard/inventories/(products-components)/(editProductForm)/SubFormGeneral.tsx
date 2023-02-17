@@ -1,11 +1,7 @@
 'use client';
 
 import type { FC } from 'react';
-import type {
-  Control,
-  FieldErrorsImpl,
-  UseFormRegister,
-} from 'react-hook-form';
+import type { Control, FieldErrors, UseFormRegister } from 'react-hook-form';
 import { useWatch } from 'react-hook-form';
 
 import { categories } from '@/categoriesDatabase/categories';
@@ -22,7 +18,7 @@ import type { EditProductFormType } from './EditProductForm';
 
 type Props = {
   register: UseFormRegister<EditProductFormType>;
-  errors: Partial<FieldErrorsImpl<EditProductFormType>>;
+  errors: FieldErrors<EditProductFormType>;
   control: Control<EditProductFormType, any>;
 };
 

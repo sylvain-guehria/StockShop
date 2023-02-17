@@ -6,7 +6,9 @@ import {
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { mainRoutes } from '@/routes/mainRoutes';
 
-export const navigation = [
+import type { Navigation } from './MobileSideBar';
+
+export const navigation: Navigation[] = [
   // { name: 'Home', path: '#', icon: HomeIcon, current: true },
   {
     name: inventoryManagementRoutes.myInventory.label,

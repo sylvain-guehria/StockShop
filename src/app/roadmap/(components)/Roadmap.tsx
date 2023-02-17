@@ -60,12 +60,12 @@ const LegendItem = ({
   iconColor,
 }: {
   text: string;
-  Icon: (
-    props: React.ComponentProps<'svg'> & {
-      title?: string;
-      titleId?: string;
+  Icon: React.ForwardRefExoticComponent<
+    React.SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+      titleId?: string | undefined;
     }
-  ) => JSX.Element;
+  >;
   iconColor: string;
 }) => {
   return (

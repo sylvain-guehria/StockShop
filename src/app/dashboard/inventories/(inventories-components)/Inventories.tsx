@@ -84,7 +84,7 @@ const Inventories: FC = () => {
               <div className="mt-4 flex sm:mt-0 sm:ml-4">
                 <Dropdown
                   label="Ajouter nouveau"
-                  Icon={PlusCircleIcon}
+                  Icon={PlusCircleIcon as any}
                   childrens={[
                     {
                       key: 'create-inventory',

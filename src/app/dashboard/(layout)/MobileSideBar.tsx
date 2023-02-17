@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { usePathname } from 'next/navigation';
-import type { FC, SVGProps } from 'react';
+import type { FC } from 'react';
 import { Fragment } from 'react';
 
 import NextImage from '@/components/lib/nextImage/NextImage';
@@ -13,15 +13,15 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-type Navigation = {
+export type Navigation = {
   name: string;
   path: string;
-  icon: (
-    props: SVGProps<SVGSVGElement> & {
+  icon: React.ForwardRefExoticComponent<
+    React.SVGProps<SVGSVGElement> & {
       title?: string | undefined;
       titleId?: string | undefined;
     }
-  ) => JSX.Element;
+  >;
 };
 
 type Props = {

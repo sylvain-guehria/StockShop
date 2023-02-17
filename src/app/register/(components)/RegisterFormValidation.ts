@@ -11,7 +11,7 @@ export const validationSchema = object().shape({
       'Doit contenir 8 caractères, 1 majuscule, 1 minuscule, 1 nombre et un caractère spécial.'
     ),
   confirmPassword: string()
-    .oneOf([ref('password'), null], 'Les mots de passe doivent être identiques')
+    .oneOf([ref('password')], 'Les mots de passe doivent être identiques')
     .required('Confirmer votre mot de passe'),
   acceptTerms: bool().oneOf([true], 'Veuillez accepter les termes'),
 });
