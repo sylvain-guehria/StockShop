@@ -1,8 +1,13 @@
-export const parseBoolean = (value: any): boolean => {
+export const parseBoolean = (value: any): boolean | undefined => {
   if (typeof value === 'boolean') {
     return value;
   }
-  return value === 'true';
+
+  if (typeof value !== 'string') return undefined;
+
+  if (value === 'true') return true;
+  if (value === 'false') return false;
+  return undefined;
 };
 
 export const isNumber = (input: any): boolean => {
