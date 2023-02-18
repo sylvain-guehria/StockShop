@@ -1,5 +1,5 @@
 import { BanknotesIcon } from '@heroicons/react/20/solid';
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 const transactions = [
   {
@@ -40,6 +40,12 @@ const statusStyles = {
   processing: 'bg-yellow-100 text-yellow-800',
   failed: 'bg-red-100 text-red-800',
 };
+
+const enum Status {
+  success = 'success',
+  processing = 'processing',
+  failed = 'failed',
+}
 
 const ActivityTable = () => {
   return (
@@ -103,10 +109,9 @@ const ActivityTable = () => {
                     </td>
                     <td className="hidden whitespace-nowrap px-6 py-4 text-sm text-gray-500 md:block">
                       <span
-                        className={classNames(
-                          // @ts-ignore
-                          statusStyles[transaction.status],
-                          'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize'
+                        className={clsx(
+                          statusStyles[transaction.status as Status],
+                          'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize'
                         )}
                       >
                         {transaction.status}

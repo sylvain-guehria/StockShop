@@ -1,6 +1,5 @@
+import clsx from 'clsx';
 import type { FC } from 'react';
-
-import { classNames } from '@/utils/tailwindUtils';
 
 type Props = {
   label?: string;
@@ -25,7 +24,7 @@ const InputTextArea: FC<Props> = ({
 }) => {
   const localRegister = register || { name };
   return (
-    <div className={classNames('text-left')}>
+    <div className={clsx('text-left')}>
       <label
         htmlFor={name}
         className="inline-block overflow-hidden text-ellipsis whitespace-nowrap text-start text-sm font-medium text-gray-700"
@@ -39,7 +38,7 @@ const InputTextArea: FC<Props> = ({
         disabled={disabled}
         {...localRegister}
         {...rest}
-        className={classNames(
+        className={clsx(
           inputClassName || '',
           'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
         )}

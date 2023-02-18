@@ -1,4 +1,5 @@
 import { CogIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 import type { FC } from 'react';
 
 export const subNavigation = [
@@ -7,10 +8,6 @@ export const subNavigation = [
 ];
 
 export const tabNames = subNavigation.map((item) => item.tab);
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
 
 type Props = {
   seletedTab: string;
@@ -25,20 +22,20 @@ const ProfileContainerSideBar: FC<Props> = ({ seletedTab, setSelectedTab }) => {
           <div
             onClick={() => setSelectedTab(item.tab)}
             key={item.tab}
-            className={classNames(
+            className={clsx(
               item.tab === seletedTab
-                ? 'bg-primary-50 border-primary-500 text-primary-700 hover:bg-primary-50 hover:text-primary-700'
+                ? 'border-primary-500 bg-primary-100 text-primary-700 hover:bg-primary-100 hover:text-primary-700'
                 : 'border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900',
-              'group border-l-4 px-3 py-2 flex items-center text-sm font-medium cursor-pointer'
+              'group flex cursor-pointer items-center border-l-4 px-3 py-2 text-sm font-medium'
             )}
             aria-current={item.tab === seletedTab ? 'page' : undefined}
           >
             <item.icon
-              className={classNames(
+              className={clsx(
                 item.tab === seletedTab
                   ? 'text-primary-500 group-hover:text-primary-500'
                   : 'text-gray-400 group-hover:text-gray-500',
-                'flex-shrink-0 -ml-1 mr-3 h-6 w-6'
+                '-ml-1 mr-3 h-6 w-6 shrink-0'
               )}
               aria-hidden="true"
             />

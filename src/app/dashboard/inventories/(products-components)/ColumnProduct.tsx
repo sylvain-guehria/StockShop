@@ -1,6 +1,5 @@
+import clsx from 'clsx';
 import type { ReactNode } from 'react';
-
-import { classNames } from '@/utils/tailwindUtils';
 
 const ColumnProduct = ({
   label,
@@ -14,7 +13,7 @@ const ColumnProduct = ({
   help?: string;
 }) => (
   <th
-    className={classNames(
+    className={clsx(
       className || '',
       'text-left text-sm font-semibold text-gray-900'
     )}

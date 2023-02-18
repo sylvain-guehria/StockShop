@@ -6,7 +6,7 @@ import {
   PhoneIcon,
   PlayIcon,
 } from '@heroicons/react/20/solid';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import type { FC } from 'react';
 import { Fragment } from 'react';
 
@@ -31,14 +31,14 @@ const ServicesButton: FC = () => {
       {({ open }) => (
         <>
           <Popover.Button
-            className={classNames(
+            className={clsx(
               open ? 'text-gray-900' : 'text-gray-600',
               'group inline-flex items-center rounded-md text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2'
             )}
           >
             <span>Services</span>
             <ChevronDownIcon
-              className={classNames(
+              className={clsx(
                 open ? 'text-gray-600' : 'text-gray-400',
                 'ml-2 h-5 w-5 group-hover:text-gray-600'
               )}

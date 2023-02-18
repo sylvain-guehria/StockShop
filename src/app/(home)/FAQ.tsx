@@ -1,10 +1,10 @@
 import { Disclosure } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 import Link from 'next/link';
 
 import Section from '@/components/lib/layout/Section';
 import { mainRoutes } from '@/routes/mainRoutes';
-import { classNames } from '@/utils/tailwindUtils';
 
 const faqs = [
   {
@@ -60,9 +60,9 @@ const FAQ = () => (
                       </span>
                       <span className="ml-6 flex h-7 items-center">
                         <ChevronDownIcon
-                          className={classNames(
+                          className={clsx(
                             open ? '-rotate-180' : 'rotate-0',
-                            'h-6 w-6 transform'
+                            'h-6 w-6'
                           )}
                           aria-hidden="true"
                         />

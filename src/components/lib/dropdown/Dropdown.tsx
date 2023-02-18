@@ -1,9 +1,8 @@
 import { Menu, Transition } from '@headlessui/react';
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid';
+import clsx from 'clsx';
 import type { FC } from 'react';
 import React, { Fragment } from 'react';
-
-import { classNames } from '@/utils/tailwindUtils';
 
 type Props = {
   iconClassName?: string;
@@ -31,8 +30,8 @@ const Dropdown: FC<Props> = ({
           <div>{label}</div>
           {
             <Icon
-              className={classNames(
-                'h-7 w-7 shrink-0 text-primary-500 hover:bg-primary-300 rounded-full  ml-3',
+              className={clsx(
+                'ml-3 h-7 w-7 shrink-0 rounded-full text-primary-500  hover:bg-primary-300',
                 iconClassName || ''
               )}
               aria-hidden="true"

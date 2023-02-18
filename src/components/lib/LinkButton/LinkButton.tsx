@@ -1,7 +1,6 @@
+import clsx from 'clsx';
 import Link from 'next/link';
 import type { FC } from 'react';
-
-import { classNames } from '@/utils/tailwindUtils';
 
 type Props = {
   href?: string;
@@ -38,7 +37,7 @@ const LinkButton: FC<Props> = ({
   return href ? (
     <Link href={href}>
       <div
-        className={classNames(
+        className={clsx(
           `mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent`,
           className || '',
           styles[style],
@@ -50,7 +49,7 @@ const LinkButton: FC<Props> = ({
     </Link>
   ) : (
     <div
-      className={classNames(
+      className={clsx(
         `mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent`,
         styles[style],
         className || '',

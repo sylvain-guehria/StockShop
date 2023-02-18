@@ -1,6 +1,6 @@
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
@@ -72,7 +72,7 @@ const ProfileDropdown: FC<Props> = ({ logo }) => {
             {({ active }) => (
               <Link href={mainRoutes.profile.path}>
                 <div
-                  className={classNames(
+                  className={clsx(
                     active ? 'bg-gray-100' : '',
                     'block px-4 py-2 text-sm text-gray-700'
                   )}
@@ -85,9 +85,9 @@ const ProfileDropdown: FC<Props> = ({ logo }) => {
           <Menu.Item>
             {({ active }) => (
               <div
-                className={classNames(
+                className={clsx(
                   active ? 'bg-gray-100' : '',
-                  'block px-4 py-2 text-sm text-gray-700 cursor-pointer'
+                  'block cursor-pointer px-4 py-2 text-sm text-gray-700'
                 )}
                 onClick={handleSingOut}
               >

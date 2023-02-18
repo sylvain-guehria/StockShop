@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import clsx from 'clsx';
 import { productRepository } from 'di';
 import type { FC } from 'react';
 
@@ -23,7 +24,6 @@ import {
   ProductLabels,
   PublicDisponibilityLabels,
 } from '@/modules/product/productType';
-import { classNames } from '@/utils/tailwindUtils';
 
 type Props = {
   productId: string;
@@ -55,10 +55,7 @@ const ProductView: FC<Props> = ({ productId }) => {
   return (
     <div className="lg:flex">
       <div
-        className={classNames(
-          'lg:pr-4',
-          hasCategoryInputs ? 'lg:w-1/3' : 'lg:w-1/2'
-        )}
+        className={clsx('lg:pr-4', hasCategoryInputs ? 'lg:w-1/3' : 'lg:w-1/2')}
       >
         <>
           <div>
@@ -173,7 +170,7 @@ const ProductView: FC<Props> = ({ productId }) => {
       </div>
 
       {hasCategoryInputs && (
-        <div className={classNames('mt-10 lg:mt-0 lg:w-1/3 lg:pl-4')}>
+        <div className={clsx('mt-10 lg:mt-0 lg:w-1/3 lg:pl-4')}>
           <>
             <div>
               <h3 className="text-lg font-medium leading-6 text-gray-900">
@@ -215,7 +212,7 @@ const ProductView: FC<Props> = ({ productId }) => {
       )}
 
       <div
-        className={classNames(
+        className={clsx(
           'mt-10 lg:mt-0 lg:pl-4',
           hasCategoryInputs ? 'lg:w-1/3' : 'lg:w-1/2'
         )}

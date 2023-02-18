@@ -7,16 +7,13 @@ import {
   PencilIcon,
   TrashIcon,
 } from '@heroicons/react/20/solid';
+import clsx from 'clsx';
 import type { FC } from 'react';
 import { Fragment } from 'react';
 
 import type InventoryEntity from '@/modules/inventory/InventoryEntity';
 import type { Inventory } from '@/modules/inventory/inventoryType';
 import { borderColors } from '@/modules/inventory/inventoryType';
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
 
 type Props = {
   inventory: InventoryEntity;
@@ -39,19 +36,21 @@ const CardInventory: FC<Props> = ({
     ? borderColors[inventory.color || 'primary-600']
     : '';
 
+  const bgColor = `bg-${inventory.color ? inventory.color : 'primary-600'}`;
+
   return (
     <li
       key={inventory.id}
-      className={classNames(
+      className={clsx(
         currentInventoryClassName,
         'relative col-span-1 flex cursor-pointer rounded-md shadow-sm hover:border hover:shadow-lg'
       )}
     >
       <div
         onClick={() => onSelectInventory(inventory.id)}
-        className={classNames(
-          `bg-${inventory.color ? inventory.color : 'primary-600'}`,
-          'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
+        className={clsx(
+          bgColor,
+          'flex w-16 shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white'
         )}
       ></div>
       <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-y border-r border-gray-200 bg-white">
@@ -80,9 +79,9 @@ const CardInventory: FC<Props> = ({
               <Menu.Item>
                 {({ active }) => (
                   <div
-                    className={classNames(
+                    className={clsx(
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'flex px-4 py-3 text-sm cursor-pointer justify-between'
+                      'flex cursor-pointer justify-between px-4 py-3 text-sm'
                     )}
                     onClick={() => handleClickEditInventory(inventory)}
                   >
@@ -97,9 +96,9 @@ const CardInventory: FC<Props> = ({
               <Menu.Item>
                 {({ active }) => (
                   <div
-                    className={classNames(
+                    className={clsx(
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'px-4 py-3 text-sm cursor-pointer flex justify-between'
+                      'flex cursor-pointer justify-between px-4 py-3 text-sm'
                     )}
                     onClick={() => handleClickDeleteInventory(inventory)}
                   >
@@ -114,9 +113,9 @@ const CardInventory: FC<Props> = ({
               <Menu.Item>
                 {({ active }) => (
                   <div
-                    className={classNames(
+                    className={clsx(
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'px-4 py-3 text-sm cursor-pointer flex justify-between'
+                      'flex cursor-pointer justify-between px-4 py-3 text-sm'
                     )}
                     onClick={() => handleClickSetDefaultInventory(inventory)}
                   >

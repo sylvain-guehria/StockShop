@@ -11,6 +11,7 @@ import {
   ShieldCheckIcon,
   UserGroupIcon,
 } from '@heroicons/react/20/solid';
+import clsx from 'clsx';
 import { Fragment } from 'react';
 
 const company = [
@@ -47,23 +48,20 @@ const blogPosts = [
   },
 ];
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
 const MoreButton = () => {
   return (
     <Popover>
       {({ open }) => (
         <>
           <Popover.Button
-            className={classNames(
+            className={clsx(
               open ? 'text-gray-900' : 'text-gray-600',
               'group inline-flex items-center rounded-md text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2'
             )}
           >
             <span>More</span>
             <ChevronDownIcon
-              className={classNames(
+              className={clsx(
                 open ? 'text-gray-600' : 'text-gray-400',
                 'ml-2 h-5 w-5 group-hover:text-gray-500'
               )}

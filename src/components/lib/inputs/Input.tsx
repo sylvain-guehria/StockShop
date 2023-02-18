@@ -1,6 +1,5 @@
+import clsx from 'clsx';
 import type { FC } from 'react';
-
-import { classNames } from '@/utils/tailwindUtils';
 
 type Props = {
   type: 'text' | 'number' | 'email' | 'password';
@@ -32,11 +31,11 @@ const Input: FC<Props> = ({
 }) => {
   const localRegister = register || { name };
   return (
-    <div className={classNames('text-left')}>
+    <div className={clsx('text-left')}>
       <div className="flex justify-between">
         <label
           htmlFor={name}
-          className="inline-block overflow-hidden text-ellipsis whitespace-nowrap text-start text-sm font-medium text-gray-700"
+          className="inline-block overflow-hidden text-ellipsis whitespace-nowrap text-start text-sm font-medium text-gray-700 hover:inline-flex hover:min-w-max hover:bg-inherit"
         >
           {label}
         </label>
@@ -53,7 +52,7 @@ const Input: FC<Props> = ({
         disabled={disabled}
         {...localRegister}
         {...rest}
-        className={classNames(
+        className={clsx(
           inputClassName || '',
           'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm',
           'overflow-hidden text-ellipsis whitespace-nowrap'

@@ -1,6 +1,5 @@
+import clsx from 'clsx';
 import type { ReactNode } from 'react';
-
-import { classNames } from '@/utils/tailwindUtils';
 
 type IBackgroundProps = {
   children: ReactNode;
@@ -9,7 +8,7 @@ type IBackgroundProps = {
 };
 
 const Background = (props: IBackgroundProps) => (
-  <div className={classNames(props.color, props.className || '')}>
+  <div className={clsx(props.color, props.className || '')}>
     {props.children}
   </div>
 );

@@ -1,4 +1,5 @@
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
+import clsx from 'clsx';
 import type { FC } from 'react';
 
 import type { Product } from '@/modules/product/productType';
@@ -6,10 +7,6 @@ import type { Product } from '@/modules/product/productType';
 type Props = {
   products: Product[];
 };
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
 
 const MobileProductTable: FC<Props> = ({ products }) => {
   return (
@@ -29,9 +26,7 @@ const MobileProductTable: FC<Props> = ({ products }) => {
             >
               <span className="flex items-center space-x-3 truncate">
                 <span
-                  className={classNames(
-                    'w-2.5 h-2.5 flex-shrink-0 rounded-full'
-                  )}
+                  className={clsx('h-2.5 w-2.5 shrink-0 rounded-full')}
                   aria-hidden="true"
                 />
                 <span className="truncate text-sm font-medium leading-6">

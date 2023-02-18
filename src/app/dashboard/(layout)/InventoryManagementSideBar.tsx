@@ -1,6 +1,7 @@
 'use client';
 
 import { Bars3CenterLeftIcon } from '@heroicons/react/20/solid';
+import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { FC } from 'react';
@@ -11,10 +12,6 @@ import { mainRoutes } from '@/routes/mainRoutes';
 import inventoryMarketLogo from '../../../../public/assets/images/inventoryMarket.png';
 import MobileSideBar from './MobileSideBar';
 import { navigation, secondaryNavigation } from './navigations';
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
 
 type Props = {
   sidebarOpen: boolean;
@@ -62,11 +59,11 @@ const InventoryManagementSideBar: FC<Props> = ({
                 {navigation.map((item) => (
                   <Link key={item.name} href={item.path}>
                     <div
-                      className={classNames(
+                      className={clsx(
                         item.path === pathname
                           ? 'bg-primary-400 text-white'
                           : 'text-primary-500  hover:bg-primary-200',
-                        'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md'
+                        'group flex items-center rounded-md p-2 text-sm font-medium leading-6'
                       )}
                       aria-current={item.path === pathname ? 'page' : undefined}
                     >
@@ -85,11 +82,11 @@ const InventoryManagementSideBar: FC<Props> = ({
                   {secondaryNavigation.map((item) => (
                     <Link key={item.name} href={item.path}>
                       <div
-                        className={classNames(
+                        className={clsx(
                           item.path === pathname
                             ? 'bg-primary-400 text-white'
                             : 'text-primary-500  hover:bg-primary-200',
-                          'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md'
+                          'group flex items-center rounded-md p-2 text-sm font-medium leading-6'
                         )}
                       >
                         <item.icon

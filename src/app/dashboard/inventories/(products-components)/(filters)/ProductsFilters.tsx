@@ -5,6 +5,7 @@ import {
   ArrowsUpDownIcon,
   ArrowUturnLeftIcon,
 } from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 import type { Dispatch, FC } from 'react';
 import { Fragment, useEffect } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
@@ -18,7 +19,6 @@ import {
   ProductAttributes,
   ProductLabels,
 } from '@/modules/product/productType';
-import { classNames } from '@/utils/tailwindUtils';
 
 import type {
   AuthorizedOrderProperty,
@@ -268,12 +268,12 @@ export const ProductsFilters: FC<Props> = ({
                         <Menu.Item key={option.value}>
                           {({ active }) => (
                             <div
-                              className={classNames(
+                              className={clsx(
                                 option.value
                                   ? 'font-medium text-gray-900'
                                   : 'text-gray-500',
                                 active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm cursor-pointer',
+                                'block cursor-pointer px-4 py-2 text-sm',
                                 option.value === filtersState.sorter.field
                                   ? 'bg-gray-200'
                                   : ''

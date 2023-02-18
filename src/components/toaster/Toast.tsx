@@ -1,6 +1,5 @@
 import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/20/solid';
-
-import { classNames } from '@/utils/tailwindUtils';
+import clsx from 'clsx';
 
 import type { ToastType } from './ToastContext';
 import { useToastDispatchContext } from './ToastContext';
@@ -13,7 +12,7 @@ export default function Toast({ type, message, id }: ToastType) {
     <div className="fixed inset-0 flex items-end px-4 py-6 sm:items-start sm:p-6">
       <div className="flex w-full flex-col items-center space-y-4">
         <div
-          className={classNames(
+          className={clsx(
             'm-3 rounded-md bg-green-50 p-4',
             type === ToasterTypeEnum.SUCCESS ? 'bg-green-50' : '',
             type === ToasterTypeEnum.ERROR ? 'bg-red-50' : '',
@@ -23,7 +22,7 @@ export default function Toast({ type, message, id }: ToastType) {
           <div className="flex">
             <div className="shrink-0">
               <CheckCircleIcon
-                className={classNames(
+                className={clsx(
                   'h-5 w-5',
                   type === ToasterTypeEnum.SUCCESS ? 'text-green-400' : '',
                   type === ToasterTypeEnum.ERROR ? 'text-red-400' : '',
@@ -34,7 +33,7 @@ export default function Toast({ type, message, id }: ToastType) {
             </div>
             <div className="ml-3">
               <p
-                className={classNames(
+                className={clsx(
                   'text-sm font-medium',
                   type === ToasterTypeEnum.SUCCESS ? 'text-green-800' : '',
                   type === ToasterTypeEnum.ERROR ? 'text-red-800' : '',
@@ -50,8 +49,8 @@ export default function Toast({ type, message, id }: ToastType) {
                   onClick={() => {
                     dispatch({ type: ToasterActionsEnum.DELETE_TOAST, id });
                   }}
-                  className={classNames(
-                    'inline-flex rounded-md focus:outline-none focus:ring-offset-2 cursor-pointer',
+                  className={clsx(
+                    'inline-flex cursor-pointer rounded-md focus:outline-none focus:ring-offset-2',
                     type === ToasterTypeEnum.SUCCESS
                       ? 'bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:ring-green-600 focus:ring-offset-green-50'
                       : '',

@@ -1,4 +1,4 @@
-import className from 'classnames';
+import clsx from 'clsx';
 import type { ReactNode } from 'react';
 
 type IPricingCardProps = {
@@ -11,7 +11,7 @@ type IPricingCardProps = {
 };
 
 const PricingCard = (props: IPricingCardProps) => {
-  const pricingCardClass = className(
+  const pricingCardClass = clsx(
     'p-8',
     'border',
     'border-gray-200',

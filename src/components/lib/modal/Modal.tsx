@@ -1,9 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/20/solid';
+import clsx from 'clsx';
 import type { FC, ReactNode } from 'react';
 import { Fragment, useRef } from 'react';
-
-import { classNames } from '@/utils/tailwindUtils';
 
 type Props = {
   open: boolean;
@@ -58,11 +57,11 @@ const Modal: FC<Props> = ({
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel
-                className={classNames(
+                className={clsx(
                   mawWidth || 'sm:max-w-lg',
                   width || 'sm:w-full',
                   margin || 'lg:m-2',
-                  padding || 'sm:p-10 px-4 pt-5 pb-4',
+                  padding || 'px-4 pt-5 pb-4 sm:p-10',
                   'relative justify-center overflow-hidden rounded-lg bg-white',
                   'shadow-xl transition-all'
                 )}

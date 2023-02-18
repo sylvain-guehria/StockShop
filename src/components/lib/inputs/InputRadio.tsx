@@ -1,6 +1,5 @@
+import clsx from 'clsx';
 import type { FC } from 'react';
-
-import { classNames } from '@/utils/tailwindUtils';
 
 type Props = {
   error?: string;
@@ -28,7 +27,7 @@ const InputRadio: FC<Props> = ({
   const localRegister = register || { name };
 
   return (
-    <div className={classNames(className || '', 'text-left')}>
+    <div className={clsx(className || '', 'text-left')}>
       {label && (
         <div className="flex justify-between">
           <label
@@ -53,7 +52,7 @@ const InputRadio: FC<Props> = ({
               value={option.value}
               disabled={disabled}
               {...localRegister}
-              className={classNames(
+              className={clsx(
                 inputClassName || '',
                 'h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500'
               )}

@@ -1,4 +1,4 @@
-import className from 'classnames';
+import clsx from 'clsx';
 import type { ReactNode } from 'react';
 
 type IVerticalFeatureRowProps = {
@@ -13,7 +13,7 @@ type IVerticalFeatureRowProps = {
 };
 
 const VerticalFeatureRow = (props: IVerticalFeatureRowProps) => {
-  const verticalFeatureClass = className(
+  const verticalFeatureClass = clsx(
     'vertical-feature',
     'first:mt-0',
     'mt-16',

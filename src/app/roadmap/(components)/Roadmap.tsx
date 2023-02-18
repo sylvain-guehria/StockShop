@@ -1,7 +1,6 @@
 import { CheckIcon } from '@heroicons/react/20/solid';
 import { ArrowPathIcon, ClockIcon } from '@heroicons/react/24/outline';
-
-import { classNames } from '@/utils/tailwindUtils';
+import clsx from 'clsx';
 
 import Section from '../../../components/lib/layout/Section';
 
@@ -71,7 +70,7 @@ const LegendItem = ({
   return (
     <div className="mx-6 p-3">
       <div
-        className={classNames(
+        className={clsx(
           'flex h-8 w-8 items-center justify-center rounded-full ring-8 ring-white',
           iconColor || ''
         )}
@@ -139,7 +138,7 @@ const Roadmap = () => {
                     <div className="relative flex space-x-3">
                       <div>
                         <span
-                          className={classNames(
+                          className={clsx(
                             step.status === StatusRoadmapStepEnum.DONE
                               ? 'bg-green-500'
                               : '',
@@ -149,7 +148,7 @@ const Roadmap = () => {
                             step.status === StatusRoadmapStepEnum.ONGOING
                               ? 'bg-blue-500'
                               : '',
-                            'h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white'
+                            'flex h-8 w-8 items-center justify-center rounded-full ring-8 ring-white'
                           )}
                         >
                           {step.status === StatusRoadmapStepEnum.DONE && (

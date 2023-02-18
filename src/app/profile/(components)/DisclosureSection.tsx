@@ -2,6 +2,7 @@
 
 import { Disclosure } from '@headlessui/react';
 import { BellIcon } from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 
 const user = {
   name: 'Debbie Lewis',
@@ -22,10 +23,6 @@ const userNavigation = [
   { name: 'Sign out', href: '#' },
 ];
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
-
 const color1 = '#583FD3';
 const color2 = '#3B2A8C';
 const color3 = '#2C2069';
@@ -36,9 +33,9 @@ const DisclosureSection = () => {
       {({ open }) => (
         <>
           <nav
-            className={classNames(
+            className={clsx(
               open ? 'bg-sky-900' : 'bg-transparent',
-              'relative z-10 border-b border-teal-500 border-opacity-25 lg:border-none lg:bg-transparent'
+              'relative z-10 border-b border-teal-500/25 lg:border-none lg:bg-transparent'
             )}
           >
             <Disclosure.Panel className="bg-sky-900 lg:hidden">
@@ -48,10 +45,8 @@ const DisclosureSection = () => {
                     key={item.name}
                     as="a"
                     href={item.href}
-                    className={classNames(
-                      item.current
-                        ? 'bg-black bg-opacity-25'
-                        : 'hover:bg-sky-800',
+                    className={clsx(
+                      item.current ? 'bg-black/25' : 'hover:bg-sky-800',
                       'block rounded-md py-2 px-3 text-base font-medium text-white'
                     )}
                   >
@@ -101,9 +96,9 @@ const DisclosureSection = () => {
           </nav>
           <div
             aria-hidden="true"
-            className={classNames(
+            className={clsx(
               open ? 'bottom-0' : 'inset-y-0',
-              'absolute inset-x-0 left-1/2 w-full -translate-x-1/2 transform overflow-hidden lg:inset-y-0'
+              'absolute inset-x-0 left-1/2 w-full -translate-x-1/2 overflow-hidden lg:inset-y-0'
             )}
           >
             <div className="absolute inset-0 flex">

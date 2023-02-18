@@ -1,5 +1,6 @@
 import { Switch } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import clsx from 'clsx';
 import type { FC } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -9,7 +10,6 @@ import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import type UserEntity from '@/modules/user/UserEntity';
 import { updateUserUseCase } from '@/usecases/usecases';
-import { classNames } from '@/utils/tailwindUtils';
 
 import { validationSchema } from './SettingsFormValidation';
 
@@ -86,20 +86,20 @@ const SettingsForm: FC<Props> = ({ user }) => {
         <Switch
           checked={hasInventoryManagementServiceActivated}
           onChange={changeHasInventoryManagementServiceActivated}
-          className={classNames(
+          className={clsx(
             hasInventoryManagementServiceActivated
               ? 'bg-primary-500'
               : 'bg-gray-200',
-            'relative ml-4 inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2'
+            'relative ml-4 inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2'
           )}
         >
           <span
             aria-hidden="true"
-            className={classNames(
+            className={clsx(
               hasInventoryManagementServiceActivated
                 ? 'translate-x-5'
                 : 'translate-x-0',
-              'inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out'
+              'inline-block h-5 w-5 rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out'
             )}
           />
         </Switch>

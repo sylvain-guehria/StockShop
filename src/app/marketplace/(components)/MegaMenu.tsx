@@ -1,5 +1,5 @@
 import { Popover, Transition } from '@headlessui/react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { Fragment } from 'react';
 
 import { navigation } from './fakeDatas';
@@ -15,7 +15,7 @@ const MegaMenu = () => {
                 <>
                   <div className="relative flex">
                     <Popover.Button
-                      className={classNames(
+                      className={clsx(
                         open
                           ? 'border-primary-600 text-primary-600'
                           : 'border-transparent text-gray-600 hover:text-gray-800',

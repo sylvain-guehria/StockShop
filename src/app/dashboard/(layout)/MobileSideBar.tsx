@@ -1,5 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
 import type { FC } from 'react';
 import { Fragment } from 'react';
@@ -8,10 +9,6 @@ import NextImage from '@/components/lib/nextImage/NextImage';
 
 import inventoryMarketLogo from '../../../../public/assets/images/inventoryMarket.png';
 import { navigation, secondaryNavigation } from './navigations';
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
 
 export type Navigation = {
   name: string;
@@ -101,11 +98,11 @@ const MobileSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
                       <a
                         key={item.name}
                         href={item.path}
-                        className={classNames(
+                        className={clsx(
                           item.path === pathname
                             ? 'bg-primary-400 text-white'
                             : 'text-primary-500  hover:bg-primary-200',
-                          'group flex items-center px-2 py-2 text-base font-medium rounded-md'
+                          'group flex items-center rounded-md p-2 text-base font-medium'
                         )}
                         aria-current={
                           item.path === pathname ? 'page' : undefined
