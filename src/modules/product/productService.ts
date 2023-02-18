@@ -20,6 +20,7 @@ class ProductService {
         label: 'New product',
         inventoryId,
         createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       })
     );
 

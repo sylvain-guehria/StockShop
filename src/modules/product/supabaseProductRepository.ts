@@ -114,6 +114,8 @@ class SupabaseProductRepository extends ProductRepository {
           condition: product.getCondition(),
           photoLink: product.getPhotoLink(),
           createdAt: product.getCreationDate(),
+          updatedAt: new Date().toISOString(),
+          inventoryId: product.getInventoryId(),
         },
       }
     );
@@ -136,6 +138,7 @@ class SupabaseProductRepository extends ProductRepository {
       condition: data.condition,
       photoLink: data.photoLink,
       createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
     });
   }
 
@@ -189,6 +192,7 @@ class SupabaseProductRepository extends ProductRepository {
             condition: product.condition,
             photoLink: product.photoLink,
             createdAt: product.createdAt,
+            updatedAt: product.updatedAt,
           })
       ),
     };

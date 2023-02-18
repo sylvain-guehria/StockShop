@@ -40,6 +40,8 @@ class ProductEntity implements Product {
 
   createdAt: string;
 
+  updatedAt: string;
+
   static new(product?: Product): ProductEntity {
     return new ProductEntity(product || ({} as Product));
   }
@@ -63,7 +65,8 @@ class ProductEntity implements Product {
     this.catSubcatAttributes = product.catSubcatAttributes || {};
     this.condition = product.condition || ConditionTypeEnum.NEW;
     this.photoLink = product.photoLink || '';
-    this.createdAt = product.createdAt || new Date().toISOString();
+    this.createdAt = product.createdAt || '';
+    this.updatedAt = product.updatedAt || '';
   }
 
   getCreationDate(): string {
@@ -72,6 +75,15 @@ class ProductEntity implements Product {
 
   setCreationDate(createdAt: string): ProductEntity {
     this.createdAt = createdAt;
+    return this;
+  }
+
+  getLastUpdateDate(): string {
+    return this.updatedAt;
+  }
+
+  setLastUpdateDate(updatedAt: string): ProductEntity {
+    this.updatedAt = updatedAt;
     return this;
   }
 
