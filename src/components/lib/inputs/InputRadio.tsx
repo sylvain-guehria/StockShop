@@ -5,18 +5,17 @@ import { classNames } from '@/utils/tailwindUtils';
 type Props = {
   error?: string;
   register?: any;
-  margin?: string;
   inputClassName?: string;
   options: { value: string | boolean | number; label: string }[];
   name: string;
   label?: string;
   defaultValue?: string | boolean | number;
   disabled?: boolean;
+  className?: string;
 };
 
 const InputRadio: FC<Props> = ({
   error,
-  margin,
   inputClassName,
   options,
   name,
@@ -24,16 +23,17 @@ const InputRadio: FC<Props> = ({
   register,
   defaultValue,
   disabled,
+  className,
 }) => {
   const localRegister = register || { name };
 
   return (
-    <div className={classNames('text-left', margin || 'mt-1')}>
+    <div className={classNames(className || '', 'text-left')}>
       {label && (
         <div className="flex justify-between">
           <label
             htmlFor={name}
-            className="block text-start text-sm font-medium text-gray-700"
+            className="inline-block overflow-hidden text-ellipsis whitespace-nowrap text-start text-sm font-medium text-gray-700"
           >
             {label}
           </label>

@@ -5,7 +5,6 @@ import { classNames } from '@/utils/tailwindUtils';
 type Props = {
   label?: string;
   error?: string;
-  margin?: string;
   inputClassName?: string;
   options: { value: string; label: string }[];
   name: string;
@@ -18,7 +17,6 @@ type Props = {
 const InputSelect: FC<Props> = ({
   label,
   error,
-  margin,
   inputClassName,
   options,
   name,
@@ -29,13 +27,16 @@ const InputSelect: FC<Props> = ({
   const localRegister = register || { name };
 
   return (
-    <div className={classNames('text-left', margin || 'mt-1')}>
-      <label
-        htmlFor={name}
-        className="block text-start text-sm font-medium text-gray-700"
-      >
-        {label}
-      </label>
+    <div className={classNames('text-left')}>
+      <div className="flex justify-between">
+        <label
+          htmlFor={name}
+          className="inline-block overflow-hidden text-ellipsis whitespace-nowrap text-start text-sm font-medium text-gray-700"
+        >
+          {label}
+        </label>
+      </div>
+
       <select
         id={name}
         autoComplete={name}

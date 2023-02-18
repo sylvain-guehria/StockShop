@@ -22,7 +22,6 @@ const Input: FC<Props> = ({
   label,
   placeholder,
   error,
-  margin,
   inputClassName,
   register,
   name,
@@ -33,11 +32,11 @@ const Input: FC<Props> = ({
 }) => {
   const localRegister = register || { name };
   return (
-    <div className={classNames('text-left', margin || 'mt-1')}>
+    <div className={classNames('text-left')}>
       <div className="flex justify-between">
         <label
           htmlFor={name}
-          className="block text-start text-sm font-medium text-gray-700"
+          className="inline-block overflow-hidden text-ellipsis whitespace-nowrap text-start text-sm font-medium text-gray-700"
         >
           {label}
         </label>
