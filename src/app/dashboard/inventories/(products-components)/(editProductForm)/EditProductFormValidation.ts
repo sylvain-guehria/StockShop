@@ -1,4 +1,4 @@
-import { number, object, string } from 'yup';
+import { boolean, number, object, string } from 'yup';
 
 import {
   ConditionTypeEnum,
@@ -18,7 +18,7 @@ export const validationSchema = object()
     [ProductAttributes.TVA]: number().min(0).max(100),
     [ProductAttributes.CATEGORY_ID]: string(),
     [ProductAttributes.SUB_CATEGORY_ID]: string(),
-    [ProductAttributes.IS_PUBLIC]: string(),
+    [ProductAttributes.IS_PUBLIC]: boolean(),
     [ProductAttributes.DESCRIPTION]: string(),
     [ProductAttributes.PUBLIC_DISPONIBILITY]: string(),
     [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]: object(),

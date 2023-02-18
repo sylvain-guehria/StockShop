@@ -15,6 +15,7 @@ import { ProductAttributes } from '@/modules/product/productType';
 import { validationSchema } from './EditProductFormValidation';
 import SubFormCategory from './SubFormCategory';
 import SubFormGeneral from './SubFormGeneral';
+import SubFormVisibility from './SubFormVisibility';
 
 export interface EditProductFormType {
   [ProductAttributes.LABEL]: string;
@@ -90,7 +91,7 @@ const EditProductForm: FC<Props> = ({
   return (
     <form onSubmit={handleSubmit(onSubmitEditProductForm)}>
       <div className="lg:flex">
-        <div className="lg:w-1/2 lg:pr-4">
+        <div className="lg:w-1/3 lg:pr-4">
           <SubFormGeneral
             register={register}
             errors={errors}
@@ -98,7 +99,7 @@ const EditProductForm: FC<Props> = ({
           />
         </div>
 
-        <div className="mt-5 lg:mt-0 lg:w-1/2 lg:pl-4">
+        <div className="mt-5 lg:mt-0 lg:w-1/3 lg:px-4">
           <SubFormCategory
             register={register}
             watch={watch}
@@ -108,15 +109,9 @@ const EditProductForm: FC<Props> = ({
           />
         </div>
 
-        {/* PARTIE 3 */}
-
-        {/* <div className="mt-5 lg:mt-0 lg:w-1/3">
-          <SubFormVisibility
-            product={product}
-            register={register}
-            errors={errors}
-          />
-          </div> */}
+        <div className="mt-5 lg:mt-0 lg:w-1/3 ">
+          <SubFormVisibility register={register} errors={errors} />
+        </div>
       </div>
 
       <div className="pt-6">

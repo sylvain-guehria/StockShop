@@ -7,7 +7,7 @@ type Props = {
   register?: any;
   margin?: string;
   inputClassName?: string;
-  options: { value: string; label: string }[];
+  options: { value: string | boolean | number; label: string }[];
   name: string;
 };
 
@@ -18,19 +18,22 @@ const InputRadio: FC<Props> = ({
   options,
   name,
   register,
-  ...rest
 }) => {
   const localRegister = register || { name };
 
   return (
     <div className={classNames('text-left', margin || 'mt-1')}>
       <div className="flex">
-        {options.map((option) => (
-          <div className="mr-4 flex items-center" key={option.value}>
+        {options.map((option, index) => (
+          <div
+            className="mr-4 flex items-center"
+            key={`${option.value}-${index}`}
+          >
             <input
               id={name}
               type="radio"
-              {...rest}
+              name={name}
+              value={option.value}
               {...localRegister}
               className={classNames(
                 inputClassName || '',
