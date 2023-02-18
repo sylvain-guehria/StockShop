@@ -2,7 +2,11 @@
 
 import { InformationCircleIcon } from '@heroicons/react/20/solid';
 import type { FC } from 'react';
-import type { FieldErrors, UseFormRegister } from 'react-hook-form';
+import type {
+  FieldErrors,
+  UseFormGetValues,
+  UseFormRegister,
+} from 'react-hook-form';
 
 import InputRadio from '@/components/lib/inputs/InputRadio';
 import InputTextArea from '@/components/lib/inputs/InputTextArea';
@@ -13,9 +17,10 @@ import type { EditProductFormType } from './EditProductForm';
 type Props = {
   register: UseFormRegister<EditProductFormType>;
   errors: FieldErrors<EditProductFormType>;
+  getValues: UseFormGetValues<EditProductFormType>;
 };
 
-const SubFormVisibility: FC<Props> = ({ register, errors }) => {
+const SubFormVisibility: FC<Props> = ({ register, errors, getValues }) => {
   return (
     <>
       <div className="flex justify-center">
@@ -40,6 +45,7 @@ const SubFormVisibility: FC<Props> = ({ register, errors }) => {
           register={register(ProductAttributes.IS_PUBLIC)}
           name={ProductAttributes.IS_PUBLIC}
           error={errors[ProductAttributes.IS_PUBLIC]?.message}
+          defaultValue={getValues(ProductAttributes.IS_PUBLIC)}
         />
       </div>
       <div className="mt-6 sm:col-span-6">

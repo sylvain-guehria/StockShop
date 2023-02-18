@@ -3,6 +3,7 @@ import { productRepository } from 'di';
 import type { FC } from 'react';
 
 import Input from '@/components/lib/inputs/Input';
+import InputRadio from '@/components/lib/inputs/InputRadio';
 import InputSelect from '@/components/lib/inputs/InputSelect';
 import InputTextArea from '@/components/lib/inputs/InputTextArea';
 import NextImage from '@/components/lib/nextImage/NextImage';
@@ -225,17 +226,18 @@ const ProductView: FC<Props> = ({ productId }) => {
               </h3>
             </div>
 
-            {/* <div className="mt-6">
+            <div className="mt-6">
               <InputRadio
                 options={[
-                  { label: 'Public', value: 'public' },
-                  { label: 'Privé', value: 'private' },
+                  { label: 'Public', value: true },
+                  { label: 'Privé', value: false },
                 ]}
-                register={register(ProductAttributes.IS_PUBLIC)}
                 name={ProductAttributes.IS_PUBLIC}
-                error={errors[ProductAttributes.IS_PUBLIC]?.message}
+                label={ProductLabels[ProductAttributes.IS_PUBLIC]}
+                defaultValue={product.getIsPublic()}
+                disabled={true}
               />
-            </div> */}
+            </div>
             <div className="mt-6 sm:col-span-6">
               <InputTextArea
                 label="Description"

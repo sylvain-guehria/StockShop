@@ -110,7 +110,11 @@ const EditProductForm: FC<Props> = ({
         </div>
 
         <div className="mt-5 lg:mt-0 lg:w-1/3 ">
-          <SubFormVisibility register={register} errors={errors} />
+          <SubFormVisibility
+            register={register}
+            errors={errors}
+            getValues={getValues}
+          />
         </div>
       </div>
 

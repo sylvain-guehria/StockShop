@@ -30,7 +30,7 @@ export const ProductLabels = {
   [ProductAttributes.SELLING_PRICE]: 'Prix de vente HT',
   [ProductAttributes.DESCRIPTION]: 'Description',
   [ProductAttributes.TO_BUY]: 'Quantité à acheter',
-  [ProductAttributes.IS_PUBLIC]: 'Publique',
+  [ProductAttributes.IS_PUBLIC]: 'Visibilité',
   [ProductAttributes.TVA]: 'TVA',
   [ProductAttributes.CATEGORY_ID]: 'Catégorie',
   [ProductAttributes.SUB_CATEGORY_ID]: 'Sous-catégorie',
