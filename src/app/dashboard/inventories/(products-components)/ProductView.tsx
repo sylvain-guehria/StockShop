@@ -53,240 +53,238 @@ const ProductView: FC<Props> = ({ productId }) => {
   // ADD a timestamp to the image src to force nextjs to reload the image without cache
   const timeStamp = new Date().getTime();
   return (
-    <>
-      <div className="lg:flex">
-        <div
-          className={classNames(
-            'lg:pr-4',
-            hasCategoryInputs ? 'lg:w-1/3' : 'lg:w-1/2'
-          )}
-        >
+    <div className="lg:flex">
+      <div
+        className={classNames(
+          'lg:pr-4',
+          hasCategoryInputs ? 'lg:w-1/3' : 'lg:w-1/2'
+        )}
+      >
+        <>
+          <div>
+            <h3 className="text-lg font-medium leading-6 text-gray-900">
+              Informations générales
+            </h3>
+          </div>
+
+          <div className="mt-6 sm:col-span-6">
+            <Input
+              type="text"
+              label={ProductLabels[ProductAttributes.LABEL]}
+              disabled={true}
+              name={ProductAttributes.LABEL}
+              value={product.getLabel()}
+            />
+          </div>
+          <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+            <div className="sm:col-span-3">
+              <Input
+                type="number"
+                label={ProductLabels[ProductAttributes.QUANTITY_IN_INVENTORY]}
+                name={ProductAttributes.QUANTITY_IN_INVENTORY}
+                value={product.getQuantityInInventory()}
+                disabled={true}
+              />
+            </div>
+
+            <div className="sm:col-span-3">
+              <Input
+                type="number"
+                label={ProductLabels[ProductAttributes.OPTIMUM_QUANTITY]}
+                name={ProductAttributes.OPTIMUM_QUANTITY}
+                value={product.getOptimumQuantity()}
+                disabled={true}
+              />
+            </div>
+
+            <div className="sm:col-span-2">
+              <Input
+                type="number"
+                name={ProductAttributes.BUYING_PRICE}
+                label={ProductLabels[ProductAttributes.BUYING_PRICE]}
+                value={product.getOptimumQuantity()}
+                disabled={true}
+              />
+            </div>
+
+            <div className="sm:col-span-2">
+              <Input
+                type="number"
+                step="0.01"
+                name={ProductAttributes.SELLING_PRICE}
+                label={ProductLabels[ProductAttributes.SELLING_PRICE]}
+                value={product.getBuyingPrice()}
+                disabled={true}
+              />
+            </div>
+
+            <div className="sm:col-span-2">
+              <Input
+                type="number"
+                step="0.1"
+                name={ProductAttributes.TVA}
+                label={ProductLabels[ProductAttributes.TVA]}
+                value={product.getTva()}
+                disabled={true}
+              />
+            </div>
+          </div>
+          <div className="mt-6 grid gap-y-6 gap-x-4 sm:grid-cols-3">
+            <div>
+              <div className="mt-1">
+                <Input
+                  type="text"
+                  value={ConditionLabels[product.getCondition()]}
+                  disabled={true}
+                  name={ProductAttributes.CONDITION}
+                  label={ProductLabels[ProductAttributes.CONDITION]}
+                />
+              </div>
+            </div>
+            <div>
+              <div className="mt-1">
+                <Input
+                  type="text"
+                  name={ProductAttributes.CATEGORY_ID}
+                  label={ProductLabels[ProductAttributes.CATEGORY_ID]}
+                  value={getCategoryById(product.getCategoryId()).label}
+                  disabled={true}
+                />
+              </div>
+            </div>
+            <div>
+              <div className="mt-1">
+                <Input
+                  type="text"
+                  name={ProductAttributes.SUB_CATEGORY_ID}
+                  label={ProductLabels[ProductAttributes.SUB_CATEGORY_ID]}
+                  value={
+                    getSubCategoryById(
+                      product.getCategoryId(),
+                      product.getSubCategoryId()
+                    ).label
+                  }
+                  disabled={true}
+                />
+              </div>
+            </div>
+          </div>
+        </>
+      </div>
+
+      {hasCategoryInputs && (
+        <div className={classNames('mt-10 lg:mt-0 lg:w-1/3 lg:pl-4')}>
           <>
             <div>
               <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Informations générales
+                Information spécifique à la catégorie
               </h3>
             </div>
 
-            <div className="mt-3 sm:col-span-6">
-              <Input
-                type="text"
-                label={ProductLabels[ProductAttributes.LABEL]}
-                disabled={true}
-                name={ProductAttributes.LABEL}
-                value={product.getLabel()}
-              />
-            </div>
             <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-              <div className="sm:col-span-3">
-                <Input
-                  type="number"
-                  label={ProductLabels[ProductAttributes.QUANTITY_IN_INVENTORY]}
-                  name={ProductAttributes.QUANTITY_IN_INVENTORY}
-                  value={product.getQuantityInInventory()}
-                  disabled={true}
-                />
-              </div>
-
-              <div className="sm:col-span-3">
-                <Input
-                  type="number"
-                  label={ProductLabels[ProductAttributes.OPTIMUM_QUANTITY]}
-                  name={ProductAttributes.OPTIMUM_QUANTITY}
-                  value={product.getOptimumQuantity()}
-                  disabled={true}
-                />
-              </div>
-
-              <div className="sm:col-span-2">
-                <Input
-                  type="number"
-                  name={ProductAttributes.BUYING_PRICE}
-                  label={ProductLabels[ProductAttributes.BUYING_PRICE]}
-                  value={product.getOptimumQuantity()}
-                  disabled={true}
-                />
-              </div>
-
-              <div className="sm:col-span-2">
-                <Input
-                  type="number"
-                  step="0.01"
-                  name={ProductAttributes.SELLING_PRICE}
-                  label={ProductLabels[ProductAttributes.SELLING_PRICE]}
-                  value={product.getBuyingPrice()}
-                  disabled={true}
-                />
-              </div>
-
-              <div className="sm:col-span-2">
-                <Input
-                  type="number"
-                  step="0.1"
-                  name={ProductAttributes.TVA}
-                  label={ProductLabels[ProductAttributes.TVA]}
-                  value={product.getTva()}
-                  disabled={true}
-                />
-              </div>
-            </div>
-            <div className="mt-6 grid gap-y-6 gap-x-4 sm:grid-cols-3">
-              <div>
-                <div className="mt-1">
-                  <Input
-                    type="text"
-                    value={ConditionLabels[product.getCondition()]}
-                    disabled={true}
-                    name={ProductAttributes.CONDITION}
-                    label={ProductLabels[ProductAttributes.CONDITION]}
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="mt-1">
-                  <Input
-                    type="text"
-                    name={ProductAttributes.CATEGORY_ID}
-                    label={ProductLabels[ProductAttributes.CATEGORY_ID]}
-                    value={getCategoryById(product.getCategoryId()).label}
-                    disabled={true}
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="mt-1">
-                  <Input
-                    type="text"
-                    name={ProductAttributes.SUB_CATEGORY_ID}
-                    label={ProductLabels[ProductAttributes.SUB_CATEGORY_ID]}
-                    value={
-                      getSubCategoryById(
-                        product.getCategoryId(),
-                        product.getSubCategoryId()
-                      ).label
-                    }
-                    disabled={true}
-                  />
-                </div>
-              </div>
-            </div>
-          </>
-        </div>
-
-        {hasCategoryInputs && (
-          <div className={classNames('mt-10 lg:mt-0 lg:w-1/3 lg:pl-4')}>
-            <>
-              <div>
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
-                  Information spécifique à la catégorie
-                </h3>
-              </div>
-
-              <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-                {allCategoryInputs.map((input: CategoryInput) => {
-                  if (input.inputType === 'select') {
-                    return (
-                      <div className="sm:col-span-2" key={input.id}>
-                        <InputSelect
-                          label={input.label}
-                          name={input.id}
-                          options={input.options || []}
-                          disabled={true}
-                          value={product.getCatSubcatAttributes()[input.id]}
-                        />
-                      </div>
-                    );
-                  }
-
+              {allCategoryInputs.map((input: CategoryInput) => {
+                if (input.inputType === 'select') {
                   return (
                     <div className="sm:col-span-2" key={input.id}>
-                      <Input
-                        type="text"
+                      <InputSelect
                         label={input.label}
                         name={input.id}
-                        value={product.getCatSubcatAttributes()[input.id]}
+                        options={input.options || []}
                         disabled={true}
+                        value={product.getCatSubcatAttributes()[input.id]}
                       />
                     </div>
                   );
-                })}
-              </div>
-            </>
-          </div>
-        )}
-
-        <div
-          className={classNames(
-            'mt-10 lg:mt-0 lg:pl-4',
-            hasCategoryInputs ? 'lg:w-1/3' : 'lg:w-1/2'
-          )}
-        >
-          <>
-            <div className="flex justify-center">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Visibilité
-              </h3>
-            </div>
-
-            <div className="mt-6 flex">
-              <InputRadio
-                options={[
-                  { label: 'Public', value: true },
-                  { label: 'Privé', value: false },
-                ]}
-                name={ProductAttributes.IS_PUBLIC}
-                label={ProductLabels[ProductAttributes.IS_PUBLIC]}
-                defaultValue={product.getIsPublic()}
-                disabled={true}
-              />
-              <Input
-                type="text"
-                value={
-                  PublicDisponibilityLabels[
-                    product.getPublicDisponibility() as PublicDisponibilityEnum
-                  ]
                 }
-                disabled={true}
-                name={ProductAttributes.PUBLIC_DISPONIBILITY}
-                label={ProductLabels[ProductAttributes.PUBLIC_DISPONIBILITY]}
-              />
-            </div>
-            <div className="mt-6 sm:col-span-6">
-              <InputTextArea
-                label="Description"
-                name={ProductAttributes.DESCRIPTION}
-                value={product.getDescription()}
-                disabled={true}
-                inputClassName="placeholder:text-right"
-              />
-            </div>
 
-            <div className="mt-6 sm:col-span-6">
-              <label
-                htmlFor="cover-photo"
-                className="block text-start text-sm font-medium text-gray-700"
-              >
-                Photo
-              </label>
-              <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
-                <div className="space-y-1 text-center">
-                  {product.getPhotoLink() ? (
-                    <NextImage
-                      src={`${product?.getPhotoLink()}?${timeStamp}`}
-                      alt="current product photo"
-                      width={200}
-                      height={200}
+                return (
+                  <div className="sm:col-span-2" key={input.id}>
+                    <Input
+                      type="text"
+                      label={input.label}
+                      name={input.id}
+                      value={product.getCatSubcatAttributes()[input.id]}
+                      disabled={true}
                     />
-                  ) : (
-                    <EmptyPictureSVG className="mx-auto h-12 w-12 text-gray-400" />
-                  )}
-                </div>
-              </div>
+                  </div>
+                );
+              })}
             </div>
           </>
         </div>
+      )}
+
+      <div
+        className={classNames(
+          'mt-10 lg:mt-0 lg:pl-4',
+          hasCategoryInputs ? 'lg:w-1/3' : 'lg:w-1/2'
+        )}
+      >
+        <>
+          <div className="flex justify-center">
+            <h3 className="text-lg font-medium leading-6 text-gray-900">
+              Visibilité
+            </h3>
+          </div>
+
+          <div className="mt-6 flex">
+            <InputRadio
+              options={[
+                { label: 'Public', value: true },
+                { label: 'Privé', value: false },
+              ]}
+              name={ProductAttributes.IS_PUBLIC}
+              label={ProductLabels[ProductAttributes.IS_PUBLIC]}
+              defaultValue={product.getIsPublic()}
+              disabled={true}
+            />
+            <Input
+              type="text"
+              value={
+                PublicDisponibilityLabels[
+                  product.getPublicDisponibility() as PublicDisponibilityEnum
+                ]
+              }
+              disabled={true}
+              name={ProductAttributes.PUBLIC_DISPONIBILITY}
+              label={ProductLabels[ProductAttributes.PUBLIC_DISPONIBILITY]}
+            />
+          </div>
+          <div className="mt-6 sm:col-span-6">
+            <InputTextArea
+              label="Description"
+              name={ProductAttributes.DESCRIPTION}
+              value={product.getDescription()}
+              disabled={true}
+              inputClassName="placeholder:text-right"
+            />
+          </div>
+
+          <div className="mt-6 sm:col-span-6">
+            <label
+              htmlFor="cover-photo"
+              className="block text-start text-sm font-medium text-gray-700"
+            >
+              Photo
+            </label>
+            <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
+              <div className="space-y-1 text-center">
+                {product.getPhotoLink() ? (
+                  <NextImage
+                    src={`${product?.getPhotoLink()}?${timeStamp}`}
+                    alt="current product photo"
+                    width={200}
+                    height={200}
+                  />
+                ) : (
+                  <EmptyPictureSVG className="mx-auto h-12 w-12 text-gray-400" />
+                )}
+              </div>
+            </div>
+          </div>
+        </>
       </div>
-    </>
+    </div>
   );
 };
 export default ProductView;

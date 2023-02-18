@@ -36,7 +36,7 @@ const SubFormGeneral: FC<Props> = ({ register, errors, control }) => {
         </h3>
       </div>
 
-      <div className="mt-3 sm:col-span-6">
+      <div className="mt-6 sm:col-span-6">
         <Input
           type="text"
           name={ProductAttributes.LABEL}
