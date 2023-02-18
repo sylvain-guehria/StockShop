@@ -16,10 +16,12 @@ import {
   getSubCategoryById,
   getSubCategoryInputsFromDatabase,
 } from '@/modules/category/categoryUtils';
+import type { PublicDisponibilityEnum } from '@/modules/product/productType';
 import {
   ConditionLabels,
   ProductAttributes,
   ProductLabels,
+  PublicDisponibilityLabels,
 } from '@/modules/product/productType';
 import { classNames } from '@/utils/tailwindUtils';
 
@@ -222,11 +224,11 @@ const ProductView: FC<Props> = ({ productId }) => {
           <>
             <div className="flex justify-center">
               <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Description
+                Visibilité
               </h3>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-6 flex">
               <InputRadio
                 options={[
                   { label: 'Public', value: true },
@@ -236,6 +238,17 @@ const ProductView: FC<Props> = ({ productId }) => {
                 label={ProductLabels[ProductAttributes.IS_PUBLIC]}
                 defaultValue={product.getIsPublic()}
                 disabled={true}
+              />
+              <Input
+                type="text"
+                value={
+                  PublicDisponibilityLabels[
+                    product.getPublicDisponibility() as PublicDisponibilityEnum
+                  ]
+                }
+                disabled={true}
+                name={ProductAttributes.PUBLIC_DISPONIBILITY}
+                label={ProductLabels[ProductAttributes.PUBLIC_DISPONIBILITY]}
               />
             </div>
             <div className="mt-6 sm:col-span-6">

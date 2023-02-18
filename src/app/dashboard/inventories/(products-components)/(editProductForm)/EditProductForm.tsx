@@ -9,7 +9,11 @@ import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import type ProductEntity from '@/modules/product/ProductEntity';
-import type { ConditionTypeEnum, Product } from '@/modules/product/productType';
+import type {
+  ConditionTypeEnum,
+  Product,
+  PublicDisponibilityEnum,
+} from '@/modules/product/productType';
 import { ProductAttributes } from '@/modules/product/productType';
 
 import { validationSchema } from './EditProductFormValidation';
@@ -28,7 +32,7 @@ export interface EditProductFormType {
   [ProductAttributes.SUB_CATEGORY_ID]?: string;
   [ProductAttributes.IS_PUBLIC]?: boolean;
   [ProductAttributes.TVA]?: number;
-  [ProductAttributes.PUBLIC_DISPONIBILITY]?: string;
+  [ProductAttributes.PUBLIC_DISPONIBILITY]?: PublicDisponibilityEnum;
   [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]?: Record<string, any>;
   [ProductAttributes.CONDITION]?: ConditionTypeEnum;
 }

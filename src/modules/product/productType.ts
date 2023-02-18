@@ -55,6 +55,24 @@ export const ConditionLabels = {
   [ConditionTypeEnum.REFURBISHED]: 'Reconditionné',
 };
 
+export enum PublicDisponibilityEnum {
+  IN_STOCK = 'inStock',
+  OUT_OF_STOCK = 'outOfStock',
+  NOT_MUCH_LEFT = 'notMuchLeft',
+  AVAILABLE_ON_ORDER = 'availableOnOrder',
+  AVAILABLE_SOON = 'availableSoon',
+  NOT_KNOW = 'notKnow',
+}
+
+export const PublicDisponibilityLabels = {
+  [PublicDisponibilityEnum.IN_STOCK]: 'En stock',
+  [PublicDisponibilityEnum.OUT_OF_STOCK]: 'Rupture de stock',
+  [PublicDisponibilityEnum.NOT_MUCH_LEFT]: 'Quelques un restant',
+  [PublicDisponibilityEnum.AVAILABLE_ON_ORDER]: 'Disponible sur commande',
+  [PublicDisponibilityEnum.AVAILABLE_SOON]: 'Bientôt disponible',
+  [PublicDisponibilityEnum.NOT_KNOW]: '',
+};
+
 export interface Product {
   [ProductAttributes.ID]?: string;
   [ProductAttributes.LABEL]?: string;
@@ -68,7 +86,7 @@ export interface Product {
   [ProductAttributes.TVA]?: number;
   [ProductAttributes.CATEGORY_ID]?: string;
   [ProductAttributes.SUB_CATEGORY_ID]?: string;
-  [ProductAttributes.PUBLIC_DISPONIBILITY]?: string;
+  [ProductAttributes.PUBLIC_DISPONIBILITY]?: PublicDisponibilityEnum;
   [ProductAttributes.INVENTORY_ID]?: string;
   [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]?: Record<string, any>;
   [ProductAttributes.CONDITION]?: ConditionTypeEnum;

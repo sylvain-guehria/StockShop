@@ -1,7 +1,7 @@
 import { parseBoolean } from '@/utils/primitiveUtils';
 
 import type { Product } from './productType';
-import { ConditionTypeEnum } from './productType';
+import { ConditionTypeEnum, PublicDisponibilityEnum } from './productType';
 
 class ProductEntity implements Product {
   id: string;
@@ -28,7 +28,7 @@ class ProductEntity implements Product {
 
   subCategoryId: string;
 
-  publicDisponibility: string;
+  publicDisponibility: PublicDisponibilityEnum;
 
   inventoryId: string;
 
@@ -57,7 +57,8 @@ class ProductEntity implements Product {
     this.tva = product.tva || 0;
     this.categoryId = product.categoryId || '';
     this.subCategoryId = product.subCategoryId || '';
-    this.publicDisponibility = product.publicDisponibility || '';
+    this.publicDisponibility =
+      product.publicDisponibility || PublicDisponibilityEnum.NOT_KNOW;
     this.inventoryId = product.inventoryId || '';
     this.catSubcatAttributes = product.catSubcatAttributes || {};
     this.condition = product.condition || ConditionTypeEnum.NEW;
@@ -227,7 +228,9 @@ class ProductEntity implements Product {
     return this.publicDisponibility;
   }
 
-  setPublicDisponibility(publicDisponibility: string): ProductEntity {
+  setPublicDisponibility(
+    publicDisponibility: PublicDisponibilityEnum
+  ): ProductEntity {
     this.publicDisponibility = publicDisponibility;
     return this;
   }
