@@ -35,7 +35,10 @@ const Input: FC<Props> = ({
       <div className="flex justify-between">
         <label
           htmlFor={name}
-          className="inline-block overflow-hidden text-ellipsis whitespace-nowrap text-start text-sm font-medium text-gray-700 hover:inline-flex hover:min-w-max hover:bg-inherit"
+          className={clsx(
+            'inline-block overflow-hidden text-ellipsis whitespace-nowrap text-start text-sm font-medium text-gray-700',
+            'hover:z-50 hover:inline-flex hover:min-w-max hover:bg-white/100 hover:pr-3'
+          )}
         >
           {label}
         </label>

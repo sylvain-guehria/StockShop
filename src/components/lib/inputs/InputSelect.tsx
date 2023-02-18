@@ -32,7 +32,7 @@ const InputSelect: FC<Props> = ({
           htmlFor={name}
           className={clsx(
             'inline-block overflow-hidden text-ellipsis whitespace-nowrap text-start text-sm font-medium text-gray-700',
-            'hover:bg-inherit/100 hover:z-50 hover:inline-flex hover:min-w-max'
+            'hover:z-50 hover:inline-flex hover:min-w-max hover:bg-white/100 hover:pr-3'
           )}
         >
           {label}
