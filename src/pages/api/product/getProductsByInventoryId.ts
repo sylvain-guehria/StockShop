@@ -7,7 +7,7 @@ import { getPagination } from '@/utils/apiUtils';
 import { removeKeysWithNoValues } from '@/utils/objectUtils';
 import { parseBoolean } from '@/utils/primitiveUtils';
 
-const getProductsByUserIdAndInventoryId = async (
+const getProductsByInventoryId = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
@@ -65,4 +65,4 @@ const getProductsByUserIdAndInventoryId = async (
   });
 };
 
-export default getProductsByUserIdAndInventoryId;
+export default getProductsByInventoryId;

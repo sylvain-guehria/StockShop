@@ -25,9 +25,13 @@ export type AuthorizedFilterProperty =
 
 export type AuthorizedOrderProperty =
   | ProductAttributes.LABEL
+  | ProductAttributes.CREATED_AT
   | ProductAttributes.UPDATED_AT
+  | ProductAttributes.SELLING_PRICE
+  | ProductAttributes.BUYING_PRICE
   | ProductAttributes.QUANTITY_IN_INVENTORY
-  | ProductAttributes.OPTIMUM_QUANTITY;
+  | ProductAttributes.OPTIMUM_QUANTITY
+  | ProductAttributes.TO_BUY;
 
 export type FiltersStateType = {
   sorter: SorterType;

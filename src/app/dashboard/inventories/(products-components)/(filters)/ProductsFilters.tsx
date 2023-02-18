@@ -31,25 +31,29 @@ import { ActionNamesEnum, initialFilters } from './ProductsFiltersReducer';
 const sortingOptions = [
   { value: ProductAttributes.LABEL, label: 'Ordre alphabétique' },
   {
+    value: ProductAttributes.CREATED_AT,
+    label: ProductLabels[ProductAttributes.CREATED_AT],
+  },
+  {
     value: ProductAttributes.UPDATED_AT,
     label: ProductLabels[ProductAttributes.UPDATED_AT],
   },
-  // {
-  //   value: ProductAttributes.SELLING_PRICE,
-  //   label: ProductLabels[ProductAttributes.SELLING_PRICE],
-  // },
-  // {
-  //   value: ProductAttributes.BUYING_PRICE,
-  //   label: ProductLabels[ProductAttributes.BUYING_PRICE],
-  // },
+  {
+    value: ProductAttributes.SELLING_PRICE,
+    label: ProductLabels[ProductAttributes.SELLING_PRICE],
+  },
+  {
+    value: ProductAttributes.BUYING_PRICE,
+    label: ProductLabels[ProductAttributes.BUYING_PRICE],
+  },
   {
     value: ProductAttributes.QUANTITY_IN_INVENTORY,
     label: ProductLabels[ProductAttributes.QUANTITY_IN_INVENTORY],
   },
-  // {
-  //   value: ProductAttributes.OPTIMUM_QUANTITY,
-  //   label: ProductLabels[ProductAttributes.OPTIMUM_QUANTITY],
-  // },
+  {
+    value: ProductAttributes.OPTIMUM_QUANTITY,
+    label: ProductLabels[ProductAttributes.OPTIMUM_QUANTITY],
+  },
   {
     value: ProductAttributes.TO_BUY,
     label: ProductLabels[ProductAttributes.TO_BUY],

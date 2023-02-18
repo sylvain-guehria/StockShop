@@ -39,8 +39,8 @@ export const ProductLabels = {
   [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]: 'Attributs',
   [ProductAttributes.CONDITION]: 'Etat',
   [ProductAttributes.PHOTO_LINK]: 'Photo',
-  [ProductAttributes.UPDATED_AT]: 'Date de création',
-  [ProductAttributes.CREATED_AT]: 'Date de modification',
+  [ProductAttributes.UPDATED_AT]: 'Date de modification',
+  [ProductAttributes.CREATED_AT]: 'Date de création',
 } as const;
 
 export enum ConditionTypeEnum {
