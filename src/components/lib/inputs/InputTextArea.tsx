@@ -27,7 +27,7 @@ const InputTextArea: FC<Props> = ({
     <div className={clsx('text-left')}>
       <label
         htmlFor={name}
-        className="inline-block overflow-hidden text-ellipsis whitespace-nowrap text-start text-sm font-medium text-gray-700"
+        className="inline-block truncate text-start text-sm font-medium text-gray-700"
       >
         {label}
       </label>

@@ -5,7 +5,6 @@ import type { FC } from 'react';
 
 import Input from '@/components/lib/inputs/Input';
 import InputRadio from '@/components/lib/inputs/InputRadio';
-import InputSelect from '@/components/lib/inputs/InputSelect';
 import InputTextArea from '@/components/lib/inputs/InputTextArea';
 import NextImage from '@/components/lib/nextImage/NextImage';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
@@ -183,10 +182,10 @@ const ProductView: FC<Props> = ({ productId }) => {
                 if (input.inputType === 'select') {
                   return (
                     <div className="sm:col-span-2" key={input.id}>
-                      <InputSelect
+                      <Input
+                        type="text"
                         label={input.label}
                         name={input.id}
-                        options={input.options || []}
                         disabled={true}
                         value={product.getCatSubcatAttributes()[input.id]}
                       />

@@ -347,7 +347,7 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
                             subCategoryLabel ? ` - ${subCategoryLabel}` : ''
                           }`}
                         >
-                          <div className="flex w-28 overflow-hidden text-ellipsis">
+                          <div className="block w-28 truncate">
                             {categroyLabel}
                             {subCategoryLabel ? ` - ${subCategoryLabel}` : ''}
                           </div>
