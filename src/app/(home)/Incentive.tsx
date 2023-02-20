@@ -30,30 +30,26 @@ const incentives = [
 
 const Incentive = () => (
   <Background color="bg-white" className="w-screen">
-    <Section>
-      <div className="mx-auto max-w-7xl sm:px-2 lg:px-4">
-        <div className="mx-auto max-w-2xl px-4 lg:max-w-none">
-          <div className="mt-5 grid grid-cols-1 gap-y-10 gap-x-8 lg:grid-cols-3">
-            {incentives.map((incentive) => (
-              <div key={incentive.name} className="sm:flex lg:block">
-                <div className="sm:shrink-0">
+    <Section maxWidth="max-w-7xl">
+      <div className="mx-auto max-w-2xl lg:max-w-7xl">
+        <dl className="grid max-w-xl grid-cols-1 gap-y-10 gap-x-8 lg:max-w-none lg:grid-cols-3 lg:gap-y-16">
+          {incentives.map((incentive) => (
+            <div key={incentive.name} className="relative pl-16">
+              <dt className="text-base font-semibold leading-7 text-gray-900">
+                <div className="absolute top-0 left-0 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600">
                   <incentive.icon
-                    className="h-10 w-10 text-primary-600"
+                    className="h-6 w-6 text-white"
                     aria-hidden="true"
                   />
                 </div>
-                <div className="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
-                  <h3 className="text-sm font-medium text-gray-900">
-                    {incentive.name}
-                  </h3>
-                  <p className="mt-2 text-sm text-gray-500">
-                    {incentive.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+                {incentive.name}
+              </dt>
+              <dd className="mt-2 text-base leading-7 text-gray-600">
+                {incentive.description}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </Section>
   </Background>

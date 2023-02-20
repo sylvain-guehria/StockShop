@@ -10,7 +10,7 @@ const Hero = () => (
         <div className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
           {'Gérez efficacement votre inventaire &\n'}
           <span className="text-primary-500">
-            Vendez en ligne en click & collect
+            vendez en ligne en click & collect
           </span>
         </div>
         <div className="mt-8 text-lg  leading-8 ">

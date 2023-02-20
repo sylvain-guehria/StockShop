@@ -22,10 +22,8 @@ const Home = () => {
         <NewsBanner setIsBetaBannerOpen={setIsBetaBannerOpen} />
       )}
       <Hero />
-      <div className="text-center">
-        <Incentive />
-      </div>
-      <div className="text-center">
+      <Incentive />
+      <div>
         <Background color="bg-gray-200">
           <Section>
             <NextImage
