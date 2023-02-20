@@ -5,15 +5,15 @@ import { mainRoutes } from '@/routes/mainRoutes';
 
 const Hero = () => (
   <Background color="bg-gray-200">
-    <Section>
+    <Section yPadding="py-36">
       <header className="text-center">
-        <div className="whitespace-pre-line text-2xl font-bold  text-gray-900 md:text-4xl">
+        <div className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
           {'Gérez efficacement votre inventaire &\n'}
           <span className="text-primary-500">
             Vendez en ligne en click & collect
           </span>
         </div>
-        <div className="mt-8 text-sm md:text-lg">
+        <div className="mt-8 text-lg  leading-8 ">
           Gérer votre inventaire et vendre vos produits en ligne n&apos;a jamais
           été aussi facile.
         </div>
