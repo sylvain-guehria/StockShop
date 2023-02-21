@@ -140,7 +140,7 @@ const EditProductPhotoForm: FC<Props> = ({ productId }) => {
                   <img
                     src={`${product?.getPhotoLink()}?${timeStamp}`}
                     alt="current product photo"
-                    className="h-full"
+                    className="h-full object-cover"
                   />
                 ) : (
                   <EmptyPictureSVG className="m-auto h-20 w-20 text-gray-400" />

@@ -262,12 +262,12 @@ const ProductView: FC<Props> = ({ productId }) => {
             >
               Photo
             </label>
-            <div className="relative mt-1 flex h-32 justify-center rounded-md border-2 border-dashed border-gray-300">
+            <div className="relative mt-1 flex h-80 justify-center rounded-md border-2 border-dashed border-gray-300 lg:h-40">
               {product.getPhotoLink() ? (
                 <img
                   src={`${product?.getPhotoLink()}?${timeStamp}`}
                   alt="current product photo"
-                  className="h-full"
+                  className="h-full object-cover"
                 />
               ) : (
                 <EmptyPictureSVG className="m-auto h-20 w-20 text-gray-400" />
