@@ -59,7 +59,10 @@ const CardInventory: FC<Props> = ({
           onClick={() => onSelectInventory(inventory.id)}
         >
           <div className="font-medium text-gray-900">{inventory.name}</div>
-          <p className="text-gray-500">X Produit</p>
+          <p className="text-gray-500">
+            {inventory.getNumberOfProductsInInventory()} Produit
+            {inventory.getNumberOfProductsInInventory() > 1 ? 's' : ''}
+          </p>
         </div>
         <Menu as="div" className="shrink-0 pr-2">
           <Menu.Button className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:text-gray-500">

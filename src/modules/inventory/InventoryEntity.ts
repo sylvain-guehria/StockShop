@@ -14,6 +14,8 @@ class InventoryEntity implements Inventory {
 
   companyId: string;
 
+  numberOfProducts: number;
+
   static new(inventory?: Inventory): InventoryEntity {
     return new InventoryEntity(inventory || {});
   }
@@ -25,6 +27,11 @@ class InventoryEntity implements Inventory {
     this.isDefaultInventory = inventory.isDefaultInventory || false;
     this.color = inventory.color || (arrayInventoryColors[0] as InventoryColor);
     this.companyId = inventory.companyId || '';
+    this.numberOfProducts = inventory.numberOfProducts || 0;
+  }
+
+  getNumberOfProductsInInventory(): number {
+    return this.numberOfProducts;
   }
 
   getId(): string {

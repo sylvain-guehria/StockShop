@@ -18,10 +18,21 @@ const getInventoriesByCompanyId = async (
 
   const supabaseSsr = createServerSupabaseSSRClient({ req, res });
 
-  const { error, data } = await supabaseSsr
+  const { error, data: inventories } = await supabaseSsr
     .from(TableNames.INVENTORIES)
     .select('*')
     .eq('companyId', companyId);
+
+  const inventoriesProductCount: Record<string, number | null> = {};
+
+  await Promise.all(
+    (inventories || []).map(async (inventory) => {
+      const { count: numberOfProduct } = await supabaseSsr
+        .from(TableNames.PRODUCTS)
+        .select('*', { count: 'exact', head: true });
+      inventoriesProductCount[inventory.id] = numberOfProduct;
+    })
+  );
 
   if (error) {
     // eslint-disable-next-line no-console
@@ -29,7 +40,10 @@ const getInventoriesByCompanyId = async (
     res.status(400).end();
     return [];
   }
-  return res.status(200).json(data);
+  return res.status(200).json({
+    inventories,
+    inventoriesProductCount,
+  });
 };
 
 export default getInventoriesByCompanyId;

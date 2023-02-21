@@ -86,7 +86,12 @@ class SupabaseInventoryRepository extends InventoryRepository {
         params: { companyId },
       }
     );
-    return response.data.map(
+    const inventories = response.data.inventories || [];
+    const inventoriesProductCount = response.data.inventoriesProductCount || {};
+
+    console.log('inventoriesProductCount', inventoriesProductCount);
+
+    return inventories.map(
       (inventory: InventoryEntity) =>
         new InventoryEntity({
           id: inventory.id,
@@ -95,6 +100,7 @@ class SupabaseInventoryRepository extends InventoryRepository {
           isDefaultInventory: inventory.isDefaultInventory,
           color: inventory.color,
           companyId,
+          numberOfProducts: inventoriesProductCount[inventory.id],
         })
     );
   }

@@ -7,6 +7,7 @@ export enum InventoryAttributes {
   UPDATED_AT = 'updatedAt',
   COLOR = 'color',
   COMPANY_ID = 'companyId',
+  NUMBER_OF_PRODUCTS = 'numberOfProducts',
 }
 
 export interface Inventory {
@@ -18,6 +19,7 @@ export interface Inventory {
   [InventoryAttributes.COMPANY_ID]?: string;
   [InventoryAttributes.CREATED_AT]?: string;
   [InventoryAttributes.UPDATED_AT]?: string;
+  [InventoryAttributes.NUMBER_OF_PRODUCTS]?: number;
 }
 
 export const InventoryColors = {
