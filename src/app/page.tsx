@@ -23,7 +23,7 @@ const HomePage = async () => {
   }
 
   if (userProfile && userProfile.hasInventoryManagementServiceActivated) {
-    redirect(inventoryManagementRoutes.dashboard.path);
+    redirect(inventoryManagementRoutes.myInventory.path);
   }
 
   if (userProfile && !userProfile.hasInventoryManagementServiceActivated) {
