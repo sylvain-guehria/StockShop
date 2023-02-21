@@ -10,7 +10,6 @@ import { createRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import LinkButton from '@/components/lib/LinkButton/LinkButton';
-import NextImage from '@/components/lib/nextImage/NextImage';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
@@ -134,18 +133,17 @@ const EditProductPhotoForm: FC<Props> = ({ productId }) => {
       </div>
       <form>
         <div className="mt-6 sm:col-span-6">
-          <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
+          <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 py-4">
             <div className="space-y-1 text-center">
-              <div className="mb-3">
+              <div className="relative mt-1 flex h-72 justify-center">
                 {product?.getPhotoLink() ? (
-                  <NextImage
+                  <img
                     src={`${product?.getPhotoLink()}?${timeStamp}`}
                     alt="current product photo"
-                    width={200}
-                    height={200}
+                    className="h-full"
                   />
                 ) : (
-                  <EmptyPictureSVG className="mx-auto h-12 w-12 text-gray-400" />
+                  <EmptyPictureSVG className="m-auto h-20 w-20 text-gray-400" />
                 )}
               </div>
 

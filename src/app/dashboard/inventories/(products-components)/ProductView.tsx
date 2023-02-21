@@ -6,7 +6,6 @@ import type { FC } from 'react';
 import Input from '@/components/lib/inputs/Input';
 import InputRadio from '@/components/lib/inputs/InputRadio';
 import InputTextArea from '@/components/lib/inputs/InputTextArea';
-import NextImage from '@/components/lib/nextImage/NextImage';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import EmptyPictureSVG from '@/logo/EmptyPictureSVG';
 import type { CategoryInput } from '@/modules/category/categoryType';
@@ -263,19 +262,16 @@ const ProductView: FC<Props> = ({ productId }) => {
             >
               Photo
             </label>
-            <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
-              <div className="space-y-1 text-center">
-                {product.getPhotoLink() ? (
-                  <NextImage
-                    src={`${product?.getPhotoLink()}?${timeStamp}`}
-                    alt="current product photo"
-                    width={200}
-                    height={200}
-                  />
-                ) : (
-                  <EmptyPictureSVG className="mx-auto h-12 w-12 text-gray-400" />
-                )}
-              </div>
+            <div className="relative mt-1 flex h-32 justify-center rounded-md border-2 border-dashed border-gray-300">
+              {product.getPhotoLink() ? (
+                <img
+                  src={`${product?.getPhotoLink()}?${timeStamp}`}
+                  alt="current product photo"
+                  className="h-full"
+                />
+              ) : (
+                <EmptyPictureSVG className="m-auto h-20 w-20 text-gray-400" />
+              )}
             </div>
           </div>
         </>
