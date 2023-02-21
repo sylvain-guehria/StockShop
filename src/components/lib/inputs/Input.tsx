@@ -30,7 +30,7 @@ const Input: FC<Props> = ({
   ...rest
 }) => {
   const localRegister = register || { name };
-  const inputLength = rest.value?.toString().length || 0;
+  const inputLength = rest?.value?.toString().length || 0;
   const inputWidth = `${(inputLength + 1) * 10}px`;
   const inputWidthClassOnHover = `hover:w-[${inputWidth}]`;
   return (
@@ -61,7 +61,7 @@ const Input: FC<Props> = ({
         className={clsx(
           inputClassName || '',
           'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm',
-          'truncate hover:overflow-visible hover:text-clip',
+          'truncate hover:text-clip',
           inputWidthClassOnHover
         )}
       />

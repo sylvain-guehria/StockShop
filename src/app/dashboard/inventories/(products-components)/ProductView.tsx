@@ -179,6 +179,11 @@ const ProductView: FC<Props> = ({ productId }) => {
             <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
               {allCategoryInputs.map((input: CategoryInput) => {
                 if (input.inputType === 'select') {
+                  const valueOfTheSelectedOption =
+                    product.getCatSubcatAttributes()[input.id];
+                  const label = input?.options?.find(
+                    (option) => option.value === valueOfTheSelectedOption
+                  )?.label;
                   return (
                     <div className="sm:col-span-2" key={input.id}>
                       <Input
@@ -186,7 +191,7 @@ const ProductView: FC<Props> = ({ productId }) => {
                         label={input.label}
                         name={input.id}
                         disabled={true}
-                        value={product.getCatSubcatAttributes()[input.id]}
+                        value={label}
                       />
                     </div>
                   );
@@ -195,11 +200,11 @@ const ProductView: FC<Props> = ({ productId }) => {
                 return (
                   <div className="sm:col-span-2" key={input.id}>
                     <Input
-                      type="text"
+                      type={input.inputType as 'text' | 'number'}
                       label={input.label}
                       name={input.id}
-                      value={product.getCatSubcatAttributes()[input.id]}
                       disabled={true}
+                      value={product.getCatSubcatAttributes()[input.id]}
                     />
                   </div>
                 );
