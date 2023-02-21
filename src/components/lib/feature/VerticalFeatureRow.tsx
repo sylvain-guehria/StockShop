@@ -14,7 +14,6 @@ type IVerticalFeatureRowProps = {
 
 const VerticalFeatureRow = (props: IVerticalFeatureRowProps) => {
   const verticalFeatureClass = clsx(
-    'vertical-feature',
     'first:mt-0',
     'mt-16',
     'flex',
