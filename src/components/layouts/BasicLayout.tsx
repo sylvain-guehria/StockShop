@@ -24,7 +24,7 @@ const BasicLayout: FC<Props> = async ({ children }) => {
   }
   return (
     <Providers userProfile={userProfile as User}>
-      <body className="flex h-screen flex-col">
+      <body className="flex h-full flex-col">
         <HeaderAndDrawer />
         <div className="h-full">{children}</div>
         <Footer />
