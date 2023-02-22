@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import { redirect } from 'next/navigation';
 
-import PublicLayout from '@/components/layouts/PublicLayout';
+import BasicLayout from '@/components/layouts/BasicLayout';
 import type { User } from '@/modules/user/userType';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { marketplaceRoutes } from '@/routes/marketplaceRoutes';
@@ -31,9 +31,9 @@ const HomePage = async () => {
   }
 
   return (
-    <PublicLayout>
+    <BasicLayout>
       <Home />
-    </PublicLayout>
+    </BasicLayout>
   );
 };
 

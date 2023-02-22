@@ -1,7 +1,6 @@
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
-  ShoppingCartIcon,
   UserIcon,
 } from '@heroicons/react/24/outline';
 import dynamic from 'next/dynamic';
@@ -9,13 +8,13 @@ import Link from 'next/link';
 import type { FC } from 'react';
 import { Suspense, useState } from 'react';
 
+import ProfileDropdown from '@/app/profile/(components)/ProfileDropdown';
 import NextImage from '@/components/lib/nextImage/NextImage';
+import ServicesButton from '@/components/lib/Popovers/ServicesButton';
 import { useAuth } from '@/hooks/useAuth';
 import { mainRoutes } from '@/routes/mainRoutes';
 
-import inventoryMarketLogo from '../../../../../public/assets/images/inventoryMarket.png';
-import ServicesButton from '../../../../components/lib/Popovers/ServicesButton';
-import ProfileDropdown from '../../../profile/(components)/ProfileDropdown';
+import inventoryMarketLogo from '../../../../public/assets/images/inventoryMarket.png';
 
 const SearchBarModal = dynamic(() => import('./SearchBarModal'), {
   suspense: true,
@@ -25,7 +24,7 @@ type Props = {
   setMobileMenuOpen: (value: boolean) => void;
 };
 
-const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
+const Header: FC<Props> = ({ setMobileMenuOpen }) => {
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
   const { user } = useAuth();
 
@@ -134,7 +133,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                         aria-hidden="true"
                       />
 
-                      <div className="flow-root">
+                      {/* <div className="flow-root">
                         <a
                           href="#"
                           className="group -m-2 flex items-center p-2"
@@ -150,7 +149,7 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
                             items in cart, view bag
                           </span>
                         </a>
-                      </div>
+                      </div> */}
                       {user.isLoggedOut() && (
                         <Link href={mainRoutes.login.path}>
                           <div className="ml-6 mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200">
@@ -169,4 +168,4 @@ const MarketplaceHeader: FC<Props> = ({ setMobileMenuOpen }) => {
     </>
   );
 };
-export default MarketplaceHeader;
+export default Header;

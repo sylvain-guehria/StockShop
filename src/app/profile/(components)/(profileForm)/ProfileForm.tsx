@@ -5,14 +5,12 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import LinkButton from '@/components/lib/LinkButton/LinkButton';
-import NextImage from '@/components/lib/nextImage/NextImage';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import UserEntity from '@/modules/user/UserEntity';
 import { updateUserUseCase } from '@/usecases/usecases';
 
-import defaultAvatar from '../../../../../public/assets/images/defaultAvatar.png';
 import { validationSchema } from './ProfileFormValidation';
 
 type Props = {
@@ -76,10 +74,6 @@ const ProfileForm: FC<Props> = () => {
           <h2 className="text-lg font-medium leading-6 text-gray-900">
             Profil
           </h2>
-          {/* <p className="mt-1 text-sm text-gray-500">
-            This information will be displayed publicly so be careful what you
-            share.
-          </p> */}
         </div>
 
         <div className="mt-6 flex flex-col lg:flex-row">
@@ -140,7 +134,7 @@ const ProfileForm: FC<Props> = () => {
                   htmlFor="lastName"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Nom de famille
+                  Nom
                 </label>
                 <input
                   type="text"
@@ -154,66 +148,6 @@ const ProfileForm: FC<Props> = () => {
                   {errors.lastName?.message}
                 </p>
               </div>
-            </div>
-          </div>
-
-          <div className="mt-6 grow lg:mt-0 lg:ml-6 lg:shrink-0 lg:grow-0">
-            <p className="text-sm font-medium text-gray-700" aria-hidden="true">
-              Photo
-            </p>
-            <div className="mt-1 lg:hidden">
-              <div className="flex items-center">
-                <div
-                  className="inline-block h-12 w-12 shrink-0 overflow-hidden rounded-full"
-                  aria-hidden="true"
-                >
-                  <NextImage
-                    className="h-full w-full rounded-full"
-                    src={defaultAvatar}
-                    alt=""
-                    priority={true}
-                  />
-                </div>
-                <div className="ml-5 rounded-md shadow-sm">
-                  <div className="group relative flex items-center justify-center rounded-md border border-gray-300 py-2 px-3 focus-within:ring-2 focus-within:ring-sky-500 focus-within:ring-offset-2 hover:bg-gray-50">
-                    <label
-                      htmlFor="mobile-user-photo"
-                      className="pointer-events-none relative text-sm font-medium leading-4 text-gray-700"
-                    >
-                      <span>Change</span>
-                      <span className="sr-only"> user photo</span>
-                    </label>
-                    <input
-                      id="mobile-user-photo"
-                      name="user-photo"
-                      type="file"
-                      className="absolute h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative hidden overflow-hidden rounded-full lg:block">
-              <NextImage
-                className="relative h-40 w-40 rounded-full"
-                src={defaultAvatar}
-                alt=""
-              />
-              <label
-                htmlFor="desktop-user-photo"
-                className="absolute inset-0 flex h-full w-full items-center justify-center bg-black/75 text-sm font-medium text-white opacity-0 focus-within:opacity-100 hover:opacity-100"
-              >
-                <span>Change</span>
-                <span className="sr-only"> user photo</span>
-                <input
-                  disabled={true}
-                  type="file"
-                  id="desktop-user-photo"
-                  name="user-photo"
-                  className="absolute inset-0 h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0"
-                />
-              </label>
             </div>
           </div>
         </div>

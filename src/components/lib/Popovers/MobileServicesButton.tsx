@@ -7,7 +7,7 @@ import type { FC } from 'react';
 
 import { mainRoutes } from '@/routes/mainRoutes';
 
-import { services } from '../Header/services';
+import { services } from '../../layouts/(header)/services';
 
 export const callsToAction = [
   { name: 'Regarder une démo', href: '#', icon: PlayIcon },

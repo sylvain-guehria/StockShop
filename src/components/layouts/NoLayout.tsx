@@ -4,7 +4,7 @@ type Props = {
   children: ReactNode;
 };
 
-const AuthLayout: FC<Props> = ({ children }) => {
+const NoLayout: FC<Props> = ({ children }) => {
   return (
     <div className="h-screen bg-gray-50">
       <div className="h-full">{children}</div>
@@ -12,4 +12,4 @@ const AuthLayout: FC<Props> = ({ children }) => {
   );
 };
 
-export default AuthLayout;
+export default NoLayout;

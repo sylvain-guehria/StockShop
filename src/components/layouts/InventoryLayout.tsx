@@ -14,7 +14,7 @@ type Props = {
   userProfile: User;
 };
 
-const InventoryManagementLayout: FC<Props> = ({ children, userProfile }) => {
+const InventoryLayout: FC<Props> = ({ children, userProfile }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sideBarMini, setSideBarMini] = useState(false);
 
@@ -48,4 +48,4 @@ const InventoryManagementLayout: FC<Props> = ({ children, userProfile }) => {
   );
 };
 
-export default InventoryManagementLayout;
+export default InventoryLayout;

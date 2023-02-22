@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 
-import AuthLayout from '@/components/layouts/AuthLayout';
+import NoLayout from '@/components/layouts/NoLayout';
 
 export default function Layout({ children }: { children: ReactNode }) {
-  return <AuthLayout>{children}</AuthLayout>;
+  return <NoLayout>{children}</NoLayout>;
 }

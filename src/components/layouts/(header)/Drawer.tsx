@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 import { Fragment } from 'react';
 
+import { navigation } from '@/app/marketplace/(components)/fakeDatas';
 import MobileServicesButton from '@/components/lib/Popovers/MobileServicesButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
@@ -13,17 +14,12 @@ import { mainRoutes } from '@/routes/mainRoutes';
 import supabase from '@/supabase/client/supabase-browser';
 import { logoutUseCase } from '@/usecases/usecases';
 
-import { navigation } from '../fakeDatas';
-
 type Props = {
   mobileMenuOpen: boolean;
   setMobileMenuOpen: (value: boolean) => void;
 };
 
-const MarketplaceDrawer: FC<Props> = ({
-  mobileMenuOpen,
-  setMobileMenuOpen,
-}) => {
+const Drawer: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
   const { user, reinitializeUser } = useAuth();
   const router = useRouter();
   const toast = useToast(4000);
@@ -126,4 +122,4 @@ const MarketplaceDrawer: FC<Props> = ({
   );
 };
 
-export default MarketplaceDrawer;
+export default Drawer;

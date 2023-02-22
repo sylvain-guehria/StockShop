@@ -1,5 +1,5 @@
-import PublicLayout from '@/components/layouts/PublicLayout';
+import BasicLayout from '@/components/layouts/BasicLayout';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <PublicLayout>{children}</PublicLayout>;
+  return <BasicLayout>{children}</BasicLayout>;
 }
