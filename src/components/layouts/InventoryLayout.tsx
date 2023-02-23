@@ -20,28 +20,26 @@ const InventoryLayout: FC<Props> = ({ children, userProfile }) => {
 
   return (
     <Providers userProfile={userProfile}>
-      <div className="h-screen bg-gray-100">
-        <div className="min-h-full">
-          <InventoryManagementSideBar
-            sidebarOpen={sidebarOpen}
+      <div className="grow bg-gray-100">
+        <InventoryManagementSideBar
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          setSideBarMini={setSideBarMini}
+          sideBarMini={sideBarMini}
+        />
+        <div
+          className={
+            sideBarMini
+              ? 'flex flex-1 flex-col'
+              : 'flex flex-1 flex-col lg:pl-64'
+          }
+        >
+          <InventoryManagementHeader
             setSidebarOpen={setSidebarOpen}
             setSideBarMini={setSideBarMini}
             sideBarMini={sideBarMini}
           />
-          <div
-            className={
-              sideBarMini
-                ? 'flex flex-1 flex-col'
-                : 'flex flex-1 flex-col lg:pl-64'
-            }
-          >
-            <InventoryManagementHeader
-              setSidebarOpen={setSidebarOpen}
-              setSideBarMini={setSideBarMini}
-              sideBarMini={sideBarMini}
-            />
-            {children}
-          </div>
+          {children}
         </div>
       </div>
     </Providers>

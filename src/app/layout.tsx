@@ -53,7 +53,7 @@ const RootLayout = async ({
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
       <SupabaseListener accessToken={session?.access_token} />
-      <body>{children}</body>
+      <body className="flex min-h-screen flex-col">{children}</body>
     </html>
   );
 };
