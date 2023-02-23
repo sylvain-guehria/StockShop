@@ -1,5 +1,6 @@
 import type { Category } from '@/modules/category/categoryType';
 
+import { babyCategory } from './baby/babyCategory';
 import { booksCategory } from './books/booksCategory';
 import { clothingCategory } from './clothing/clothingCategory';
 import { electronicsCategory } from './electronics/electronicsCategory';
@@ -16,4 +17,5 @@ export const categories: Category[] = [
   electronicsCategory,
   majorAppliancesCategory,
   gamingCategory,
+  babyCategory,
 ];

@@ -1,6 +1,9 @@
 import { AttributeInputTypes } from '@/modules/category/categoryType';
 
-import { seasonOptions } from '../reusableOptions';
+import {
+  clothesAndAccessoriesMaterialOptions,
+  seasonOptions,
+} from '../reusableOptions';
 
 export const subcategorieClothes = {
   id: 'clothes',
@@ -24,7 +27,8 @@ export const subcategorieClothes = {
     {
       id: 'material',
       label: 'Matière',
-      inputType: AttributeInputTypes.TEXT,
+      inputType: AttributeInputTypes.SELECT,
+      options: clothesAndAccessoriesMaterialOptions,
     },
     {
       id: 'type',
@@ -81,7 +85,8 @@ export const subcategorieShoes = {
     {
       id: 'material',
       label: 'Matière',
-      inputType: AttributeInputTypes.TEXT,
+      inputType: AttributeInputTypes.SELECT,
+      options: clothesAndAccessoriesMaterialOptions,
     },
     {
       id: 'type',
@@ -117,7 +122,8 @@ export const subcategorieAccessories = {
     {
       id: 'material',
       label: 'Matière',
-      inputType: AttributeInputTypes.TEXT,
+      inputType: AttributeInputTypes.SELECT,
+      options: clothesAndAccessoriesMaterialOptions,
     },
     {
       id: 'type',
