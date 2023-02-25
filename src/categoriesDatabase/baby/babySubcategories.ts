@@ -36,5 +36,51 @@ export const subcategorieAccessories: SubCategory = {
       inputType: AttributeInputTypes.SELECT,
       options: clothesAndAccessoriesMaterialOptions,
     },
+    {
+      id: 'brand',
+      label: 'Marque',
+      inputType: AttributeInputTypes.TEXT,
+    },
+  ],
+};
+
+export const subcategorieClothes: SubCategory = {
+  id: 'baby-clothes',
+  label: 'Vêtements',
+  inputs: [
+    colorsInput,
+    {
+      label: 'Âge',
+      id: 'age',
+      inputType: AttributeInputTypes.SELECT,
+      options: babyAgesOptions,
+    },
+    {
+      label: 'Type',
+      id: 'type',
+      inputType: AttributeInputTypes.SELECT,
+      options: [
+        { label: 'Pantalon', value: 'pants' },
+        { label: 'Robe', value: 'dress' },
+        { label: 'Short', value: 'short' },
+        { label: 'T-shirt', value: 't-shirt' },
+        { label: 'Veste', value: 'jacket' },
+        {
+          label: 'autre',
+          value: 'other',
+        },
+      ],
+    },
+    {
+      id: 'material',
+      label: 'Matière',
+      inputType: AttributeInputTypes.SELECT,
+      options: clothesAndAccessoriesMaterialOptions,
+    },
+    {
+      id: 'brand',
+      label: 'Marque',
+      inputType: AttributeInputTypes.TEXT,
+    },
   ],
 };
