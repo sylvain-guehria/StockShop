@@ -84,3 +84,41 @@ export const subcategorieClothes: SubCategory = {
     },
   ],
 };
+
+export const subcategorieShoes: SubCategory = {
+  id: 'baby-shoes',
+  label: 'Chaussures',
+  inputs: [
+    colorsInput,
+    {
+      label: 'Âge',
+      id: 'age',
+      inputType: AttributeInputTypes.SELECT,
+      options: babyAgesOptions,
+    },
+    {
+      label: 'Type',
+      id: 'type',
+      inputType: AttributeInputTypes.SELECT,
+      options: [
+        { label: 'Bottes', value: 'boots' },
+        { label: 'Chaussures', value: 'shoes' },
+        { label: 'Chaussons', value: 'slippers' },
+        { label: 'Sandales', value: 'sandals' },
+        { label: 'Tongs', value: 'flip-flops' },
+        { label: 'autre', value: 'other' },
+      ],
+    },
+    {
+      id: 'material',
+      label: 'Matière',
+      inputType: AttributeInputTypes.SELECT,
+      options: clothesAndAccessoriesMaterialOptions,
+    },
+    {
+      id: 'brand',
+      label: 'Marque',
+      inputType: AttributeInputTypes.TEXT,
+    },
+  ],
+};
