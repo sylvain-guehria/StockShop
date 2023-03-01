@@ -35,15 +35,15 @@ const Profile = () => {
   const toast = useToast(10000);
   const searchParams = useSearchParams();
   const [seletedTab, setSelectedTab] = useState(
-    tabNames.includes(searchParams.get('tab') as string)
-      ? searchParams.get('tab')
+    tabNames.includes(searchParams?.get('tab') as string)
+      ? searchParams?.get('tab')
       : 'profil'
   );
 
   useEffect(() => {
     if (
-      searchParams.get('tab') &&
-      searchParams.get('displayHelpIM') === 'true'
+      searchParams?.get('tab') &&
+      searchParams?.get('displayHelpIM') === 'true'
     ) {
       toast(
         ToasterTypeEnum.INFO,
