@@ -57,6 +57,9 @@ const LoginWithMagikLinkForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div className="text-center text-base text-gray-600">
+        Demander un lien de connexion par email
+      </div>
       <div>
         <div className="mt-1">
           <input
@@ -76,7 +79,7 @@ const LoginWithMagikLinkForm = () => {
           type="submit"
           className="flex w-full justify-center rounded-md border border-transparent bg-primary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
         >
-          Recevoir le lien par email
+          Recevoir le lien
         </button>
       </div>
     </form>

@@ -41,10 +41,7 @@ const Profile = () => {
   );
 
   useEffect(() => {
-    if (
-      searchParams?.get('tab') &&
-      searchParams?.get('displayHelpIM') === 'true'
-    ) {
+    if (searchParams?.get('tab') && searchParams?.get('+') === 'true') {
       toast(
         ToasterTypeEnum.INFO,
         'Vous devez activer la gestion des stocks dans les paramètres de votre compte pour acceder à ce module'
