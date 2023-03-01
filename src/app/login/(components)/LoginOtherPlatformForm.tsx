@@ -3,6 +3,7 @@
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
+import { isMobile } from 'react-device-detect';
 
 import Providers from '@/components/layouts/Providers';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
@@ -26,7 +27,7 @@ const DynamicLoginWithMagikLinkForm = dynamic(
 );
 
 const LoginOtherPlatformForm = () => {
-  const toast = useToast(4000);
+  const toast = useToast(15000);
   const [isMagikLinkModalOpen, setOpenMagikLinkModal] = useState(false);
 
   const handleLoginGoogle = async () => {
@@ -41,9 +42,18 @@ const LoginOtherPlatformForm = () => {
       toast(ToasterTypeEnum.ERROR, error.message);
     }
   };
+
+  const tellUSerToUseMagikLink = () => {
+    toast(
+      ToasterTypeEnum.INFO,
+      "La connexion avec Google n'est pas disponible sur mobile. Vous pouvez utiliser le lien email ou créer un mot de passe. Vous pourrez toujours vous connecter avec Google sur votre ordinateur."
+    );
+  };
+
   const openMagikLinkModal = () => {
     setOpenMagikLinkModal(true);
   };
+
   return (
     <>
       {isMagikLinkModalOpen && (
@@ -58,7 +68,7 @@ const LoginOtherPlatformForm = () => {
       )}
       <div className="mt-6 grid grid-cols-2 gap-3">
         <div
-          onClick={handleLoginGoogle}
+          onClick={isMobile ? tellUSerToUseMagikLink : handleLoginGoogle}
           className="inline-flex w-full cursor-pointer justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
         >
           <span className="sr-only">Sign in with Google</span>
