@@ -1,5 +1,6 @@
 'use client';
 
+import { EnvelopeIcon } from '@heroicons/react/24/outline';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
@@ -68,6 +69,7 @@ const LoginOtherPlatformForm = () => {
           className="inline-flex w-full cursor-pointer justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
         >
           <span className="sr-only">Sign in with Magik link</span>
+          <EnvelopeIcon className="mr-1 h-5 w-5" />
           Lien email
         </div>
       </div>
