@@ -25,7 +25,7 @@ type ProfileFormType = {
 
 const ProfileForm: FC<Props> = () => {
   const [errorUserNameExist, setErrorUserNameExist] = useState(false);
-  const toast = useToast(4000);
+  const toast = useToast(10000);
   const { user, setUser } = useAuth();
 
   const formOptions = {

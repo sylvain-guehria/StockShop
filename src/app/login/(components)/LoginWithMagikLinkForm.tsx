@@ -1,6 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -25,7 +26,8 @@ async function signInWithEmail(email: string) {
 }
 
 const LoginWithMagikLinkForm = () => {
-  const toast = useToast(4000);
+  const toast = useToast(10000);
+  const [isLoading, setIsLoading] = useState(false);
 
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -39,6 +41,7 @@ const LoginWithMagikLinkForm = () => {
     email: string;
   }) => {
     const { email } = data;
+    setIsLoading(true);
     try {
       const response = await signInWithEmail(email);
       if (response.error) {
@@ -47,13 +50,15 @@ const LoginWithMagikLinkForm = () => {
       if (response.data) {
         toast(
           ToasterTypeEnum.SUCCESS,
-          'Un email de connexion vous a été envoyé. Attention, pensez à vérifier vos spams.'
+          'Un email de connexion vous a été envoyé. Pensez à vérifier vos spams.'
         );
       }
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.error('error MagikLinkForm', error);
       toast(ToasterTypeEnum.ERROR, error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -79,6 +84,7 @@ const LoginWithMagikLinkForm = () => {
           type="submit"
           className="w-full justify-center "
           style="secondary"
+          isLoading={isLoading}
         >
           Recevoir le lien
         </LinkButton>

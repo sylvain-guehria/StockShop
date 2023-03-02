@@ -2,6 +2,8 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import type { FC } from 'react';
 
+import Spinner from '../spinner/Spinner';
+
 type Props = {
   href?: string;
   children: React.ReactNode;
@@ -9,6 +11,7 @@ type Props = {
   style?: 'primary' | 'secondary' | 'tertiary';
   onClick?: (params: any) => any;
   className?: string;
+  isLoading?: boolean;
 };
 
 const primaryStyle =
@@ -33,6 +36,7 @@ const LinkButton: FC<Props> = ({
   type = 'submit',
   onClick,
   className,
+  isLoading,
 }) => {
   return href ? (
     <Link href={href}>
@@ -56,8 +60,13 @@ const LinkButton: FC<Props> = ({
         'focus-within:ring-2 focus-within:ring-primary-500'
       )}
     >
-      <button type={type} onClick={onClick} className="outline-0">
+      <button type={type} onClick={onClick} className="flex">
         {children}
+        {isLoading && (
+          <span className="ml-2">
+            <Spinner />
+          </span>
+        )}
       </button>
     </div>
   );

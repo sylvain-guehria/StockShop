@@ -5,7 +5,7 @@ const Spinner: FC = () => {
     <div className="flex items-center justify-center">
       <div className="m-auto">
         <svg
-          className="h-8 w-8 animate-spin fill-primary-600 text-gray-200 dark:text-gray-600"
+          className="h-6 w-6 animate-spin fill-primary-600 text-gray-200 dark:text-gray-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

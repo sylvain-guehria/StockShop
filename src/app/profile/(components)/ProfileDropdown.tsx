@@ -23,7 +23,7 @@ type Props = {
 const ProfileDropdown: FC<Props> = ({ logo }) => {
   const router = useRouter();
   const { user, reinitializeUser } = useAuth();
-  const toast = useToast(4000);
+  const toast = useToast(10000);
 
   const handleSingOut = async () => {
     try {

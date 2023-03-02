@@ -37,7 +37,7 @@ type Props = {
 };
 
 const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
-  const toast = useToast(4000);
+  const toast = useToast(10000);
   const formOptions = {
     resolver: yupResolver(validationSchema),
     defaultValues: {

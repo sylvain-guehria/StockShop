@@ -57,7 +57,7 @@ const PinnedInventories: FC<Props> = ({
   onSelectInventory,
 }) => {
   const queryClient = useQueryClient();
-  const toast = useToast(4000);
+  const toast = useToast(10000);
   const { user } = useAuth();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);

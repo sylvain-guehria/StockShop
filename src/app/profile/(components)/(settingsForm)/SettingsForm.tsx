@@ -22,7 +22,7 @@ type SettingsFormType = {
 };
 
 const SettingsForm: FC<Props> = ({ user }) => {
-  const toast = useToast(4000);
+  const toast = useToast(10000);
 
   const formOptions = {
     resolver: yupResolver(validationSchema),

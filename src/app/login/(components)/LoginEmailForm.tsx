@@ -24,7 +24,7 @@ interface LoginFormType {
 }
 
 const LoginEmailForm = () => {
-  const toast = useToast(4000);
+  const toast = useToast(10000);
   const router = useRouter();
   const formOptions = { resolver: yupResolver(validationSchema) };
 

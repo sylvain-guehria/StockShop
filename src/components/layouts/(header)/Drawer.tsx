@@ -22,7 +22,7 @@ type Props = {
 const Drawer: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
   const { user, reinitializeUser } = useAuth();
   const router = useRouter();
-  const toast = useToast(4000);
+  const toast = useToast(10000);
 
   const handleSingOut = async () => {
     try {

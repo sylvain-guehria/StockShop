@@ -1,6 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -21,7 +22,8 @@ interface LoginFormType {
 }
 
 const ResetPasswordForm = () => {
-  const toast = useToast(4000);
+  const toast = useToast(10000);
+  const [isLoading, setIsLoading] = useState(false);
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   const {
@@ -35,6 +37,7 @@ const ResetPasswordForm = () => {
     data: LoginFormType
   ) => {
     const { email } = data;
+    setIsLoading(true);
     try {
       const response = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: getURL(),
@@ -50,6 +53,8 @@ const ResetPasswordForm = () => {
       // eslint-disable-next-line no-console
       console.error('error ResetPasswordForm', error);
       toast(ToasterTypeEnum.ERROR, error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -73,6 +78,7 @@ const ResetPasswordForm = () => {
           type="submit"
           className="w-full justify-center "
           style="secondary"
+          isLoading={isLoading}
         >
           Recevoir un email
         </LinkButton>
