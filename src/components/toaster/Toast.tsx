@@ -9,14 +9,15 @@ export default function Toast({ type, message, id }: ToastType) {
   const dispatch = useToastDispatchContext();
   // see => https://tailwindui.com/components/application-ui/overlays/notifications
   return (
-    <div className="fixed inset-0 flex items-end px-4 py-6 sm:items-start sm:p-6">
+    <div className="fixed inset-0 h-0 items-end sm:items-start">
       <div className="flex w-full flex-col items-center space-y-4">
         <div
           className={clsx(
             'm-3 rounded-md bg-green-50 p-4',
             type === ToasterTypeEnum.SUCCESS ? 'bg-green-50' : '',
             type === ToasterTypeEnum.ERROR ? 'bg-red-50' : '',
-            type === ToasterTypeEnum.INFO ? 'bg-blue-50' : ''
+            type === ToasterTypeEnum.INFO ? 'bg-blue-50' : '',
+            'shadow-sm'
           )}
         >
           <div className="flex">

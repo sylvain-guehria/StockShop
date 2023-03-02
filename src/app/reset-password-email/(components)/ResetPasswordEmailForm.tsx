@@ -24,7 +24,6 @@ const ResetPasswordEmailForm = () => {
   const toast = useToast(10000);
   const [isLoading, setIsLoading] = useState(false);
   const formOptions = { resolver: yupResolver(validationSchema) };
-
   const {
     register,
     handleSubmit,
