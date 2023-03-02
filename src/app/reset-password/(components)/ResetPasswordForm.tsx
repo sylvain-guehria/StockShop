@@ -41,6 +41,7 @@ const ResetPasswordForm = () => {
       const response = await supabase.auth.updateUser({
         password,
       });
+      console.log('response', response);
       if (response.data) {
         toast(ToasterTypeEnum.SUCCESS, 'Votre mot de passe a été changé');
         supabase.auth.signOut();
@@ -68,7 +69,11 @@ const ResetPasswordForm = () => {
           Mot de passe
         </label>
         <div className="mt-1">
-          <Input name="password" register={register('password')} type="text" />
+          <Input
+            name="password"
+            register={register('password')}
+            type="password"
+          />
         </div>
         <div className="text-sm text-red-600">{errors.password?.message}</div>
       </div>
