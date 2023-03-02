@@ -13,7 +13,7 @@ import { useToast } from '@/hooks/useToast';
 import supabase from '@/supabase/client/supabase-browser';
 import { getURL } from '@/usecases/auth/authUtils';
 
-import { validationSchema } from './ResetPasswordFormValidation';
+import { validationSchema } from './ResetPasswordEmailFormValidation';
 
 interface LoginFormType {
   email: string;
@@ -21,7 +21,7 @@ interface LoginFormType {
   rememberMe: boolean;
 }
 
-const ResetPasswordForm = () => {
+const ResetPasswordEmailForm = () => {
   const toast = useToast(10000);
   const [isLoading, setIsLoading] = useState(false);
   const formOptions = { resolver: yupResolver(validationSchema) };
@@ -51,7 +51,7 @@ const ResetPasswordForm = () => {
       }
     } catch (error: any) {
       // eslint-disable-next-line no-console
-      console.error('error ResetPasswordForm', error);
+      console.error('error ResetPasswordEmailForm', error);
       toast(ToasterTypeEnum.ERROR, error.message);
     } finally {
       setIsLoading(false);
@@ -87,10 +87,10 @@ const ResetPasswordForm = () => {
   );
 };
 
-const ResetPasswordFormWithProviders = () => (
+const ResetPasswordEmailFormFormWithProviders = () => (
   <Providers>
-    <ResetPasswordForm />
+    <ResetPasswordEmailForm />
   </Providers>
 );
 
-export default ResetPasswordFormWithProviders;
+export default ResetPasswordEmailFormFormWithProviders;

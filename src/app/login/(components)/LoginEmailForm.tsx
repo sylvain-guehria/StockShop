@@ -92,8 +92,8 @@ const LoginEmailForm = () => {
       <div className="flex items-center justify-between">
         <div className="text-sm">
           <div className="cursor-pointer font-medium text-primary-600 hover:text-primary-500">
-            <Link href={mainRoutes.resetPassword.path}>
-              {mainRoutes.resetPassword.label}
+            <Link href={mainRoutes.resetPasswordEmail.path}>
+              {mainRoutes.resetPasswordEmail.label}
             </Link>
           </div>
         </div>

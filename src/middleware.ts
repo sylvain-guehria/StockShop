@@ -20,7 +20,7 @@ export async function middleware(req: NextRequestType) {
     if (
       pathname.startsWith(mainRoutes.login.path) ||
       pathname.startsWith(mainRoutes.register.path) ||
-      pathname.startsWith(mainRoutes.resetPassword.path)
+      pathname.startsWith(mainRoutes.resetPasswordEmail.path)
     ) {
       return NextResponse.redirect(new URL(mainRoutes.home.path, req.url));
     }

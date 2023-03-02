@@ -4,9 +4,9 @@ import NextImage from '@/components/lib/nextImage/NextImage';
 import { mainRoutes } from '@/routes/mainRoutes';
 
 import inventoryMarketLogo from '../../../../public/assets/images/inventoryMarket.png';
-import ResetPasswordForm from './ResetPasswordForm';
+import ResetPasswordEmailForm from './ResetPasswordEmailForm';
 
-const ResetPassword = () => {
+const ResetPasswordEmail = () => {
   return (
     <>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -31,11 +31,11 @@ const ResetPassword = () => {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <ResetPasswordForm />
+            <ResetPasswordEmailForm />
           </div>
         </div>
       </div>
     </>
   );
 };
-export default ResetPassword;
+export default ResetPasswordEmail;

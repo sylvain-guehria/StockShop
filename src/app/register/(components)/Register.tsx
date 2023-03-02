@@ -22,10 +22,10 @@ const Register = () => {
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
             S&apos;inscrire avec son email
           </h2>
-          <div className="mt-2 text-center text-sm text-gray-600">
-            Déjà inscrit ?{' '}
+          <div className="mt-2 flex justify-center text-center text-sm text-gray-600">
+            Déjà inscrit ?
             <Link href={mainRoutes.login.path}>
-              <div className="cursor-pointer font-medium text-primary-600 hover:text-primary-500">
+              <div className="ml-2 cursor-pointer font-medium text-primary-600 hover:text-primary-500">
                 Se connecter
               </div>
             </Link>
