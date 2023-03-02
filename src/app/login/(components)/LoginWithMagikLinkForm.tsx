@@ -5,6 +5,8 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import Providers from '@/components/layouts/Providers';
+import Input from '@/components/lib/inputs/Input';
+import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import supabase from '@/supabase/client/supabase-browser';
@@ -62,25 +64,24 @@ const LoginWithMagikLinkForm = () => {
       </div>
       <div>
         <div className="mt-1">
-          <input
-            id="email"
-            {...register('email')}
+          <Input
+            name="email"
+            register={register('email')}
             type="text"
-            autoComplete="email"
             placeholder="votre-email@exemple.com"
-            className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
           />
         </div>
         <div className="text-sm text-red-600">{errors.email?.message}</div>
       </div>
 
       <div>
-        <button
+        <LinkButton
           type="submit"
-          className="flex w-full justify-center rounded-md border border-transparent bg-primary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+          className="w-full justify-center "
+          style="secondary"
         >
           Recevoir le lien
-        </button>
+        </LinkButton>
       </div>
     </form>
   );

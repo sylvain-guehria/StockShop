@@ -5,6 +5,8 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import Providers from '@/components/layouts/Providers';
+import Input from '@/components/lib/inputs/Input';
+import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import supabase from '@/supabase/client/supabase-browser';
@@ -65,13 +67,7 @@ const RegisterForm = () => {
           Adresse Email
         </label>
         <div className="mt-1">
-          <input
-            id="email"
-            {...register('email')}
-            type="text"
-            autoComplete="email"
-            className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
-          />
+          <Input name="email" register={register('email')} type="text" />
         </div>
         <div className="text-sm text-red-600">{errors.email?.message}</div>
       </div>
@@ -84,12 +80,10 @@ const RegisterForm = () => {
           Mot de passe
         </label>
         <div className="mt-1">
-          <input
-            id="password"
-            {...register('password')}
+          <Input
+            name="password"
+            register={register('password')}
             type="password"
-            autoComplete="current-password"
-            className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
           />
         </div>
         <div className="text-sm text-red-600">{errors.password?.message}</div>
@@ -103,22 +97,16 @@ const RegisterForm = () => {
           Confirmer mot de passe
         </label>
         <div className="mt-1">
-          <input
-            id="confirmPassword"
-            {...register('confirmPassword')}
+          <Input
+            name="confirmPassword"
+            register={register('confirmPassword')}
             type="password"
-            autoComplete="new-password"
-            className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
           />
         </div>
         <div className="text-sm text-red-600">
           {errors.confirmPassword?.message}
         </div>
       </div>
-      {/* 
-      {errorMessage && (
-        <div className="text-sm text-red-600">{errorMessage}</div>
-      )} */}
 
       <div className="flex items-center justify-between">
         <div className="flex items-center">
@@ -138,12 +126,13 @@ const RegisterForm = () => {
       </div>
 
       <div>
-        <button
+        <LinkButton
           type="submit"
-          className="flex w-full justify-center rounded-md border border-transparent bg-primary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+          style="secondary"
+          className="w-full justify-center"
         >
           S&apos;inscrire
-        </button>
+        </LinkButton>
       </div>
     </form>
   );
