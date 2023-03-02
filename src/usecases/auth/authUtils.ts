@@ -1,6 +1,4 @@
 export const getURL = () => {
-  // eslint-disable-next-line no-console
-  console.log('process.env', process.env);
   let url =
     process?.env?.NEXT_PUBLIC_SITE_URL ||
     process?.env?.NEXT_PUBLIC_VERCEL_URL ||

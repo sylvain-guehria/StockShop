@@ -10,17 +10,15 @@ import Input from '@/components/lib/inputs/Input';
 import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
-import { mainRoutes } from '@/routes/mainRoutes';
 import supabase from '@/supabase/client/supabase-browser';
-import { getURL } from '@/usecases/auth/authUtils';
 
-import { validationSchema } from './ResetPasswordEmailFormValidation';
+import { validationSchema } from './ResetPasswordFormValidation';
 
-interface ResetPasswordEmailFormType {
-  email: string;
+interface ResetPasswordFormType {
+  password: string;
 }
 
-const ResetPasswordEmailForm = () => {
+const ResetPasswordForm = () => {
   const toast = useToast(10000);
   const [isLoading, setIsLoading] = useState(false);
   const formOptions = { resolver: yupResolver(validationSchema) };
@@ -30,27 +28,28 @@ const ResetPasswordEmailForm = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<ResetPasswordEmailFormType>(formOptions);
+  } = useForm<ResetPasswordFormType>(formOptions);
 
-  const onSubmit: SubmitHandler<ResetPasswordEmailFormType> = async (
-    data: ResetPasswordEmailFormType
+  const onSubmit: SubmitHandler<ResetPasswordFormType> = async (
+    data: ResetPasswordFormType
   ) => {
-    const { email } = data;
+    const { password } = data;
     setIsLoading(true);
     try {
-      const response = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${getURL()}${mainRoutes.resetPassword.path}/`,
+      const response = await supabase.auth.updateUser({
+        password,
       });
       if (response.data) {
-        toast(ToasterTypeEnum.SUCCESS, 'Email envoyé');
+        toast(ToasterTypeEnum.SUCCESS, 'Mot de passe changé');
         reset();
+        supabase.auth.signOut();
       }
       if (response.error) {
         toast(ToasterTypeEnum.ERROR, response.error.message);
       }
     } catch (error: any) {
       // eslint-disable-next-line no-console
-      console.error('error ResetPasswordEmailForm', error);
+      console.error('error ResetPasswordForm', error);
       toast(ToasterTypeEnum.ERROR, error.message);
     } finally {
       setIsLoading(false);
@@ -61,15 +60,15 @@ const ResetPasswordEmailForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div>
         <label
-          htmlFor="email"
+          htmlFor="password"
           className="block text-sm font-medium text-gray-700"
         >
-          Adresse Email
+          Mot de passe
         </label>
         <div className="mt-1">
-          <Input name="email" register={register('email')} type="text" />
+          <Input name="password" register={register('password')} type="text" />
         </div>
-        <div className="text-sm text-red-600">{errors.email?.message}</div>
+        <div className="text-sm text-red-600">{errors.password?.message}</div>
       </div>
 
       <div>
@@ -79,17 +78,17 @@ const ResetPasswordEmailForm = () => {
           style="secondary"
           isLoading={isLoading}
         >
-          Recevoir un email
+          Changez le mot de passe
         </LinkButton>
       </div>
     </form>
   );
 };
 
-const ResetPasswordEmailFormFormWithProviders = () => (
+const ResetPasswordFormFormWithProviders = () => (
   <Providers>
-    <ResetPasswordEmailForm />
+    <ResetPasswordForm />
   </Providers>
 );
 
-export default ResetPasswordEmailFormFormWithProviders;
+export default ResetPasswordFormFormWithProviders;
