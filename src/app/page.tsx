@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import { redirect, useSearchParams } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 import BasicLayout from '@/components/layouts/BasicLayout';
 import type { User } from '@/modules/user/userType';
@@ -15,11 +15,14 @@ const DynamicFirstConnectionModal = dynamic(
 
 export const revalidate = 600;
 
-const HomePage = async () => {
+const HomePage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
   const userProfile = await getUserInServerComponant();
 
-  const urlParam = useSearchParams();
-  const noRedirect = urlParam?.get('no-redirect') === 'true';
+  const noRedirect = searchParams['no-redirect'] === 'true';
 
   if (userProfile && !userProfile.hasSeenFirstConnectionModal) {
     return <DynamicFirstConnectionModal user={userProfile as User} />;
