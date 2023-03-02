@@ -1,6 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -10,6 +11,7 @@ import Input from '@/components/lib/inputs/Input';
 import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
+import { mainRoutes } from '@/routes/mainRoutes';
 import supabase from '@/supabase/client/supabase-browser';
 
 import { validationSchema } from './ResetPasswordFormValidation';
@@ -20,13 +22,13 @@ interface ResetPasswordFormType {
 
 const ResetPasswordForm = () => {
   const toast = useToast(10000);
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<ResetPasswordFormType>(formOptions);
 
@@ -40,9 +42,9 @@ const ResetPasswordForm = () => {
         password,
       });
       if (response.data) {
-        toast(ToasterTypeEnum.SUCCESS, 'Mot de passe changé');
-        reset();
+        toast(ToasterTypeEnum.SUCCESS, 'Votre mot de passe a été changé');
         supabase.auth.signOut();
+        router.push(mainRoutes.login.path);
       }
       if (response.error) {
         toast(ToasterTypeEnum.ERROR, response.error.message);
