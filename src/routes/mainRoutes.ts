@@ -16,7 +16,7 @@ export const mainRoutes = {
     label: 'Mot de passe oublié ?',
   },
   resetPassword: {
-    path: '/reset-password',
+    path: 'reset-password',
     label: 'Réinitialiser le mot de passe',
   },
   pricing: {
