@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import { redirect } from 'next/navigation';
+import { redirect, useSearchParams } from 'next/navigation';
 
 import BasicLayout from '@/components/layouts/BasicLayout';
 import type { User } from '@/modules/user/userType';
@@ -18,15 +18,26 @@ export const revalidate = 600;
 const HomePage = async () => {
   const userProfile = await getUserInServerComponant();
 
+  const urlParam = useSearchParams();
+  const noRedirect = urlParam?.get('no-redirect') === 'true';
+
   if (userProfile && !userProfile.hasSeenFirstConnectionModal) {
     return <DynamicFirstConnectionModal user={userProfile as User} />;
   }
 
-  if (userProfile && userProfile.hasInventoryManagementServiceActivated) {
+  if (
+    !noRedirect &&
+    userProfile &&
+    userProfile.hasInventoryManagementServiceActivated
+  ) {
     redirect(inventoryManagementRoutes.myInventory.path);
   }
 
-  if (userProfile && !userProfile.hasInventoryManagementServiceActivated) {
+  if (
+    !noRedirect &&
+    userProfile &&
+    !userProfile.hasInventoryManagementServiceActivated
+  ) {
     redirect(marketplaceRoutes.marketplace.path);
   }
 

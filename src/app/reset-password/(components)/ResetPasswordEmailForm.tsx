@@ -37,7 +37,7 @@ const ResetPasswordEmailForm = () => {
     setIsLoading(true);
     try {
       const response = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: getURL(),
+        redirectTo: `${getURL()}?no-redirect=true`,
       });
       if (response.data) {
         toast(ToasterTypeEnum.SUCCESS, 'Email envoyé');
