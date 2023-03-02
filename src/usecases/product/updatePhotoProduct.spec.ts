@@ -90,17 +90,17 @@ describe('updatePhotoProduct', () => {
       expect(error.message).toBe('product must be in an inventoryId');
     }
   });
-  it('Should throw an error if currentFile is bigger than 2MB', async () => {
+  it('Should throw an error if currentFile is bigger than 1MB', async () => {
     const companyId = 'companyId';
 
-    const twoMegaBits = 2 * 1024 * 1024;
+    const oneMegaBits = 1 * 1024 * 1024;
     const product = ProductEntity.new({
       id: 'id',
       label: 'label',
       inventoryId: 'inventoryId',
     });
     const currentFile = {
-      size: twoMegaBits + 1,
+      size: oneMegaBits + 1,
     };
 
     try {

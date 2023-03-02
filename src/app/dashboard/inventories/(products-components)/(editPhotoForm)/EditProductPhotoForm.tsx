@@ -64,13 +64,13 @@ const EditProductPhotoForm: FC<Props> = ({ productId }) => {
   register('size');
   register('type');
 
-  const submitFile = async (file: File) => {
+  const submitFile = async (file: File | null) => {
     if (!product) return;
     try {
       await updatePhotoProductUseCase({
         companyId: user.getCompanyId(),
         product,
-        currentFile: file as File,
+        currentFile: file,
       });
       queryClient.invalidateQueries({ queryKey: [ApiRequestEnums.GetProduct] });
       refetch();
@@ -103,7 +103,7 @@ const EditProductPhotoForm: FC<Props> = ({ productId }) => {
     if (fileInput != null && fileInput.current != null) {
       fileInput.current.value = '';
     }
-    submitFile(null as unknown as File);
+    submitFile(null);
   };
 
   const handleDeletePhoto = (): void => {
@@ -158,11 +158,6 @@ const EditProductPhotoForm: FC<Props> = ({ productId }) => {
                   onChange={handleImageChange}
                 />
               </div>
-              {errors.size?.message && (
-                <p className="text-sm text-red-600" id="inventoryName-error">
-                  {errors.size?.message}
-                </p>
-              )}
               {errors.type?.message && (
                 <p className="text-sm text-red-600" id="inventoryName-error">
                   {errors.type?.message}
@@ -171,7 +166,9 @@ const EditProductPhotoForm: FC<Props> = ({ productId }) => {
             </div>
           </div>
         </div>
-        <p className="text-xs text-gray-500">PNG, JPG, JPEG max 2MB</p>
+        <p className="text-xs text-gray-500">
+          PNG, JPG, JPEG. Les photos de plus de 1MB seront compressées
+        </p>
         <div className="mt-4 text-sm text-gray-600">
           {product?.getPhotoLink() ? (
             <LinkButton type="button" onClick={() => handleDeletePhoto()}>

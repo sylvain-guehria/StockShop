@@ -74,7 +74,7 @@ const ResetPasswordForm = () => {
           className="w-full justify-center "
           style="secondary"
         >
-          Recevoir un email.
+          Recevoir un email
         </LinkButton>
       </div>
     </form>
