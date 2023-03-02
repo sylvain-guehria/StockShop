@@ -92,7 +92,7 @@ const SubFormVisibility: FC<Props> = ({ register, errors, getValues }) => {
           label={ProductLabels[ProductAttributes.PUBLIC_DISPONIBILITY]}
           register={register(ProductAttributes.PUBLIC_DISPONIBILITY)}
           error={errors[ProductAttributes.PUBLIC_DISPONIBILITY]?.message}
-          inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
         />
       </div>
       <div className="mt-6 sm:col-span-6">

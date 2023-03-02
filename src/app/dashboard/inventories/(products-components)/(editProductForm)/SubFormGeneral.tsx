@@ -121,7 +121,7 @@ const SubFormGeneral: FC<Props> = ({ register, errors, control }) => {
               label={ProductLabels[ProductAttributes.CONDITION]}
               register={register(ProductAttributes.CONDITION)}
               error={errors[ProductAttributes.CONDITION]?.message}
-              inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
             />
           </div>
         </div>
@@ -139,7 +139,7 @@ const SubFormGeneral: FC<Props> = ({ register, errors, control }) => {
               label={ProductLabels[ProductAttributes.CATEGORY_ID]}
               register={register(ProductAttributes.CATEGORY_ID)}
               error={errors[ProductAttributes.CATEGORY_ID]?.message}
-              inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
             />
           </div>
         </div>
@@ -160,7 +160,7 @@ const SubFormGeneral: FC<Props> = ({ register, errors, control }) => {
               label={ProductLabels[ProductAttributes.SUB_CATEGORY_ID]}
               register={register(ProductAttributes.SUB_CATEGORY_ID)}
               error={errors[ProductAttributes.SUB_CATEGORY_ID]?.message}
-              inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
             />
           </div>
         </div>

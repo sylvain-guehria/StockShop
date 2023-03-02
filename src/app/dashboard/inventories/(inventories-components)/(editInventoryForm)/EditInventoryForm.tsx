@@ -124,7 +124,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
               }
               aria-describedby="checkbox-color"
               type="checkbox"
-              className="mr-3 h-6 w-6 rounded border-gray-300 bg-primary-600 text-primary-600 focus:ring-indigo-500"
+              className="mr-3 h-6 w-6 rounded border-gray-300 bg-primary-600 text-primary-600 focus:ring-primary-500"
             />
             <input
               checked={watch('color') === GREEN}
@@ -135,7 +135,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
               }
               aria-describedby="checkbox-color"
               type="checkbox"
-              className="mr-3 h-6  w-6 rounded border-gray-300 bg-green-500 text-green-500 focus:ring-indigo-500"
+              className="mr-3 h-6  w-6 rounded border-gray-300 bg-green-500 text-green-500 focus:ring-primary-500"
             />
             <input
               checked={watch('color') === YELLOW}
@@ -146,7 +146,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
               }
               aria-describedby="checkbox-color"
               type="checkbox"
-              className="mr-3 h-6 w-6 rounded border-gray-300 bg-yellow-500 text-yellow-400 focus:ring-indigo-500"
+              className="mr-3 h-6 w-6 rounded border-gray-300 bg-yellow-500 text-yellow-400 focus:ring-primary-500"
             />
             <input
               checked={watch('color') === RED}
@@ -157,7 +157,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
               }
               aria-describedby="checkbox-color"
               type="checkbox"
-              className="mr-3 h-6  w-6 rounded border-gray-300 bg-red-500 text-red-500 focus:ring-indigo-500"
+              className="mr-3 h-6  w-6 rounded border-gray-300 bg-red-500 text-red-500 focus:ring-primary-500"
             />
             <input
               checked={watch('color') === BLUE}
@@ -168,7 +168,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
               }
               aria-describedby="checkbox-color"
               type="checkbox"
-              className="mr-3 h-6  w-6 rounded border-gray-300 bg-blue-400 text-blue-400 focus:ring-indigo-500"
+              className="mr-3 h-6  w-6 rounded border-gray-300 bg-blue-400 text-blue-400 focus:ring-primary-500"
             />
             <input
               checked={watch('color') === ORANGE}
@@ -179,7 +179,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
               }
               aria-describedby="checkbox-color"
               type="checkbox"
-              className="mr-3 h-6  w-6 rounded border-gray-300 bg-orange-500 text-orange-500 focus:ring-indigo-500"
+              className="mr-3 h-6  w-6 rounded border-gray-300 bg-orange-500 text-orange-500 focus:ring-primary-500"
             />
             <input
               checked={watch('color') === GRAY}
@@ -190,7 +190,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
               }
               aria-describedby="checkbox-color"
               type="checkbox"
-              className="mr-3 h-6  w-6 rounded border-gray-300 bg-gray-500 text-gray-500 focus:ring-indigo-500"
+              className="mr-3 h-6  w-6 rounded border-gray-300 bg-gray-500 text-gray-500 focus:ring-primary-500"
             />
             <input
               checked={watch('color') === BLACK}
@@ -201,7 +201,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
               }
               aria-describedby="checkbox-color"
               type="checkbox"
-              className="mr-3 h-6  w-6 rounded border-gray-300 bg-black text-black focus:ring-indigo-500"
+              className="mr-3 h-6  w-6 rounded border-gray-300 bg-black text-black focus:ring-primary-500"
             />
           </div>
         </div>
@@ -215,7 +215,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
               value={state.value}
               {...register('isPublic')}
               type="radio"
-              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              className="h-4 w-4 border-gray-300 text-primary-600 focus:ring-primary-500"
             />
             <label
               htmlFor={state.id}

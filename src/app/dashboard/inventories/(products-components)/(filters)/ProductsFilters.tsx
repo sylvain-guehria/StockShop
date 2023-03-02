@@ -157,7 +157,7 @@ export const ProductsFilters: FC<Props> = ({
                   label="Catégorie"
                   name={ProductAttributes.CATEGORY_ID}
                   register={register(ProductAttributes.CATEGORY_ID)}
-                  inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                 />
               </fieldset>
               <fieldset className="sm:col-span-3">
@@ -176,7 +176,7 @@ export const ProductsFilters: FC<Props> = ({
                     disabled={!watchCategoryId}
                     name={ProductAttributes.SUB_CATEGORY_ID}
                     register={register(ProductAttributes.SUB_CATEGORY_ID)}
-                    inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                   />
                 </div>
               </fieldset>
@@ -191,7 +191,7 @@ export const ProductsFilters: FC<Props> = ({
                     ]}
                     name={ProductAttributes.TO_BUY}
                     register={register(ProductAttributes.TO_BUY)}
-                    inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                   />
                 </div>
               </fieldset>
@@ -206,7 +206,7 @@ export const ProductsFilters: FC<Props> = ({
                     ]}
                     name={ProductAttributes.IS_PUBLIC}
                     register={register(ProductAttributes.IS_PUBLIC)}
-                    inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                   />
                 </div>
               </fieldset>
