@@ -10,7 +10,6 @@ import Input from '@/components/lib/inputs/Input';
 import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
-import { mainRoutes } from '@/routes/mainRoutes';
 import supabase from '@/supabase/client/supabase-browser';
 import { getURL } from '@/usecases/auth/authUtils';
 
@@ -38,7 +37,7 @@ const ResetPasswordEmailForm = () => {
     setIsLoading(true);
     try {
       const response = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${getURL()}${mainRoutes.resetPassword.path}/`,
+        redirectTo: getURL(),
       });
       if (response.data) {
         toast(ToasterTypeEnum.SUCCESS, 'Email envoyé');

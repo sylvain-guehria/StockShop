@@ -1,7 +1,7 @@
-import ResetPassword from './(components)/ResetPassword';
+import ResetPasswordEmail from './(components)/ResetPasswordEmail';
 
-const ResetPasswordPage = async () => {
-  return <ResetPassword />;
+const ResetPasswordEmailPage = async () => {
+  return <ResetPasswordEmail />;
 };
 
-export default ResetPasswordPage;
+export default ResetPasswordEmailPage;

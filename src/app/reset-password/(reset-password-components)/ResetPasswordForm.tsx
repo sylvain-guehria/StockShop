@@ -41,7 +41,6 @@ const ResetPasswordForm = () => {
       const response = await supabase.auth.updateUser({
         password,
       });
-      console.log('response', response);
       if (response.data) {
         toast(ToasterTypeEnum.SUCCESS, 'Votre mot de passe a été changé');
         supabase.auth.signOut();
