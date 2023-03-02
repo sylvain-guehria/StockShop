@@ -10,6 +10,7 @@ import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import supabase from '@/supabase/client/supabase-browser';
+import { getURL } from '@/usecases/auth/authUtils';
 
 import { validationSchema } from './ResetPasswordFormValidation';
 
@@ -35,7 +36,9 @@ const ResetPasswordForm = () => {
   ) => {
     const { email } = data;
     try {
-      const response = await supabase.auth.resetPasswordForEmail(email);
+      const response = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: getURL(),
+      });
       if (response.data) {
         toast(ToasterTypeEnum.SUCCESS, 'Email envoyé');
         reset();
