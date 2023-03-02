@@ -51,9 +51,11 @@ const RootLayout = async ({
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-      </head>
-      <SupabaseListener accessToken={session?.access_token} />
-      <body className="flex min-h-screen flex-col">{children}</body>
+      </head>{' '}
+      <body className="flex min-h-screen flex-col">
+        <SupabaseListener accessToken={session?.access_token} />
+        {children}
+      </body>
     </html>
   );
 };
