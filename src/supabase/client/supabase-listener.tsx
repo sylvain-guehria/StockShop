@@ -1,50 +1,63 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
+// import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
-import supabase from './supabase-browser';
+import { useAuth } from '@/hooks/useAuth';
+import type { User } from '@/modules/user/userType';
 
-const DynamicModal = dynamic(() => import('src/components/lib/modal/Modal'), {
-  suspense: true,
-});
+import { useSupabase } from './SupabaseProvider';
 
-const DynamicResetPassword = dynamic(
-  () =>
-    import('src/app/reset-password/(reset-password-components)/ResetPassword'),
-  {
-    suspense: true,
-  }
-);
+// const DynamicModal = dynamic(() => import('src/components/lib/modal/Modal'), {
+//   suspense: true,
+// });
+
+// const DynamicResetPassword = dynamic(
+//   () =>
+//     import('src/app/reset-password/(reset-password-components)/ResetPassword'),
+//   {
+//     suspense: true,
+//   }
+// );
 
 export default function SupabaseListener({
-  accessToken,
+  serverAccessToken,
+  user,
 }: {
-  accessToken?: string;
+  serverAccessToken?: string;
+  user?: User;
 }) {
-  const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] =
-    useState(false);
+  const { supabase } = useSupabase();
+  const router = useRouter();
+  const { setUserTypeUser } = useAuth();
 
   useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('event', event, 'session', session);
-      if (event === 'PASSWORD_RECOVERY') {
-        setIsResetPasswordModalOpen(true);
-        return;
-      }
-      if (session?.access_token !== accessToken) {
+    setUserTypeUser(user as User);
+  }, [user]);
+
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.access_token !== serverAccessToken) {
         window.location.reload();
       }
     });
-    return () => data.subscription.unsubscribe();
-  }, [accessToken]);
 
-  return isResetPasswordModalOpen ? (
-    <DynamicModal
-      open={isResetPasswordModalOpen}
-      handleCloseModal={() => setIsResetPasswordModalOpen(false)}
-    >
-      <DynamicResetPassword />
-    </DynamicModal>
-  ) : null;
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [serverAccessToken, router, supabase]);
+
+  return null;
 }
+
+// isResetPasswordModalOpen ? (
+//   <DynamicModal
+//     open={isResetPasswordModalOpen}
+//     handleCloseModal={() => setIsResetPasswordModalOpen(false)}
+//   >
+//     <DynamicResetPassword />
+//   </DynamicModal>
+// ) :

@@ -1,5 +1,5 @@
 import { TableNames } from './enums/tableNames';
-import createServerCompSupabaseClient from './server/supabase-server';
+import { createServerCompSupabaseClient } from './server/supabase-server';
 
 export const getUserInServerComponant = async () => {
   const supabase = createServerCompSupabaseClient();
@@ -15,4 +15,17 @@ export const getUserInServerComponant = async () => {
     userProfile = profileData || null;
   }
   return userProfile;
+};
+
+export const getUserByIdInServerComponant = async (userId?: string) => {
+  if (!userId) return null;
+  const supabase = createServerCompSupabaseClient();
+
+  const { data: profileData } = await supabase
+    .from(TableNames.USERS)
+    .select('*')
+    .eq('id', userId)
+    .single();
+
+  return profileData;
 };

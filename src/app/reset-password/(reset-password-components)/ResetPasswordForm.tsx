@@ -5,7 +5,6 @@ import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
-import Providers from '@/components/layouts/Providers';
 import Input from '@/components/lib/inputs/Input';
 import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
@@ -86,10 +85,4 @@ const ResetPasswordForm = () => {
   );
 };
 
-const ResetPasswordFormFormWithProviders = () => (
-  <Providers>
-    <ResetPasswordForm />
-  </Providers>
-);
-
-export default ResetPasswordFormFormWithProviders;
+export default ResetPasswordForm;

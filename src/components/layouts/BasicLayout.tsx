@@ -6,7 +6,6 @@ import { getUserInServerComponant } from '@/supabase/getUserInServerComponant';
 
 import HeaderAndDrawer from './(header)/HeaderAndDrawer';
 import Footer from './Footer';
-import Providers from './Providers';
 
 const DynamicFirstConnectionModal = dynamic(
   () => import('../FirstConnectionModal')
@@ -23,11 +22,11 @@ const BasicLayout: FC<Props> = async ({ children }) => {
     return <DynamicFirstConnectionModal user={userProfile as User} />;
   }
   return (
-    <Providers userProfile={userProfile as User}>
+    <>
       <HeaderAndDrawer />
       <main className="grow">{children}</main>
       <Footer />
-    </Providers>
+    </>
   );
 };
 

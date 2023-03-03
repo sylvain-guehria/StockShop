@@ -1,11 +1,13 @@
 import 'server-only';
 import '../styles/global.css';
 
-import type { JSXElementConstructor, ReactElement } from 'react';
 import React from 'react';
 
+import Providers from '@/components/layouts/Providers';
+import type { User } from '@/modules/user/userType';
 import SupabaseListener from '@/supabase/client/supabase-listener';
-import createServerCompSupabaseClient from '@/supabase/server/supabase-server';
+import { getUserByIdInServerComponant } from '@/supabase/getUserInServerComponant';
+import { createServerCompSupabaseClient } from '@/supabase/server/supabase-server';
 
 // We don't want Next.js to cache this session value
 export const revalidate = 0;
@@ -13,13 +15,15 @@ export const revalidate = 0;
 const RootLayout = async ({
   children,
 }: {
-  children: ReactElement<any, string | JSXElementConstructor<any>>;
+  children: { children: React.ReactNode };
 }) => {
   const supabase = createServerCompSupabaseClient();
 
   const {
     data: { session },
   } = await supabase.auth.getSession();
+
+  const user = await getUserByIdInServerComponant(session?.user?.id);
 
   return (
     <html lang="en">
@@ -53,8 +57,15 @@ const RootLayout = async ({
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>{' '}
       <body className="flex min-h-screen flex-col">
-        <SupabaseListener accessToken={session?.access_token} />
-        {children}
+        <Providers session={session}>
+          <>
+            <SupabaseListener
+              serverAccessToken={session?.access_token}
+              user={user as User}
+            />
+            {children}
+          </>
+        </Providers>
       </body>
     </html>
   );

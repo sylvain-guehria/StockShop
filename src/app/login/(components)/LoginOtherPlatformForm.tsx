@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { isMobile } from 'react-device-detect';
 
-import Providers from '@/components/layouts/Providers';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import GoogleSVG from '@/logo/GoogleSVG';
@@ -87,10 +86,4 @@ const LoginOtherPlatformForm = () => {
   );
 };
 
-const LoginOtherPlatformFormWithProviders = () => (
-  <Providers>
-    <LoginOtherPlatformForm />
-  </Providers>
-);
-
-export default LoginOtherPlatformFormWithProviders;
+export default LoginOtherPlatformForm;

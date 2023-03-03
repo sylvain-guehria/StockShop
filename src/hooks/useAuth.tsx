@@ -7,31 +7,37 @@ type ContextType = {
   user: UserEntity;
   setUser: (user: UserEntity) => void;
   reinitializeUser: () => void;
+  setUserTypeUser: (user: User) => void;
 };
 
 const AuthContext = createContext<ContextType>({
   user: UserEntity.new(),
   setUser: () => {},
   reinitializeUser: () => {},
+  setUserTypeUser: () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({
   children,
-  userProfile,
 }: {
   children: React.ReactNode;
-  userProfile?: User;
 }) => {
-  const [user, setUser] = useState<UserEntity>(UserEntity.new(userProfile));
+  const [user, setUser] = useState<UserEntity>(UserEntity.new());
+
+  const setUserTypeUser = (userParam: User) => {
+    setUser(UserEntity.new(userParam));
+  };
 
   const reinitializeUser = () => {
     setUser(UserEntity.new());
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, reinitializeUser }}>
+    <AuthContext.Provider
+      value={{ user, setUser, reinitializeUser, setUserTypeUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
