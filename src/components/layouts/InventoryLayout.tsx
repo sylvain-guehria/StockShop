@@ -17,7 +17,7 @@ const InventoryLayout: FC<Props> = ({ children, bgColor }) => {
   const [sideBarMini, setSideBarMini] = useState(false);
 
   return (
-    <div className={clsx('grow ', bgColor || 'bg-gray-100')}>
+    <main className={clsx('grow ', bgColor || 'bg-gray-100')}>
       <InventoryManagementSideBar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
@@ -36,7 +36,7 @@ const InventoryLayout: FC<Props> = ({ children, bgColor }) => {
         />
         {children}
       </div>
-    </div>
+    </main>
   );
 };
 
