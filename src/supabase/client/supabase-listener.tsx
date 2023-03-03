@@ -24,8 +24,10 @@ export default function SupabaseListener({
 }) {
   const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] =
     useState(false);
+
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('event', event, 'session', session);
       if (event === 'PASSWORD_RECOVERY') {
         setIsResetPasswordModalOpen(true);
         return;
