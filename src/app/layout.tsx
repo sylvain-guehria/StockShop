@@ -55,7 +55,7 @@ const RootLayout = async ({
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-      </head>{' '}
+      </head>
       <body className="flex min-h-screen flex-col">
         <Providers session={session}>
           <>

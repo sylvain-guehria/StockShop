@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { TableNames } from './enums/tableNames';
 import { createServerCompSupabaseClient } from './server/supabase-server';
 
@@ -22,7 +24,7 @@ export const getUserByIdInServerComponant = async (userId?: string) => {
   const supabase = createServerCompSupabaseClient();
 
   const { data: profileData } = await supabase
-    .from(TableNames.USERS)
+    .from(TableNames.PROFILES)
     .select('*')
     .eq('id', userId)
     .single();
