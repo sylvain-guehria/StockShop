@@ -28,6 +28,7 @@ export default function SupabaseListener({
     const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'PASSWORD_RECOVERY') {
         setIsResetPasswordModalOpen(true);
+        return;
       }
       if (session?.access_token !== accessToken) {
         window.location.reload();
