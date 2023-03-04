@@ -1,7 +1,9 @@
 import { AttributeInputTypes } from '@/modules/category/categoryType';
 
 import {
+  americanPentsSizeOptions,
   clothesAndAccessoriesMaterialOptions,
+  europeanPentsSizeOptions,
   seasonOptions,
 } from '../reusableOptions';
 
@@ -12,12 +14,14 @@ export const subcategorieClothes = {
     {
       id: 'europeanSize',
       label: 'Taille UE',
-      inputType: AttributeInputTypes.TEXT,
+      inputType: AttributeInputTypes.SELECT,
+      options: europeanPentsSizeOptions,
     },
     {
       id: 'americanSize',
       label: 'Taille US',
-      inputType: AttributeInputTypes.TEXT,
+      inputType: AttributeInputTypes.SELECT,
+      options: americanPentsSizeOptions,
     },
     {
       id: 'brand',
