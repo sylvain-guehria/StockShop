@@ -53,6 +53,8 @@ export const clothesAndAccessoriesMaterialOptions = [
   { label: 'tissu', value: 'fabric' },
 ];
 
+// TODO : add more options https://www.parisinfo.com/paris-pratique/informations-utiles/vie-quotidienne/poids-et-mesures-tailles-et-pointures-france
+
 export const americanPentsSizeOptions = [
   { label: '26', value: '26' },
   { label: '27', value: '27' },
