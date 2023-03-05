@@ -5,7 +5,11 @@ import {
   clothesAndAccessoriesMaterialOptions,
   europeanPentsSizeOptions,
   seasonOptions,
+  shoesAmericanSizeOptions,
+  shoesEuropeanSizeOptions,
+  universalSizeOptions,
 } from '../reusableOptions';
+import { clothesAndShoesBrands } from './reusableOptions';
 
 export const subcategorieClothes = {
   id: 'clothes',
@@ -24,9 +28,16 @@ export const subcategorieClothes = {
       options: americanPentsSizeOptions,
     },
     {
+      id: 'universalSize',
+      label: 'Taille universelle',
+      inputType: AttributeInputTypes.SELECT,
+      options: universalSizeOptions,
+    },
+    {
       id: 'brand',
       label: 'Marque',
-      inputType: AttributeInputTypes.TEXT,
+      inputType: AttributeInputTypes.SELECT,
+      options: clothesAndShoesBrands,
     },
     {
       id: 'material',
@@ -74,17 +85,20 @@ export const subcategorieShoes = {
     {
       id: 'europeanSize',
       label: 'Taille UE',
-      inputType: AttributeInputTypes.TEXT,
+      inputType: AttributeInputTypes.SELECT,
+      options: shoesEuropeanSizeOptions,
     },
     {
       id: 'americanSize',
       label: 'Taille US',
-      inputType: AttributeInputTypes.TEXT,
+      inputType: AttributeInputTypes.SELECT,
+      options: shoesAmericanSizeOptions,
     },
     {
       id: 'brand',
       label: 'Marque',
-      inputType: AttributeInputTypes.TEXT,
+      inputType: AttributeInputTypes.SELECT,
+      options: clothesAndShoesBrands,
     },
     {
       id: 'material',
