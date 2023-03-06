@@ -23,21 +23,19 @@ const Home = () => {
       )}
       <Hero />
       <Incentive />
-      <div>
-        <Background color="bg-gray-200">
-          <Section>
-            <NextImage
-              style={{
-                width: '100%',
-                height: 'auto',
-                borderRadius: '0.375rem',
-              }}
-              src={screenShot}
-              alt="Inventory market screenshot"
-            />
-          </Section>
-        </Background>
-      </div>
+      <Background color="bg-gray-200">
+        <Section>
+          <NextImage
+            style={{
+              width: '100%',
+              height: 'auto',
+              borderRadius: '0.375rem',
+            }}
+            src={screenShot}
+            alt="Inventory market screenshot"
+          />
+        </Section>
+      </Background>
       <NewsLetterIncentive />
       {/* <Customer /> */}
       {/* <Features /> */}

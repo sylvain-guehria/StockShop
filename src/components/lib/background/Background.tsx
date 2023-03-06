@@ -7,10 +7,8 @@ type IBackgroundProps = {
   className?: string;
 };
 
-const Background = (props: IBackgroundProps) => (
-  <div className={clsx(props.color, props.className || '')}>
-    {props.children}
-  </div>
+const Background = ({ color, className, children }: IBackgroundProps) => (
+  <div className={clsx(color, className || '')}>{children}</div>
 );
 
 export { Background };

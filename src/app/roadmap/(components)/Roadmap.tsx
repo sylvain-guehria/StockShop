@@ -2,14 +2,16 @@ import { CheckIcon } from '@heroicons/react/20/solid';
 import { ArrowPathIcon, ClockIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 
+import { Background } from '@/components/lib/background/Background';
+
 import Section from '../../../components/lib/layout/Section';
 import { LegendItem } from './LegendItem';
 import { StatusRoadmapStepEnum, timeline } from './roadmapItems';
 
 const Roadmap = () => {
   return (
-    <div>
-      <div className="bg-gray-100">
+    <main className="bg-white">
+      <Background color="bg-gray-100">
         <Section yPadding="py-28">
           <div className="sm:flex sm:flex-col">
             <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-center">
@@ -26,7 +28,7 @@ const Roadmap = () => {
             </p>
           </div>
         </Section>
-      </div>
+      </Background>
 
       <Section yPadding="py-10">
         <div className="mb-6 flex justify-center">
@@ -116,7 +118,7 @@ const Roadmap = () => {
           </ul>
         </div>
       </Section>
-    </div>
+    </main>
   );
 };
 

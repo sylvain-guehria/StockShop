@@ -2,7 +2,7 @@ import Section from '@/components/lib/layout/Section';
 
 const Marketplace = () => {
   return (
-    <main>
+    <main className="bg-white">
       <Section
         title="Marketplace en cours de développement"
         description="Le marketplace vous permettra de voir les produits disponible de vos commerces favoris, de les réserver ou de les acheter en click & collect."
