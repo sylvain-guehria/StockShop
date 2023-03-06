@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import dynamic from 'next/dynamic';
 import type { FC, ReactNode } from 'react';
 
@@ -13,9 +14,10 @@ const DynamicFirstConnectionModal = dynamic(
 
 type Props = {
   children: ReactNode;
+  bgColor?: string;
 };
 // @ts-ignore
-const BasicLayout: FC<Props> = async ({ children }) => {
+const BasicLayout: FC<Props> = async ({ children, bgColor }) => {
   const userProfile = await getUserInServerComponant();
 
   if (userProfile && !userProfile.hasSeenFirstConnectionModal) {
@@ -24,7 +26,7 @@ const BasicLayout: FC<Props> = async ({ children }) => {
   return (
     <>
       <HeaderAndDrawer />
-      <main className="grow">{children}</main>
+      <main className={clsx('grow', bgColor || '')}>{children}</main>
       <Footer />
     </>
   );
