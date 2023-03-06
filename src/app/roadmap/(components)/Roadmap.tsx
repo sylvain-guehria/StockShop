@@ -3,90 +3,14 @@ import { ArrowPathIcon, ClockIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 
 import Section from '../../../components/lib/layout/Section';
-
-const StatusRoadmapStepEnum = {
-  ONGOING: 'ONGOING',
-  DONE: 'DONE',
-  FUTURE: 'FUTURE',
-};
-
-const timeline = [
-  {
-    feature: 'Lancement du projet',
-    description: 'Création du site et de la landing page',
-    date: '26 octobre 2022',
-    status: StatusRoadmapStepEnum.DONE,
-  },
-  {
-    feature: 'Module de gestion des stocks V1',
-    description:
-      'Un module permettant de gérer les stocks de vos produits et le réapprovisionnement',
-    date: 'Décembre 2022',
-    status: StatusRoadmapStepEnum.DONE,
-  },
-  {
-    feature: 'Module marketplace V1',
-    description:
-      'Un module permettant au visiteur du site de visualiser les stocks de vos produits marqués comme "public"',
-    date: 'Janvier 2023',
-    status: StatusRoadmapStepEnum.ONGOING,
-  },
-  {
-    feature: 'Module création de catégories custom',
-    description:
-      'Un module permettant au entreprise de créer des catégories de produits custom avec des champs personnalisés',
-    date: 'Février 2023',
-    status: StatusRoadmapStepEnum.FUTURE,
-  },
-  {
-    feature: 'Module marketplace V2 click & collect',
-    description:
-      'Les visiteurs pourront passer des commandes directement sur le site et payer en ligne ou sur place',
-    date: 'Mars 2023',
-    status: StatusRoadmapStepEnum.FUTURE,
-  },
-  {
-    feature: 'Module de gestion des stocks V2',
-    description: 'Un stock pourra être géré par plusieurs utilisateurs',
-    date: 'Avril 2023',
-    status: StatusRoadmapStepEnum.FUTURE,
-  },
-];
-
-const LegendItem = ({
-  text,
-  Icon,
-  iconColor,
-}: {
-  text: string;
-  Icon: React.ForwardRefExoticComponent<
-    React.SVGProps<SVGSVGElement> & {
-      title?: string | undefined;
-      titleId?: string | undefined;
-    }
-  >;
-  iconColor: string;
-}) => {
-  return (
-    <div className="mx-6 p-3">
-      <div
-        className={clsx(
-          'flex h-8 w-8 items-center justify-center rounded-full ring-8 ring-white',
-          iconColor || ''
-        )}
-      >
-        <Icon className="h-5 w-5 text-white" aria-hidden="true" />
-      </div>
-      <div className="text-sm text-gray-500">{text}</div>
-    </div>
-  );
-};
+import { LegendItem } from './LegendItem';
+import { StatusRoadmapStepEnum, timeline } from './roadmapItems';
 
 const Roadmap = () => {
   return (
     <div>
       <div className="bg-gray-100">
-        <Section yPadding="pt-10 pb-5">
+        <Section yPadding="py-28">
           <div className="sm:flex sm:flex-col">
             <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-center">
               Roadmap
