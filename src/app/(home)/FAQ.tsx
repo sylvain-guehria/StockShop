@@ -15,7 +15,7 @@ const faqs = [
   {
     question: 'Comment fonctionne le site pour une entreprise ?',
     answer:
-      "Si vous êtes une entreprise, il vous suffit de vous connecter en vous créant un compte. Vous aurez accès à un module de gestion d'inventaire. Vous pourrez ajouter vos produits, les classer par catégories, gérer leur approvisionnement etc... Vous pourrez également ajouter des images à vos produits et décider pour chaque inventaire et chaque produit si celui-ci est privé ou public. Si vous avez un inventaire public, une page dédiée à votre entreprise sera créée sur notre marketplace. Les produits marqués comme public seront visibles sur ce marketplace.",
+      "Si vous êtes une entreprise, il vous suffit de vous connecter en vous créant un compte. Vous aurez accès à un module de gestion d'inventaire. \n \nVous pourrez ajouter vos produits, les classer par catégories, gérer leurs approvisionnements etc...  \n \nVous pourrez également ajouter des images à vos produits et décider pour chaque inventaires et chaque produits si celui-ci est privé ou public. Si vous avez un inventaire public, une page dédiée à votre entreprise sera créée sur notre marketplace. Les produits marqués comme public seront visibles sur ce marketplace.",
   },
   {
     question: 'Suis-je obligé de rendre un inventaire public ?',
@@ -26,12 +26,12 @@ const faqs = [
     question:
       "J'utilise les catégories pour trier mes produits mais je ne trouve pas la catégorie que je veux ?",
     answer:
-      'Nous ajoutons des nouvelles catégories aussi souvent que possible. Ecrivez-nous si vous souhaitez une nouvelle catégorie. Nous la créerons très vite pour vous. De plus une feature vous permettant de créer vos propres catégories est prévue dans la roadmap.',
+      'Nous ajoutons des nouvelles catégories aussi souvent que possible. Ecrivez-nous si vous souhaitez une nouvelle catégorie. Nous la créerons très vite pour vous.\n\nDe plus une feature vous permettant de créer vos propres catégories est prévue dans la roadmap.',
   },
   {
     question: 'Comment fonctionne le site pour un visiteur ou un client ?',
     answer:
-      'Si vous êtes un client, vous pourrez rechercher vos commerces locaux par ville et voir leurs produits. Vous pourrez également vous créer un compte pour suivre vos commandes et avoir une visibilité sur vos achats.',
+      'Si vous êtes un visiteur ou un client, vous pourrez rechercher vos commerces locaux par ville et voir leurs produits. Vous pourrez également vous créer un compte pour suivre vos commandes et avoir une visibilité sur vos achats.',
   },
   {
     question: 'Je ne trouve pas le marketplace ?',
@@ -70,7 +70,9 @@ const FAQ = () => (
                     </Disclosure.Button>
                   </dt>
                   <Disclosure.Panel as="dd" className="mt-2 pr-12">
-                    <p className="text-base text-gray-500">{faq.answer}</p>
+                    <p className="whitespace-pre-wrap text-base text-gray-500">
+                      {faq.answer}
+                    </p>
                   </Disclosure.Panel>
                 </>
               )}
@@ -80,7 +82,7 @@ const FAQ = () => (
       </div>
     </section>
     <div className="mt-7 flex max-w-xl text-lg text-gray-500">
-      Si vous ne trouvez pas réponse{' '}
+      Vous ne trouvez pas de réponse à votre question ?{' '}
       <Link href={mainRoutes.contact.path}>
         <div className="ml-2 text-lg font-medium text-primary-600 hover:text-primary-500">
           envoyez nous un email.
