@@ -81,12 +81,12 @@ const FAQ = () => (
         </dl>
       </div>
     </section>
-    <div className="mt-7 flex max-w-xl text-lg text-gray-500">
+    <div className="mt-7 flex max-w-2xl text-lg text-gray-500">
       Vous ne trouvez pas de réponse à votre question ?{' '}
       <Link href={mainRoutes.contact.path}>
         <div className="ml-2 text-lg font-medium text-primary-600 hover:text-primary-500">
           envoyez nous un email.
-        </div>{' '}
+        </div>
       </Link>
     </div>
   </Section>

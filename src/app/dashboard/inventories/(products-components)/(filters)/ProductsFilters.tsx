@@ -122,7 +122,7 @@ export const ProductsFilters: FC<Props> = ({
                       (filter) => filter
                     ).length
                   }{' '}
-                  Filtres
+                  <span className="hidden sm:block">Filtres</span>
                 </Disclosure.Button>
               </div>
               <div className="pl-6">
@@ -239,7 +239,7 @@ export const ProductsFilters: FC<Props> = ({
                     />
                   </div>
                   <Menu.Button className="group inline-flex justify-center border-x border-gray-300 px-3 text-sm  font-medium text-gray-700 hover:text-gray-900">
-                    <div>Trier par</div>
+                    <span className="hidden sm:block">Trier par</span>
                     <div className="tooltip tooltip-left" data-tip="Trier par">
                       <ChevronDownIcon
                         className="ml-1 h-5 w-5 shrink-0 text-gray-400 group-hover:text-gray-500 lg:-mr-1"
