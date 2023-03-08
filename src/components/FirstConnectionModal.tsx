@@ -27,6 +27,7 @@ const FirstConnectionModal: FC<Props> = ({ user }) => {
   const [open, setOpen] = useState(true);
   const router = useRouter();
   const toast = useToast(10000);
+
   const { setUserTypeUser } = useAuth();
 
   const cancelButtonRef = useRef(null);
@@ -34,23 +35,21 @@ const FirstConnectionModal: FC<Props> = ({ user }) => {
   const onChooseRoleFirstConnection = async (
     subrole: SUBROLES.BUYER | SUBROLES.SELLER
   ) => {
-    try {
-      const updatedUser = await chooseSubRoleOnFirstConnectionUseCase(
-        UserEntity.new({ ...user }),
-        subrole
-      );
-      if (!updatedUser) return;
-      setUserTypeUser(updatedUser);
-      if (subrole === SUBROLES.BUYER) {
-        router.push(marketplaceRoutes.marketplace.path);
-      }
-      if (subrole === SUBROLES.SELLER) {
-        router.push(inventoryManagementRoutes.myInventory.path);
-      }
-      setOpen(false);
-    } catch (error: any) {
-      toast(ToasterTypeEnum.ERROR, error.message);
-    }
+    chooseSubRoleOnFirstConnectionUseCase(UserEntity.new({ ...user }), subrole)
+      .then((updatedUser) => {
+        if (!updatedUser) return;
+        setUserTypeUser(updatedUser);
+        if (subrole === SUBROLES.BUYER) {
+          router.push(marketplaceRoutes.marketplace.path);
+        }
+        if (subrole === SUBROLES.SELLER) {
+          router.push(inventoryManagementRoutes.myInventory.path);
+        }
+        setOpen(false);
+      })
+      .catch((error: any) => {
+        toast(ToasterTypeEnum.ERROR, error.message);
+      });
   };
 
   return (
