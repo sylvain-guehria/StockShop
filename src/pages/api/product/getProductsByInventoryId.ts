@@ -53,6 +53,10 @@ const getProductsByInventoryId = async (
     })
     .range(from, to);
 
+  const { count } = await supabaseSsr
+    .from(TableNames.PRODUCTS)
+    .select('*', { count: 'exact', head: true });
+
   if (error) {
     // eslint-disable-next-line no-console
     console.error('error when getting products by inventory', error);
@@ -60,7 +64,7 @@ const getProductsByInventoryId = async (
     return [];
   }
   return res.status(200).json({
-    count: data.length,
+    count,
     results: data,
   });
 };
