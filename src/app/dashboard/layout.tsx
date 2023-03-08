@@ -4,6 +4,8 @@ import InventoryLayout from '@/components/layouts/InventoryLayout';
 import { mainRoutes } from '@/routes/mainRoutes';
 import { getUserInServerComponant } from '@/supabase/getUserInServerComponant';
 
+export const revalidate = 0;
+
 const Layout = async ({ children }: { children: React.ReactNode }) => {
   const userProfile = await getUserInServerComponant();
 
