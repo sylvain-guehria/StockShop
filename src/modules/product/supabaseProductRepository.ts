@@ -65,6 +65,7 @@ class SupabaseProductRepository extends ProductRepository {
         inventoryId: product.getInventoryId(),
         createdAt: product.getCreationDate(),
         isPublic: product.getIsPublic(),
+        updatedAt: product.getLastUpdateDate(),
       },
     });
     const success = res.status === 200;

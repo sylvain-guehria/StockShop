@@ -259,7 +259,7 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
             filtersState={filtersState}
             dispatchFilterActions={dispatchFilterActions}
           />
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto overflow-y-hidden">
             <table className="min-w-full divide-y divide-gray-300">
               <thead className="bg-gray-100">
                 <tr className="border-t border-gray-200">
