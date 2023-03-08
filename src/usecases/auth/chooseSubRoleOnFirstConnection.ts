@@ -7,7 +7,7 @@ export const chooseSubRoleOnFirstConnection =
   async (
     user: UserEntity,
     subrole: SUBROLES.BUYER | SUBROLES.SELLER
-  ): Promise<boolean> => {
+  ): Promise<UserEntity> => {
     if (subrole === SUBROLES.SELLER) {
       user.activateSockManagement();
     }
@@ -16,6 +16,13 @@ export const chooseSubRoleOnFirstConnection =
     }
 
     user.markFirstConnectionModalAsSeen();
+    const success = userRepository.update(user);
 
-    return userRepository.update(user);
+    if (!success) {
+      throw new Error(
+        "Nous n'avons pas pu mettre à jour votre compte. Veuillez réessayer."
+      );
+    }
+
+    return user;
   };

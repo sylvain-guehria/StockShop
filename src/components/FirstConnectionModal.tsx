@@ -7,6 +7,8 @@ import SettingsImg from 'public/assets/images/settings.png';
 import type { FC } from 'react';
 import { Fragment, useRef, useState } from 'react';
 
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
 import UserEntity from '@/modules/user/UserEntity';
 import type { User } from '@/modules/user/userType';
 import { SUBROLES } from '@/modules/user/userType';
@@ -15,6 +17,7 @@ import { marketplaceRoutes } from '@/routes/marketplaceRoutes';
 import { chooseSubRoleOnFirstConnectionUseCase } from '@/usecases/usecases';
 
 import NextImage from './lib/nextImage/NextImage';
+import { ToasterTypeEnum } from './toaster/toasterEnum';
 
 type Props = {
   user: User;
@@ -23,17 +26,21 @@ type Props = {
 const FirstConnectionModal: FC<Props> = ({ user }) => {
   const [open, setOpen] = useState(true);
   const router = useRouter();
+  const toast = useToast(10000);
+  const { setUserTypeUser } = useAuth();
 
   const cancelButtonRef = useRef(null);
 
   const onChooseRoleFirstConnection = async (
     subrole: SUBROLES.BUYER | SUBROLES.SELLER
   ) => {
-    chooseSubRoleOnFirstConnectionUseCase(
-      UserEntity.new({ ...user }),
-      subrole
-    ).then((success) => {
-      if (!success) return;
+    try {
+      const updatedUser = await chooseSubRoleOnFirstConnectionUseCase(
+        UserEntity.new({ ...user }),
+        subrole
+      );
+      if (!updatedUser) return;
+      setUserTypeUser(updatedUser);
       if (subrole === SUBROLES.BUYER) {
         router.push(marketplaceRoutes.marketplace.path);
       }
@@ -41,7 +48,9 @@ const FirstConnectionModal: FC<Props> = ({ user }) => {
         router.push(inventoryManagementRoutes.myInventory.path);
       }
       setOpen(false);
-    });
+    } catch (error: any) {
+      toast(ToasterTypeEnum.ERROR, error.message);
+    }
   };
 
   return (
