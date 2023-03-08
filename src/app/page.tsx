@@ -28,20 +28,14 @@ const HomePage = async ({
     return <DynamicFirstConnectionModal user={userProfile as User} />;
   }
 
-  if (
-    !noRedirect &&
-    userProfile &&
-    userProfile.hasInventoryManagementServiceActivated
-  ) {
-    redirect(inventoryManagementRoutes.myInventory.path);
-  }
+  const isLoggedIn = !!userProfile;
 
-  if (
-    !noRedirect &&
-    userProfile &&
-    !userProfile.hasInventoryManagementServiceActivated
-  ) {
-    redirect(marketplaceRoutes.marketplace.path);
+  if (!noRedirect && isLoggedIn) {
+    if (userProfile.hasInventoryManagementServiceActivated) {
+      redirect(inventoryManagementRoutes.myInventory.path);
+    } else {
+      redirect(marketplaceRoutes.marketplace.path);
+    }
   }
 
   return (
