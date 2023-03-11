@@ -221,7 +221,8 @@ export const subcategorieWatches = {
       label: 'Mécanisme',
       inputType: AttributeInputTypes.SELECT,
       options: [
-        { label: 'Mécanique', value: 'mecanique' },
+        { label: 'Mécanique automatique', value: 'mecanique automatique' },
+        { label: 'Mécanique manuel', value: 'mecanique_manuel' },
         { label: 'Quartz', value: 'quartz' },
         { label: 'Solaire', value: 'solaire' },
         { label: 'Hybride', value: 'hybride' },
