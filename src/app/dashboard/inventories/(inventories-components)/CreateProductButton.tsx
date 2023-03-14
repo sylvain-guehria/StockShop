@@ -27,6 +27,9 @@ const CreateProductButton: FC<Props> = ({ currentInventoryId }) => {
       queryClient.invalidateQueries({
         queryKey: [ApiRequestEnums.GetProducts],
       });
+      queryClient.invalidateQueries({
+        queryKey: [ApiRequestEnums.GetInventories],
+      });
       const event = new CustomEvent(CustomEvents.ProductEventCreation, {
         detail: data,
       });
