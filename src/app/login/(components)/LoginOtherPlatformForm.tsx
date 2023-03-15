@@ -1,6 +1,7 @@
 'use client';
 
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
+import { logException } from 'logger';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { isMobile } from 'react-device-detect';
@@ -36,8 +37,7 @@ const LoginOtherPlatformForm = () => {
         toast(ToasterTypeEnum.ERROR, response.error.message);
       }
     } catch (error: any) {
-      // eslint-disable-next-line no-console
-      console.error('error LoginOtherPlatformForm', error);
+      logException(error, { when: 'LoginOtherPlatformForm' });
       toast(ToasterTypeEnum.ERROR, error.message);
     }
   };

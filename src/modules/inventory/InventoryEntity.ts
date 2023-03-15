@@ -88,7 +88,7 @@ class InventoryEntity implements Inventory {
     return this;
   }
 
-  setAsNotDefaultInventory(): InventoryEntity {
+  unSetAsDefaultInventory(): InventoryEntity {
     this.isDefaultInventory = false;
     return this;
   }

@@ -1,3 +1,5 @@
+import { logException } from 'logger';
+
 import type CompanyService from '@/modules/company/companyService';
 import type InventoryEntity from '@/modules/inventory/InventoryEntity';
 import type { InventoryRepository } from '@/modules/inventory/inventoryRepository';
@@ -37,8 +39,7 @@ export const getUserInventories =
 
       return inventories;
     } catch (error: any) {
-      // eslint-disable-next-line no-console
-      console.log('error when getting user inventories', error);
+      logException(error, { when: 'getting user inventories usecase' });
       return [];
     }
   };

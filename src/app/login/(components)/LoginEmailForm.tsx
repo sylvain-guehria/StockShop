@@ -1,6 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { logException } from 'logger';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { SubmitHandler } from 'react-hook-form';
@@ -50,8 +51,7 @@ const LoginEmailForm = () => {
         toast(ToasterTypeEnum.ERROR, response.error.message);
       }
     } catch (error: any) {
-      // eslint-disable-next-line no-console
-      console.error('error LoginEmailForm', error);
+      logException(error, { when: 'LoginEmailForm' });
       toast(ToasterTypeEnum.ERROR, error.message);
     }
   };

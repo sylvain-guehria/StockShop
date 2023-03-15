@@ -1,4 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { logException } from 'logger';
 
 import type { InventoryRepository } from '@/modules/inventory/inventoryRepository';
 import { BucketNames } from '@/supabase/enums/bucketNames';
@@ -41,11 +42,9 @@ export const deleteInventory =
       if (!listOfFiles || !listOfFiles.length) return;
 
       if (listError) {
-        // eslint-disable-next-line no-console
-        console.error(
-          `Error when listing the storage folder ${inventoryFolderPath}. The inventory has been deleted though`,
-          listError
-        );
+        logException(listError, {
+          when: `Error when listing the storage folder ${inventoryFolderPath}. The inventory has been deleted though`,
+        });
       }
 
       const filesToRemove = listOfFiles.map(
@@ -59,11 +58,9 @@ export const deleteInventory =
         .remove(filesToRemove);
 
       if (error) {
-        // eslint-disable-next-line no-console
-        console.error(
-          `Error when deleting the storage folder ${inventoryFolderPath}. The inventory has been deleted though`,
-          error
-        );
+        logException(listError, {
+          when: `Error when deleting the storage folder ${inventoryFolderPath}. The inventory has been deleted though`,
+        });
       }
     } catch (error: any) {
       throw new Error(error.message);

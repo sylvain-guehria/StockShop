@@ -1,4 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { logException } from 'logger';
 
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { ProductRepository } from '@/modules/product/productRepository';
@@ -44,15 +45,12 @@ export const deleteProduct =
         data?.length === 1 && data[0]?.metadata?.httpStatusCode === 200;
 
       if (!isDeleted) {
-        // eslint-disable-next-line no-console
-        console.error(
-          'Error when deleting a photo. The product has been deleted though',
-          error
-        );
+        logException(error, {
+          when: 'deleting a photo. The product has been deleted though',
+        });
       }
     } catch (error: any) {
-      // eslint-disable-next-line no-console
-      console.log('error', error);
+      logException(error);
       throw new Error(error.message);
     }
   };

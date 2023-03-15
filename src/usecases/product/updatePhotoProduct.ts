@@ -1,5 +1,6 @@
 /* eslint-disable no-new */
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { logException } from 'logger';
 
 import {
   authorizedFileTypes,
@@ -70,8 +71,7 @@ export const updatePhotoProduct =
         });
         uploadedFile = compressedFile as File;
       } catch (error: any) {
-        // eslint-disable-next-line no-console
-        console.error('error during compression', error);
+        logException(error, { when: 'during compression' });
       }
     }
 

@@ -109,7 +109,7 @@ describe('deleteInventory', () => {
       inventoryToSetAsDefault
     );
 
-    defaultInventory.setAsNotDefaultInventory();
+    defaultInventory.unSetAsDefaultInventory();
     entityInventoryToSetAsDefault.setAsDefaultInventory();
 
     expect(inventoryRepository.update).toHaveBeenCalledTimes(2);
