@@ -1,3 +1,4 @@
+import { logException } from 'logger';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { TableNames } from '@/supabase/enums/tableNames';
@@ -35,8 +36,7 @@ const getInventoriesByCompanyId = async (
   );
 
   if (error) {
-    // eslint-disable-next-line no-console
-    console.error('error when getting inventory by company id', error);
+    logException(error, { when: 'getting inventory by company id' });
     res.status(400).end();
     return [];
   }

@@ -1,3 +1,4 @@
+import { logException } from 'logger';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { ProductAttributes } from '@/modules/product/productType';
@@ -58,8 +59,7 @@ const getProductsByInventoryId = async (
     .select('*', { count: 'exact', head: true });
 
   if (error) {
-    // eslint-disable-next-line no-console
-    console.error('error when getting products by inventory', error);
+    logException(error, { when: 'getting products by inventory id' });
     res.status(400).end();
     return [];
   }

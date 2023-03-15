@@ -1,3 +1,4 @@
+import { logException } from 'logger';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { TableNames } from '@/supabase/enums/tableNames';
@@ -13,8 +14,7 @@ const addProduct = async (req: NextApiRequest, res: NextApiResponse) => {
   const { error } = await supabaseSsr.from(TableNames.PRODUCTS).insert(product);
 
   if (error) {
-    // eslint-disable-next-line no-console
-    console.error('error when adding a product', error);
+    logException(error, { when: 'adding inventory' });
     res.status(400).end();
     return;
   }

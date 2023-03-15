@@ -1,3 +1,4 @@
+import { logException } from 'logger';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { TableNames } from '@/supabase/enums/tableNames';
@@ -23,8 +24,7 @@ const userById = async (req: NextApiRequest, res: NextApiResponse) => {
       .single();
 
     if (error) {
-      // eslint-disable-next-line no-console
-      console.error('error when getting user profile', error);
+      logException(error, { when: 'getting user profile by id' });
       res.status(400).end();
       return;
     }
@@ -37,8 +37,7 @@ const userById = async (req: NextApiRequest, res: NextApiResponse) => {
       .update(removeKeysWithNoValues(req.body))
       .eq('id', id);
     if (error) {
-      // eslint-disable-next-line no-console
-      console.error('error when updating user profile', error);
+      logException(error, { when: 'updating user profile' });
       res.status(400).end();
       return;
     }

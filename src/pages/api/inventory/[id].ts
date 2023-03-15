@@ -1,3 +1,4 @@
+import { logException } from 'logger';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { TableNames } from '@/supabase/enums/tableNames';
@@ -17,10 +18,8 @@ const inventoryById = async (req: NextApiRequest, res: NextApiResponse) => {
     color: req.body.color,
   };
 
-  if (!id) {
-    res.status(400).end('Inventory id is mandatory to update an inventory');
-    return;
-  }
+  if (!id) throw new Error('Inventory id is mandatory to update an inventory');
+
   const supabaseSsr = createServerSupabaseSSRClient({ req, res });
 
   if (method === 'GET') {
@@ -31,8 +30,7 @@ const inventoryById = async (req: NextApiRequest, res: NextApiResponse) => {
       .single();
 
     if (error) {
-      // eslint-disable-next-line no-console
-      console.error('error when getting inventory', error);
+      logException(error, { when: 'getting inventory' });
       res.status(400).end();
       return;
     }
@@ -46,8 +44,7 @@ const inventoryById = async (req: NextApiRequest, res: NextApiResponse) => {
       .eq('id', id)
       .single();
     if (error) {
-      // eslint-disable-next-line no-console
-      console.error('error when updating inventory', error);
+      logException(error, { when: 'updating inventory' });
       res.status(400).end();
       return;
     }

@@ -1,3 +1,4 @@
+import { logException } from 'logger';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { TableNames } from '@/supabase/enums/tableNames';
@@ -26,8 +27,7 @@ const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) => {
     .eq('id', productId);
 
   if (error) {
-    // eslint-disable-next-line no-console
-    console.error('error when deleting a product', error);
+    logException(error, { when: 'deleting inventory' });
     res.status(400).end();
     return;
   }
