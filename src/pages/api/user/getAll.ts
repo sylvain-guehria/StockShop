@@ -1,11 +1,11 @@
+import { logException } from 'logger';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const getAllUsers = async (_req: NextApiRequest, res: NextApiResponse) => {
   try {
     res.status(200).json({});
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error('error when fetching users', e);
+  } catch (error) {
+    logException(error, { when: 'getting all users' });
     res.status(400).end();
   }
 };

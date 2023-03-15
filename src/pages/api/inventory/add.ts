@@ -1,3 +1,4 @@
+import { logException } from 'logger';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { TableNames } from '@/supabase/enums/tableNames';
@@ -18,8 +19,7 @@ const addInventory = async (req: NextApiRequest, res: NextApiResponse) => {
     .insert(inventory);
 
   if (error) {
-    // eslint-disable-next-line no-console
-    console.error('error when adding an inventory', error);
+    logException(error, { when: 'adding inventory' });
     res.status(400).end();
     return;
   }

@@ -1,3 +1,4 @@
+import { logException } from 'logger';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { TableNames } from '@/supabase/enums/tableNames';
@@ -22,8 +23,7 @@ const productById = async (req: NextApiRequest, res: NextApiResponse) => {
       .single();
 
     if (error) {
-      // eslint-disable-next-line no-console
-      console.error('error when getting product', error);
+      logException(error, { when: 'getting product' });
       res.status(400).end();
       return;
     }
@@ -37,8 +37,7 @@ const productById = async (req: NextApiRequest, res: NextApiResponse) => {
       .eq('id', id)
       .single();
     if (error) {
-      // eslint-disable-next-line no-console
-      console.error('error when updating product', error);
+      logException(error, { when: 'updating inventory' });
       res.status(400).end();
       return;
     }
