@@ -1,3 +1,5 @@
+import { logException } from 'logger';
+
 import type {
   FilterPropertyType,
   SorterType,
@@ -61,8 +63,9 @@ export const getInventoryProducts =
         products: response.products,
       };
     } catch (error: any) {
-      // eslint-disable-next-line no-console
-      console.log('error', error);
+      logException(error, {
+        when: 'getInventoryProducts usecase',
+      });
       throw new Error(error.message);
     }
   };

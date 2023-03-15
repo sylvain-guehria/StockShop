@@ -1,3 +1,5 @@
+import { logException } from 'logger';
+
 import InventoryEntity from '@/modules/inventory/InventoryEntity';
 import type { InventoryRepository } from '@/modules/inventory/inventoryRepository';
 import type { Inventory } from '@/modules/inventory/inventoryType';
@@ -30,15 +32,11 @@ export const setInventoryAsDefault =
         (retrievedInventory) => retrievedInventory.isDefaultInventory
       );
       if (formerDefaultInventory) {
-        formerDefaultInventory.setAsNotDefaultInventory();
+        formerDefaultInventory.unSetAsDefaultInventory();
         await inventoryRepository.update(formerDefaultInventory);
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('No former default inventory founed');
       }
     } catch (error: any) {
-      // eslint-disable-next-line no-console
-      console.log('error', error);
+      logException(error, { when: 'setInventoryAsDefault usecase' });
       throw new Error(error);
     }
   };

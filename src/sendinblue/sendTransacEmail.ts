@@ -1,3 +1,5 @@
+import { logException, logInConsole } from 'logger';
+
 /* eslint-disable no-console */
 const SibApiV3Sdk = require('sib-api-v3-sdk');
 
@@ -16,10 +18,10 @@ const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 const sendTransacEmail = async (sendSmtpEmail): boolean => {
   try {
     const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
-    console.log(`API called successfully. Returned data: ${data}`);
+    logInConsole(`API called successfully. Returned data: ${data}`);
     return true;
   } catch (error) {
-    console.error('error sendTransacEmail', error);
+    logException(error, { when: 'error sendTransacEmail' });
     return false;
   }
 };

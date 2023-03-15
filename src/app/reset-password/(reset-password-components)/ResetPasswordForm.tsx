@@ -1,6 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { logException } from 'logger';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -44,8 +45,7 @@ const ResetPasswordForm = () => {
         toast(ToasterTypeEnum.ERROR, response.error.message);
       }
     } catch (error: any) {
-      // eslint-disable-next-line no-console
-      console.error('error ResetPasswordForm', error);
+      logException(error, { when: 'ResetPasswordForm' });
       toast(ToasterTypeEnum.ERROR, error.message);
     } finally {
       setIsLoading(false);

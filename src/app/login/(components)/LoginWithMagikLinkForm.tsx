@@ -1,6 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { logException } from 'logger';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -53,8 +54,7 @@ const LoginWithMagikLinkForm = () => {
         );
       }
     } catch (error: any) {
-      // eslint-disable-next-line no-console
-      console.error('error MagikLinkForm', error);
+      logException(error, { when: 'MagikLinkForm' });
       toast(ToasterTypeEnum.ERROR, error.message);
     } finally {
       setIsLoading(false);

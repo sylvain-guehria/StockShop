@@ -2,6 +2,7 @@
 
 import { TrashIcon } from '@heroicons/react/20/solid';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { logException } from 'logger';
 import type { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { object, string } from 'yup';
@@ -34,8 +35,7 @@ const DeleteInventoryForm: FC<Props> = ({ inventory, deleteInventory }) => {
     try {
       deleteInventory(inventory);
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
+      logException(e);
     }
   };
 
