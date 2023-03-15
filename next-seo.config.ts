@@ -1,6 +1,4 @@
-import type { NextSeoProps } from 'next-seo';
-
-export const NEXT_SEO_DEFAULT: NextSeoProps = {
+export const NEXT_SEO_DEFAULT = {
   title: 'Inventory Market',
   description:
     'Inventory Market, gérez votre inventaire et vendez vos produits en ligne',

@@ -1,6 +1,8 @@
 import 'server-only';
 import '../styles/global.css';
 
+import type { Metadata } from 'next';
+import { NEXT_SEO_DEFAULT } from 'next-seo.config';
 import React from 'react';
 
 import Providers from '@/components/layouts/Providers';
@@ -11,6 +13,9 @@ import { createServerCompSupabaseClient } from '@/supabase/server/supabase-serve
 
 // We don't want Next.js to cache this session value
 export const revalidate = 0;
+
+// Static metadata
+export const metadata: Metadata = { ...NEXT_SEO_DEFAULT };
 
 const RootLayout = async ({
   children,
