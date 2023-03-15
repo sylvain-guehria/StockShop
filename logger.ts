@@ -1,7 +1,11 @@
 import type { SeverityLevel } from '@sentry/nextjs';
 import { captureException, captureMessage, withScope } from '@sentry/nextjs';
 
-export function logException(error: any, moreExtra = {}) {
+interface ExtraInterface {
+  when?: string;
+}
+
+export function logException(error: any, moreExtra: ExtraInterface = {}) {
   withScope((scope) => {
     scope.setExtra('error', error);
     // eslint-disable-next-line no-restricted-syntax
