@@ -89,8 +89,6 @@ class SupabaseInventoryRepository extends InventoryRepository {
     const inventories = response.data.inventories || [];
     const inventoriesProductCount = response.data.inventoriesProductCount || {};
 
-    console.log('inventoriesProductCount', inventoriesProductCount);
-
     return inventories.map(
       (inventory: InventoryEntity) =>
         new InventoryEntity({

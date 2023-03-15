@@ -36,6 +36,10 @@ export function logMessage({
   captureMessage(message, level);
 }
 
+export function logInfoInConsole(content: any) {
+  logInConsole(content, 'log');
+}
+
 export function logInConsole(
   content: any,
   level: SeverityLevel | undefined = 'log'
