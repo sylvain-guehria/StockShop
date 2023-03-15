@@ -22,6 +22,7 @@
     "@headlessui/react": "^1.7.11",
     "@heroicons/react": "^2.0.15",
     "@hookform/resolvers": "^2.9.11",
+    "@sentry/nextjs": "^7.43.0",
     "@supabase/auth-helpers-nextjs": "^0.5.5",
     "@supabase/supabase-js": "^2.10.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
@@ -92,7 +93,7 @@
     "postcss": "^8.4.21",
     "prettier": "^2.8.4",
     "rimraf": "^4.1.2",
-    "start-server-and-test": "^1.15.4",
+    "start-server-and-test": "^2.0.0",
     "typescript": "^4.9.5"
   },
   "author": "Sylvain Guehria"
