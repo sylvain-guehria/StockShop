@@ -33,9 +33,7 @@ const LoginOtherPlatformForm = () => {
   const handleLoginGoogle = async () => {
     try {
       const response = await loginWithGoogleUseCase({ supabase });
-      if (response.error) {
-        toast(ToasterTypeEnum.ERROR, response.error.message);
-      }
+      if (response.error) throw new Error(response.error.message);
     } catch (error: any) {
       logException(error, { when: 'LoginOtherPlatformForm' });
       toast(ToasterTypeEnum.ERROR, error.message);

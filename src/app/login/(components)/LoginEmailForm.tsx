@@ -47,9 +47,7 @@ const LoginEmailForm = () => {
       if (response.data.user) {
         router.push(mainRoutes.home.path);
       }
-      if (response.error) {
-        toast(ToasterTypeEnum.ERROR, response.error.message);
-      }
+      if (response.error) throw new Error(response.error.message);
     } catch (error: any) {
       logException(error, { when: 'LoginEmailForm' });
       toast(ToasterTypeEnum.ERROR, error.message);
