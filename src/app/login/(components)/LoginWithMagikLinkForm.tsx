@@ -44,7 +44,9 @@ const LoginWithMagikLinkForm = () => {
     setIsLoading(true);
     try {
       const response = await signInWithEmail(email);
-      if (response.error) throw new Error(response.error.message);
+      if (response.error) {
+        toast(ToasterTypeEnum.ERROR, response.error.message);
+      }
       if (response.data) {
         toast(
           ToasterTypeEnum.SUCCESS,

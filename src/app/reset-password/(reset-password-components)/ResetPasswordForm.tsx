@@ -41,7 +41,9 @@ const ResetPasswordForm = () => {
       if (response.data) {
         toast(ToasterTypeEnum.SUCCESS, 'Votre mot de passe a été changé');
       }
-      if (response.error) throw new Error(response.error.message);
+      if (response.error) {
+        toast(ToasterTypeEnum.ERROR, response.error.message);
+      }
     } catch (error: any) {
       logException(error, { when: 'ResetPasswordForm' });
       toast(ToasterTypeEnum.ERROR, error.message);

@@ -43,7 +43,9 @@ const ResetPasswordEmailForm = () => {
         toast(ToasterTypeEnum.SUCCESS, 'Email envoyé');
         reset();
       }
-      if (response.error) throw new Error(response.error.message);
+      if (response.error) {
+        toast(ToasterTypeEnum.ERROR, response.error.message);
+      }
     } catch (error: any) {
       logException(error, { when: 'ResetPasswordEmailForm' });
       toast(ToasterTypeEnum.ERROR, error.message);

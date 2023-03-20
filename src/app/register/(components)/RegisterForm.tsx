@@ -47,7 +47,9 @@ const RegisterForm = () => {
           'un email envoyé de confirmation vous  a été envoyé'
         );
       }
-      if (response.error) throw new Error(response.error.message);
+      if (response.error) {
+        toast(ToasterTypeEnum.ERROR, response.error.message);
+      }
     } catch (error: any) {
       logException(error, { when: 'RegisterForm' });
       toast(ToasterTypeEnum.ERROR, error.message);
