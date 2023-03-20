@@ -48,12 +48,15 @@ export default function SupabaseListener({
 }
 
 const newPassWordPrompt = async (supabase: SupabaseClient<Database>) => {
-  const newPassword = prompt('What would you like your new password to be?');
+  const newPassword = prompt('Entrez votre nouveau mot de passe');
   if (!newPassword) return;
   const { data, error } = await supabase.auth.updateUser({
     password: newPassword as string,
   });
 
-  if (data) alert('Password updated successfully!');
-  if (error) alert('There was an error updating your password.');
+  if (data?.user) {
+    alert('Votre mot de passe a été mis à jour');
+    supabase.auth.signOut();
+  }
+  if (error) alert(error.message);
 };
