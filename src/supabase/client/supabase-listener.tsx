@@ -1,15 +1,25 @@
-/* eslint-disable no-alert */
-
 'use client';
 
-import type { SupabaseClient } from '@supabase/supabase-js';
-import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import { useAuth } from '@/hooks/useAuth';
 import type { User } from '@/modules/user/userType';
-import type { Database } from '@/types/supabase';
 
 import { useSupabase } from './SupabaseProvider';
+
+const DynamicModal = dynamic(() => import('src/components/lib/modal/Modal'), {
+  suspense: true,
+});
+
+const DynamicResetPassword = dynamic(
+  () =>
+    import('src/app/reset-password/(reset-password-components)/ResetPassword'),
+  {
+    suspense: true,
+  }
+);
 
 export default function SupabaseListener({
   serverAccessToken,
@@ -19,7 +29,10 @@ export default function SupabaseListener({
   user?: User;
 }) {
   const { supabase } = useSupabase();
+  const router = useRouter();
   const { setUserTypeUser } = useAuth();
+  const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] =
+    useState(false);
 
   useEffect(() => {
     setUserTypeUser(user as User);
@@ -30,7 +43,7 @@ export default function SupabaseListener({
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY') {
-        newPassWordPrompt(supabase);
+        setIsResetPasswordModalOpen(true);
         return;
       }
       if (session?.access_token !== serverAccessToken) {
@@ -41,18 +54,14 @@ export default function SupabaseListener({
     return () => {
       subscription.unsubscribe();
     };
-  }, [serverAccessToken, supabase]);
+  }, [serverAccessToken, router, supabase]);
 
-  return null;
+  return isResetPasswordModalOpen ? (
+    <DynamicModal
+      open={isResetPasswordModalOpen}
+      handleCloseModal={() => setIsResetPasswordModalOpen(false)}
+    >
+      <DynamicResetPassword />
+    </DynamicModal>
+  ) : null;
 }
-
-const newPassWordPrompt = async (supabase: SupabaseClient<Database>) => {
-  const newPassword = prompt('What would you like your new password to be?');
-  if (!newPassword) return;
-  const { data, error } = await supabase.auth.updateUser({
-    password: newPassword as string,
-  });
-
-  if (data) alert('Password updated successfully!');
-  if (error) alert('There was an error updating your password.');
-};
