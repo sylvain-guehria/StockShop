@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-alert */
 
 'use client';
@@ -29,6 +30,11 @@ export default function SupabaseListener({
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('event', event);
+      console.log('session', session);
+      console.log('serverAccessToken', serverAccessToken);
+      console.log('session?.access_token', session?.access_token);
+
       if (event === 'PASSWORD_RECOVERY') {
         await newPassWordPrompt(supabase);
         return;
