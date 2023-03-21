@@ -31,8 +31,8 @@ export default function SupabaseListener({
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log('event', event);
-      console.log('supabase getSession', supabase.auth.getSession());
-      console.log('supabase getUser', supabase.auth.getUser());
+      console.log('supabase getSession', await supabase.auth.getSession());
+      console.log('supabase getUser', await supabase.auth.getUser());
 
       if (serverAccessToken && session?.access_token !== serverAccessToken) {
         window.location.reload();
