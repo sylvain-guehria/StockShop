@@ -57,6 +57,7 @@ const newPassWordPrompt = async (supabase: SupabaseClient<Database>) => {
 
   if (data?.user) {
     alert('Votre mot de passe a été mis à jour');
+    window.location.reload();
   }
   if (error) alert(error.message);
 };
