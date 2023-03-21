@@ -86,14 +86,14 @@ const Header: FC<Props> = ({ setMobileMenuOpen }) => {
                     </div>
                   </div>
                   {/* Logo (lg-) */}
-                  <a href="#" className="lg:hidden">
+                  <Link href={mainRoutes.home.path}>
                     <span className="sr-only">Inventory Market</span>
                     <NextImage
                       className="h-10 w-auto cursor-pointer"
                       src={inventoryMarketLogo}
                       alt="inventory shop logo"
                     />
-                  </a>
+                  </Link>
                   <div className="flex flex-1 items-center justify-end">
                     <div className="flex items-center lg:ml-8">
                       <div className="flex items-center space-x-8">
@@ -101,16 +101,13 @@ const Header: FC<Props> = ({ setMobileMenuOpen }) => {
                           className="hidden lg:flex"
                           onClick={() => setIsSearchBarOpen(true)}
                         >
-                          <a
-                            href="#"
-                            className="-m-2 p-2 text-gray-400 hover:text-gray-500"
-                          >
+                          <div className="-m-2 cursor-pointer p-2 text-gray-400 hover:text-gray-500">
                             <span className="sr-only">Search</span>
                             <MagnifyingGlassIcon
                               className="h-6 w-6"
                               aria-hidden="true"
                             />
-                          </a>
+                          </div>
                         </div>
 
                         {user.isLoggedIn() && (
