@@ -30,8 +30,6 @@ export default function SupabaseListener({
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
-      await supabase.auth.getSession();
-
       if (serverAccessToken && session?.access_token !== serverAccessToken) {
         window.location.reload();
       }
@@ -50,6 +48,8 @@ export default function SupabaseListener({
 }
 
 const newPassWordPrompt = async (supabase: SupabaseClient<Database>) => {
+  await supabase.auth.getSession();
+
   const newPassword = prompt('Entrez votre nouveau mot de passe');
   if (!newPassword) return;
   const { data, error } = await supabase.auth.updateUser({
