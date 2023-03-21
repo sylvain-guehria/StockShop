@@ -4,12 +4,14 @@
 'use client';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { setCookie } from 'cookies-next';
 import { useEffect } from 'react';
 
 import { useAuth } from '@/hooks/useAuth';
 import type { User } from '@/modules/user/userType';
 import type { Database } from '@/types/supabase';
 
+import { superBaseAuthTokenCookieName } from '../constant';
 import { useSupabase } from './SupabaseProvider';
 
 export default function SupabaseListener({
@@ -35,13 +37,16 @@ export default function SupabaseListener({
       console.log('serverAccessToken', serverAccessToken);
       console.log('session?.access_token', session?.access_token);
 
-      if (event === 'PASSWORD_RECOVERY') {
-        await newPassWordPrompt(supabase);
-        return;
+      if (serverAccessToken && session?.access_token !== serverAccessToken) {
+        window.location.reload();
       }
 
-      if (session?.access_token !== serverAccessToken) {
-        window.location.reload();
+      if (session?.access_token && !serverAccessToken) {
+        setCookie(superBaseAuthTokenCookieName, session.access_token);
+      }
+
+      if (event === 'PASSWORD_RECOVERY') {
+        await newPassWordPrompt(supabase);
       }
     });
 
