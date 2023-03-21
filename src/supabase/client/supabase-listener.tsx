@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable no-alert */
 
 'use client';
@@ -58,7 +57,6 @@ const newPassWordPrompt = async (supabase: SupabaseClient<Database>) => {
 
   if (data?.user) {
     alert('Votre mot de passe a été mis à jour');
-    supabase.auth.signOut();
   }
   if (error) alert(error.message);
 };
