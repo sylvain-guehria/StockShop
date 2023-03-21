@@ -67,7 +67,6 @@ const RootLayout = async ({
             <SupabaseListener
               serverAccessToken={session?.access_token}
               user={user as User}
-              layoutAuth={supabase.auth}
             />
             {children}
           </>

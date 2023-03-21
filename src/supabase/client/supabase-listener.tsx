@@ -15,11 +15,9 @@ import { useSupabase } from './SupabaseProvider';
 export default function SupabaseListener({
   serverAccessToken,
   user,
-  layoutAuth,
 }: {
   serverAccessToken?: string;
   user?: User;
-  layoutAuth?: SupabaseClient<Database>['auth'];
 }) {
   const { supabase } = useSupabase();
   const { setUserTypeUser } = useAuth();
@@ -32,12 +30,16 @@ export default function SupabaseListener({
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('event', event);
+      console.log('supabase getSession', supabase.auth.getSession());
+      console.log('supabase getUser', supabase.auth.getUser());
+
       if (serverAccessToken && session?.access_token !== serverAccessToken) {
         window.location.reload();
       }
 
       if (event === 'PASSWORD_RECOVERY') {
-        await newPassWordPrompt(layoutAuth);
+        await newPassWordPrompt(supabase);
       }
     });
 
@@ -49,19 +51,16 @@ export default function SupabaseListener({
   return null;
 }
 
-const newPassWordPrompt = async (
-  layoutAuth?: SupabaseClient<Database>['auth']
-) => {
-  if (!layoutAuth) return;
+const newPassWordPrompt = async (supabase: SupabaseClient<Database>) => {
   const newPassword = prompt('Entrez votre nouveau mot de passe');
   if (!newPassword) return;
-  const { data, error } = await layoutAuth.updateUser({
+  const { data, error } = await supabase.auth.updateUser({
     password: newPassword as string,
   });
 
   if (data?.user) {
     alert('Votre mot de passe a été mis à jour');
-    layoutAuth.signOut();
+    supabase.auth.signOut();
   }
   if (error) alert(error.message);
 };
