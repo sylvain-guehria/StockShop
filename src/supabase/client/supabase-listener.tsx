@@ -3,13 +3,18 @@
 'use client';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 
 import { useAuth } from '@/hooks/useAuth';
 import type { User } from '@/modules/user/userType';
 import type { Database } from '@/types/supabase';
 
 import { useSupabase } from './SupabaseProvider';
+
+const DynamicFirstConnectionModal = dynamic(
+  () => import('../../components/FirstConnectionModal')
+);
 
 export default function SupabaseListener({
   serverAccessToken,
@@ -20,9 +25,14 @@ export default function SupabaseListener({
 }) {
   const { supabase } = useSupabase();
   const { setUserTypeUser } = useAuth();
+  const [showFirstConnectionModal, setShowFirstConnectionModal] =
+    useState(false);
 
   useEffect(() => {
     setUserTypeUser(user as User);
+    if (user && !user.hasSeenFirstConnectionModal) {
+      setShowFirstConnectionModal(true);
+    }
   }, [user]);
 
   useEffect(() => {
@@ -43,7 +53,9 @@ export default function SupabaseListener({
     };
   }, [serverAccessToken, supabase]);
 
-  return null;
+  return showFirstConnectionModal ? (
+    <DynamicFirstConnectionModal user={user as User} />
+  ) : null;
 }
 
 const newPassWordPrompt = async (supabase: SupabaseClient<Database>) => {
