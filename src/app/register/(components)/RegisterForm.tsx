@@ -30,6 +30,7 @@ const RegisterForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<RegisterFormType>(formOptions);
 
   const onSubmit: SubmitHandler<RegisterFormType> = async (
@@ -48,6 +49,7 @@ const RegisterForm = () => {
           ToasterTypeEnum.SUCCESS,
           'Bienvenue, un email envoyé de confirmation vous  a été envoyé'
         );
+        reset();
       }
       if (response.error) throw new Error(response.error.message);
     } catch (error: any) {
