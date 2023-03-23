@@ -6,9 +6,7 @@ import { NEXT_SEO_DEFAULT } from 'next-seo.config';
 import React from 'react';
 
 import Providers from '@/components/layouts/Providers';
-import type { User } from '@/modules/user/userType';
 import SupabaseListener from '@/supabase/client/supabase-listener';
-import { getUserByIdInServerComponant } from '@/supabase/getUserInServerComponant';
 import { createServerCompSupabaseClient } from '@/supabase/server/supabase-server';
 
 // We don't want Next.js to cache this session value
@@ -27,8 +25,6 @@ const RootLayout = async ({
   const {
     data: { session },
   } = await supabase.auth.getSession();
-
-  const user = await getUserByIdInServerComponant(session?.user?.id);
 
   return (
     <html lang="en">
@@ -66,7 +62,7 @@ const RootLayout = async ({
           <>
             <SupabaseListener
               serverAccessToken={session?.access_token}
-              user={user as User}
+              userId={session?.user?.id}
             />
             {children}
           </>

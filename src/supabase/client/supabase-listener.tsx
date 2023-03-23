@@ -3,13 +3,16 @@
 'use client';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { useQuery } from '@tanstack/react-query';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
+import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import type { User } from '@/modules/user/userType';
 import type { Database } from '@/types/supabase';
 
+import { TableNames } from '../enums/tableNames';
 import { useSupabase } from './SupabaseProvider';
 
 const DynamicFirstConnectionModal = dynamic(
@@ -18,22 +21,34 @@ const DynamicFirstConnectionModal = dynamic(
 
 export default function SupabaseListener({
   serverAccessToken,
-  user,
+  userId,
 }: {
   serverAccessToken?: string;
-  user?: User;
+  userId?: string;
 }) {
   const { supabase } = useSupabase();
-  const { setUserTypeUser } = useAuth();
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const { setUserTypeUser, user, reinitializeUser } = useAuth();
   const [showFirstConnectionModal, setShowFirstConnectionModal] =
     useState(false);
 
-  useEffect(() => {
-    setUserTypeUser(user as User);
-    if (user && !user.hasSeenFirstConnectionModal) {
-      setShowFirstConnectionModal(true);
-    }
-  }, [user]);
+  useQuery({
+    queryKey: [ApiRequestEnums.GetUser, { currentUserId }],
+    enabled: !!currentUserId || !!userId,
+    queryFn: async () =>
+      supabase
+        .from(TableNames.PROFILES)
+        .select('*')
+        .eq('id', currentUserId || userId)
+        .single(),
+    staleTime: 3000,
+    onSuccess: ({ data }: { data: User }) => {
+      setUserTypeUser(data as User);
+      if (data && !data.hasSeenFirstConnectionModal) {
+        setShowFirstConnectionModal(true);
+      }
+    },
+  });
 
   useEffect(() => {
     const {
@@ -46,6 +61,9 @@ export default function SupabaseListener({
       if (event === 'PASSWORD_RECOVERY') {
         await newPassWordPrompt(supabase);
       }
+      setCurrentUserId(session?.user?.id || null);
+
+      if (!session?.user?.id) reinitializeUser();
     });
 
     return () => {
