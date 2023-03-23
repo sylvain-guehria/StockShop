@@ -1,6 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { setCookie } from 'cookies-next';
 import { logException } from 'logger';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -14,6 +15,7 @@ import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
 import supabase from '@/supabase/client/supabase-browser';
+import { superBaseAuthTokenCookieName } from '@/supabase/constant';
 import { loginWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './LoginFormValidation';
@@ -48,6 +50,10 @@ const LoginEmailForm = () => {
         supabase,
       });
       if (response.data.user) {
+        setCookie(
+          superBaseAuthTokenCookieName,
+          response.data.session?.access_token
+        );
         router.push(mainRoutes.home.path);
       }
       if (response.error) throw new Error(response.error.message);
