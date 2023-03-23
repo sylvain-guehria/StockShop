@@ -13,7 +13,7 @@ const DynamicFirstConnectionModal = dynamic(
   () => import('../components/FirstConnectionModal')
 );
 
-export const revalidate = 600;
+export const revalidate = 0;
 
 const HomePage = async ({
   searchParams,
