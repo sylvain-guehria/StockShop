@@ -12,6 +12,7 @@ type Props = {
   onClick?: (params: any) => any;
   className?: string;
   isLoading?: boolean;
+  disabled?: boolean;
 };
 
 const primaryStyle =
@@ -37,6 +38,7 @@ const LinkButton: FC<Props> = ({
   onClick,
   className,
   isLoading,
+  disabled,
 }) => {
   return href ? (
     <Link href={href}>
@@ -60,7 +62,12 @@ const LinkButton: FC<Props> = ({
         'focus-within:ring-2 focus-within:ring-primary-500'
       )}
     >
-      <button type={type} onClick={onClick} className="flex">
+      <button
+        type={type}
+        onClick={onClick}
+        className="flex"
+        disabled={disabled}
+      >
         {children}
         {isLoading && (
           <span className="ml-2">

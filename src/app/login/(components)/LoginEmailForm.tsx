@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { logException } from 'logger';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -26,6 +27,7 @@ interface LoginFormType {
 const LoginEmailForm = () => {
   const toast = useToast(10000);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   const {
@@ -37,6 +39,7 @@ const LoginEmailForm = () => {
   const onSubmit: SubmitHandler<LoginFormType> = async (
     data: LoginFormType
   ) => {
+    setIsLoading(true);
     const { email, password } = data;
     try {
       const response = await loginWithEmailUseCase({
@@ -51,6 +54,8 @@ const LoginEmailForm = () => {
     } catch (error: any) {
       logException(error, { when: 'LoginEmailForm' });
       toast(ToasterTypeEnum.ERROR, error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -101,6 +106,8 @@ const LoginEmailForm = () => {
           type="submit"
           style="secondary"
           className="w-full justify-center"
+          isLoading={isLoading}
+          disabled={isLoading}
         >
           Se connecter
         </LinkButton>

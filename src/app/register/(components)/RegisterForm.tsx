@@ -2,6 +2,7 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { logException } from 'logger';
+import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -22,7 +23,7 @@ interface RegisterFormType {
 }
 const RegisterForm = () => {
   const toast = useToast(10000);
-
+  const [isLoading, setIsLoading] = useState(false);
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   const {
@@ -34,6 +35,7 @@ const RegisterForm = () => {
   const onSubmit: SubmitHandler<RegisterFormType> = async (
     data: RegisterFormType
   ) => {
+    setIsLoading(true);
     const { email, password } = data;
     try {
       const response = await registerWithEmailUseCase({
@@ -44,13 +46,15 @@ const RegisterForm = () => {
       if (response.data.user) {
         toast(
           ToasterTypeEnum.SUCCESS,
-          'un email envoyé de confirmation vous  a été envoyé'
+          'Bienvenue, un email envoyé de confirmation vous  a été envoyé'
         );
       }
       if (response.error) throw new Error(response.error.message);
     } catch (error: any) {
       logException(error, { when: 'RegisterForm' });
       toast(ToasterTypeEnum.ERROR, error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -127,6 +131,8 @@ const RegisterForm = () => {
           type="submit"
           style="secondary"
           className="w-full justify-center"
+          isLoading={isLoading}
+          disabled={isLoading}
         >
           S&apos;inscrire
         </LinkButton>
