@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 
 import { inventoryManagementRoutes } from './routes/inventoryManagementRoutes';
 import { mainRoutes } from './routes/mainRoutes';
+import { superBaseAuthTokenCookieName } from './supabase/constant';
 
 export async function middleware(req: NextRequestType) {
   const { pathname } = req.nextUrl;
@@ -14,6 +15,8 @@ export async function middleware(req: NextRequestType) {
 
   const session = await supabase.auth?.getSession();
   const user = session?.data?.session?.user;
+
+  if (!user) res.cookies.delete(superBaseAuthTokenCookieName);
 
   // LOGGEDIN USER
   if (user) {
@@ -38,7 +41,3 @@ export async function middleware(req: NextRequestType) {
 
   return res;
 }
-
-// export const config = {
-//   matcher: ['/optional-session', '/required-session', '/realtime'],
-// }
