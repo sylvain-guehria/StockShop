@@ -28,7 +28,7 @@ export default function SupabaseListener({
 }) {
   const { supabase } = useSupabase();
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
-  const { setUserTypeUser, user, reinitializeUser } = useAuth();
+  const { setUserTypeUser, reinitializeUser } = useAuth();
   const [showFirstConnectionModal, setShowFirstConnectionModal] =
     useState(false);
 
@@ -71,9 +71,7 @@ export default function SupabaseListener({
     };
   }, [serverAccessToken, supabase]);
 
-  return showFirstConnectionModal ? (
-    <DynamicFirstConnectionModal user={user as User} />
-  ) : null;
+  return showFirstConnectionModal ? <DynamicFirstConnectionModal /> : null;
 }
 
 const newPassWordPrompt = async (supabase: SupabaseClient<Database>) => {

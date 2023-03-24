@@ -10,25 +10,25 @@ import { Fragment, useRef, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import UserEntity from '@/modules/user/UserEntity';
-import type { User } from '@/modules/user/userType';
 import { SUBROLES } from '@/modules/user/userType';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { marketplaceRoutes } from '@/routes/marketplaceRoutes';
+import { useSupabase } from '@/supabase/client/SupabaseProvider';
 import { chooseSubRoleOnFirstConnectionUseCase } from '@/usecases/usecases';
 
 import NextImage from './lib/nextImage/NextImage';
 import { ToasterTypeEnum } from './toaster/toasterEnum';
 
-type Props = {
-  user: User;
-};
+type Props = {};
 
-const FirstConnectionModal: FC<Props> = ({ user }) => {
+const FirstConnectionModal: FC<Props> = () => {
   const [open, setOpen] = useState(true);
   const router = useRouter();
   const toast = useToast(10000);
 
-  const { setUserTypeUser } = useAuth();
+  const { setUserTypeUser, user } = useAuth();
+  const { supabase } = useSupabase();
+  supabase.auth.getSession();
 
   const cancelButtonRef = useRef(null);
 
