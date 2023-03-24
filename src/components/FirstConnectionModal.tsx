@@ -2,7 +2,6 @@
 
 import { Dialog, Transition } from '@headlessui/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import SettingsImg from 'public/assets/images/settings.png';
 import type { FC } from 'react';
 import { Fragment, useRef, useState } from 'react';
@@ -23,10 +22,9 @@ type Props = {};
 
 const FirstConnectionModal: FC<Props> = () => {
   const [open, setOpen] = useState(true);
-  const router = useRouter();
   const toast = useToast(10000);
 
-  const { setUserTypeUser, user } = useAuth();
+  const { user } = useAuth();
   const { supabase } = useSupabase();
   supabase.auth.getSession();
 
@@ -38,13 +36,7 @@ const FirstConnectionModal: FC<Props> = () => {
     chooseSubRoleOnFirstConnectionUseCase(UserEntity.new({ ...user }), subrole)
       .then((updatedUser) => {
         if (!updatedUser) return;
-        setUserTypeUser(updatedUser);
-        if (subrole === SUBROLES.BUYER) {
-          router.push(marketplaceRoutes.marketplace.path);
-        }
-        if (subrole === SUBROLES.SELLER) {
-          router.push(inventoryManagementRoutes.myInventory.path);
-        }
+        window.location.reload();
         setOpen(false);
       })
       .catch((error: any) => {

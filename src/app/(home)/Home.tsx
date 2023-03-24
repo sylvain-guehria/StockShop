@@ -1,7 +1,10 @@
 'use client';
 
+import { deleteCookie, getCookie } from 'cookies-next';
 import type { FC } from 'react';
 import { useState } from 'react';
+
+import { superBaseAuthTokenCookieName } from '@/supabase/constant';
 
 import screenShot from '../../../public/assets/images/capture-inventory-market.png';
 import { Background } from '../../components/lib/background/Background';
@@ -14,10 +17,17 @@ import { FAQ } from './FAQ';
 import Hero from './Hero';
 import Incentive from './Incentive';
 
-interface Props {}
+interface Props {
+  isLoggedIn: boolean;
+}
 
-const Home: FC<Props> = () => {
+const Home: FC<Props> = ({ isLoggedIn }) => {
   const [isBetaBannerOpen, setIsBetaBannerOpen] = useState(true);
+
+  const superBaseAuthTokenCookie = getCookie(superBaseAuthTokenCookieName);
+  if (!isLoggedIn && superBaseAuthTokenCookie) {
+    deleteCookie(superBaseAuthTokenCookieName);
+  }
 
   return (
     <div className="bg-white text-gray-600 antialiased">
