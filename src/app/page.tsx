@@ -30,7 +30,7 @@ const HomePage = async ({
 
   return (
     <BasicLayout>
-      <Home isLoggedIn={!!userProfile} />
+      <Home />
     </BasicLayout>
   );
 };
