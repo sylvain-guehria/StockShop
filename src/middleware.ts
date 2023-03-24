@@ -16,7 +16,10 @@ export async function middleware(req: NextRequestType) {
   const session = await supabase.auth?.getSession();
   const user = session?.data?.session?.user;
 
-  if (!user) req.cookies.delete(superBaseAuthTokenCookieName);
+  if (!user) {
+    req.cookies.delete(superBaseAuthTokenCookieName);
+    res.cookies.delete(superBaseAuthTokenCookieName);
+  }
 
   // LOGGEDIN USER
   if (user) {
