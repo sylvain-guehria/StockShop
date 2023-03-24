@@ -54,6 +54,8 @@ export default function SupabaseListener({
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('event', event);
+      console.log('session', session);
       if (serverAccessToken && session?.access_token !== serverAccessToken) {
         window.location.reload();
       }
@@ -61,8 +63,8 @@ export default function SupabaseListener({
       if (event === 'PASSWORD_RECOVERY') {
         await newPassWordPrompt(supabase);
       }
-      setCurrentUserId(session?.user?.id || null);
 
+      if (session?.user?.id) setCurrentUserId(session?.user?.id);
       if (!session?.user?.id) reinitializeUser();
     });
 
