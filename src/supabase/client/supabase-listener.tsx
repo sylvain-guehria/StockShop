@@ -54,7 +54,7 @@ export default function SupabaseListener({
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (serverAccessToken && session?.access_token !== serverAccessToken) {
+      if (session?.access_token !== serverAccessToken) {
         window.location.reload();
       }
 
