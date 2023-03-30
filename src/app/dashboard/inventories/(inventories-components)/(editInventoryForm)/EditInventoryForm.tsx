@@ -1,10 +1,13 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { logException } from 'logger';
 import type { FC } from 'react';
+import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
+import Input from '@/components/lib/inputs/Input';
 import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
@@ -38,6 +41,7 @@ type Props = {
 
 const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
   const toast = useToast(10000);
+  const [isLoading, setIsLoading] = useState(false);
   const formOptions = {
     resolver: yupResolver(validationSchema),
     defaultValues: {
@@ -64,6 +68,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
   const onSubmitForm: SubmitHandler<EditInventoryFormType> = async (
     data: EditInventoryFormType
   ) => {
+    setIsLoading(true);
     try {
       onSubmit({
         inventory: {
@@ -74,11 +79,14 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
           isDefaultInventory: inventory.isDefaultInventory,
         },
       });
-    } catch (e) {
+    } catch (error) {
+      logException(error, { when: 'EditInventoryForm' });
       toast(
         ToasterTypeEnum.ERROR,
         "Une erreur est survenue lors de la modification de l'inventaire"
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -88,19 +96,13 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
       className="space-y-6 p-6 text-left"
     >
       <div>
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Nom de l&apos;inventaire
-        </label>
         <div className="mt-1">
-          <input
-            id="name"
-            {...register('name')}
+          <Input
             type="text"
-            autoComplete="name"
-            className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+            name="name"
+            label="Nom de l'inventaire"
+            register={register('name')}
+            error={errors.name?.message}
           />
         </div>
         <div className="text-sm text-red-600">{errors.name?.message}</div>
@@ -232,6 +234,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
           type="submit"
           style="secondary"
           className="flex w-full justify-center"
+          isLoading={isLoading}
         >
           Valider
         </LinkButton>
