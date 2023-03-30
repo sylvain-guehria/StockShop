@@ -52,11 +52,13 @@ const PinnedInventories: FC<Props> = ({
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedInventory, setSelectedInventory] = useState<Inventory>();
 
-  const setDaufltInventoryMutation = useMutation({
+  const {
+    mutate: mutateSetDefaultInventory,
+    isLoading: isLoadingSetDefaultInventory,
+  } = useMutation({
     mutationFn: (inventory: Inventory) =>
       setInventoryAsDefaultUseCase(inventory),
     onSuccess: () => {
-      // Invalidate and refetch
       queryClient.invalidateQueries({
         queryKey: [ApiRequestEnums.GetInventories],
       });
@@ -80,7 +82,7 @@ const PinnedInventories: FC<Props> = ({
   };
 
   const handleClickSetDefaultInventory = (inventory: Inventory) => {
-    setDaufltInventoryMutation.mutate(inventory);
+    mutateSetDefaultInventory(inventory);
   };
 
   return (
@@ -107,6 +109,7 @@ const PinnedInventories: FC<Props> = ({
           />
         </DynamicModal>
       )}
+
       <ul
         role="list"
         className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4"
@@ -126,6 +129,8 @@ const PinnedInventories: FC<Props> = ({
             />
           ))
         )}
+
+        {isLoadingSetDefaultInventory && <Spinner />}
       </ul>
     </>
   );
