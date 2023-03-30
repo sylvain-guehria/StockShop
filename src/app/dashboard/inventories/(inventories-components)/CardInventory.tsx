@@ -52,7 +52,19 @@ const CardInventory: FC<Props> = ({
           bgColor,
           'flex w-16 shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white'
         )}
-      ></div>
+      >
+        {inventory.isDefault() && (
+          <div
+            className="tooltip"
+            data-tip="Est l'actuel inventaire par défaut"
+          >
+            <ArrowsPointingInIcon
+              className="tooltip h-5 w-5 shrink-0 text-gray-400"
+              aria-hidden="true"
+            />
+          </div>
+        )}
+      </div>
       <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-y border-r border-gray-200 bg-white">
         <div
           className="flex-1 truncate px-4 py-2 text-sm"
