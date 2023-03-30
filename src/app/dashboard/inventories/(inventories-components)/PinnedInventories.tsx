@@ -1,7 +1,6 @@
 'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { inventoryServiceDi } from 'di';
 import dynamic from 'next/dynamic';
 import type { FC } from 'react';
 import { useState } from 'react';
@@ -12,7 +11,6 @@ import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import type InventoryEntity from '@/modules/inventory/InventoryEntity';
-import type { UpdateInventoryParams } from '@/modules/inventory/inventoryService';
 import type { Inventory } from '@/modules/inventory/inventoryType';
 import type { DeleteInventoryParams } from '@/usecases/inventoy/deleteInventory';
 import {
@@ -62,18 +60,6 @@ const PinnedInventories: FC<Props> = ({
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedInventory, setSelectedInventory] = useState<Inventory>();
-
-  const updateInventoryMutation = useMutation({
-    mutationFn: (params: UpdateInventoryParams) =>
-      inventoryServiceDi.updateInventory(params),
-    onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({
-        queryKey: [ApiRequestEnums.GetInventories],
-      });
-      setIsEditModalOpen(false);
-    },
-  });
 
   const deleteInventoryMutation = useMutation({
     mutationFn: (params: DeleteInventoryParams) =>
@@ -134,7 +120,7 @@ const PinnedInventories: FC<Props> = ({
         >
           <DynamicEditInventoryForm
             inventory={selectedInventory as unknown as Inventory}
-            onSubmit={updateInventoryMutation.mutate}
+            setIsEditModalOpen={setIsEditModalOpen}
           />
         </DynamicModal>
       )}

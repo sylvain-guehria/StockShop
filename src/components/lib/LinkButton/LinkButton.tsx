@@ -66,7 +66,7 @@ const LinkButton: FC<Props> = ({
         type={type}
         onClick={onClick}
         className="flex"
-        disabled={disabled}
+        disabled={disabled || isLoading}
       >
         {children}
         {isLoading && (

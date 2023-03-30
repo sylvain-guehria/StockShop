@@ -1,6 +1,8 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { inventoryServiceDi } from 'di';
 import { logException } from 'logger';
 import type { FC } from 'react';
 import { useState } from 'react';
@@ -10,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import Input from '@/components/lib/inputs/Input';
 import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
+import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useToast } from '@/hooks/useToast';
 import type { UpdateInventoryParams } from '@/modules/inventory/inventoryService';
 import type {
@@ -36,12 +39,14 @@ const publicStates = [
 
 type Props = {
   inventory: Inventory;
-  onSubmit: ({ inventory }: UpdateInventoryParams) => void;
+  setIsEditModalOpen: (isOpen: boolean) => void;
 };
 
-const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
+const EditInventoryForm: FC<Props> = ({ inventory, setIsEditModalOpen }) => {
   const toast = useToast(10000);
   const [isLoading, setIsLoading] = useState(false);
+  const queryClient = useQueryClient();
+
   const formOptions = {
     resolver: yupResolver(validationSchema),
     defaultValues: {
@@ -65,29 +70,40 @@ const EditInventoryForm: FC<Props> = ({ inventory, onSubmit }) => {
     setValue('color', color);
   };
 
-  const onSubmitForm: SubmitHandler<EditInventoryFormType> = async (
-    data: EditInventoryFormType
-  ) => {
-    setIsLoading(true);
-    try {
-      onSubmit({
-        inventory: {
-          id: inventory.id,
-          name: data.name,
-          isPublic: data.isPublic as unknown as boolean,
-          color: data.color,
-          isDefaultInventory: inventory.isDefaultInventory,
-        },
+  const { mutate: mutateInventory } = useMutation({
+    mutationFn: (params: UpdateInventoryParams) =>
+      inventoryServiceDi.updateInventory(params),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [ApiRequestEnums.GetInventories],
       });
-    } catch (error) {
+      setIsEditModalOpen(false);
+    },
+    onError: (error) => {
       logException(error, { when: 'EditInventoryForm' });
       toast(
         ToasterTypeEnum.ERROR,
         "Une erreur est survenue lors de la modification de l'inventaire"
       );
-    } finally {
+    },
+    onSettled: () => {
       setIsLoading(false);
-    }
+    },
+  });
+
+  const onSubmitForm: SubmitHandler<EditInventoryFormType> = (
+    data: EditInventoryFormType
+  ) => {
+    setIsLoading(true);
+    mutateInventory({
+      inventory: {
+        id: inventory.id,
+        name: data.name,
+        isPublic: data.isPublic as unknown as boolean,
+        color: data.color,
+        isDefaultInventory: inventory.isDefaultInventory,
+      },
+    });
   };
 
   return (
