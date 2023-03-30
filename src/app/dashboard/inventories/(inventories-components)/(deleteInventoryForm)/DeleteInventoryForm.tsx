@@ -2,19 +2,35 @@
 
 import { TrashIcon } from '@heroicons/react/20/solid';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { logException } from 'logger';
 import type { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { object, string } from 'yup';
 
+import Input from '@/components/lib/inputs/Input';
+import LinkButton from '@/components/lib/LinkButton/LinkButton';
+import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
+import { ApiRequestEnums } from '@/enums/apiRequestEnums';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
 import type { Inventory } from '@/modules/inventory/inventoryType';
+import type { DeleteInventoryParams } from '@/usecases/inventoy/deleteInventory';
+import { deleteInventoryUseCase } from '@/usecases/usecases';
 
 type Props = {
   inventory: Inventory;
-  deleteInventory: (inventory: Inventory) => void;
+  setIsDeleteModalOpen: (isOpen: boolean) => void;
 };
 
-const DeleteInventoryForm: FC<Props> = ({ inventory, deleteInventory }) => {
+const DeleteInventoryForm: FC<Props> = ({
+  inventory,
+  setIsDeleteModalOpen,
+}) => {
+  const queryClient = useQueryClient();
+  const toast = useToast(10000);
+  const { user } = useAuth();
+
   const validationSchema = object().shape({
     inventoryName: string()
       .required("Vous devez écrire le nom de l'inventaire.")
@@ -31,12 +47,33 @@ const DeleteInventoryForm: FC<Props> = ({ inventory, deleteInventory }) => {
     formState: { errors },
   } = useForm<{ inventoryName: string }>(formOptions);
 
-  const onSubmitDeleteInventory = async () => {
-    try {
-      deleteInventory(inventory);
-    } catch (e) {
-      logException(e);
-    }
+  const { isLoading, mutate } = useMutation({
+    mutationFn: (params: DeleteInventoryParams) =>
+      deleteInventoryUseCase(params),
+    onSuccess: () => {
+      setIsDeleteModalOpen(false);
+      toast(ToasterTypeEnum.SUCCESS, 'Linventaire a été supprimé avec succès');
+      queryClient.invalidateQueries({
+        queryKey: [ApiRequestEnums.GetProducts],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [ApiRequestEnums.GetInventories],
+      });
+    },
+    onError: (error) => {
+      logException(error, { when: 'DeleteInventoryForm' });
+      toast(
+        ToasterTypeEnum.ERROR,
+        "Une erreur est survenue lors de la suppression de l'inventaire"
+      );
+    },
+  });
+
+  const onSubmitDeleteInventory = () => {
+    mutate({
+      inventoryId: inventory.id as string,
+      companyId: user.getCompanyId(),
+    });
   };
 
   return (
@@ -55,8 +92,8 @@ const DeleteInventoryForm: FC<Props> = ({ inventory, deleteInventory }) => {
             </h3>
             <div className="mt-2">
               <p className="text-sm text-gray-500">
-                Etes vous sûr de vouloir supprimer cette inventaire ? Cet action
-                est définitive.
+                Etes vous sûr de vouloir supprimer cette inventaire ? Cette
+                action est définitive.
                 <br /> <br /> Pour supprimer cet inventaire veuillez écrire son
                 nom complet et valider.
               </p>
@@ -67,27 +104,24 @@ const DeleteInventoryForm: FC<Props> = ({ inventory, deleteInventory }) => {
       <div className="justify-center px-4 py-3 sm:flex sm:px-6">
         <form onSubmit={handleSubmit(onSubmitDeleteInventory)}>
           <div className="relative mt-1 rounded-md shadow-sm sm:flex">
-            <input
+            <Input
               type="text"
-              {...register('inventoryName')}
-              id="inventoryName"
-              className="block w-full rounded-md border-red-300 pr-10 text-red-900 placeholder:text-red-300 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm"
+              name="inventoryName"
+              register={register('inventoryName')}
               placeholder={inventory.name}
-              aria-invalid="true"
+              error={errors.inventoryName?.message}
               aria-describedby="inventoryName-error"
+              aria-invalid="true"
+              inputClassName="border-red-300 pr-10 text-red-900 placeholder:text-red-300 focus:border-red-500 focus:outline-none focus:ring-red-500 "
             />
-            <button
+            <LinkButton
               type="submit"
+              isLoading={isLoading}
               className="mt-3 w-full rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:mt-0 sm:w-auto sm:text-sm"
             >
               Valider
-            </button>
+            </LinkButton>
           </div>
-          {errors && (
-            <p className="mt-2 text-sm text-red-600" id="inventoryName-error">
-              {errors.inventoryName?.message}
-            </p>
-          )}
         </form>
       </div>
     </>

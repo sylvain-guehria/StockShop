@@ -5,7 +5,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { inventoryServiceDi } from 'di';
 import { logException } from 'logger';
 import type { FC } from 'react';
-import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -44,7 +43,6 @@ type Props = {
 
 const EditInventoryForm: FC<Props> = ({ inventory, setIsEditModalOpen }) => {
   const toast = useToast(10000);
-  const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
 
   const formOptions = {
@@ -70,7 +68,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, setIsEditModalOpen }) => {
     setValue('color', color);
   };
 
-  const { mutate: mutateInventory } = useMutation({
+  const { mutate: mutateInventory, isLoading } = useMutation({
     mutationFn: (params: UpdateInventoryParams) =>
       inventoryServiceDi.updateInventory(params),
     onSuccess: () => {
@@ -86,15 +84,11 @@ const EditInventoryForm: FC<Props> = ({ inventory, setIsEditModalOpen }) => {
         "Une erreur est survenue lors de la modification de l'inventaire"
       );
     },
-    onSettled: () => {
-      setIsLoading(false);
-    },
   });
 
   const onSubmitForm: SubmitHandler<EditInventoryFormType> = (
     data: EditInventoryFormType
   ) => {
-    setIsLoading(true);
     mutateInventory({
       inventory: {
         id: inventory.id,

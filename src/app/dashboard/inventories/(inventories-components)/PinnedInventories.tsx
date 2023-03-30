@@ -6,17 +6,10 @@ import type { FC } from 'react';
 import { useState } from 'react';
 
 import Spinner from '@/components/lib/spinner/Spinner';
-import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
-import { useAuth } from '@/hooks/useAuth';
-import { useToast } from '@/hooks/useToast';
 import type InventoryEntity from '@/modules/inventory/InventoryEntity';
 import type { Inventory } from '@/modules/inventory/inventoryType';
-import type { DeleteInventoryParams } from '@/usecases/inventoy/deleteInventory';
-import {
-  deleteInventoryUseCase,
-  setInventoryAsDefaultUseCase,
-} from '@/usecases/usecases';
+import { setInventoryAsDefaultUseCase } from '@/usecases/usecases';
 
 import CardInventory from './CardInventory';
 
@@ -55,30 +48,9 @@ const PinnedInventories: FC<Props> = ({
   onSelectInventory,
 }) => {
   const queryClient = useQueryClient();
-  const toast = useToast(10000);
-  const { user } = useAuth();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedInventory, setSelectedInventory] = useState<Inventory>();
-
-  const deleteInventoryMutation = useMutation({
-    mutationFn: (params: DeleteInventoryParams) =>
-      deleteInventoryUseCase(params),
-    onSuccess: () => {
-      handleCloseModal();
-      toast(ToasterTypeEnum.SUCCESS, 'Linventaire a été supprimé avec succès');
-      queryClient.invalidateQueries({
-        queryKey: [ApiRequestEnums.GetProducts],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [ApiRequestEnums.GetInventories],
-      });
-    },
-    onError: (error: any) => {
-      handleCloseModal();
-      toast(ToasterTypeEnum.ERROR, error.message);
-    },
-  });
 
   const setDaufltInventoryMutation = useMutation({
     mutationFn: (inventory: Inventory) =>
@@ -131,12 +103,7 @@ const PinnedInventories: FC<Props> = ({
         >
           <DynamicDeleteInventoryForm
             inventory={selectedInventory as unknown as Inventory}
-            deleteInventory={(inventory) =>
-              deleteInventoryMutation.mutate({
-                inventoryId: inventory.id as string,
-                companyId: user.getCompanyId(),
-              })
-            }
+            setIsDeleteModalOpen={setIsDeleteModalOpen}
           />
         </DynamicModal>
       )}
