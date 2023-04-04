@@ -16,7 +16,7 @@ const CreateInventoryButton: FC = () => {
   const { user } = useAuth();
   const toast = useToast(5000);
 
-  const mutation = useMutation({
+  const { mutate } = useMutation({
     mutationFn: ({ companyId }: CreateInventoryParams) =>
       inventoryServiceDi.createInventoryWithCompanyId({
         companyId,
@@ -39,7 +39,7 @@ const CreateInventoryButton: FC = () => {
     const { companyId } = user;
 
     if (!companyId) return;
-    mutation.mutate({
+    mutate({
       companyId,
     });
   };
@@ -47,7 +47,7 @@ const CreateInventoryButton: FC = () => {
   return (
     <div
       onClick={handleClickCreateInventory}
-      className="mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent py-2 px-4 text-base font-medium text-primary-500 "
+      className="mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent px-4 py-2 text-base font-medium text-primary-500 "
     >
       <FolderPlusIcon className="mr-3 h-6 w-6 shrink-0 text-primary-500" />
       Ajouter inventaire

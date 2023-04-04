@@ -1,21 +1,20 @@
 'use client';
 
 import { Dialog, Transition } from '@headlessui/react';
-import Link from 'next/link';
+import { useMutation } from '@tanstack/react-query';
 import SettingsImg from 'public/assets/images/settings.png';
 import type { FC } from 'react';
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import UserEntity from '@/modules/user/UserEntity';
 import { SUBROLES } from '@/modules/user/userType';
-import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
-import { marketplaceRoutes } from '@/routes/marketplaceRoutes';
 import { useSupabase } from '@/supabase/client/SupabaseProvider';
 import { chooseSubRoleOnFirstConnectionUseCase } from '@/usecases/usecases';
 
 import NextImage from './lib/nextImage/NextImage';
+import Spinner from './lib/spinner/Spinner';
 import { ToasterTypeEnum } from './toaster/toasterEnum';
 
 type Props = {};
@@ -28,30 +27,32 @@ const FirstConnectionModal: FC<Props> = () => {
   const { supabase } = useSupabase();
   supabase.auth.getSession();
 
-  const cancelButtonRef = useRef(null);
+  const { mutate, isLoading } = useMutation({
+    mutationFn: (subrole: SUBROLES.BUYER | SUBROLES.SELLER) =>
+      chooseSubRoleOnFirstConnectionUseCase(
+        UserEntity.new({ ...user }),
+        subrole
+      ),
+    onSuccess: () => {
+      setOpen(false);
+    },
+    onError: () => {
+      toast(
+        ToasterTypeEnum.ERROR,
+        'Une erreur est survenue lors de la création de l&apos;inventaire'
+      );
+    },
+  });
 
   const onChooseRoleFirstConnection = async (
     subrole: SUBROLES.BUYER | SUBROLES.SELLER
   ) => {
-    chooseSubRoleOnFirstConnectionUseCase(UserEntity.new({ ...user }), subrole)
-      .then((updatedUser) => {
-        if (!updatedUser) return;
-        window.location.reload();
-        setOpen(false);
-      })
-      .catch((error: any) => {
-        toast(ToasterTypeEnum.ERROR, error.message);
-      });
+    mutate(subrole);
   };
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-10"
-        initialFocus={cancelButtonRef}
-        onClose={() => null}
-      >
+      <Dialog as="div" className="relative z-10" onClose={() => null}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -75,7 +76,7 @@ const FirstConnectionModal: FC<Props> = () => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+              <Dialog.Panel className="relative overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
                 <div>
                   <Dialog.Title
                     as="h3"
@@ -110,29 +111,26 @@ const FirstConnectionModal: FC<Props> = () => {
                   </div>
                 </div>
                 <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-                  <Link href={marketplaceRoutes.marketplace.path}>
-                    <button
-                      type="button"
-                      className="inline-flex w-full justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
-                      onClick={() =>
-                        onChooseRoleFirstConnection(SUBROLES.SELLER)
-                      }
-                      ref={cancelButtonRef}
-                    >
-                      Je veux gérer mon inventaire
-                    </button>
-                  </Link>
-                  <Link href={inventoryManagementRoutes.myInventory.path}>
-                    <button
-                      type="button"
-                      className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
-                      onClick={() =>
-                        onChooseRoleFirstConnection(SUBROLES.BUYER)
-                      }
-                    >
-                      Je viens seulement en tant qu&apos;acheteur
-                    </button>
-                  </Link>
+                  <button
+                    type="button"
+                    className="inline-flex w-full justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
+                    onClick={() => onChooseRoleFirstConnection(SUBROLES.SELLER)}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? <Spinner /> : 'Je veux gérer mon inventaire'}
+                  </button>
+                  <button
+                    type="button"
+                    className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
+                    onClick={() => onChooseRoleFirstConnection(SUBROLES.BUYER)}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <Spinner />
+                    ) : (
+                      "Je viens seulement en tant qu'acheteur"
+                    )}
+                  </button>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

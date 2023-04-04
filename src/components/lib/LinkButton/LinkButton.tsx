@@ -13,6 +13,7 @@ type Props = {
   className?: string;
   isLoading?: boolean;
   disabled?: boolean;
+  buttonClassName?: string;
 };
 
 const primaryStyle =
@@ -37,6 +38,7 @@ const LinkButton: FC<Props> = ({
   type = 'submit',
   onClick,
   className,
+  buttonClassName,
   isLoading,
   disabled,
 }) => {
@@ -65,7 +67,7 @@ const LinkButton: FC<Props> = ({
       <button
         type={type}
         onClick={onClick}
-        className="flex"
+        className={clsx('flex', buttonClassName || '')}
         disabled={disabled || isLoading}
       >
         {children}
