@@ -1,10 +1,14 @@
 import {
   MagnifyingGlassIcon,
+  MinusCircleIcon,
   PencilSquareIcon,
   PhotoIcon,
+  PlusCircleIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { productServiceDi } from 'di';
+import { logException } from 'logger';
 import dynamic from 'next/dynamic';
 import type { FC, Reducer } from 'react';
 import { useEffect, useReducer, useState } from 'react';
@@ -12,14 +16,17 @@ import { useEffect, useReducer, useState } from 'react';
 import Pagination from '@/components/lib/pagination/Pagination';
 import Spinner from '@/components/lib/spinner/Spinner';
 import Tag from '@/components/lib/tag/Tag';
+import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { CustomEvents } from '@/enums/eventEnums';
 import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
 import {
   getCategoryById,
   getSubCategoryById,
 } from '@/modules/category/categoryUtils';
 import type ProductEntity from '@/modules/product/ProductEntity';
+import type { Product } from '@/modules/product/productType';
 import { getInventoryProductsUseCase } from '@/usecases/usecases';
 
 import { ProductsFilters } from './(filters)/ProductsFilters';
@@ -72,6 +79,8 @@ type Props = {
 
 const ProductTable: FC<Props> = ({ currentInventoryId }) => {
   const { user } = useAuth();
+  const toast = useToast(10000);
+  const queryClient = useQueryClient();
   const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
   const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] =
     useState(false);
@@ -137,6 +146,29 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
     staleTime: oneHourInMilliseconds,
   });
 
+  const { mutate: mutateProduct, isLoading: isLoadingProductMutation } =
+    useMutation({
+      mutationFn: (params: Product) => productServiceDi.updateProduct(params),
+      onSuccess: () => {
+        // Invalidate and refetch
+        queryClient.invalidateQueries({
+          queryKey: [ApiRequestEnums.GetProducts],
+        });
+        queryClient.invalidateQueries({
+          queryKey: [ApiRequestEnums.GetProduct],
+        });
+        setIsEditProductModalOpen(false);
+        setProductToEdit(null);
+      },
+      onError: (error) => {
+        logException(error, { when: 'updateProductMutation' });
+        toast(
+          ToasterTypeEnum.ERROR,
+          'Erreur lors de la mise à jour du produit'
+        );
+      },
+    });
+
   const handleEditProductClick = (product: ProductEntity) => {
     if (!product) return;
     setProductToEdit(product);
@@ -178,6 +210,8 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
           <DynamicEditProductForm
             product={productToEdit as ProductEntity}
             handleCloseModal={handleCloseModal}
+            onSubmitEditForm={mutateProduct}
+            isLoading={isLoadingProductMutation}
           />
         </DynamicModal>
       )}
@@ -345,6 +379,32 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
                           product={product}
                           handleCloseModal={handleCloseModal}
                         />
+                        <div className="flex">
+                          <MinusCircleIcon
+                            className="mr-3 h-5 w-5 shrink-0 cursor-pointer text-primary-600"
+                            aria-hidden="true"
+                            onClick={() =>
+                              mutateProduct({
+                                ...product,
+                                toBuy:
+                                  product.toBuy > 0 ? product.toBuy - 1 : 0,
+                              })
+                            }
+                          />
+
+                          {product.toBuy}
+
+                          <PlusCircleIcon
+                            className="ml-3 h-5 w-5 shrink-0 cursor-pointer text-primary-600"
+                            aria-hidden="true"
+                            onClick={() =>
+                              mutateProduct({
+                                ...product,
+                                toBuy: product.toBuy + 1,
+                              })
+                            }
+                          />
+                        </div>
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {product.isPublic ? 'Public' : 'Privé'}
