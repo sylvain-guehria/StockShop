@@ -1,7 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { setCookie } from 'cookies-next';
+import { useMutation } from '@tanstack/react-query';
 import { logException } from 'logger';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -15,7 +15,6 @@ import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
 import supabase from '@/supabase/client/supabase-browser';
-import { superBaseAuthTokenCookieName } from '@/supabase/constant';
 import { loginWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './LoginFormValidation';
@@ -38,31 +37,39 @@ const LoginEmailForm = () => {
     formState: { errors },
   } = useForm<LoginFormType>(formOptions);
 
+  const { mutate } = useMutation({
+    mutationFn: ({ email, password }: LoginFormType) =>
+      loginWithEmailUseCase({
+        email,
+        password,
+        supabase,
+      }),
+    onSuccess: (response) => {
+      setIsLoading(false);
+      if (response.data.user) {
+        router.push(mainRoutes.home.path);
+      }
+      if (response.error) throw new Error(response.error.message);
+    },
+    onError: (error) => {
+      logException(error, { when: 'LoginEmailForm' });
+      toast(
+        ToasterTypeEnum.ERROR,
+        'Une erreur est survenue, veuillez réessayer'
+      );
+    },
+  });
+
   const onSubmit: SubmitHandler<LoginFormType> = async (
     data: LoginFormType
   ) => {
     setIsLoading(true);
-    const { email, password } = data;
-    try {
-      const response = await loginWithEmailUseCase({
-        email,
-        password,
-        supabase,
-      });
-      if (response.data.user) {
-        setCookie(
-          superBaseAuthTokenCookieName,
-          response.data.session?.access_token
-        );
-        router.push(mainRoutes.home.path);
-      }
-      if (response.error) throw new Error(response.error.message);
-    } catch (error: any) {
-      logException(error, { when: 'LoginEmailForm' });
-      toast(ToasterTypeEnum.ERROR, error.message);
-    } finally {
-      setIsLoading(false);
-    }
+    const { email, password, rememberMe } = data;
+    mutate({
+      email,
+      password,
+      rememberMe,
+    });
   };
 
   return (
