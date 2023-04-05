@@ -3,6 +3,7 @@
 import { FolderPlusIcon } from '@heroicons/react/24/outline';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { inventoryServiceDi } from 'di';
+import { logException } from 'logger';
 import type { FC } from 'react';
 
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
@@ -27,7 +28,8 @@ const CreateInventoryButton: FC = () => {
         queryKey: [ApiRequestEnums.GetInventories],
       });
     },
-    onError: () => {
+    onError: (error) => {
+      logException(error, { when: 'CreateInventoryButton' });
       toast(
         ToasterTypeEnum.ERROR,
         "Erreur lors de la création de l'inventaire, veuillez réessayer."

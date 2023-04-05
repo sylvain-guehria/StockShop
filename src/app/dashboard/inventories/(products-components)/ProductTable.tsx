@@ -24,10 +24,7 @@ import {
 } from '@/modules/category/categoryUtils';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { Product } from '@/modules/product/productType';
-import {
-  deleteProductUseCase,
-  getInventoryProductsUseCase,
-} from '@/usecases/usecases';
+import { getInventoryProductsUseCase } from '@/usecases/usecases';
 
 import { ProductsFilters } from './(filters)/ProductsFilters';
 import type {
@@ -47,8 +44,8 @@ const DynamicModal = dynamic(
   }
 );
 
-const DynamicDeleteModal = dynamic(
-  () => import('../../../../components/lib/modal/DeleteModal'),
+const DynamicDeleteProductModal = dynamic(
+  () => import('./DeleteProductModal'),
   {
     suspense: true,
   }
@@ -157,19 +154,6 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
     },
   });
 
-  const deleteProductMutation = useMutation({
-    mutationFn: (product: ProductEntity) =>
-      deleteProductUseCase({ product, companyId: user.getCompanyId() }),
-    onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({
-        queryKey: [ApiRequestEnums.GetProducts],
-      });
-      setIsDeleteProductModalOpen(false);
-      setProductToEdit(null);
-    },
-  });
-
   const handleEditProductClick = (product: ProductEntity) => {
     if (!product) return;
     setProductToEdit(product);
@@ -216,17 +200,10 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
         </DynamicModal>
       )}
       {isDeleteProductModalOpen && (
-        <DynamicDeleteModal
+        <DynamicDeleteProductModal
+          product={productToEdit as ProductEntity}
           open={isDeleteProductModalOpen}
           handleCloseModal={handleCloseModal}
-          cancelLabel="Annuler"
-          confirmLabel="Supprimer"
-          title="Supprimer le produit"
-          description={`Êtes-vous sûr de vouloir supprimer le produit : ${productToEdit?.getLabel()} ?`}
-          isLoading={deleteProductMutation.isLoading}
-          onConfirm={() =>
-            deleteProductMutation.mutate(productToEdit as ProductEntity)
-          }
         />
       )}
       {isEditPhotoModalOpen && (

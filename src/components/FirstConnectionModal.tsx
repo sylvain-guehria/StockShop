@@ -2,6 +2,7 @@
 
 import { Dialog, Transition } from '@headlessui/react';
 import { useMutation } from '@tanstack/react-query';
+import { logException } from 'logger';
 import SettingsImg from 'public/assets/images/settings.png';
 import type { FC } from 'react';
 import { Fragment, useState } from 'react';
@@ -36,7 +37,8 @@ const FirstConnectionModal: FC<Props> = () => {
     onSuccess: () => {
       setOpen(false);
     },
-    onError: () => {
+    onError: (error) => {
+      logException(error, { when: 'FirstConnectionModal' });
       toast(
         ToasterTypeEnum.ERROR,
         'Une erreur est survenue lors de la création de l&apos;inventaire'

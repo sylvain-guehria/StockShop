@@ -3,6 +3,7 @@
 import { DocumentPlusIcon } from '@heroicons/react/24/outline';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { productServiceDi } from 'di';
+import { logException } from 'logger';
 import type { FC } from 'react';
 
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
@@ -35,7 +36,8 @@ const CreateProductButton: FC<Props> = ({ currentInventoryId }) => {
       });
       window.dispatchEvent(event);
     },
-    onError: () => {
+    onError: (error) => {
+      logException(error, { when: 'CreateProductButton' });
       toast(
         ToasterTypeEnum.ERROR,
         'Erreur lors de la création du produit, veuillez réessayer.'
@@ -54,7 +56,7 @@ const CreateProductButton: FC<Props> = ({ currentInventoryId }) => {
   return (
     <div
       onClick={handleClickCreateProduct}
-      className="mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent py-2 px-4 text-base font-medium text-primary-500 "
+      className="mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent px-4 py-2 text-base font-medium text-primary-500 "
     >
       <DocumentPlusIcon className="mr-3 h-6 w-6 shrink-0 text-primary-500" />
       Ajouter produit
