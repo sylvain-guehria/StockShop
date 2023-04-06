@@ -56,7 +56,9 @@ const getProductsByInventoryId = async (
 
   const { count } = await supabaseSsr
     .from(TableNames.PRODUCTS)
-    .select('*', { count: 'exact', head: true });
+    .select('*', { count: 'exact', head: true })
+    .match(match)
+    .gt(filterToBuy === 'true' ? ProductAttributes.TO_BUY : '', 0);
 
   if (error) {
     logException(error, { when: 'getting products by inventory id' });

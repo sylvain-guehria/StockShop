@@ -122,7 +122,7 @@ export const ProductsFilters: FC<Props> = ({
                       (filter) => filter
                     ).length
                   }{' '}
-                  <span className="hidden sm:block">Filtres</span>
+                  <span className="ml-1 hidden sm:block">Filtres</span>
                 </Disclosure.Button>
               </div>
               <div className="pl-6">
@@ -144,7 +144,7 @@ export const ProductsFilters: FC<Props> = ({
             </div>
           </div>
           <Disclosure.Panel className="border-t border-gray-200 pb-4 pt-1">
-            <div className="my-3 grid grid-cols-1 gap-y-6 gap-x-4 px-6 sm:grid-cols-12">
+            <div className="my-3 grid grid-cols-1 gap-x-4 gap-y-6 px-6 sm:grid-cols-12">
               <fieldset className="sm:col-span-3">
                 <InputSelect
                   options={[
