@@ -16,17 +16,13 @@ import { updateUserUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './ProfileFormValidation';
 
-type Props = {
-  user: UserEntity;
-};
-
 type ProfileFormType = {
   username: string;
   firstName: string;
   lastName: string;
 };
 
-const ProfileForm: FC<Props> = () => {
+const ProfileForm: FC = () => {
   const [errorUserNameExist, setErrorUserNameExist] = useState(false);
   const toast = useToast(10000);
   const { user, setUser } = useAuth();
@@ -53,6 +49,7 @@ const ProfileForm: FC<Props> = () => {
       setUser(UserEntity.new(user));
       toast(ToasterTypeEnum.SUCCESS, 'Vos informations ont été mises à jour');
     },
+
     onError: (error: any) => {
       logException(error, { when: 'ProfileForm' });
       if (error.message === 'UserName already exists') {

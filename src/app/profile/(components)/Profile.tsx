@@ -61,11 +61,11 @@ const Profile = () => {
                 setSelectedTab={setSelectedTab}
               />
               {user.isLoggedIn() && seletedTab === subNavigation[0]?.tab && (
-                <DynamicProfileForm user={user} />
+                <DynamicProfileForm />
               )}
 
               {user.isLoggedIn() && seletedTab === subNavigation[1]?.tab && (
-                <DynamicSettingsForm user={user} />
+                <DynamicSettingsForm />
               )}
 
               {!user.isLoggedIn() && (

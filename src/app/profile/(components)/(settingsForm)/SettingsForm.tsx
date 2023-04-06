@@ -1,28 +1,28 @@
 import { Switch } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
 import clsx from 'clsx';
+import { logException } from 'logger';
 import type { FC } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
+import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
-import type UserEntity from '@/modules/user/UserEntity';
+import UserEntity from '@/modules/user/UserEntity';
 import { updateUserUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './SettingsFormValidation';
-
-type Props = {
-  user: UserEntity;
-};
 
 type SettingsFormType = {
   hasInventoryManagementServiceActivated: boolean;
 };
 
-const SettingsForm: FC<Props> = ({ user }) => {
+const SettingsForm: FC = () => {
   const toast = useToast(10000);
+  const { user, setUser } = useAuth();
 
   const formOptions = {
     resolver: yupResolver(validationSchema),
@@ -40,6 +40,20 @@ const SettingsForm: FC<Props> = ({ user }) => {
     'hasInventoryManagementServiceActivated'
   );
 
+  const { mutate, isLoading } = useMutation({
+    mutationFn: (userParam: UserEntity) => updateUserUseCase(userParam),
+
+    onSuccess: () => {
+      setUser(UserEntity.new(user));
+      toast(ToasterTypeEnum.SUCCESS, 'Vos informations ont été mises à jour');
+    },
+
+    onError: (error: any) => {
+      logException(error, { when: 'SettingsForm' });
+      toast(ToasterTypeEnum.ERROR, error.message);
+    },
+  });
+
   const onSubmit: SubmitHandler<SettingsFormType> = async () => {
     if (hasInventoryManagementServiceActivated) {
       user.activateSockManagement();
@@ -47,13 +61,7 @@ const SettingsForm: FC<Props> = ({ user }) => {
       user.desActivateSockManagement();
     }
 
-    try {
-      await updateUserUseCase(user);
-    } catch (error: any) {
-      toast(ToasterTypeEnum.ERROR, error.message);
-      return;
-    }
-    toast(ToasterTypeEnum.SUCCESS, 'Vos informations ont été mises à jour');
+    mutate(user);
   };
 
   const changeHasInventoryManagementServiceActivated = () => {
@@ -105,7 +113,9 @@ const SettingsForm: FC<Props> = ({ user }) => {
         </Switch>
       </Switch.Group>
       <div className="mt-4 flex justify-end p-4 sm:px-6">
-        <LinkButton type="submit">Enregistrer</LinkButton>
+        <LinkButton isLoading={isLoading} type="submit">
+          Enregistrer
+        </LinkButton>
       </div>
     </form>
   );
