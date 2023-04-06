@@ -1,9 +1,7 @@
 import {
   MagnifyingGlassIcon,
-  MinusCircleIcon,
   PencilSquareIcon,
   PhotoIcon,
-  PlusCircleIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -36,6 +34,7 @@ import {
   reducerFilters,
 } from './(filters)/ProductsFiltersReducer';
 import Column from './ColumnProduct';
+import UpdateProductQuantity from './UpdateProductQuantity';
 
 const DynamicModal = dynamic(
   () => import('../../../../components/lib/modal/Modal'),
@@ -359,32 +358,10 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
                         />
                       </td>
                       <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                        <div className="flex">
-                          <MinusCircleIcon
-                            className="mr-3 h-5 w-5 shrink-0 cursor-pointer text-primary-600"
-                            aria-hidden="true"
-                            onClick={() =>
-                              updateProductMutation.mutate({
-                                ...product,
-                                toBuy:
-                                  product.toBuy > 0 ? product.toBuy - 1 : 0,
-                              })
-                            }
-                          />
-
-                          {product.toBuy}
-
-                          <PlusCircleIcon
-                            className="ml-3 h-5 w-5 shrink-0 cursor-pointer text-primary-600"
-                            aria-hidden="true"
-                            onClick={() =>
-                              updateProductMutation.mutate({
-                                ...product,
-                                toBuy: product.toBuy + 1,
-                              })
-                            }
-                          />
-                        </div>
+                        <UpdateProductQuantity
+                          product={product}
+                          handleCloseModal={handleCloseModal}
+                        />
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {product.isPublic ? 'Public' : 'Privé'}
