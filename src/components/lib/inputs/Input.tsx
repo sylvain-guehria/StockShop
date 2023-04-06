@@ -14,6 +14,7 @@ type Props = {
   value?: string | number;
   disabled?: boolean;
   help?: string;
+  maxLength?: number;
 };
 
 const Input: FC<Props> = ({
@@ -27,6 +28,7 @@ const Input: FC<Props> = ({
   help,
   step,
   disabled,
+  maxLength,
   ...rest
 }) => {
   const localRegister = register || { name };
@@ -56,6 +58,7 @@ const Input: FC<Props> = ({
         placeholder={placeholder}
         autoComplete={name}
         disabled={disabled}
+        maxLength={maxLength}
         {...localRegister}
         {...rest}
         className={clsx(
