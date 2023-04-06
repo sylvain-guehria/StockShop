@@ -4,8 +4,7 @@ import {
   PhotoIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { productServiceDi } from 'di';
+import { useQuery } from '@tanstack/react-query';
 import dynamic from 'next/dynamic';
 import type { FC, Reducer } from 'react';
 import { useEffect, useReducer, useState } from 'react';
@@ -21,7 +20,6 @@ import {
   getSubCategoryById,
 } from '@/modules/category/categoryUtils';
 import type ProductEntity from '@/modules/product/ProductEntity';
-import type { Product } from '@/modules/product/productType';
 import { getInventoryProductsUseCase } from '@/usecases/usecases';
 
 import { ProductsFilters } from './(filters)/ProductsFilters';
@@ -74,7 +72,6 @@ type Props = {
 
 const ProductTable: FC<Props> = ({ currentInventoryId }) => {
   const { user } = useAuth();
-  const queryClient = useQueryClient();
   const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
   const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] =
     useState(false);
@@ -140,19 +137,6 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
     staleTime: oneHourInMilliseconds,
   });
 
-  const updateProductMutation = useMutation({
-    mutationFn: (params: Product) => productServiceDi.updateProduct(params),
-    onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({
-        queryKey: [ApiRequestEnums.GetProducts],
-      });
-      queryClient.invalidateQueries({ queryKey: [ApiRequestEnums.GetProduct] });
-      setIsEditProductModalOpen(false);
-      setProductToEdit(null);
-    },
-  });
-
   const handleEditProductClick = (product: ProductEntity) => {
     if (!product) return;
     setProductToEdit(product);
@@ -194,7 +178,6 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
           <DynamicEditProductForm
             product={productToEdit as ProductEntity}
             handleCloseModal={handleCloseModal}
-            onSubmitEditForm={updateProductMutation.mutate}
           />
         </DynamicModal>
       )}

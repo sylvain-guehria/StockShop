@@ -1,12 +1,15 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { productServiceDi } from 'di';
 import type { FC } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
+import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useToast } from '@/hooks/useToast';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type {
@@ -40,15 +43,11 @@ export interface EditProductFormType {
 type Props = {
   product: ProductEntity;
   handleCloseModal: () => void;
-  onSubmitEditForm: (params: Product) => void;
 };
 
-const EditProductForm: FC<Props> = ({
-  product,
-  handleCloseModal,
-  onSubmitEditForm,
-}) => {
+const EditProductForm: FC<Props> = ({ product, handleCloseModal }) => {
   const toast = useToast(10000);
+  const queryClient = useQueryClient();
 
   const formOptions = {
     resolver: yupResolver(validationSchema),
@@ -69,6 +68,20 @@ const EditProductForm: FC<Props> = ({
     },
   };
 
+  const { mutate, isLoading } = useMutation({
+    mutationFn: (params: Product) => productServiceDi.updateProduct(params),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [ApiRequestEnums.GetProducts],
+      });
+      queryClient.invalidateQueries({ queryKey: [ApiRequestEnums.GetProduct] });
+      handleCloseModal();
+    },
+    onError: (error: any) => {
+      toast(ToasterTypeEnum.ERROR, error.message);
+    },
+  });
+
   const {
     register,
     handleSubmit,
@@ -82,14 +95,10 @@ const EditProductForm: FC<Props> = ({
   const onSubmitEditProductForm: SubmitHandler<EditProductFormType> = async (
     data: EditProductFormType
   ) => {
-    try {
-      await onSubmitEditForm({
-        ...product,
-        ...data,
-      });
-    } catch (e: any) {
-      toast(ToasterTypeEnum.ERROR, e.message);
-    }
+    mutate({
+      ...product,
+      ...data,
+    });
   };
 
   return (
@@ -136,6 +145,7 @@ const EditProductForm: FC<Props> = ({
             type="submit"
             style="secondary"
             className="ml-2 flex justify-center"
+            isLoading={isLoading}
           >
             Valider
           </LinkButton>

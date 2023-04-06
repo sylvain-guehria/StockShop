@@ -81,7 +81,7 @@ const Inventories: FC = () => {
                   <InformationCircleIcon className="ml-3 h-6 w-6 shrink-0 text-primary-400" />
                 </div> */}
               </div>
-              <div className="mt-4 flex sm:mt-0 sm:ml-4">
+              <div className="mt-4 flex sm:ml-4 sm:mt-0">
                 <Dropdown
                   label="Ajouter nouveau"
                   Icon={PlusCircleIcon as any}
