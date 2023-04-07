@@ -1,16 +1,19 @@
 'use client';
 
 import { Dialog, Transition } from '@headlessui/react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { logException } from 'logger';
+import { useRouter } from 'next/navigation';
 import SettingsImg from 'public/assets/images/settings.png';
 import type { FC } from 'react';
 import { Fragment, useState } from 'react';
 
+import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
-import UserEntity from '@/modules/user/UserEntity';
 import { SUBROLES } from '@/modules/user/userType';
+import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
+import { marketplaceRoutes } from '@/routes/marketplaceRoutes';
 import { useSupabase } from '@/supabase/client/SupabaseProvider';
 import { chooseSubRoleOnFirstConnectionUseCase } from '@/usecases/usecases';
 
@@ -23,6 +26,8 @@ type Props = {};
 const FirstConnectionModal: FC<Props> = () => {
   const [open, setOpen] = useState(true);
   const toast = useToast(10000);
+  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { user } = useAuth();
   const { supabase } = useSupabase();
@@ -30,12 +35,17 @@ const FirstConnectionModal: FC<Props> = () => {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: (subrole: SUBROLES.BUYER | SUBROLES.SELLER) =>
-      chooseSubRoleOnFirstConnectionUseCase(
-        UserEntity.new({ ...user }),
-        subrole
-      ),
-    onSuccess: () => {
+      chooseSubRoleOnFirstConnectionUseCase(user, subrole),
+    onSuccess: (updatedUser) => {
+      queryClient.invalidateQueries({
+        queryKey: [ApiRequestEnums.GetUser],
+      });
       setOpen(false);
+      if (updatedUser.isSeller()) {
+        router.push(inventoryManagementRoutes.myInventory.path);
+        return;
+      }
+      router.push(marketplaceRoutes.marketplace.path);
     },
     onError: (error) => {
       logException(error, { when: 'FirstConnectionModal' });
