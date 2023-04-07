@@ -5,25 +5,26 @@ import { NextResponse } from 'next/server';
 import { inventoryManagementRoutes } from './routes/inventoryManagementRoutes';
 import { mainRoutes } from './routes/mainRoutes';
 import { marketplaceRoutes } from './routes/marketplaceRoutes';
+import type { Database } from './types/supabase';
 
 export async function middleware(req: NextRequestType) {
   const { pathname } = req.nextUrl;
 
   const res = NextResponse.next();
 
-  const supabase = createMiddlewareSupabaseClient({ req, res });
+  const supabase = createMiddlewareSupabaseClient<Database>({ req, res });
 
   const session = await supabase.auth?.getSession();
-  const user = session?.data?.session?.user;
+  const userId = session?.data?.session?.user?.id;
 
-  const { data: userProfile } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', user?.id)
-    .single();
+  const result = userId
+    ? await supabase.from('profiles').select('*').eq('id', userId).single()
+    : null;
+
+  const userProfile = result?.data;
 
   // LOGGEDIN USER
-  if (user) {
+  if (userProfile) {
     if (
       pathname.startsWith(mainRoutes.login.path) ||
       pathname.startsWith(mainRoutes.register.path) ||
@@ -60,7 +61,7 @@ export async function middleware(req: NextRequestType) {
   }
 
   // VISITOR USER
-  if (!user) {
+  if (!userProfile) {
     if (
       pathname.startsWith(inventoryManagementRoutes.dashboard.path) ||
       pathname.startsWith(mainRoutes.profile.path)
