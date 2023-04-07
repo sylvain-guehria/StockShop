@@ -39,7 +39,7 @@ const DisclosureSection = () => {
             )}
           >
             <Disclosure.Panel className="bg-sky-900 lg:hidden">
-              <div className="space-y-1 px-2 pt-2 pb-3">
+              <div className="space-y-1 px-2 pb-3 pt-2">
                 {navigation.map((item) => (
                   <Disclosure.Button
                     key={item.name}
@@ -47,14 +47,14 @@ const DisclosureSection = () => {
                     href={item.href}
                     className={clsx(
                       item.current ? 'bg-black/25' : 'hover:bg-sky-800',
-                      'block rounded-md py-2 px-3 text-base font-medium text-white'
+                      'block rounded-md px-3 py-2 text-base font-medium text-white'
                     )}
                   >
                     {item.name}
                   </Disclosure.Button>
                 ))}
               </div>
-              <div className="border-t border-sky-800 pt-4 pb-3">
+              <div className="border-t border-sky-800 pb-3 pt-4">
                 <div className="flex items-center px-4">
                   <div className="shrink-0">
                     <img
@@ -85,7 +85,7 @@ const DisclosureSection = () => {
                       key={item.name}
                       as="a"
                       href={item.href}
-                      className="block rounded-md py-2 px-3 text-base font-medium text-sky-200 hover:bg-sky-800 hover:text-white"
+                      className="block rounded-md px-3 py-2 text-base font-medium text-sky-200 hover:bg-sky-800 hover:text-white"
                     >
                       {item.name}
                     </Disclosure.Button>

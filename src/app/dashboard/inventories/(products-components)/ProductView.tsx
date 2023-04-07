@@ -71,7 +71,7 @@ const ProductView: FC<Props> = ({ productId }) => {
               value={product.getLabel()}
             />
           </div>
-          <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+          <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-6">
             <div className="sm:col-span-3">
               <Input
                 type="number"
@@ -124,7 +124,7 @@ const ProductView: FC<Props> = ({ productId }) => {
               />
             </div>
           </div>
-          <div className="mt-6 grid gap-y-6 gap-x-4 sm:grid-cols-3">
+          <div className="mt-6 grid gap-x-4 gap-y-6 sm:grid-cols-3">
             <div>
               <div className="mt-1">
                 <Input
@@ -176,7 +176,7 @@ const ProductView: FC<Props> = ({ productId }) => {
               </h3>
             </div>
 
-            <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+            <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-6">
               {allCategoryInputs.map((input: CategoryInput) => {
                 if (input.inputType === 'select') {
                   const valueOfTheSelectedOption =

@@ -98,7 +98,7 @@ const ServicesButton: FC = () => {
                 ))}
               </div>
               <div className="bg-gray-50">
-                <div className="mx-auto max-w-7xl space-y-6 px-4 py-5 sm:flex sm:space-y-0 sm:space-x-10 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-7xl space-y-6 px-4 py-5 sm:flex sm:space-x-10 sm:space-y-0 sm:px-6 lg:px-8">
                   {callsToAction.map((item) => (
                     <div key={item.name} className="flow-root">
                       <a

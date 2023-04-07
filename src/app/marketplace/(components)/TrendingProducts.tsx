@@ -3,7 +3,7 @@ import { trendingProducts } from './fakeDatas';
 const TrendingProducts = () => {
   return (
     <section aria-labelledby="trending-heading" className="bg-white">
-      <div className="py-16 sm:py-24 lg:mx-auto lg:max-w-7xl lg:py-32 lg:px-8">
+      <div className="py-16 sm:py-24 lg:mx-auto lg:max-w-7xl lg:px-8 lg:py-32">
         <div className="flex items-center justify-between px-4 sm:px-6 lg:px-0">
           <h2
             id="trending-heading"
@@ -32,7 +32,7 @@ const TrendingProducts = () => {
                   className="inline-flex w-64 flex-col text-center lg:w-auto"
                 >
                   <div className="group relative">
-                    <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200">
+                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200">
                       <img
                         src={product.imageSrc}
                         alt={product.imageAlt}

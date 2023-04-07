@@ -12,13 +12,13 @@ const Hero = () => {
             <div className="mx-auto max-w-7xl lg:px-8">
               <ul
                 role="list"
-                className="grid grid-cols-1 divide-y divide-gray-200 lg:grid-cols-3 lg:divide-y-0 lg:divide-x"
+                className="grid grid-cols-1 divide-y divide-gray-200 lg:grid-cols-3 lg:divide-x lg:divide-y-0"
               >
                 {offers.map((offer) => (
                   <li key={offer.name} className="flex flex-col">
                     <a
                       href={offer.href}
-                      className="relative flex flex-1 flex-col justify-center py-6 px-4 text-center focus:z-10"
+                      className="relative flex flex-1 flex-col justify-center px-4 py-6 text-center focus:z-10"
                     >
                       <p className="text-sm text-gray-500">{offer.name}</p>
                       <p className="font-semibold text-gray-900">

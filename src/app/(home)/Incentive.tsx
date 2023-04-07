@@ -34,11 +34,11 @@ const Incentive = () => (
   <Background color="bg-white">
     <Section maxWidth="max-w-7xl">
       <div className="mx-auto max-w-2xl lg:max-w-7xl">
-        <dl className="grid max-w-xl grid-cols-1 gap-y-10 gap-x-8 lg:max-w-none lg:grid-cols-3 lg:gap-y-16">
+        <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-3 lg:gap-y-16">
           {incentives.map((incentive) => (
             <div key={incentive.title} className="relative pl-16">
               <dt className="text-base font-semibold leading-7 text-gray-900">
-                <div className="absolute top-0 left-0 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600">
+                <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600">
                   <incentive.icon
                     className="h-6 w-6 text-white"
                     aria-hidden="true"

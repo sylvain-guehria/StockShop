@@ -34,7 +34,7 @@ const PricingCard = (props: IPricingCardProps) => {
         {props.description}
       </div>
 
-      <ul className="mt-4 mb-8">{props.children}</ul>
+      <ul className="mb-8 mt-4">{props.children}</ul>
 
       {props.button}
     </div>

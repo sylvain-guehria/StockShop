@@ -14,7 +14,7 @@ const Banner = () => (
         <div className="text-primary-500">Commencez dès maintenant</div>
       </div>
 
-      <div className="mt-3 sm:mt-0 sm:ml-2">
+      <div className="mt-3 sm:ml-2 sm:mt-0">
         <LinkButton href={mainRoutes.register.path} style="secondary">
           Créé votre compte gratuitement
         </LinkButton>

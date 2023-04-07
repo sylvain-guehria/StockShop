@@ -25,7 +25,7 @@ const Dropdown: FC<Props> = ({
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200">
+        <Menu.Button className="mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 px-4 py-2 text-base font-medium text-primary-600 hover:bg-primary-200">
           <span className="sr-only">Open options</span>
           <div>{label}</div>
           {

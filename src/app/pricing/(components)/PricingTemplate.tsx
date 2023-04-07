@@ -205,7 +205,7 @@ export default function Example() {
                     Buy {tier.name}
                   </a>
                 </div>
-                <div className="px-6 pt-6 pb-8">
+                <div className="px-6 pb-8 pt-6">
                   <h3 className="text-sm font-medium text-gray-900">
                     What&apos;s included
                   </h3>
@@ -227,7 +227,7 @@ export default function Example() {
         </div>
 
         {/* Feature list */}
-        <div className="mx-auto max-w-7xl py-16 px-4 sm:px-6 lg:py-24 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900">
               All-in-one platform
@@ -249,7 +249,7 @@ export default function Example() {
                     {feature.name}
                   </p>
                 </dt>
-                <dd className="mt-2 ml-9 flex text-base text-gray-500 lg:py-0 lg:pb-4">
+                <dd className="ml-9 mt-2 flex text-base text-gray-500 lg:py-0 lg:pb-4">
                   {feature.description}
                 </dd>
               </div>
@@ -260,17 +260,17 @@ export default function Example() {
 
       {/* Logo cloud on brand */}
       <div className="bg-primary-600">
-        <div className="mx-auto max-w-7xl py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
           <div className="lg:space-y-10">
             <h2 className="text-3xl font-bold tracking-tight text-white">
               The world&apos;s most innovative companies use our app
             </h2>
             <div className="mt-8 flow-root lg:mt-0">
-              <div className="-mt-4 -ml-8 flex flex-wrap justify-between lg:-ml-4">
+              <div className="-ml-8 -mt-4 flex flex-wrap justify-between lg:-ml-4">
                 {logos.map((logo) => (
                   <div
                     key={logo.name}
-                    className="mt-4 ml-8 flex shrink-0 grow lg:ml-4 lg:grow-0"
+                    className="ml-8 mt-4 flex shrink-0 grow lg:ml-4 lg:grow-0"
                   >
                     <img className="h-12" src={logo.url} alt={logo.name} />
                   </div>
@@ -282,7 +282,7 @@ export default function Example() {
       </div>
 
       {/* FAQ offset */}
-      <div className="mx-auto max-w-7xl py-16 px-4 sm:px-6 lg:py-20 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="lg:grid lg:grid-cols-3 lg:gap-8">
           <div className="space-y-4">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900">

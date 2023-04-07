@@ -57,7 +57,7 @@ const Roadmap = () => {
                   <div className="relative pb-8">
                     {!isLastItem && (
                       <span
-                        className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"
+                        className="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200"
                         aria-hidden="true"
                       />
                     )}

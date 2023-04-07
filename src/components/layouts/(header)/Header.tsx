@@ -149,7 +149,7 @@ const Header: FC<Props> = ({ setMobileMenuOpen }) => {
                       </div> */}
                       {user.isLoggedOut() && (
                         <Link href={mainRoutes.login.path}>
-                          <div className="ml-6 mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 py-2 px-4 text-base font-medium text-primary-600 hover:bg-primary-200">
+                          <div className="ml-6 mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 px-4 py-2 text-base font-medium text-primary-600 hover:bg-primary-200">
                             {mainRoutes.login.label}
                           </div>
                         </Link>

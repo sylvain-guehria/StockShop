@@ -61,12 +61,12 @@ const Modal: FC<Props> = ({
                   mawWidth || 'sm:max-w-lg',
                   width || 'sm:w-full',
                   margin || 'lg:m-2',
-                  padding || 'px-4 pt-5 pb-4 sm:p-10',
+                  padding || 'px-4 pb-4 pt-5 sm:p-10',
                   'relative justify-center overflow-hidden rounded-lg bg-white',
                   'shadow-xl transition-all'
                 )}
               >
-                <div className="absolute top-0 right-0 pt-4 pr-4 sm:block">
+                <div className="absolute right-0 top-0 pr-4 pt-4 sm:block">
                   <button
                     type="button"
                     className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-red-100 focus:ring-offset-2"

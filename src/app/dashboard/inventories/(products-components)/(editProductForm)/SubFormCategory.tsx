@@ -75,7 +75,7 @@ const SubFormCategory: FC<Props> = ({
         </h3>
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+      <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-6">
         {allCategoryInputs.map((input: CategoryInput) => {
           const isNumber = input.inputType === AttributeInputTypes.NUMBER;
           const isText = input.inputType === AttributeInputTypes.TEXT;

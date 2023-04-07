@@ -31,7 +31,7 @@ const SalesTestimonials = () => {
           </p>
           <a
             href="#"
-            className="mt-6 inline-block w-full rounded-md border border-transparent bg-gray-900 py-3 px-8 font-medium text-white hover:bg-gray-800 sm:w-auto"
+            className="mt-6 inline-block w-full rounded-md border border-transparent bg-gray-900 px-8 py-3 font-medium text-white hover:bg-gray-800 sm:w-auto"
           >
             Get access to our one-time sale
           </a>
@@ -40,7 +40,7 @@ const SalesTestimonials = () => {
 
       <section
         aria-labelledby="testimonial-heading"
-        className="relative mx-auto max-w-7xl py-24 px-4 sm:px-6 lg:py-32 lg:px-8"
+        className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32"
       >
         <div className="mx-auto max-w-2xl lg:max-w-none">
           <h2
@@ -66,7 +66,7 @@ const SalesTestimonials = () => {
                     fill="currentColor"
                   />
                 </svg>
-                <div className="mt-8 sm:mt-0 sm:ml-6 lg:mt-10 lg:ml-0">
+                <div className="mt-8 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-10">
                   <p className="text-lg text-gray-600">{testimonial.quote}</p>
                   <cite className="mt-4 block font-semibold not-italic text-gray-900">
                     {testimonial.attribution}

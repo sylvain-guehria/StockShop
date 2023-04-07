@@ -90,7 +90,7 @@ const CardInventory: FC<Props> = ({
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute top-14 right-1 z-10 mx-3 mt-1 w-auto rounded-md bg-white shadow-lg ring-1 ring-black/5">
+            <Menu.Items className="absolute right-1 top-14 z-10 mx-3 mt-1 w-auto rounded-md bg-white shadow-lg ring-1 ring-black/5">
               <Menu.Item>
                 {({ active }) => (
                   <div

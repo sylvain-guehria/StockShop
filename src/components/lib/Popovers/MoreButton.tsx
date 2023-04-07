@@ -84,7 +84,7 @@ const MoreButton = () => {
                 <div className="w-1/2 bg-gray-50" />
               </div>
               <div className="relative mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
-                <nav className="grid gap-y-10 bg-white px-4 py-8 sm:grid-cols-2 sm:gap-x-8 sm:py-12 sm:px-6 lg:px-8 xl:pr-12">
+                <nav className="grid gap-y-10 bg-white px-4 py-8 sm:grid-cols-2 sm:gap-x-8 sm:px-6 sm:py-12 lg:px-8 xl:pr-12">
                   <div>
                     <h3 className="text-base font-medium text-gray-500">
                       Company
@@ -128,7 +128,7 @@ const MoreButton = () => {
                     </ul>
                   </div>
                 </nav>
-                <div className="bg-gray-50 px-4 py-8 sm:py-12 sm:px-6 lg:px-8 xl:pl-12">
+                <div className="bg-gray-50 px-4 py-8 sm:px-6 sm:py-12 lg:px-8 xl:pl-12">
                   <div>
                     <h3 className="text-base font-medium text-gray-500">
                       From the blog

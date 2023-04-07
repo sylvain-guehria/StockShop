@@ -44,8 +44,8 @@ const MegaMenu = () => {
 
                       <div className="relative bg-white">
                         <div className="mx-auto max-w-7xl px-8">
-                          <div className="grid grid-cols-2 items-start gap-y-10 gap-x-8 pt-10 pb-12">
-                            <div className="grid grid-cols-2 gap-y-10 gap-x-8">
+                          <div className="grid grid-cols-2 items-start gap-x-8 gap-y-10 pb-12 pt-10">
+                            <div className="grid grid-cols-2 gap-x-8 gap-y-10">
                               <div>
                                 <p
                                   id={`desktop-featured-heading-${categoryIdx}`}
@@ -95,7 +95,7 @@ const MegaMenu = () => {
                                 </ul>
                               </div>
                             </div>
-                            <div className="grid grid-cols-2 gap-y-10 gap-x-8">
+                            <div className="grid grid-cols-2 gap-x-8 gap-y-10">
                               <div>
                                 <p
                                   id="desktop-collection-heading"

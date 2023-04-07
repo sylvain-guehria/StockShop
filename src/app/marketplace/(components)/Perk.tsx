@@ -39,7 +39,7 @@ const Perk = () => {
         Our perks
       </h2>
 
-      <div className="mx-auto max-w-7xl py-24 px-4 sm:px-6 sm:py-32 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
         <div className="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0">
           {perks.map((perk) => (
             <div
@@ -55,7 +55,7 @@ const Perk = () => {
                   />
                 </div>
               </div>
-              <div className="mt-6 md:mt-0 md:ml-4 lg:mt-6 lg:ml-0">
+              <div className="mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6">
                 <h3 className="text-base font-medium text-gray-900">
                   {perk.name}
                 </h3>

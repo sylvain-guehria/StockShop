@@ -35,7 +35,7 @@ const InventoryManagementSideBar: FC<Props> = ({
       />
       {!sideBarMini && (
         <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
-          <div className="flex grow flex-col overflow-y-auto bg-white pt-5 pb-4">
+          <div className="flex grow flex-col overflow-y-auto bg-white pb-4 pt-5">
             <div className="flex w-full justify-between px-3 text-right">
               <Link href={mainRoutes.home.path}>
                 <NextImage
