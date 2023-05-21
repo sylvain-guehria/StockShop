@@ -15,7 +15,7 @@ import type { CreateInventoryParams } from '@/modules/inventory/inventoryService
 const CreateInventoryButton: FC = () => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
-  const toast = useToast(5000);
+  const toast = useToast(10000);
 
   const { mutate } = useMutation({
     mutationFn: ({ companyId }: CreateInventoryParams) =>

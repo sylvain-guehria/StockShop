@@ -1177,17 +1177,19 @@
   dependencies:
     "@sinonjs/commons" "^2.0.0"
 
-"@supabase/auth-helpers-nextjs@^0.5.5":
-  version "0.5.5"
-  resolved "https://registry.yarnpkg.com/@supabase/auth-helpers-nextjs/-/auth-helpers-nextjs-0.5.5.tgz#8f62edeb3df6875f4338ea8a4b800762d7fb7e38"
-  integrity sha512-IJp6XDvLpPOg7r1YU14jmqlOYHOB0MeXZgmbIg6LHFYU8yMBczWu9c1A63plFVnXRtLUMAlcNISkrgHZMc0VdA==
+"@supabase/auth-helpers-nextjs@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@supabase/auth-helpers-nextjs/-/auth-helpers-nextjs-0.6.1.tgz#d327099201a55b8225e0f8e642c6a18eccbab9ca"
+  integrity sha512-ffDAR4pW2Cosj/CuuGRAhzOFfHtqzdgax7zqRGGyq334gxxPplsmJFGaLPRJ3Z/4mTSIJHyFd6LYdHMN0a+5Bw==
   dependencies:
-    "@supabase/auth-helpers-shared" "0.3.0"
+    "@supabase/auth-helpers-shared" "0.3.4"
 
-"@supabase/auth-helpers-shared@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@supabase/auth-helpers-shared/-/auth-helpers-shared-0.3.0.tgz#765e023801572658ba64503b3625fe9e135b10a3"
-  integrity sha512-6lKhVMBZnGdFelpZyvQDBQSOY+pglS6a5U4ieAqfKQ/rx3rSjRASR3UGh7V+el1re3xYe3ddVBWXw16rdVAzrQ==
+"@supabase/auth-helpers-shared@0.3.4":
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/@supabase/auth-helpers-shared/-/auth-helpers-shared-0.3.4.tgz#dcea97d55d535a720023f081576f3b61e00ad75f"
+  integrity sha512-8I3D0SPHHexkFTSfPg0nZgJSVazWoB3tZDpT6IjRv6w89vDMUzO99Lit4H9anVLF4teW8c/nJJxawDNbDlgbgg==
+  dependencies:
+    jose "^4.14.0"
 
 "@supabase/functions-js@^2.1.0":
   version "2.1.0"
@@ -5294,6 +5296,11 @@ joi@^17.7.0:
     "@sideway/address" "^4.1.3"
     "@sideway/formula" "^3.0.1"
     "@sideway/pinpoint" "^2.0.0"
+
+jose@^4.14.0:
+  version "4.14.4"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-4.14.4.tgz#59e09204e2670c3164ee24cbfe7115c6f8bff9ca"
+  integrity sha512-j8GhLiKmUAh+dsFXlX1aJCbt5KMibuKb+d7j1JaOJG6s2UjX1PQlW+OKB/sD4a/5ZYF4RcmYmLSndOoU3Lt/3g==
 
 js-sdsl@^4.1.4:
   version "4.2.0"

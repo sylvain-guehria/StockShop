@@ -38,7 +38,7 @@ interface PhotoAttributesType {
 const EditProductPhotoForm: FC<Props> = ({ productId }) => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
-  const toast = useToast(5000);
+  const toast = useToast(10000);
   const [isDeletePhotoModalOpen, setIsDeletePhotoModalOpen] = useState(false);
 
   const { data: product, refetch } = useQuery({

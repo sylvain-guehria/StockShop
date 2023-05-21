@@ -19,7 +19,7 @@ type Props = {
 const CreateProductButton: FC<Props> = ({ currentInventoryId }) => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
-  const toast = useToast(5000);
+  const toast = useToast(10000);
 
   const { mutate } = useMutation({
     mutationFn: (inventoryId: string) =>

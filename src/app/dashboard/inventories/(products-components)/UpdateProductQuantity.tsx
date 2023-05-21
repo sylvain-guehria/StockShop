@@ -1,9 +1,13 @@
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { productServiceDi } from 'di';
+import { logException } from 'logger';
 import type { FC } from 'react';
 
+import Spinner from '@/components/lib/spinner/Spinner';
+import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
+import { useToast } from '@/hooks/useToast';
 import type ProductEntity from '@/modules/product/ProductEntity';
 import type { Product } from '@/modules/product/productType';
 
@@ -14,8 +18,9 @@ type Props = {
 
 const UpdateProductQuantity: FC<Props> = ({ product, handleCloseModal }) => {
   const queryClient = useQueryClient();
+  const toast = useToast(10000);
 
-  const updateProductMutation = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (params: Product) => productServiceDi.updateProduct(params),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -23,6 +28,13 @@ const UpdateProductQuantity: FC<Props> = ({ product, handleCloseModal }) => {
       });
       queryClient.invalidateQueries({ queryKey: [ApiRequestEnums.GetProduct] });
       handleCloseModal();
+    },
+    onError: (error) => {
+      logException(error, { when: 'UpdateProductQuantity' });
+      toast(
+        ToasterTypeEnum.ERROR,
+        'Erreur lors de la création du produit, veuillez réessayer.'
+      );
     },
   });
 
@@ -32,20 +44,20 @@ const UpdateProductQuantity: FC<Props> = ({ product, handleCloseModal }) => {
         className="mr-3 h-5 w-5 shrink-0 cursor-pointer text-primary-600"
         aria-hidden="true"
         onClick={() =>
-          updateProductMutation.mutate({
+          mutate({
             ...product,
             toBuy: product.toBuy > 0 ? product.toBuy - 1 : 0,
           })
         }
       />
 
-      {product.toBuy}
+      <div className="h-2 w-2">{isLoading ? <Spinner /> : product.toBuy}</div>
 
       <PlusCircleIcon
         className="ml-3 h-5 w-5 shrink-0 cursor-pointer text-primary-600"
         aria-hidden="true"
         onClick={() =>
-          updateProductMutation.mutate({
+          mutate({
             ...product,
             toBuy: product.toBuy + 1,
           })
