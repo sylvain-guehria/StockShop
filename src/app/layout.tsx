@@ -1,13 +1,14 @@
 import 'server-only';
 import '../styles/global.css';
 
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import { NEXT_SEO_DEFAULT } from 'next-seo.config';
 import React from 'react';
 
 import Providers from '@/components/layouts/Providers';
 import SupabaseListener from '@/supabase/client/supabase-listener';
-import { createServerCompSupabaseClient } from '@/supabase/server/supabase-server';
 
 // We don't want Next.js to cache this session value
 export const revalidate = 0;
@@ -20,7 +21,7 @@ const RootLayout = async ({
 }: {
   children: { children: React.ReactNode };
 }) => {
-  const supabase = createServerCompSupabaseClient();
+  const supabase = createServerComponentClient({ cookies });
 
   const {
     data: { session },

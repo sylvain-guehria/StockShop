@@ -1,8 +1,10 @@
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { cookies } from 'next/headers';
 
 import { TableNames } from '@/supabase/enums/tableNames';
-import createServerSupabaseSSRClient from '@/supabase/server/supabase-ssr';
+import type { Database } from '@/types/supabase';
 import { removeKeysWithNoValues } from '@/utils/objectUtils';
 
 const userById = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -14,10 +16,10 @@ const userById = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const supabaseSsr = createServerSupabaseSSRClient({ req, res });
+  const supabase = createServerComponentClient<Database>({ cookies });
 
   if (method === 'GET') {
-    const { data: profile, error } = await supabaseSsr
+    const { data: profile, error } = await supabase
       .from(TableNames.PROFILES)
       .select('*')
       .eq('id', id)
@@ -32,7 +34,7 @@ const userById = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
   if (method === 'PUT') {
-    const { error } = await supabaseSsr
+    const { error } = await supabase
       .from(TableNames.PROFILES)
       .update(removeKeysWithNoValues(req.body))
       .eq('id', id);

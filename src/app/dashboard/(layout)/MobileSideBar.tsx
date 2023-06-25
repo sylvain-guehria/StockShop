@@ -13,11 +13,11 @@ import { navigation, secondaryNavigation } from './navigations';
 export type Navigation = {
   name: string;
   path: string;
-  icon: React.ForwardRefExoticComponent<
-    React.SVGProps<SVGSVGElement> & {
+  Icon: React.ForwardRefExoticComponent<
+    Omit<React.SVGProps<SVGSVGElement>, 'ref'> & {
       title?: string | undefined;
       titleId?: string | undefined;
-    }
+    } & React.RefAttributes<SVGSVGElement>
   >;
 };
 
@@ -94,43 +94,43 @@ const MobileSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
                   aria-label="Sidebar"
                 >
                   <div className="space-y-1 px-2">
-                    {navigation.map((item: Navigation) => (
+                    {navigation.map(({ name, path, Icon }: Navigation) => (
                       <a
-                        key={item.name}
-                        href={item.path}
+                        key={name}
+                        href={path}
                         className={clsx(
-                          item.path === pathname
+                          path === pathname
                             ? 'bg-primary-400 text-white'
                             : 'text-primary-500  hover:bg-primary-200',
                           'group flex items-center rounded-md p-2 text-base font-medium'
                         )}
-                        aria-current={
-                          item.path === pathname ? 'page' : undefined
-                        }
+                        aria-current={path === pathname ? 'page' : undefined}
                       >
-                        <item.icon
+                        <Icon
                           className="mr-4 h-6 w-6 shrink-0 text-primary-300"
                           aria-hidden="true"
                         />
-                        {item.name}
+                        {name}
                       </a>
                     ))}
                   </div>
                   <div className="mt-6 pt-6">
                     <div className="space-y-1 px-2">
-                      {secondaryNavigation.map((item: Navigation) => (
-                        <a
-                          key={item.name}
-                          href={item.path}
-                          className="group flex items-center rounded-md p-2 text-base font-medium text-primary-500 hover:bg-primary-200"
-                        >
-                          <item.icon
-                            className="mr-4 h-6 w-6 text-primary-300"
-                            aria-hidden="true"
-                          />
-                          {item.name}
-                        </a>
-                      ))}
+                      {secondaryNavigation.map(
+                        ({ name, path, Icon }: Navigation) => (
+                          <a
+                            key={name}
+                            href={path}
+                            className="group flex items-center rounded-md p-2 text-base font-medium text-primary-500 hover:bg-primary-200"
+                          >
+                            <Icon
+                              className="mr-4 h-6 w-6 text-primary-300"
+                              aria-hidden="true"
+                            />
+                            {name}
+                          </a>
+                        )
+                      )}
                     </div>
                   </div>
                 </nav>

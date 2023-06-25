@@ -1,8 +1,10 @@
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { cookies } from 'next/headers';
 
 import { TableNames } from '@/supabase/enums/tableNames';
-import createServerSupabaseSSRClient from '@/supabase/server/supabase-ssr';
+import type { Database } from '@/types/supabase';
 
 const productById = async (req: NextApiRequest, res: NextApiResponse) => {
   const { query, method } = req;
@@ -13,10 +15,10 @@ const productById = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const supabaseSsr = createServerSupabaseSSRClient({ req, res });
+  const supabase = createServerComponentClient<Database>({ cookies });
 
   if (method === 'GET') {
-    const { data: prod, error } = await supabaseSsr
+    const { data: prod, error } = await supabase
       .from(TableNames.PRODUCTS)
       .select('*')
       .eq('id', id)
@@ -31,7 +33,7 @@ const productById = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
   if (method === 'PUT') {
-    const { error } = await supabaseSsr
+    const { error } = await supabase
       .from(TableNames.PRODUCTS)
       .update(req.body.product)
       .eq('id', id)

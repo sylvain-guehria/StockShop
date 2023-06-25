@@ -56,22 +56,22 @@ const InventoryManagementSideBar: FC<Props> = ({
               aria-label="Sidebar"
             >
               <div className="space-y-1 px-2">
-                {navigation.map((item) => (
-                  <Link key={item.name} href={item.path}>
+                {navigation.map(({ Icon, name, path }) => (
+                  <Link key={name} href={path}>
                     <div
                       className={clsx(
-                        item.path === pathname
+                        path === pathname
                           ? 'bg-primary-400 text-white'
                           : 'text-primary-500  hover:bg-primary-200',
                         'group flex items-center rounded-md p-2 text-sm font-medium leading-6'
                       )}
-                      aria-current={item.path === pathname ? 'page' : undefined}
+                      aria-current={path === pathname ? 'page' : undefined}
                     >
-                      <item.icon
+                      <Icon
                         className="mr-4 h-6 w-6 shrink-0 text-primary-300"
                         aria-hidden="true"
                       />
-                      {item.name}
+                      {name}
                     </div>
                   </Link>
                 ))}
@@ -79,21 +79,21 @@ const InventoryManagementSideBar: FC<Props> = ({
               {/* <div className="mt-6 pt-6"> */}
               <div className="pt-6">
                 <div className="space-y-1 px-2">
-                  {secondaryNavigation.map((item) => (
-                    <Link key={item.name} href={item.path}>
+                  {secondaryNavigation.map(({ Icon, name, path }) => (
+                    <Link key={name} href={path}>
                       <div
                         className={clsx(
-                          item.path === pathname
+                          path === pathname
                             ? 'bg-primary-400 text-white'
                             : 'text-primary-500  hover:bg-primary-200',
                           'group flex items-center rounded-md p-2 text-sm font-medium leading-6'
                         )}
                       >
-                        <item.icon
+                        <Icon
                           className="mr-4 h-6 w-6 text-primary-300"
                           aria-hidden="true"
                         />
-                        {item.name}
+                        {name}
                       </div>
                     </Link>
                   ))}

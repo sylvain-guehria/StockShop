@@ -1,10 +1,14 @@
 import 'server-only';
 
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+
+import type { Database } from '@/types/supabase';
+
 import { TableNames } from './enums/tableNames';
-import { createServerCompSupabaseClient } from './server/supabase-server';
 
 export const getUserInServerComponant = async () => {
-  const supabase = createServerCompSupabaseClient();
+  const supabase = createServerComponentClient<Database>({ cookies });
   const { data } = await supabase.auth.getUser();
   let userProfile = null;
 
@@ -21,7 +25,7 @@ export const getUserInServerComponant = async () => {
 
 export const getUserByIdInServerComponant = async (userId?: string) => {
   if (!userId) return null;
-  const supabase = createServerCompSupabaseClient();
+  const supabase = createServerComponentClient<Database>({ cookies });
 
   const { data: profileData } = await supabase
     .from(TableNames.PROFILES)

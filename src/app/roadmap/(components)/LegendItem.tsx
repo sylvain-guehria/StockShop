@@ -1,17 +1,14 @@
 import clsx from 'clsx';
 
+import type { Navigation } from '@/app/dashboard/(layout)/MobileSideBar';
+
 export const LegendItem = ({
   text,
   Icon,
   iconColor,
 }: {
   text: string;
-  Icon: React.ForwardRefExoticComponent<
-    React.SVGProps<SVGSVGElement> & {
-      title?: string | undefined;
-      titleId?: string | undefined;
-    }
-  >;
+  Icon: Navigation['Icon'];
   iconColor: string;
 }) => {
   return (

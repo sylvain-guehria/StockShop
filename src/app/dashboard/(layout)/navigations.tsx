@@ -9,52 +9,52 @@ import { mainRoutes } from '@/routes/mainRoutes';
 import type { Navigation } from './MobileSideBar';
 
 export const navigation: Navigation[] = [
-  // { name: 'Home', path: '#', icon: HomeIcon, current: true },
+  // { name: 'Home', path: '#', Icon: HomeIcon, current: true },
   {
     name: inventoryManagementRoutes.myInventory.label,
     path: inventoryManagementRoutes.myInventory.path,
-    icon: ArchiveBoxIcon,
+    Icon: ArchiveBoxIcon,
   },
   // {
   //   name: inventoryManagementRoutes.sells.label,
   //   path: inventoryManagementRoutes.sells.path,
-  //   icon: ArrowRightOnRectangleIcon,
+  //   Icon: ArrowRightOnRectangleIcon,
   // },
   // {
   //   name: inventoryManagementRoutes.toPurchase.label,
   //   path: inventoryManagementRoutes.toPurchase.path,
-  //   icon: CreditCardIcon,
+  //   Icon: CreditCardIcon,
   // },
   // {
   //   name: inventoryManagementRoutes.clients.label,
   //   path: inventoryManagementRoutes.clients.path,
-  //   icon: UserGroupIcon,
+  //   Icon: UserGroupIcon,
   // },
   // {
   //   name: inventoryManagementRoutes.myMarketPlace.label,
   //   path: inventoryManagementRoutes.myMarketPlace.path,
-  //   icon: ShoppingBagIcon,
+  //   Icon: ShoppingBagIcon,
   // },
 ];
-export const secondaryNavigation = [
+export const secondaryNavigation: Navigation[] = [
   // {
   //   name: inventoryManagementRoutes.setting.label,
   //   path: inventoryManagementRoutes.setting.path,
-  //   icon: CogIcon,
+  //   Icon: CogIcon,
   // },
   // {
   //   name: inventoryManagementRoutes.myCompany.label,
   //   path: inventoryManagementRoutes.myCompany.path,
-  //   icon: Squares2X2Icon,
+  //   Icon: Squares2X2Icon,
   // },
   // {
   //   name: inventoryManagementRoutes.help.label,
   //   path: inventoryManagementRoutes.help.path,
-  //   icon: QuestionMarkCircleIcon,
+  //   Icon: QuestionMarkCircleIcon,
   // },
   {
     name: 'Feedback / contact',
     path: mainRoutes.contact.path,
-    icon: QuestionMarkCircleIcon,
+    Icon: QuestionMarkCircleIcon,
   },
 ];

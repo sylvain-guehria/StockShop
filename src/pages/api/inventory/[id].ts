@@ -1,8 +1,10 @@
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { cookies } from 'next/headers';
 
 import { TableNames } from '@/supabase/enums/tableNames';
-import createServerSupabaseSSRClient from '@/supabase/server/supabase-ssr';
+import type { Database } from '@/types/supabase';
 
 const inventoryById = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -20,10 +22,10 @@ const inventoryById = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (!id) throw new Error('Inventory id is mandatory to update an inventory');
 
-  const supabaseSsr = createServerSupabaseSSRClient({ req, res });
+  const supabase = createServerComponentClient<Database>({ cookies });
 
   if (method === 'GET') {
-    const { data: inventor, error } = await supabaseSsr
+    const { data: inventor, error } = await supabase
       .from(TableNames.INVENTORIES)
       .select('*')
       .eq('id', id)
@@ -38,7 +40,7 @@ const inventoryById = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
   if (method === 'PUT') {
-    const { error } = await supabaseSsr
+    const { error } = await supabase
       .from(TableNames.INVENTORIES)
       .update({ ...inventory })
       .eq('id', id)

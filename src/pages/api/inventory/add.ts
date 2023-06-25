@@ -1,8 +1,10 @@
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { cookies } from 'next/headers';
 
 import { TableNames } from '@/supabase/enums/tableNames';
-import createServerSupabaseSSRClient from '@/supabase/server/supabase-ssr';
+import type { Database } from '@/types/supabase';
 
 const addInventory = async (req: NextApiRequest, res: NextApiResponse) => {
   const { inventory } = req.body;
@@ -12,9 +14,9 @@ const addInventory = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!inventory.companyId)
     throw new Error('companyId is required to add inventory');
 
-  const supabaseSsr = createServerSupabaseSSRClient({ req, res });
+  const supabase = createServerComponentClient<Database>({ cookies });
 
-  const { error } = await supabaseSsr
+  const { error } = await supabase
     .from(TableNames.INVENTORIES)
     .insert(inventory);
 

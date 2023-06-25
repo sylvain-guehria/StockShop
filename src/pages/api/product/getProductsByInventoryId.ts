@@ -1,9 +1,11 @@
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { cookies } from 'next/headers';
 
 import { ProductAttributes } from '@/modules/product/productType';
 import { TableNames } from '@/supabase/enums/tableNames';
-import createServerSupabaseSSRClient from '@/supabase/server/supabase-ssr';
+import type { Database } from '@/types/supabase';
 import { getPagination } from '@/utils/apiUtils';
 import { removeKeysWithNoValues } from '@/utils/objectUtils';
 import { parseBoolean } from '@/utils/primitiveUtils';
@@ -26,7 +28,7 @@ const getProductsByInventoryId = async (
     },
   } = req;
 
-  const supabaseSsr = createServerSupabaseSSRClient({ req, res });
+  const supabase = createServerComponentClient<Database>({ cookies });
 
   const { from, to } = getPagination(
     currentPage as string,
@@ -44,7 +46,7 @@ const getProductsByInventoryId = async (
 
   match = removeKeysWithNoValues(match);
 
-  const { error, data } = await supabaseSsr
+  const { error, data } = await supabase
     .from(TableNames.PRODUCTS)
     .select('*')
     .match(match)
@@ -54,7 +56,7 @@ const getProductsByInventoryId = async (
     })
     .range(from, to);
 
-  const { count } = await supabaseSsr
+  const { count } = await supabase
     .from(TableNames.PRODUCTS)
     .select('*', { count: 'exact', head: true })
     .match(match)

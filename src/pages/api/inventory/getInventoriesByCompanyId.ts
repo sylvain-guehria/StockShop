@@ -1,8 +1,10 @@
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { cookies } from 'next/headers';
 
 import { TableNames } from '@/supabase/enums/tableNames';
-import createServerSupabaseSSRClient from '@/supabase/server/supabase-ssr';
+import type { Database } from '@/types/supabase';
 
 const getInventoriesByCompanyId = async (
   req: NextApiRequest,
@@ -17,9 +19,9 @@ const getInventoriesByCompanyId = async (
     return [];
   }
 
-  const supabaseSsr = createServerSupabaseSSRClient({ req, res });
+  const supabase = createServerComponentClient<Database>({ cookies });
 
-  const { error, data: inventories } = await supabaseSsr
+  const { error, data: inventories } = await supabase
     .from(TableNames.INVENTORIES)
     .select('*')
     .eq('companyId', companyId);
@@ -28,7 +30,7 @@ const getInventoriesByCompanyId = async (
 
   await Promise.all(
     (inventories || []).map(async (inventory) => {
-      const { count: numberOfProduct } = await supabaseSsr
+      const { count: numberOfProduct } = await supabase
         .from(TableNames.PRODUCTS)
         .select('*', { count: 'exact', head: true });
       inventoriesProductCount[inventory.id] = numberOfProduct;

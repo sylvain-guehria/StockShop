@@ -1,8 +1,10 @@
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { cookies } from 'next/headers';
 
 import { TableNames } from '@/supabase/enums/tableNames';
-import createServerSupabaseSSRClient from '@/supabase/server/supabase-ssr';
+import type { Database } from '@/types/supabase';
 
 const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -19,9 +21,9 @@ const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const supabaseSsr = createServerSupabaseSSRClient({ req, res });
+  const supabase = createServerComponentClient<Database>({ cookies });
 
-  const { error } = await supabaseSsr
+  const { error } = await supabase
     .from(TableNames.PRODUCTS)
     .delete()
     .eq('id', productId);
