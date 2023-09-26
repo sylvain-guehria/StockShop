@@ -31,7 +31,7 @@ const ResetPasswordEmailForm = () => {
   } = useForm<ResetPasswordEmailFormType>(formOptions);
 
   const onSubmit: SubmitHandler<ResetPasswordEmailFormType> = async (
-    data: ResetPasswordEmailFormType
+    data: ResetPasswordEmailFormType,
   ) => {
     const { email } = data;
     setIsLoading(true);

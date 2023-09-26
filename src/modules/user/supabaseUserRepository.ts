@@ -74,7 +74,7 @@ class SupabaseUserRepository extends UserRepository {
           phone: user.phone,
           role: user.role,
           locale: user.locale,
-        })
+        }),
     );
   }
 
@@ -97,7 +97,7 @@ class SupabaseUserRepository extends UserRepository {
         locale: user.getLocale(),
         avatarUrl: user.getAvatarUrl(),
         companyId: user.getCompanyId(),
-      }
+      },
     );
     if (success) return true;
     return false;

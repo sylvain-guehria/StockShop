@@ -16,7 +16,7 @@ const PricingCard = (props: IPricingCardProps) => {
     'border',
     'border-gray-200',
     'rounded-md',
-    'bg-white'
+    'bg-white',
   );
 
   return (

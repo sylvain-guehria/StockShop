@@ -12,7 +12,7 @@ class SupabaseProductRepository extends ProductRepository {
   async getById(productId: string): Promise<ProductEntity> {
     console.info('get product in db with id: ', productId);
     const response = await axios.get(
-      `${this.baseUrl}/api/product/${productId}`
+      `${this.baseUrl}/api/product/${productId}`,
     );
     const {
       label,
@@ -118,7 +118,7 @@ class SupabaseProductRepository extends ProductRepository {
           updatedAt: new Date().toISOString(),
           inventoryId: product.getInventoryId(),
         },
-      }
+      },
     );
     return ProductEntity.new({
       id: data.id,
@@ -168,7 +168,7 @@ class SupabaseProductRepository extends ProductRepository {
           filterToBuy: filters.toBuy,
           filterIsPublic: filters.isPublic,
         },
-      }
+      },
     );
     return {
       count: response.data.count,
@@ -194,7 +194,7 @@ class SupabaseProductRepository extends ProductRepository {
             photoLink: product.photoLink,
             createdAt: product.createdAt,
             updatedAt: product.updatedAt,
-          })
+          }),
       ),
     };
   }

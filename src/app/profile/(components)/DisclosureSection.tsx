@@ -35,7 +35,7 @@ const DisclosureSection = () => {
           <nav
             className={clsx(
               open ? 'bg-sky-900' : 'bg-transparent',
-              'relative z-10 border-b border-teal-500/25 lg:border-none lg:bg-transparent'
+              'relative z-10 border-b border-teal-500/25 lg:border-none lg:bg-transparent',
             )}
           >
             <Disclosure.Panel className="bg-sky-900 lg:hidden">
@@ -47,7 +47,7 @@ const DisclosureSection = () => {
                     href={item.href}
                     className={clsx(
                       item.current ? 'bg-black/25' : 'hover:bg-sky-800',
-                      'block rounded-md px-3 py-2 text-base font-medium text-white'
+                      'block rounded-md px-3 py-2 text-base font-medium text-white',
                     )}
                   >
                     {item.name}
@@ -98,7 +98,7 @@ const DisclosureSection = () => {
             aria-hidden="true"
             className={clsx(
               open ? 'bottom-0' : 'inset-y-0',
-              'absolute inset-x-0 left-1/2 w-full -translate-x-1/2 overflow-hidden lg:inset-y-0'
+              'absolute inset-x-0 left-1/2 w-full -translate-x-1/2 overflow-hidden lg:inset-y-0',
             )}
           >
             <div className="absolute inset-0 flex">

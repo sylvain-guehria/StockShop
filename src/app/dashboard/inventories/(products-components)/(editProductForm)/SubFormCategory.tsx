@@ -41,18 +41,18 @@ const SubFormCategory: FC<Props> = ({
   const currentSubCategoryId = watch(ProductAttributes.SUB_CATEGORY_ID);
 
   const categoryInputs = getCategoryInputFromDatabase(
-    currentCategoryId as string
+    currentCategoryId as string,
   );
   const subCategoryInputs = getSubCategoryInputsFromDatabase(
     currentCategoryId as string,
-    currentSubCategoryId as string
+    currentSubCategoryId as string,
   );
 
   const allCategoryInputs = [...categoryInputs, ...subCategoryInputs];
 
   useEffect(() => {
     const fieldNames = Object.keys(
-      getValues(ProductAttributes.CAT_SUBCAT_ATTRIBUTES) || {}
+      getValues(ProductAttributes.CAT_SUBCAT_ATTRIBUTES) || {},
     );
     if (
       !product.isSameCategory(currentCategoryId || '') ||
@@ -61,8 +61,8 @@ const SubFormCategory: FC<Props> = ({
       fieldNames.forEach((fieldName) =>
         setValue(
           `${ProductAttributes.CAT_SUBCAT_ATTRIBUTES}.${fieldName}`,
-          '' as never
-        )
+          '' as never,
+        ),
       );
     }
   }, [currentCategoryId, currentSubCategoryId]);
@@ -92,7 +92,7 @@ const SubFormCategory: FC<Props> = ({
                   label={input.label}
                   name={input.id}
                   register={register(
-                    `${ProductAttributes.CAT_SUBCAT_ATTRIBUTES}.${input.id}`
+                    `${ProductAttributes.CAT_SUBCAT_ATTRIBUTES}.${input.id}`,
                   )}
                 />
               )}
@@ -102,7 +102,7 @@ const SubFormCategory: FC<Props> = ({
                   options={[{ label: '', value: '' }, ...(input.options || [])]}
                   name={input.id}
                   register={register(
-                    `${ProductAttributes.CAT_SUBCAT_ATTRIBUTES}.${input.id}`
+                    `${ProductAttributes.CAT_SUBCAT_ATTRIBUTES}.${input.id}`,
                   )}
                   inputClassName="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                 />

@@ -7,7 +7,7 @@ import React, { Fragment } from 'react';
 type Props = {
   iconClassName?: string;
   Icon?: (
-    props: React.ComponentProps<'svg'> & { title?: string; titleId?: string }
+    props: React.ComponentProps<'svg'> & { title?: string; titleId?: string },
   ) => JSX.Element;
   childrens: {
     key: string;
@@ -32,7 +32,7 @@ const Dropdown: FC<Props> = ({
             <Icon
               className={clsx(
                 'ml-3 h-7 w-7 shrink-0 rounded-full text-primary-500  hover:bg-primary-300',
-                iconClassName || ''
+                iconClassName || '',
               )}
               aria-hidden="true"
             />

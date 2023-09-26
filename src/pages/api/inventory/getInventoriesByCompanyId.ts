@@ -8,7 +8,7 @@ import type { Database } from '@/types/supabase';
 
 const getInventoriesByCompanyId = async (
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) => {
   const {
     query: { companyId },
@@ -34,7 +34,7 @@ const getInventoriesByCompanyId = async (
         .from(TableNames.PRODUCTS)
         .select('*', { count: 'exact', head: true });
       inventoriesProductCount[inventory.id] = numberOfProduct;
-    })
+    }),
   );
 
   if (error) {

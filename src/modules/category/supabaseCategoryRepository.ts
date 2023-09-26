@@ -45,7 +45,7 @@ class FirebaseCategoryRepository extends CategoryRepository {
           id: category.id,
           label: category.label,
           inputs: category.inputs,
-        })
+        }),
     );
   }
 

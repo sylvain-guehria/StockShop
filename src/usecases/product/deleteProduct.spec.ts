@@ -31,7 +31,7 @@ describe('deleteProduct', () => {
     try {
       await deleteProduct(
         productRepository as any,
-        supabaseStorage as any
+        supabaseStorage as any,
         // @ts-ignore
       )({ product: null, companyId });
     } catch (error: any) {
@@ -46,7 +46,7 @@ describe('deleteProduct', () => {
     try {
       await deleteProduct(
         productRepository as any,
-        supabaseStorage as any
+        supabaseStorage as any,
       )({
         product: ProductEntity.new({
           photoLink: 'photoLink',
@@ -63,7 +63,7 @@ describe('deleteProduct', () => {
     try {
       await deleteProduct(
         productRepository as any,
-        supabaseStorage as any
+        supabaseStorage as any,
       )({ product: productWithPhoto, companyId: '' });
     } catch (error: any) {
       expect(productRepository.delete).toHaveBeenCalledTimes(0);
@@ -78,12 +78,12 @@ describe('deleteProduct', () => {
 
     await deleteProduct(
       productRepository as any,
-      supabaseStorage as any
+      supabaseStorage as any,
     )({ product: productWithoutPhoto, companyId });
 
     expect(productRepository.delete).toHaveBeenCalledTimes(1);
     expect(productRepository.delete).toHaveBeenCalledWith(
-      productWithoutPhoto.getId()
+      productWithoutPhoto.getId(),
     );
     expect(supabaseStorage.from).toHaveBeenCalledTimes(0);
     expect(supabaseStorage.remove).toHaveBeenCalledTimes(0);
@@ -99,18 +99,18 @@ describe('deleteProduct', () => {
 
     await deleteProduct(
       productRepository as any,
-      supabaseStorage as any
+      supabaseStorage as any,
     )({ product: productWithPhoto, companyId });
 
     expect(productRepository.delete).toHaveBeenCalledTimes(1);
     expect(productRepository.delete).toHaveBeenCalledWith(
-      productWithPhoto.getId()
+      productWithPhoto.getId(),
     );
     expect(
-      supabaseStorage.from(BucketNames.PRODUCTS).remove
+      supabaseStorage.from(BucketNames.PRODUCTS).remove,
     ).toHaveBeenCalledTimes(1);
     expect(
-      supabaseStorage.from(BucketNames.PRODUCTS).remove
+      supabaseStorage.from(BucketNames.PRODUCTS).remove,
     ).toHaveBeenCalledWith(['companyId/inventoryId/productId']);
   });
 });

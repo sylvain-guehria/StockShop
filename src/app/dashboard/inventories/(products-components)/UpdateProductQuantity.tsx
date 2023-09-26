@@ -33,7 +33,7 @@ const UpdateProductQuantity: FC<Props> = ({ product, handleCloseModal }) => {
       logException(error, { when: 'UpdateProductQuantity' });
       toast(
         ToasterTypeEnum.ERROR,
-        'Erreur lors de la création du produit, veuillez réessayer.'
+        'Erreur lors de la création du produit, veuillez réessayer.',
       );
     },
   });

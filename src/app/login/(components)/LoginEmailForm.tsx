@@ -55,13 +55,13 @@ const LoginEmailForm = () => {
       logException(error, { when: 'LoginEmailForm' });
       toast(
         ToasterTypeEnum.ERROR,
-        'Une erreur est survenue, veuillez réessayer'
+        'Une erreur est survenue, veuillez réessayer',
       );
     },
   });
 
   const onSubmit: SubmitHandler<LoginFormType> = async (
-    data: LoginFormType
+    data: LoginFormType,
   ) => {
     setIsLoading(true);
     const { email, password, rememberMe } = data;

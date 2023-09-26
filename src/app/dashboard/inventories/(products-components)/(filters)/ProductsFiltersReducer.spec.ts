@@ -74,7 +74,7 @@ describe('reducerFilters', () => {
       type: ActionNamesEnum.RESET_FILTERS,
     };
     expect(reducerFilters(initialFiltersState, action)).toEqual(
-      initialFilterState
+      initialFilterState,
     );
   });
 

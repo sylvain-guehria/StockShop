@@ -26,7 +26,7 @@ const ProfileContainerSideBar: FC<Props> = ({ seletedTab, setSelectedTab }) => {
               item.tab === seletedTab
                 ? 'border-primary-500 bg-primary-100 text-primary-700 hover:bg-primary-100 hover:text-primary-700'
                 : 'border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900',
-              'group flex cursor-pointer items-center border-l-4 px-3 py-2 text-sm font-medium'
+              'group flex cursor-pointer items-center border-l-4 px-3 py-2 text-sm font-medium',
             )}
             aria-current={item.tab === seletedTab ? 'page' : undefined}
           >
@@ -35,7 +35,7 @@ const ProfileContainerSideBar: FC<Props> = ({ seletedTab, setSelectedTab }) => {
                 item.tab === seletedTab
                   ? 'text-primary-500 group-hover:text-primary-500'
                   : 'text-gray-400 group-hover:text-gray-500',
-                '-ml-1 mr-3 h-6 w-6 shrink-0'
+                '-ml-1 mr-3 h-6 w-6 shrink-0',
               )}
               aria-hidden="true"
             />

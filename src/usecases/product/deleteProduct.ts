@@ -8,7 +8,7 @@ import { BucketNames } from '@/supabase/enums/bucketNames';
 export const deleteProduct =
   (
     productRepository: ProductRepository,
-    supabaseStorage: SupabaseClient<any, 'public', any>['storage']
+    supabaseStorage: SupabaseClient<any, 'public', any>['storage'],
   ) =>
   async ({
     product,

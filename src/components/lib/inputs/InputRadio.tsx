@@ -54,7 +54,7 @@ const InputRadio: FC<Props> = ({
               {...localRegister}
               className={clsx(
                 inputClassName || '',
-                'h-4 w-4 border-gray-300 text-primary-600 focus:ring-primary-500'
+                'h-4 w-4 border-gray-300 text-primary-600 focus:ring-primary-500',
               )}
             />
             <label

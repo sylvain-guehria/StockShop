@@ -9,7 +9,7 @@ export const validationSchema = object()
   .noUnknown()
   .shape({
     [ProductAttributes.LABEL]: string().required(
-      'Votre produit doit avoir un label'
+      'Votre produit doit avoir un label',
     ),
     [ProductAttributes.QUANTITY_IN_INVENTORY]: string(),
     [ProductAttributes.OPTIMUM_QUANTITY]: number(),

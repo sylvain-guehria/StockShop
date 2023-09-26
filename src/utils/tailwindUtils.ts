@@ -15,7 +15,7 @@ const fullConfig = resolveConfig(tailwindConfig);
 export const getBreakpointValue = (value: string): number =>
   +fullConfig.theme.screens[value].slice(
     0,
-    fullConfig.theme.screens[value].indexOf('px')
+    fullConfig.theme.screens[value].indexOf('px'),
   );
 
 /**

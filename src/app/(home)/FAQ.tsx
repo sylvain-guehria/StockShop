@@ -62,7 +62,7 @@ const FAQ = () => (
                         <ChevronDownIcon
                           className={clsx(
                             open ? '-rotate-180' : 'rotate-0',
-                            'h-6 w-6'
+                            'h-6 w-6',
                           )}
                           aria-hidden="true"
                         />

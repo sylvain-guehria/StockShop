@@ -97,7 +97,7 @@ class ProductEntity implements Product {
   }
 
   setCatSubcatAttributes(
-    catSubcatAttributes: Record<string, any>
+    catSubcatAttributes: Record<string, any>,
   ): ProductEntity {
     this.catSubcatAttributes = catSubcatAttributes;
     return this;
@@ -241,7 +241,7 @@ class ProductEntity implements Product {
   }
 
   setPublicDisponibility(
-    publicDisponibility: PublicDisponibilityEnum
+    publicDisponibility: PublicDisponibilityEnum,
   ): ProductEntity {
     this.publicDisponibility = publicDisponibility;
     return this;

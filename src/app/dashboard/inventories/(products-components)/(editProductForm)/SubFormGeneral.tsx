@@ -149,7 +149,7 @@ const SubFormGeneral: FC<Props> = ({ register, errors, control }) => {
               options={[
                 { label: '', value: '' },
                 ...getSubCategoriesByCategoryIdFromDatabase(
-                  watchCategoryId as string
+                  watchCategoryId as string,
                 ).map((subcategory) => ({
                   label: subcategory.label,
                   value: subcategory.id,

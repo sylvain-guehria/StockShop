@@ -11,10 +11,10 @@ describe('compressFile', () => {
       'invalid-file.txt',
       {
         type: 'text/plain',
-      }
+      },
     );
     await expect(
-      compressFile(invalidFile, { quality: 0.8, convertSize: oneMegaBits })
+      compressFile(invalidFile, { quality: 0.8, convertSize: oneMegaBits }),
     ).rejects.toThrow();
   });
 });

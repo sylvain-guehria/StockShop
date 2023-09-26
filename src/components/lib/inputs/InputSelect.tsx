@@ -32,7 +32,7 @@ const InputSelect: FC<Props> = ({
           htmlFor={name}
           className={clsx(
             'inline-block truncate text-start text-sm font-medium text-gray-700',
-            'hover:z-50 hover:inline-flex hover:min-w-max hover:bg-white/100 hover:pr-3'
+            'hover:z-50 hover:inline-flex hover:min-w-max hover:bg-white/100 hover:pr-3',
           )}
         >
           {label}
@@ -48,7 +48,7 @@ const InputSelect: FC<Props> = ({
         className={clsx(
           inputClassName || '',
           'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm',
-          'truncate'
+          'truncate',
         )}
       >
         {options.map((option) => (

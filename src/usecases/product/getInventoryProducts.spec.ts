@@ -27,10 +27,10 @@ describe('getInventoryProducts', () => {
       });
     } catch (error: any) {
       expect(productRepository.getProductsByInventoryId).toHaveBeenCalledTimes(
-        0
+        0,
       );
       expect(error.message).toBe(
-        'inventoryId is required to get user inventoriy products'
+        'inventoryId is required to get user inventoriy products',
       );
     }
   });

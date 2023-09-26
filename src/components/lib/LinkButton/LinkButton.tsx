@@ -49,7 +49,7 @@ const LinkButton: FC<Props> = ({
           `mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent`,
           className || '',
           styles[style],
-          'focus-within:ring-2 focus-within:ring-primary-500'
+          'focus-within:ring-2 focus-within:ring-primary-500',
         )}
       >
         {children}
@@ -61,7 +61,7 @@ const LinkButton: FC<Props> = ({
         `mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent`,
         styles[style],
         className || '',
-        'focus-within:ring-2 focus-within:ring-primary-500'
+        'focus-within:ring-2 focus-within:ring-primary-500',
       )}
     >
       <button

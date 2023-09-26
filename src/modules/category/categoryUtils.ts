@@ -4,7 +4,7 @@ import type { Category, CategoryInput, SubCategory } from './categoryType';
 
 export const getSubCategoriesByCategoryId = (
   categories: Category[],
-  categoryId: string
+  categoryId: string,
 ): SubCategory[] => {
   if (!categoryId) return [];
   if (!categories || !categories.length) return [];
@@ -13,7 +13,7 @@ export const getSubCategoriesByCategoryId = (
 };
 
 export const getSubCategoriesByCategoryIdFromDatabase = (
-  categoryId: string
+  categoryId: string,
 ): SubCategory[] => {
   if (!categoryId) return [];
   return getSubCategoriesByCategoryId(categorieFromDB, categoryId);
@@ -21,7 +21,7 @@ export const getSubCategoriesByCategoryIdFromDatabase = (
 
 export const getCategoryInput = (
   categories: Category[],
-  categoryId: string
+  categoryId: string,
 ): CategoryInput[] => {
   if (!categories || !categories.length) return [];
   if (!categoryId) return [];
@@ -33,25 +33,25 @@ export const getCategoryInput = (
 export const getSubCategoryInputs = (
   categories: Category[],
   categoryId: string,
-  subCategoryId: string
+  subCategoryId: string,
 ) => {
   if (!categories || !categories.length) return [];
   if (!categoryId || !subCategoryId) return [];
   const category: Category = categories.find(
-    (cat) => cat.id === categoryId
+    (cat) => cat.id === categoryId,
   ) as Category;
 
   if (!category) return [];
 
   const subCategory = category.subCatgories?.find(
-    (subCat) => subCat.id === subCategoryId
+    (subCat) => subCat.id === subCategoryId,
   );
 
   return subCategory?.inputs || [];
 };
 
 export const getCategoryInputFromDatabase = (
-  categoryId: string
+  categoryId: string,
 ): CategoryInput[] => {
   if (!categoryId) return [];
   return getCategoryInput(categorieFromDB, categoryId);
@@ -59,7 +59,7 @@ export const getCategoryInputFromDatabase = (
 
 export const getSubCategoryInputsFromDatabase = (
   categoryId: string,
-  subCategoryId: string
+  subCategoryId: string,
 ) => {
   if (!categoryId || !subCategoryId) return [];
   return getSubCategoryInputs(categorieFromDB, categoryId, subCategoryId);
@@ -76,7 +76,7 @@ export const getCategoryById = (categoryId: string): Category => {
 
 export const getSubCategoryById = (
   categoryId: string,
-  subCategoryId: string
+  subCategoryId: string,
 ) => {
   if (!categoryId || !subCategoryId) return {} as SubCategory;
   const category = getCategoryById(categoryId);

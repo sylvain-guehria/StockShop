@@ -17,7 +17,7 @@ describe('deleteInventory', () => {
     } catch (error: any) {
       expect(inventoryRepository.update).toHaveBeenCalledTimes(0);
       expect(error.message).toBe(
-        'inventory is required to set inventory as default'
+        'inventory is required to set inventory as default',
       );
     }
   });
@@ -29,7 +29,7 @@ describe('deleteInventory', () => {
     } catch (error: any) {
       expect(inventoryRepository.update).toHaveBeenCalledTimes(0);
       expect(error.message).toBe(
-        'companyId is required in the inventory to set inventory as default'
+        'companyId is required in the inventory to set inventory as default',
       );
     }
   });
@@ -54,7 +54,7 @@ describe('deleteInventory', () => {
     await setInventoryAsDefault(inventoryRepository as any)(inventory);
 
     expect(inventoryRepository.getInventoriesByCompanyId).toHaveBeenCalledTimes(
-      0
+      0,
     );
   });
 
@@ -76,10 +76,10 @@ describe('deleteInventory', () => {
     await setInventoryAsDefault(inventoryRepository as any)(inventory);
 
     expect(inventoryRepository.getInventoriesByCompanyId).toHaveBeenCalledTimes(
-      1
+      1,
     );
     expect(inventoryRepository.getInventoriesByCompanyId).toHaveBeenCalledWith(
-      inventory.companyId
+      inventory.companyId,
     );
   });
 
@@ -98,7 +98,7 @@ describe('deleteInventory', () => {
     });
 
     const entityInventoryToSetAsDefault = InventoryEntity.new(
-      inventoryToSetAsDefault
+      inventoryToSetAsDefault,
     );
 
     inventoryRepository.getInventoriesByCompanyId.mockResolvedValueOnce([
@@ -106,7 +106,7 @@ describe('deleteInventory', () => {
     ]);
 
     await setInventoryAsDefault(inventoryRepository as any)(
-      inventoryToSetAsDefault
+      inventoryToSetAsDefault,
     );
 
     defaultInventory.unSetAsDefaultInventory();
@@ -114,7 +114,7 @@ describe('deleteInventory', () => {
 
     expect(inventoryRepository.update).toHaveBeenCalledTimes(2);
     expect(inventoryRepository.update).toHaveBeenCalledWith(
-      entityInventoryToSetAsDefault
+      entityInventoryToSetAsDefault,
     );
     expect(inventoryRepository.update).toHaveBeenCalledWith(defaultInventory);
   });

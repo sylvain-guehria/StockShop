@@ -102,7 +102,7 @@ const MobileSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
                           path === pathname
                             ? 'bg-primary-400 text-white'
                             : 'text-primary-500  hover:bg-primary-200',
-                          'group flex items-center rounded-md p-2 text-base font-medium'
+                          'group flex items-center rounded-md p-2 text-base font-medium',
                         )}
                         aria-current={path === pathname ? 'page' : undefined}
                       >
@@ -129,7 +129,7 @@ const MobileSideBar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
                             />
                             {name}
                           </a>
-                        )
+                        ),
                       )}
                     </div>
                   </div>

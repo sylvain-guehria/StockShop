@@ -33,7 +33,7 @@ export const getInventoryProducts =
     try {
       if (!inventoryId) {
         throw new Error(
-          'inventoryId is required to get user inventoriy products'
+          'inventoryId is required to get user inventoriy products',
         );
       }
 

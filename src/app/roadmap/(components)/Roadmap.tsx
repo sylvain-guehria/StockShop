@@ -74,7 +74,7 @@ const Roadmap = () => {
                             step.status === StatusRoadmapStepEnum.ONGOING
                               ? 'bg-blue-500'
                               : '',
-                            'flex h-8 w-8 items-center justify-center rounded-full ring-8 ring-white'
+                            'flex h-8 w-8 items-center justify-center rounded-full ring-8 ring-white',
                           )}
                         >
                           {step.status === StatusRoadmapStepEnum.DONE && (

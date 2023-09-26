@@ -21,7 +21,7 @@ class ProductService {
         inventoryId,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-      })
+      }),
     );
 
     if (!createdProduct) throw new Error('Product not created');
@@ -33,7 +33,7 @@ class ProductService {
     return this.productRepository.update(
       ProductEntity.new({
         ...product,
-      })
+      }),
     );
   }
 }

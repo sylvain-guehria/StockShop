@@ -7,6 +7,6 @@ export const validationSchema = object().shape({
   size: number(),
   type: string().oneOf(
     authorizedFileTypes,
-    'Seul les image jpg, png et jpeg sont autorisées'
+    'Seul les image jpg, png et jpeg sont autorisées',
   ),
 });

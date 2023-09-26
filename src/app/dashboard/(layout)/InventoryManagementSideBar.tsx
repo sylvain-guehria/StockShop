@@ -63,7 +63,7 @@ const InventoryManagementSideBar: FC<Props> = ({
                         path === pathname
                           ? 'bg-primary-400 text-white'
                           : 'text-primary-500  hover:bg-primary-200',
-                        'group flex items-center rounded-md p-2 text-sm font-medium leading-6'
+                        'group flex items-center rounded-md p-2 text-sm font-medium leading-6',
                       )}
                       aria-current={path === pathname ? 'page' : undefined}
                     >
@@ -86,7 +86,7 @@ const InventoryManagementSideBar: FC<Props> = ({
                           path === pathname
                             ? 'bg-primary-400 text-white'
                             : 'text-primary-500  hover:bg-primary-200',
-                          'group flex items-center rounded-md p-2 text-sm font-medium leading-6'
+                          'group flex items-center rounded-md p-2 text-sm font-medium leading-6',
                         )}
                       >
                         <Icon

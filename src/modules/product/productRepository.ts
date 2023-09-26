@@ -14,7 +14,7 @@ export abstract class ProductRepository {
   constructor() {
     if (this.constructor === ProductRepository) {
       throw new TypeError(
-        'Abstract class "ProductRepository" cannot be instantiated, it can only be extended.'
+        'Abstract class "ProductRepository" cannot be instantiated, it can only be extended.',
       );
     }
   }
@@ -27,7 +27,7 @@ export abstract class ProductRepository {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
         product,
-      }}`
+      }}`,
     );
   }
 
@@ -39,7 +39,7 @@ export abstract class ProductRepository {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
         product,
-      }}`
+      }}`,
     );
   }
 
@@ -60,7 +60,7 @@ export abstract class ProductRepository {
         numberOfProductsPerPage,
         sorter,
         filters,
-      }}`
+      }}`,
     );
   }
 }

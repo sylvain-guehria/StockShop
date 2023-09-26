@@ -15,7 +15,7 @@ const ColumnProduct = ({
   <th
     className={clsx(
       className || '',
-      'text-left text-sm font-semibold text-gray-900'
+      'text-left text-sm font-semibold text-gray-900',
     )}
     scope="col"
   >

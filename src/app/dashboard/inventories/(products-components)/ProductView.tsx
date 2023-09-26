@@ -38,11 +38,11 @@ const ProductView: FC<Props> = ({ productId }) => {
   if (!product) return null;
 
   const categoryInputs = getCategoryInputFromDatabase(
-    product.getCategoryId() as string
+    product.getCategoryId() as string,
   );
   const subCategoryInputs = getSubCategoryInputsFromDatabase(
     product.getCategoryId() as string,
-    product.getSubCategoryId() as string
+    product.getSubCategoryId() as string,
   );
 
   const allCategoryInputs = [...categoryInputs, ...subCategoryInputs];
@@ -156,7 +156,7 @@ const ProductView: FC<Props> = ({ productId }) => {
                   value={
                     getSubCategoryById(
                       product.getCategoryId(),
-                      product.getSubCategoryId()
+                      product.getSubCategoryId(),
                     ).label
                   }
                   disabled={true}
@@ -182,7 +182,7 @@ const ProductView: FC<Props> = ({ productId }) => {
                   const valueOfTheSelectedOption =
                     product.getCatSubcatAttributes()[input.id];
                   const label = input?.options?.find(
-                    (option) => option.value === valueOfTheSelectedOption
+                    (option) => option.value === valueOfTheSelectedOption,
                   )?.label;
                   return (
                     <div className="sm:col-span-2" key={input.id}>
@@ -217,7 +217,7 @@ const ProductView: FC<Props> = ({ productId }) => {
       <div
         className={clsx(
           'mt-10 lg:mt-0 lg:pl-4',
-          hasCategoryInputs ? 'lg:w-1/3' : 'lg:w-1/2'
+          hasCategoryInputs ? 'lg:w-1/3' : 'lg:w-1/2',
         )}
       >
         <>

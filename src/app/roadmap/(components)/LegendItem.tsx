@@ -16,7 +16,7 @@ export const LegendItem = ({
       <div
         className={clsx(
           'flex h-8 w-8 items-center justify-center rounded-full ring-8 ring-white',
-          iconColor || ''
+          iconColor || '',
         )}
       >
         <Icon className="h-5 w-5 text-white" aria-hidden="true" />

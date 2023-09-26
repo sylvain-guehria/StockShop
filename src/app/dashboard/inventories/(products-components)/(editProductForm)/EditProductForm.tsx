@@ -93,7 +93,7 @@ const EditProductForm: FC<Props> = ({ product, handleCloseModal }) => {
   } = useForm<EditProductFormType>(formOptions);
 
   const onSubmitEditProductForm: SubmitHandler<EditProductFormType> = async (
-    data: EditProductFormType
+    data: EditProductFormType,
   ) => {
     mutate({
       ...product,

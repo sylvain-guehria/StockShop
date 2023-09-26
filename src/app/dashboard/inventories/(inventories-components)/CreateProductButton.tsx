@@ -40,7 +40,7 @@ const CreateProductButton: FC<Props> = ({ currentInventoryId }) => {
       logException(error, { when: 'CreateProductButton' });
       toast(
         ToasterTypeEnum.ERROR,
-        'Erreur lors de la création du produit, veuillez réessayer.'
+        'Erreur lors de la création du produit, veuillez réessayer.',
       );
     },
   });

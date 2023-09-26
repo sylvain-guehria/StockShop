@@ -43,14 +43,14 @@ const CardInventory: FC<Props> = ({
       key={inventory.id}
       className={clsx(
         currentInventoryClassName,
-        'relative col-span-1 flex cursor-pointer rounded-md shadow-sm hover:border hover:shadow-lg'
+        'relative col-span-1 flex cursor-pointer rounded-md shadow-sm hover:border hover:shadow-lg',
       )}
     >
       <div
         onClick={() => onSelectInventory(inventory.id)}
         className={clsx(
           bgColor,
-          'flex w-16 shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white'
+          'flex w-16 shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
         )}
       >
         {inventory.isDefault() && (
@@ -96,7 +96,7 @@ const CardInventory: FC<Props> = ({
                   <div
                     className={clsx(
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'flex cursor-pointer justify-between px-4 py-3 text-sm'
+                      'flex cursor-pointer justify-between px-4 py-3 text-sm',
                     )}
                     onClick={() => handleClickEditInventory(inventory)}
                   >
@@ -113,7 +113,7 @@ const CardInventory: FC<Props> = ({
                   <div
                     className={clsx(
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'flex cursor-pointer justify-between px-4 py-3 text-sm'
+                      'flex cursor-pointer justify-between px-4 py-3 text-sm',
                     )}
                     onClick={() => handleClickDeleteInventory(inventory)}
                   >
@@ -130,7 +130,7 @@ const CardInventory: FC<Props> = ({
                   <div
                     className={clsx(
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'flex cursor-pointer justify-between px-4 py-3 text-sm'
+                      'flex cursor-pointer justify-between px-4 py-3 text-sm',
                     )}
                     onClick={() => handleClickSetDefaultInventory(inventory)}
                   >

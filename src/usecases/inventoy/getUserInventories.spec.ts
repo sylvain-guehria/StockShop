@@ -27,11 +27,11 @@ describe('getUserInventories', () => {
       userRepository as any,
       inventoryRepository as any,
       companyService as any,
-      inventoryService as any
+      inventoryService as any,
     )(user);
 
     expect(
-      inventoryService.getInventoriesByUserIdAndCompanyId
+      inventoryService.getInventoriesByUserIdAndCompanyId,
     ).toHaveBeenCalledTimes(0);
     expect(inventories).toEqual([]);
   });
@@ -43,7 +43,7 @@ describe('getUserInventories', () => {
       inventoryRepository as any,
       companyService as any,
       inventoryService as any,
-      userRepository as any
+      userRepository as any,
     )(user);
 
     expect(companyService.createCompany).toHaveBeenCalledTimes(1);
@@ -55,7 +55,7 @@ describe('getUserInventories', () => {
       inventoryRepository as any,
       companyService as any,
       inventoryService as any,
-      userRepository as any
+      userRepository as any,
     )(user);
 
     expect(companyService.createCompany).toHaveBeenCalledTimes(0);
@@ -67,14 +67,14 @@ describe('getUserInventories', () => {
       inventoryRepository as any,
       companyService as any,
       inventoryService as any,
-      userRepository as any
+      userRepository as any,
     )(user);
 
     expect(inventoryRepository.getInventoriesByCompanyId).toHaveBeenCalledTimes(
-      1
+      1,
     );
     expect(inventoryRepository.getInventoriesByCompanyId).toBeCalledWith(
-      'companyId'
+      'companyId',
     );
   });
   it('Create his first inventory when creating a company for the user', async () => {
@@ -88,15 +88,15 @@ describe('getUserInventories', () => {
       inventoryRepository as any,
       companyService as any,
       inventoryService as any,
-      userRepository as any
+      userRepository as any,
     )(user);
 
     expect(userRepository.update).toHaveBeenCalledTimes(1);
     expect(userRepository.update).toBeCalledWith(
-      user.setCompanyId('newCompanyId')
+      user.setCompanyId('newCompanyId'),
     );
     expect(inventoryService.createInventoryWithCompanyId).toHaveBeenCalledTimes(
-      1
+      1,
     );
     expect(inventoryService.createInventoryWithCompanyId).toBeCalledWith({
       companyId: 'newCompanyId',
@@ -108,18 +108,18 @@ describe('getUserInventories', () => {
     const inventories = [{ id: 'inventoryId' }];
 
     inventoryRepository.getInventoriesByCompanyId.mockResolvedValue(
-      inventories
+      inventories,
     );
 
     await getUserInventories(
       inventoryRepository as any,
       companyService as any,
       inventoryService as any,
-      userRepository as any
+      userRepository as any,
     )(user);
 
     expect(inventoryService.createInventoryWithCompanyId).toHaveBeenCalledTimes(
-      0
+      0,
     );
   });
 
@@ -140,7 +140,7 @@ describe('getUserInventories', () => {
       inventoryRepository as any,
       companyService as any,
       inventoryService as any,
-      userRepository as any
+      userRepository as any,
     )(user);
     expect(inventories).toEqual([inventory]);
   });

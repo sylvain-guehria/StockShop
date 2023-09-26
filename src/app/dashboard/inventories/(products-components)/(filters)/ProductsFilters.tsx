@@ -79,7 +79,7 @@ export const ProductsFilters: FC<Props> = ({
   const watchCategoryId = watch(ProductAttributes.CATEGORY_ID);
 
   const onSubmitFilterForm: SubmitHandler<FilterPropertyType> = async (
-    data: FilterPropertyType
+    data: FilterPropertyType,
   ) => {
     dispatchFilterActions({
       type: ActionNamesEnum.SET_FILTERS,
@@ -119,7 +119,7 @@ export const ProductsFilters: FC<Props> = ({
                   />
                   {
                     Object.values(filtersState.filters).filter(
-                      (filter) => filter
+                      (filter) => filter,
                     ).length
                   }{' '}
                   <span className="ml-1 hidden sm:block">Filtres</span>
@@ -166,7 +166,7 @@ export const ProductsFilters: FC<Props> = ({
                     options={[
                       { label: '', value: '' },
                       ...getSubCategoriesByCategoryIdFromDatabase(
-                        watchCategoryId as string
+                        watchCategoryId as string,
                       ).map((subcategory) => ({
                         label: subcategory.label,
                         value: subcategory.id,
@@ -280,7 +280,7 @@ export const ProductsFilters: FC<Props> = ({
                                 'block cursor-pointer px-4 py-2 text-sm',
                                 option.value === filtersState.sorter.field
                                   ? 'bg-gray-200'
-                                  : ''
+                                  : '',
                               )}
                               onClick={() =>
                                 dispatchFilterActions({

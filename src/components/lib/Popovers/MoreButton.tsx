@@ -56,14 +56,14 @@ const MoreButton = () => {
           <Popover.Button
             className={clsx(
               open ? 'text-gray-900' : 'text-gray-600',
-              'group inline-flex items-center rounded-md text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2'
+              'group inline-flex items-center rounded-md text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
             )}
           >
             <span>More</span>
             <ChevronDownIcon
               className={clsx(
                 open ? 'text-gray-600' : 'text-gray-400',
-                'ml-2 h-5 w-5 group-hover:text-gray-500'
+                'ml-2 h-5 w-5 group-hover:text-gray-500',
               )}
               aria-hidden="true"
             />

@@ -23,7 +23,7 @@ const DynamicDeleteModal = dynamic(
   () => import('../../../../../components/lib/modal/DeleteModal'),
   {
     suspense: true,
-  }
+  },
 );
 
 type Props = {

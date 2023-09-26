@@ -81,13 +81,13 @@ const EditInventoryForm: FC<Props> = ({ inventory, setIsEditModalOpen }) => {
       logException(error, { when: 'EditInventoryForm' });
       toast(
         ToasterTypeEnum.ERROR,
-        "Une erreur est survenue lors de la modification de l'inventaire"
+        "Une erreur est survenue lors de la modification de l'inventaire",
       );
     },
   });
 
   const onSubmitForm: SubmitHandler<EditInventoryFormType> = (
-    data: EditInventoryFormType
+    data: EditInventoryFormType,
   ) => {
     mutateInventory({
       inventory: {

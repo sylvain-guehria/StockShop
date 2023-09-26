@@ -35,7 +35,7 @@ const DeleteProductModal: FC<Props> = ({ product, open, handleCloseModal }) => {
       logException(error, { when: 'DeleteProductModal' });
       toast(
         ToasterTypeEnum.ERROR,
-        'Une erreur est survenue lors de la suppression du produit, veuillez réessayer.'
+        'Une erreur est survenue lors de la suppression du produit, veuillez réessayer.',
       );
     },
   });

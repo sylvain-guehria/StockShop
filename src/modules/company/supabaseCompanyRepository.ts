@@ -50,7 +50,7 @@ class SupabaseCompanyRepository extends CompanyRepository {
           name: company.name,
           vat: company.vat,
           addressId: company.addressId,
-        })
+        }),
     );
   }
 

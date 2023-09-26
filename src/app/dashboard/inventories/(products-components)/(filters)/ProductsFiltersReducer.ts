@@ -76,7 +76,7 @@ export const initialFilterState: FiltersStateType = {
 
 export const reducerFilters = (
   filtersState: FiltersStateType,
-  action: FiltersActionsType
+  action: FiltersActionsType,
 ) => {
   switch (action.type) {
     case ActionNamesEnum.SET_FILTER:

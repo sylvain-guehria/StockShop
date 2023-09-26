@@ -99,12 +99,12 @@ describe('categoryUtils', () => {
       expect(getSubCategoriesByCategoryId(mockedCategories, null)).toEqual([]);
       expect(
         // @ts-ignore
-        getSubCategoriesByCategoryId(mockedCategories, undefined)
+        getSubCategoriesByCategoryId(mockedCategories, undefined),
       ).toEqual([]);
     });
     it('Should return the subCategories of the categoryId', () => {
       expect(
-        getSubCategoriesByCategoryId(mockedCategories, 'categoryId2')
+        getSubCategoriesByCategoryId(mockedCategories, 'categoryId2'),
       ).toEqual([
         { id: 'subCategoryId3', label: 'SubCategory 3' },
         {
@@ -167,7 +167,7 @@ describe('getSubCategoryInputs', () => {
   it('Should return an empty array if subCategoryId is null or undefined', () => {
     expect(
       // @ts-ignore
-      getSubCategoryInputs(mockedCategories, 'categoryId2', null)
+      getSubCategoryInputs(mockedCategories, 'categoryId2', null),
     ).toEqual([]);
     // @ts-ignore
     expect(getSubCategoryInputs(mockedCategories, 'categoryId2')).toEqual([]);
@@ -180,7 +180,7 @@ describe('getSubCategoryInputs', () => {
   });
   it('Should return the inputs of the subCategory', () => {
     expect(
-      getSubCategoryInputs(mockedCategories, 'categoryId2', 'subCategoryId4')
+      getSubCategoryInputs(mockedCategories, 'categoryId2', 'subCategoryId4'),
     ).toEqual([
       {
         id: 'inputId7',

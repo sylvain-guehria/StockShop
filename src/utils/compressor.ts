@@ -8,7 +8,7 @@ export interface CompressorOptions {
 
 export function compressFile(
   file: File | Blob,
-  { quality, convertSize }: CompressorOptions
+  { quality, convertSize }: CompressorOptions,
 ): Promise<File | Blob> {
   return new Promise((resolve, reject) => {
     new Compressor(file, {

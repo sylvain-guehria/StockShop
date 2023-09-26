@@ -10,7 +10,7 @@ export abstract class InventoryRepository {
   constructor() {
     if (this.constructor === InventoryRepository) {
       throw new TypeError(
-        'Abstract class "InventoryRepository" cannot be instantiated, it can only be extended.'
+        'Abstract class "InventoryRepository" cannot be instantiated, it can only be extended.',
       );
     }
   }
@@ -21,13 +21,13 @@ export abstract class InventoryRepository {
 
   async add(inventory: Inventory): Promise<InventoryEntity | null> {
     throw new Error(
-      `You tried to call an abstract methode, inventory: ${inventory}`
+      `You tried to call an abstract methode, inventory: ${inventory}`,
     );
   }
 
   async delete(inventoryId: string): Promise<boolean> {
     throw new Error(
-      `You tried to call an abstract methode, arg inventoryId ${inventoryId}`
+      `You tried to call an abstract methode, arg inventoryId ${inventoryId}`,
     );
   }
 
@@ -39,15 +39,15 @@ export abstract class InventoryRepository {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
         inventory,
-      }} `
+      }} `,
     );
   }
 
   async getInventoriesByCompanyId(
-    companyId: string
+    companyId: string,
   ): Promise<InventoryEntity[]> {
     throw new Error(
-      `You tried to call an abstract methode, arg: ${{ companyId }}`
+      `You tried to call an abstract methode, arg: ${{ companyId }}`,
     );
   }
 }

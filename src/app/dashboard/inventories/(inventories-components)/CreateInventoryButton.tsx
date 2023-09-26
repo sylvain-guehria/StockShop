@@ -32,7 +32,7 @@ const CreateInventoryButton: FC = () => {
       logException(error, { when: 'CreateInventoryButton' });
       toast(
         ToasterTypeEnum.ERROR,
-        "Erreur lors de la création de l'inventaire, veuillez réessayer."
+        "Erreur lors de la création de l'inventaire, veuillez réessayer.",
       );
     },
   });

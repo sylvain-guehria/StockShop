@@ -15,7 +15,7 @@ const Section = (props: ISectionProps) => (
     className={clsx(
       'mx-auto px-3',
       props.yPadding || 'py-24',
-      props.maxWidth || 'max-w-screen-lg'
+      props.maxWidth || 'max-w-screen-lg',
     )}
   >
     {(props.title || props.subtitle || props.description) && (

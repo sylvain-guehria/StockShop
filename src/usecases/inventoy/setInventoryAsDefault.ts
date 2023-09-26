@@ -15,21 +15,20 @@ export const setInventoryAsDefault =
 
     if (!companyId)
       throw new Error(
-        'companyId is required in the inventory to set inventory as default'
+        'companyId is required in the inventory to set inventory as default',
       );
 
     if (inventoryEntity.isDefault()) return;
 
     try {
-      const inventories = await inventoryRepository.getInventoriesByCompanyId(
-        companyId
-      );
+      const inventories =
+        await inventoryRepository.getInventoriesByCompanyId(companyId);
 
       inventoryEntity.setAsDefaultInventory();
       await inventoryRepository.update(inventoryEntity);
 
       const formerDefaultInventory = inventories.find(
-        (retrievedInventory) => retrievedInventory.isDefaultInventory
+        (retrievedInventory) => retrievedInventory.isDefaultInventory,
       );
       if (formerDefaultInventory) {
         formerDefaultInventory.unSetAsDefaultInventory();

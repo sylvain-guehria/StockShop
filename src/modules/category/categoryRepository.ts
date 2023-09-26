@@ -9,7 +9,7 @@ export abstract class CategoryRepository {
   constructor() {
     if (this.constructor === CategoryRepository) {
       throw new TypeError(
-        'Abstract class "CategoryRepository" cannot be instantiated, it can only be extended.'
+        'Abstract class "CategoryRepository" cannot be instantiated, it can only be extended.',
       );
     }
   }
@@ -32,7 +32,7 @@ export abstract class CategoryRepository {
 
   async update(category: CategoryEntity): Promise<void> {
     throw new Error(
-      `You tried to call an abstract methode, arg: ${{ category }}`
+      `You tried to call an abstract methode, arg: ${{ category }}`,
     );
   }
 }

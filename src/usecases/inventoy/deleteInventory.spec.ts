@@ -25,7 +25,7 @@ describe('deleteInventory', () => {
     try {
       await deleteInventory(
         inventoryRepository as any,
-        supabaseStorage as any
+        supabaseStorage as any,
       )({
         companyId,
         inventoryId,
@@ -43,7 +43,7 @@ describe('deleteInventory', () => {
     try {
       await deleteInventory(
         inventoryRepository as any,
-        supabaseStorage as any
+        supabaseStorage as any,
       )({
         companyId,
         inventoryId,
@@ -65,7 +65,7 @@ describe('deleteInventory', () => {
     try {
       await deleteInventory(
         inventoryRepository as any,
-        supabaseStorage as any
+        supabaseStorage as any,
       )({
         companyId,
         inventoryId,
@@ -73,7 +73,7 @@ describe('deleteInventory', () => {
     } catch (error: any) {
       expect(inventoryRepository.delete).toHaveBeenCalledTimes(0);
       expect(error.message).toBe(
-        'Vous ne pouvez pas supprimer le dernier inventaire'
+        'Vous ne pouvez pas supprimer le dernier inventaire',
       );
     }
   });
@@ -95,7 +95,7 @@ describe('deleteInventory', () => {
 
       await deleteInventory(
         inventoryRepository as any,
-        supabaseStorage as any
+        supabaseStorage as any,
       )({
         companyId,
         inventoryId,
@@ -132,7 +132,7 @@ describe('deleteInventory', () => {
 
       await deleteInventory(
         inventoryRepository as any,
-        supabaseStorage as any
+        supabaseStorage as any,
       )({
         companyId,
         inventoryId,

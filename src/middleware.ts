@@ -41,8 +41,8 @@ export async function middleware(req: NextRequestType) {
       return NextResponse.redirect(
         new URL(
           `${mainRoutes.profile.path}/?tab=settings&displayHelpIM=true`,
-          req.url
-        )
+          req.url,
+        ),
       );
     }
     if (
@@ -51,11 +51,11 @@ export async function middleware(req: NextRequestType) {
     ) {
       if (userProfile?.hasInventoryManagementServiceActivated) {
         return NextResponse.redirect(
-          new URL(inventoryManagementRoutes.myInventory.path, req.url)
+          new URL(inventoryManagementRoutes.myInventory.path, req.url),
         );
       }
       return NextResponse.redirect(
-        new URL(marketplaceRoutes.marketplace.path, req.url)
+        new URL(marketplaceRoutes.marketplace.path, req.url),
       );
     }
   }

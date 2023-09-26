@@ -12,7 +12,7 @@ import { parseBoolean } from '@/utils/primitiveUtils';
 
 const getProductsByInventoryId = async (
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) => {
   const {
     query: {
@@ -32,7 +32,7 @@ const getProductsByInventoryId = async (
 
   const { from, to } = getPagination(
     currentPage as string,
-    numberOfProductsPerPage as string
+    numberOfProductsPerPage as string,
   );
 
   const boolIsPublic = parseBoolean(filterIsPublic as string);

@@ -17,21 +17,21 @@ const DynamicModal = dynamic(
   () => import('../../../../components/lib/modal/Modal'),
   {
     suspense: true,
-  }
+  },
 );
 
 const DynamicEditInventoryForm = dynamic(
   () => import('./(editInventoryForm)/EditInventoryForm'),
   {
     suspense: true,
-  }
+  },
 );
 
 const DynamicDeleteInventoryForm = dynamic(
   () => import('./(deleteInventoryForm)/DeleteInventoryForm'),
   {
     suspense: true,
-  }
+  },
 );
 
 type Props = {

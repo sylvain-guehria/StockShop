@@ -19,14 +19,14 @@ const DynamicProfileForm = dynamic(
   () => import('./(profileForm)/ProfileForm'),
   {
     loading: () => <Spinner />,
-  }
+  },
 );
 
 const DynamicSettingsForm = dynamic(
   () => import('./(settingsForm)/SettingsForm'),
   {
     loading: () => <Spinner />,
-  }
+  },
 );
 
 const Profile = () => {
@@ -37,14 +37,14 @@ const Profile = () => {
   const [seletedTab, setSelectedTab] = useState(
     tabNames.includes(searchParams?.get('tab') as string)
       ? searchParams?.get('tab')
-      : 'profil'
+      : 'profil',
   );
 
   useEffect(() => {
     if (searchParams?.get('tab') && searchParams?.get('+') === 'true') {
       toast(
         ToasterTypeEnum.INFO,
-        'Vous devez activer la gestion des stocks dans les paramètres de votre compte pour acceder à ce module'
+        'Vous devez activer la gestion des stocks dans les paramètres de votre compte pour acceder à ce module',
       );
     }
   }, []);

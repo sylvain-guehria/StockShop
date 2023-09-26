@@ -6,7 +6,7 @@ export const chooseSubRoleOnFirstConnection =
   (userRepository: UserRepository) =>
   async (
     user: UserEntity,
-    subrole: SUBROLES.BUYER | SUBROLES.SELLER
+    subrole: SUBROLES.BUYER | SUBROLES.SELLER,
   ): Promise<UserEntity> => {
     if (subrole === SUBROLES.SELLER) {
       user.activateSockManagement();
@@ -20,7 +20,7 @@ export const chooseSubRoleOnFirstConnection =
 
     if (!success) {
       throw new Error(
-        "Nous n'avons pas pu mettre à jour votre compte. Veuillez réessayer."
+        "Nous n'avons pas pu mettre à jour votre compte. Veuillez réessayer.",
       );
     }
 

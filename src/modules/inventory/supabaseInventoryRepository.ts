@@ -61,7 +61,7 @@ class SupabaseInventoryRepository extends InventoryRepository {
           isPublic: inventory.isPublic,
           isDefaultInventory: inventory.isDefaultInventory,
           color: inventory.color,
-        })
+        }),
     );
   }
 
@@ -77,14 +77,14 @@ class SupabaseInventoryRepository extends InventoryRepository {
   }
 
   async getInventoriesByCompanyId(
-    companyId: string
+    companyId: string,
   ): Promise<InventoryEntity[]> {
     console.info('get inventories by companyId in db');
     const response = await axios.get(
       `${this.baseUrl}/api/inventory/getInventoriesByCompanyId`,
       {
         params: { companyId },
-      }
+      },
     );
     const inventories = response.data.inventories || [];
     const inventoriesProductCount = response.data.inventoriesProductCount || {};
@@ -99,7 +99,7 @@ class SupabaseInventoryRepository extends InventoryRepository {
           color: inventory.color,
           companyId,
           numberOfProducts: inventoriesProductCount[inventory.id],
-        })
+        }),
     );
   }
 }

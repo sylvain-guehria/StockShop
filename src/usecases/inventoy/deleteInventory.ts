@@ -12,7 +12,7 @@ export interface DeleteInventoryParams {
 export const deleteInventory =
   (
     inventoryRepository: InventoryRepository,
-    supabaseStorage: SupabaseClient<any, 'public', any>['storage']
+    supabaseStorage: SupabaseClient<any, 'public', any>['storage'],
   ) =>
   async ({ companyId, inventoryId }: DeleteInventoryParams): Promise<void> => {
     try {
@@ -21,9 +21,8 @@ export const deleteInventory =
       if (!inventoryId)
         throw new Error('inventoryId is required to delete inventory');
 
-      const inventories = await inventoryRepository.getInventoriesByCompanyId(
-        companyId
-      );
+      const inventories =
+        await inventoryRepository.getInventoriesByCompanyId(companyId);
 
       if (inventories && inventories.length <= 1) {
         throw new Error('Vous ne pouvez pas supprimer le dernier inventaire');
@@ -48,7 +47,7 @@ export const deleteInventory =
       }
 
       const filesToRemove = listOfFiles.map(
-        (file) => `${inventoryFolderPath}/${file.name}`
+        (file) => `${inventoryFolderPath}/${file.name}`,
       );
 
       if (!filesToRemove || !filesToRemove.length) return;

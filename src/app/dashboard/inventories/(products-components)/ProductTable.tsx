@@ -38,28 +38,28 @@ const DynamicModal = dynamic(
   () => import('../../../../components/lib/modal/Modal'),
   {
     suspense: true,
-  }
+  },
 );
 
 const DynamicDeleteProductModal = dynamic(
   () => import('./DeleteProductModal'),
   {
     suspense: true,
-  }
+  },
 );
 
 const DynamicEditProductForm = dynamic(
   () => import('./(editProductForm)/EditProductForm'),
   {
     suspense: true,
-  }
+  },
 );
 
 const DynamicEditProductPhotoForm = dynamic(
   () => import('./(editPhotoForm)/EditProductPhotoForm'),
   {
     suspense: true,
-  }
+  },
 );
 
 const DynamicProductView = dynamic(() => import('./ProductView'), {
@@ -79,7 +79,7 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
   const [isViewProductModalOpen, setIsViewProductModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [productToEdit, setProductToEdit] = useState<ProductEntity | null>(
-    null
+    null,
   );
 
   const oneHourInMilliseconds = 1000 * 60 * 60;
@@ -90,13 +90,13 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
 
   useEffect(() => {
     window.addEventListener(CustomEvents.ProductEventCreation, (event: any) =>
-      handleEditProductClick(event.detail as ProductEntity)
+      handleEditProductClick(event.detail as ProductEntity),
     );
 
     return () => {
       window.removeEventListener(
         CustomEvents.ProductEventCreation,
-        (event: any) => handleEditProductClick(event.detail as ProductEntity)
+        (event: any) => handleEditProductClick(event.detail as ProductEntity),
       );
     };
   }, []);
@@ -270,7 +270,7 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
                   const subCategoryLabel =
                     getSubCategoryById(
                       product.getCategoryId(),
-                      product.getSubCategoryId()
+                      product.getSubCategoryId(),
                     )?.label || '';
                   return (
                     <tr key={product.id}>

@@ -16,14 +16,14 @@ const DynamicModal = dynamic(
   () => import('../../../components/lib/modal/Modal'),
   {
     suspense: true,
-  }
+  },
 );
 
 const DynamicLoginWithMagikLinkForm = dynamic(
   () => import('./LoginWithMagikLinkForm'),
   {
     suspense: true,
-  }
+  },
 );
 
 const LoginOtherPlatformForm = () => {
@@ -43,7 +43,7 @@ const LoginOtherPlatformForm = () => {
   const tellUSerToUseMagikLink = () => {
     toast(
       ToasterTypeEnum.INFO,
-      "La connexion avec Google n'est pas disponible sur mobile. Vous pouvez utiliser le lien email ou créer un mot de passe. Vous pourrez toujours vous connecter avec Google sur votre ordinateur."
+      "La connexion avec Google n'est pas disponible sur mobile. Vous pouvez utiliser le lien email ou créer un mot de passe. Vous pourrez toujours vous connecter avec Google sur votre ordinateur.",
     );
   };
 

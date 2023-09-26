@@ -63,7 +63,7 @@ const Modal: FC<Props> = ({
                   margin || 'lg:m-2',
                   padding || 'px-4 pb-4 pt-5 sm:p-10',
                   'relative justify-center overflow-hidden rounded-lg bg-white',
-                  'shadow-xl transition-all'
+                  'shadow-xl transition-all',
                 )}
               >
                 <div className="absolute right-0 top-0 pr-4 pt-4 sm:block">

@@ -34,7 +34,7 @@ const RegisterForm = () => {
   } = useForm<RegisterFormType>(formOptions);
 
   const onSubmit: SubmitHandler<RegisterFormType> = async (
-    data: RegisterFormType
+    data: RegisterFormType,
   ) => {
     setIsLoading(true);
     const { email, password } = data;
@@ -47,7 +47,7 @@ const RegisterForm = () => {
       if (response.data.user) {
         toast(
           ToasterTypeEnum.SUCCESS,
-          'Bienvenue, un email envoyé de confirmation vous  a été envoyé'
+          'Bienvenue, un email envoyé de confirmation vous  a été envoyé',
         );
         reset();
       }

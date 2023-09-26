@@ -13,7 +13,6 @@ const customJestConfig = {
     '^@/public/(.*)$': '<rootDir>/public/$1',
   },
   modulePaths: ['<rootDir>/'],
-  setupFilesAfterEnv: ['./jest.setup.js'],
   clearMocks: true,
   collectCoverage: false,
   collectCoverageFrom: [

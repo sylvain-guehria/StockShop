@@ -48,7 +48,7 @@ const LoginWithMagikLinkForm = () => {
       if (response.data) {
         toast(
           ToasterTypeEnum.SUCCESS,
-          'Un email de connexion vous a été envoyé. Pensez à vérifier vos spams.'
+          'Un email de connexion vous a été envoyé. Pensez à vérifier vos spams.',
         );
       }
     } catch (error: any) {

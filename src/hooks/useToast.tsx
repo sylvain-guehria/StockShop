@@ -12,7 +12,7 @@ export function useToast(delay: number) {
       | ToasterTypeEnum.ERROR
       | ToasterTypeEnum.SUCCESS
       | ToasterTypeEnum.INFO,
-    message: string
+    message: string,
   ) {
     const id = uuidV4();
     const id2 = uuidV4();

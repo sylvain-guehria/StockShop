@@ -14,7 +14,7 @@ const Tag: FC<Props> = ({ label, bgColor, textColor, className }) => (
         bgColor || 'bg-gray-100',
         textColor || 'text-gray-800',
         'rounded-full px-2.5 py-0.5 text-center text-xs font-semibold leading-5',
-        className || ''
+        className || '',
       )}
     >
       {label}

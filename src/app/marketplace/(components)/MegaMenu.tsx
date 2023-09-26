@@ -19,7 +19,7 @@ const MegaMenu = () => {
                         open
                           ? 'border-primary-600 text-primary-600'
                           : 'border-transparent text-gray-600 hover:text-gray-800',
-                        'relative z-10 -mb-px flex items-center border-b-2 pt-px font-medium transition-colors duration-200 ease-out'
+                        'relative z-10 -mb-px flex items-center border-b-2 pt-px font-medium transition-colors duration-200 ease-out',
                       )}
                     >
                       {category.name}

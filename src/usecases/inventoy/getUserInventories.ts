@@ -12,7 +12,7 @@ export const getUserInventories =
     inventoryRepository: InventoryRepository,
     companyServiceDi: CompanyService,
     inventoryServiceDi: InventoryService,
-    userRepository: UserRepository
+    userRepository: UserRepository,
   ) =>
   async (user: UserEntity): Promise<InventoryEntity[]> => {
     try {
@@ -33,9 +33,8 @@ export const getUserInventories =
         return [newInventory];
       }
 
-      const inventories = await inventoryRepository.getInventoriesByCompanyId(
-        userCompanyId
-      );
+      const inventories =
+        await inventoryRepository.getInventoriesByCompanyId(userCompanyId);
 
       return inventories;
     } catch (error: any) {

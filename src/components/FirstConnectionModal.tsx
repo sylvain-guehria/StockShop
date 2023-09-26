@@ -51,13 +51,13 @@ const FirstConnectionModal: FC<Props> = () => {
       logException(error, { when: 'FirstConnectionModal' });
       toast(
         ToasterTypeEnum.ERROR,
-        'Une erreur est survenue lors de la création de l&apos;inventaire'
+        'Une erreur est survenue lors de la création de l&apos;inventaire',
       );
     },
   });
 
   const onChooseRoleFirstConnection = async (
-    subrole: SUBROLES.BUYER | SUBROLES.SELLER
+    subrole: SUBROLES.BUYER | SUBROLES.SELLER,
   ) => {
     mutate(subrole);
   };

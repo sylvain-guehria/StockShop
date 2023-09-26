@@ -34,7 +34,7 @@ const ContactForm = () => {
   } = useForm<ContactFormType>(formOptions);
 
   const onSubmit: SubmitHandler<ContactFormType> = async (
-    data: ContactFormType
+    data: ContactFormType,
   ) => {
     const { fullName, company, phone, message, soureOfHeard, email } = data;
     try {
@@ -50,13 +50,13 @@ const ContactForm = () => {
       });
       toast(
         ToasterTypeEnum.SUCCESS,
-        'Votre email à été envoyé, nous vous répondrons aussi vite que possible =)'
+        'Votre email à été envoyé, nous vous répondrons aussi vite que possible =)',
       );
       reset();
     } catch (error) {
       toast(
         ToasterTypeEnum.ERROR,
-        `Il semble que nous ayons un problème avec notre serveur mail, veuillez envoyer un email directement à ${addressEmails.INENTORY_MARKET_FR}`
+        `Il semble que nous ayons un problème avec notre serveur mail, veuillez envoyer un email directement à ${addressEmails.INENTORY_MARKET_FR}`,
       );
     }
   };

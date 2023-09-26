@@ -20,7 +20,7 @@ type UpdatePhotoProductInterface = {
 export const updatePhotoProduct =
   (
     productServiceDi: ProductService,
-    supabaseStorage: SupabaseClient<any, 'public', any>['storage']
+    supabaseStorage: SupabaseClient<any, 'public', any>['storage'],
   ) =>
   async ({
     companyId,
@@ -31,7 +31,7 @@ export const updatePhotoProduct =
 
     if (!companyId)
       throw new Error(
-        'companyId is required to update the photo of the product'
+        'companyId is required to update the photo of the product',
       );
     if (!product)
       throw new Error('product is required to update the photo of the product');
@@ -41,7 +41,7 @@ export const updatePhotoProduct =
 
     if (uploadedFile && !authorizedFileTypes.includes(uploadedFile.type)) {
       throw new Error(
-        'Le fichier doit être une image au format png, jpg ou jpeg'
+        'Le fichier doit être une image au format png, jpg ou jpeg',
       );
     }
 
@@ -89,7 +89,7 @@ export const updatePhotoProduct =
           .getPublicUrl(`${filePath}`);
 
         return await productServiceDi.updateProduct(
-          product.setPhotoLink(data.publicUrl)
+          product.setPhotoLink(data.publicUrl),
         );
       }
 
@@ -103,7 +103,7 @@ export const updatePhotoProduct =
       if (error) throw new Error(error.message);
       if (!isDeleted)
         throw new Error(
-          "Le fichier n'a pas pu être supprimé, veuillez réessayer"
+          "Le fichier n'a pas pu être supprimé, veuillez réessayer",
         );
 
       return await productServiceDi.updateProduct(product.setPhotoLink(''));

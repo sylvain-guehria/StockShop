@@ -35,11 +35,11 @@ export const getUserInventoriesUseCase = getUserInventories(
   inventoryRepository,
   companyServiceDi,
   inventoryServiceDi,
-  userRepository
+  userRepository,
 );
 export const deleteInventoryUseCase = deleteInventory(
   inventoryRepository,
-  supabase.storage
+  supabase.storage,
 );
 export const setInventoryAsDefaultUseCase =
   setInventoryAsDefault(inventoryRepository);
@@ -49,11 +49,11 @@ export const getInventoryProductsUseCase =
   getInventoryProducts(productRepository);
 export const deleteProductUseCase = deleteProduct(
   productRepository,
-  supabase.storage
+  supabase.storage,
 );
 export const updatePhotoProductUseCase = updatePhotoProduct(
   productServiceDi,
-  supabase.storage
+  supabase.storage,
 );
 
 // USER

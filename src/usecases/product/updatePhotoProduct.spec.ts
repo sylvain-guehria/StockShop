@@ -29,7 +29,7 @@ describe('updatePhotoProduct', () => {
     try {
       await updatePhotoProduct(
         productServiceDi as any,
-        supabaseStorage as any
+        supabaseStorage as any,
       )({
         companyId,
         product,
@@ -40,7 +40,7 @@ describe('updatePhotoProduct', () => {
       expect(supabaseStorage.from('products').upload).toHaveBeenCalledTimes(0);
 
       expect(error.message).toBe(
-        'companyId is required to update the photo of the product'
+        'companyId is required to update the photo of the product',
       );
     }
   });
@@ -52,7 +52,7 @@ describe('updatePhotoProduct', () => {
     try {
       await updatePhotoProduct(
         productServiceDi as any,
-        supabaseStorage as any
+        supabaseStorage as any,
       )({
         companyId,
         product: product as any,
@@ -62,7 +62,7 @@ describe('updatePhotoProduct', () => {
       expect(supabaseStorage.from).toHaveBeenCalledTimes(0);
       expect(supabaseStorage.from('products').upload).toHaveBeenCalledTimes(0);
       expect(error.message).toBe(
-        'product is required to update the photo of the product'
+        'product is required to update the photo of the product',
       );
     }
   });
@@ -77,7 +77,7 @@ describe('updatePhotoProduct', () => {
     try {
       await updatePhotoProduct(
         productServiceDi as any,
-        supabaseStorage as any
+        supabaseStorage as any,
       )({
         companyId,
         product,
@@ -106,7 +106,7 @@ describe('updatePhotoProduct', () => {
     try {
       await updatePhotoProduct(
         productServiceDi as any,
-        supabaseStorage as any
+        supabaseStorage as any,
       )({
         companyId,
         product,
@@ -129,7 +129,7 @@ describe('updatePhotoProduct', () => {
     try {
       await updatePhotoProduct(
         productServiceDi as any,
-        supabaseStorage as any
+        supabaseStorage as any,
       )({
         companyId,
         product,
@@ -138,7 +138,7 @@ describe('updatePhotoProduct', () => {
     } catch (error: any) {
       expect(supabaseStorage.from('products').upload).toHaveBeenCalledTimes(0);
       expect(error.message).toBe(
-        'Le fichier doit être une image au format png, jpg ou jpeg'
+        'Le fichier doit être une image au format png, jpg ou jpeg',
       );
     }
   });
@@ -163,7 +163,7 @@ describe('updatePhotoProduct', () => {
 
       await updatePhotoProduct(
         productServiceDi as any,
-        supabaseStorage as any
+        supabaseStorage as any,
       )({
         companyId,
         product,
@@ -173,7 +173,7 @@ describe('updatePhotoProduct', () => {
       expect(supabaseStorage.from('products').upload).toHaveBeenCalledTimes(1);
       expect(supabaseStorage.from('products').upload).toHaveBeenCalledWith(
         `companyId/inventoryId/${product.id}`,
-        currentFile
+        currentFile,
       );
     });
     it('Should update the product with the Public Url', async () => {
@@ -198,7 +198,7 @@ describe('updatePhotoProduct', () => {
 
       await updatePhotoProduct(
         productServiceDi as any,
-        supabaseStorage as any
+        supabaseStorage as any,
       )({
         companyId,
         product,
@@ -215,7 +215,7 @@ describe('updatePhotoProduct', () => {
 
       expect(productServiceDi.updateProduct).toHaveBeenCalledTimes(1);
       expect(productServiceDi.updateProduct).toHaveBeenCalledWith(
-        expectedProduct
+        expectedProduct,
       );
     });
   });
@@ -237,7 +237,7 @@ describe('updatePhotoProduct', () => {
 
       await updatePhotoProduct(
         productServiceDi as any,
-        supabaseStorage as any
+        supabaseStorage as any,
       )({
         companyId,
         product,
@@ -276,7 +276,7 @@ describe('updatePhotoProduct', () => {
 
       await updatePhotoProduct(
         productServiceDi as any,
-        supabaseStorage as any
+        supabaseStorage as any,
       )({
         companyId,
         product,
@@ -285,7 +285,7 @@ describe('updatePhotoProduct', () => {
 
       expect(productServiceDi.updateProduct).toHaveBeenCalledTimes(1);
       expect(productServiceDi.updateProduct).toHaveBeenCalledWith(
-        expectedProduct
+        expectedProduct,
       );
     });
     it('Should not update the product if there is an error when deleting the photo', async () => {
@@ -306,7 +306,7 @@ describe('updatePhotoProduct', () => {
       try {
         await updatePhotoProduct(
           productServiceDi as any,
-          supabaseStorage as any
+          supabaseStorage as any,
         )({
           companyId,
           product,
@@ -335,7 +335,7 @@ describe('updatePhotoProduct', () => {
       try {
         await updatePhotoProduct(
           productServiceDi as any,
-          supabaseStorage as any
+          supabaseStorage as any,
         )({
           companyId,
           product,
@@ -343,7 +343,7 @@ describe('updatePhotoProduct', () => {
         });
       } catch (error: any) {
         expect(error.message).toBe(
-          "Le fichier n'a pas pu être supprimé, veuillez réessayer"
+          "Le fichier n'a pas pu être supprimé, veuillez réessayer",
         );
         expect(productServiceDi.updateProduct).toHaveBeenCalledTimes(0);
       }

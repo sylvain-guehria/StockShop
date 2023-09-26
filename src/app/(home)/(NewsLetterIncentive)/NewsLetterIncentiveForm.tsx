@@ -27,7 +27,7 @@ const NewsLetterIncentiveForm = () => {
   } = useForm<NewsLetterIncentiveFormType>(formOptions);
 
   const onSubmitForm: SubmitHandler<NewsLetterIncentiveFormType> = async (
-    data
+    data,
   ) => {
     try {
       await addContact({ email: data.email, listIds: [1] });

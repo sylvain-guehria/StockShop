@@ -42,7 +42,7 @@ export function logInfoInConsole(content: any) {
 
 export function logInConsole(
   content: any,
-  level: SeverityLevel | undefined = 'log'
+  level: SeverityLevel | undefined = 'log',
 ) {
   // eslint-disable-next-line no-console
   if (level === 'debug') console.debug(content);

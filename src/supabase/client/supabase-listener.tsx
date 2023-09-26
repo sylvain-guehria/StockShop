@@ -16,7 +16,7 @@ import { TableNames } from '../enums/tableNames';
 import { useSupabase } from './SupabaseProvider';
 
 const DynamicFirstConnectionModal = dynamic(
-  () => import('../../components/FirstConnectionModal')
+  () => import('../../components/FirstConnectionModal'),
 );
 
 export default function SupabaseListener({

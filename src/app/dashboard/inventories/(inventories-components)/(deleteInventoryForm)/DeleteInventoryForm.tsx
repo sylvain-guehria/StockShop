@@ -64,7 +64,7 @@ const DeleteInventoryForm: FC<Props> = ({
       logException(error, { when: 'DeleteInventoryForm' });
       toast(
         ToasterTypeEnum.ERROR,
-        "Une erreur est survenue lors de la suppression de l'inventaire"
+        "Une erreur est survenue lors de la suppression de l'inventaire",
       );
     },
   });

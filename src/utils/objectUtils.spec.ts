@@ -11,7 +11,7 @@ describe('getKeysWithValues', () => {
         c: '',
         d: null,
         e: undefined,
-      })
+      }),
     ).toEqual([]);
   });
 
@@ -25,7 +25,7 @@ describe('getKeysWithValues', () => {
         e: '',
         f: null,
         g: undefined,
-      })
+      }),
     ).toEqual(['a', 'b', 'c', 'd']);
   });
 
@@ -45,7 +45,7 @@ describe('removeKeysWithNoValues', () => {
         c: '',
         d: null,
         e: undefined,
-      })
+      }),
     ).toEqual({});
   });
   it('should return the object with only the keys with truthy values or 0 or boolean false', () => {
@@ -58,7 +58,7 @@ describe('removeKeysWithNoValues', () => {
         e: '',
         f: null,
         g: undefined,
-      })
+      }),
     ).toEqual({ a: 1, b: 'foo', c: true, d: false });
   });
   it('should return an empty object if passed null or undefined', () => {

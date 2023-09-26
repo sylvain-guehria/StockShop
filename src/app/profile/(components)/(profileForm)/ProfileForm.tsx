@@ -61,7 +61,7 @@ const ProfileForm: FC = () => {
   });
 
   const onSubmit: SubmitHandler<ProfileFormType> = async (
-    data: ProfileFormType
+    data: ProfileFormType,
   ) => {
     const { username, firstName, lastName } = data;
     user.setLastName(lastName);

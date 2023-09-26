@@ -17,7 +17,7 @@ export default function Toast({ type, message, id }: ToastType) {
             type === ToasterTypeEnum.SUCCESS ? 'bg-green-50' : '',
             type === ToasterTypeEnum.ERROR ? 'bg-red-50' : '',
             type === ToasterTypeEnum.INFO ? 'bg-blue-50' : '',
-            'shadow-sm'
+            'shadow-sm',
           )}
         >
           <div className="flex">
@@ -27,7 +27,7 @@ export default function Toast({ type, message, id }: ToastType) {
                   'h-5 w-5',
                   type === ToasterTypeEnum.SUCCESS ? 'text-green-400' : '',
                   type === ToasterTypeEnum.ERROR ? 'text-red-400' : '',
-                  type === ToasterTypeEnum.INFO ? 'text-blue-400' : ''
+                  type === ToasterTypeEnum.INFO ? 'text-blue-400' : '',
                 )}
                 aria-hidden="true"
               />
@@ -38,7 +38,7 @@ export default function Toast({ type, message, id }: ToastType) {
                   'text-sm font-medium',
                   type === ToasterTypeEnum.SUCCESS ? 'text-green-800' : '',
                   type === ToasterTypeEnum.ERROR ? 'text-red-800' : '',
-                  type === ToasterTypeEnum.INFO ? 'text-blue-800' : ''
+                  type === ToasterTypeEnum.INFO ? 'text-blue-800' : '',
                 )}
               >
                 {message}
@@ -60,7 +60,7 @@ export default function Toast({ type, message, id }: ToastType) {
                       : '',
                     type === ToasterTypeEnum.INFO
                       ? 'bg-blue-50 p-1.5 text-blue-500 hover:bg-blue-100 focus:ring-blue-600 focus:ring-offset-blue-50'
-                      : ''
+                      : '',
                   )}
                 >
                   <span className="sr-only">Dismiss</span>
