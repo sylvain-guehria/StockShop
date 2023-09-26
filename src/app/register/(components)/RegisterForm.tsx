@@ -1,7 +1,6 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
@@ -11,8 +10,6 @@ import Input from '@/components/lib/inputs/Input';
 import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
-import type { Database } from '@/types/supabase';
-import { registerWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './RegisterFormValidation';
 
@@ -24,7 +21,6 @@ interface RegisterFormType {
 }
 const RegisterForm = () => {
   const toast = useToast(10000);
-  const supabase = createClientComponentClient<Database>();
   const [isLoading, setIsLoading] = useState(false);
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -41,11 +37,13 @@ const RegisterForm = () => {
     setIsLoading(true);
     const { email, password } = data;
     try {
-      const response = await registerWithEmailUseCase({
-        email,
-        password,
-        supabase,
-      });
+      const response = await fetch('/auth/sign-up', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      }).then((res) => res.json());
       if (response.data.user) {
         toast(
           ToasterTypeEnum.SUCCESS,

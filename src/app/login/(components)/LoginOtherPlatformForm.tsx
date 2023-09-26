@@ -1,7 +1,6 @@
 'use client';
 
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
@@ -10,8 +9,6 @@ import { isMobile } from 'react-device-detect';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import GoogleSVG from '@/logo/GoogleSVG';
-import type { Database } from '@/types/supabase';
-import { loginWithGoogleUseCase } from '@/usecases/usecases';
 
 const DynamicModal = dynamic(
   () => import('../../../components/lib/modal/Modal'),
@@ -30,11 +27,16 @@ const DynamicLoginWithMagikLinkForm = dynamic(
 const LoginOtherPlatformForm = () => {
   const toast = useToast(15000);
   const [isMagikLinkModalOpen, setOpenMagikLinkModal] = useState(false);
-  const supabase = createClientComponentClient<Database>();
 
   const handleLoginGoogle = async () => {
     try {
-      const response = await loginWithGoogleUseCase({ supabase });
+      const response = await fetch('/auth/sign-in-google', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then((res) => res.json());
+
       if (response.error) throw new Error(response.error.message);
     } catch (error: any) {
       logException(error, { when: 'LoginOtherPlatformForm' });

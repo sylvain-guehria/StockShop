@@ -5,6 +5,8 @@ import type { Metadata } from 'next';
 import { NEXT_SEO_DEFAULT } from 'next-seo.config';
 import React from 'react';
 
+import Providers from '@/components/layouts/Providers';
+
 // We don't want Next.js to cache this session value
 export const revalidate = 0;
 
@@ -43,7 +45,9 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
         <meta name="theme-color" content="#ffffff" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
-      <body className="flex min-h-screen flex-col">{children}</body>
+      <body className="flex min-h-screen flex-col">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 };

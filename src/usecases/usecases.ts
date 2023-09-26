@@ -11,10 +11,6 @@ import {
 import type { Database } from '@/types/supabase';
 
 import { chooseSubRoleOnFirstConnection } from './auth/chooseSubRoleOnFirstConnection';
-import { loginWithEmail } from './auth/loginWithEmail';
-import { loginWithGoogle } from './auth/loginWithGoogle';
-import { logout } from './auth/logout';
-import { registerWithEmail } from './auth/registerWithEmail';
 import { deleteInventory } from './inventoy/deleteInventory';
 import { getUserInventories } from './inventoy/getUserInventories';
 import { setInventoryAsDefault } from './inventoy/setInventoryAsDefault';
@@ -27,10 +23,6 @@ import { updateUser } from './user/updateUser';
 const supabase = createClientComponentClient<Database>();
 
 // AUTH
-export const registerWithEmailUseCase = registerWithEmail();
-export const loginWithEmailUseCase = loginWithEmail();
-export const logoutUseCase = logout();
-export const loginWithGoogleUseCase = loginWithGoogle();
 export const chooseSubRoleOnFirstConnectionUseCase =
   chooseSubRoleOnFirstConnection(userRepository);
 

@@ -1,7 +1,6 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useMutation } from '@tanstack/react-query';
 import { logException } from 'logger';
 import Link from 'next/link';
@@ -15,8 +14,6 @@ import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
-import type { Database } from '@/types/supabase';
-import { loginWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './LoginFormValidation';
 
@@ -30,7 +27,6 @@ const LoginEmailForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const formOptions = { resolver: yupResolver(validationSchema) };
-  const supabase = createClientComponentClient<Database>();
 
   const {
     register,
@@ -40,11 +36,14 @@ const LoginEmailForm = () => {
 
   const { mutate } = useMutation({
     mutationFn: ({ email, password }: LoginFormType) =>
-      loginWithEmailUseCase({
-        email,
-        password,
-        supabase,
-      }),
+      fetch('/auth/sign-in', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      }).then((res) => res.json()),
+
     onSuccess: (response) => {
       setIsLoading(false);
       if (response.data.user) {
