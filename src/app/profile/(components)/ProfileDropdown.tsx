@@ -1,5 +1,6 @@
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -9,7 +10,7 @@ import { Fragment } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
-import supabaseBrowser from '@/supabase/client/supabase-browser';
+import type { Database } from '@/types/supabase';
 import { logoutUseCase } from '@/usecases/usecases';
 
 import avatarImg from '../../../../public/assets/images/defaultAvatar.png';
@@ -24,10 +25,11 @@ const ProfileDropdown: FC<Props> = ({ logo }) => {
   const router = useRouter();
   const { user, reinitializeUser } = useAuth();
   const toast = useToast(10000);
+  const supabase = createClientComponentClient<Database>();
 
   const handleSingOut = async () => {
     try {
-      await logoutUseCase({ supabase: supabaseBrowser });
+      await logoutUseCase({ supabase });
       reinitializeUser();
 
       router.push(mainRoutes.home.path);

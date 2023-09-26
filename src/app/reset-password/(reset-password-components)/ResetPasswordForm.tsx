@@ -1,6 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
@@ -10,7 +11,7 @@ import Input from '@/components/lib/inputs/Input';
 import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
-import supabase from '@/supabase/client/supabase-browser';
+import type { Database } from '@/types/supabase';
 
 import { validationSchema } from './ResetPasswordFormValidation';
 
@@ -22,6 +23,7 @@ const ResetPasswordForm = () => {
   const toast = useToast(10000);
   const [isLoading, setIsLoading] = useState(false);
   const formOptions = { resolver: yupResolver(validationSchema) };
+  const supabase = createClientComponentClient<Database>();
 
   const {
     register,

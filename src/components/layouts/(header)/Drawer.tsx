@@ -1,5 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/20/solid';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
@@ -11,7 +12,7 @@ import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
-import supabase from '@/supabase/client/supabase-browser';
+import type { Database } from '@/types/supabase';
 import { logoutUseCase } from '@/usecases/usecases';
 
 type Props = {
@@ -23,6 +24,7 @@ const Drawer: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
   const { user, reinitializeUser } = useAuth();
   const router = useRouter();
   const toast = useToast(10000);
+  const supabase = createClientComponentClient<Database>();
 
   const handleSingOut = async () => {
     try {

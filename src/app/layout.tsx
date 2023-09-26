@@ -1,14 +1,9 @@
 import 'server-only';
 import '../styles/global.css';
 
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import type { Metadata } from 'next';
-import { cookies } from 'next/headers';
 import { NEXT_SEO_DEFAULT } from 'next-seo.config';
 import React from 'react';
-
-import Providers from '@/components/layouts/Providers';
-import SupabaseListener from '@/supabase/client/supabase-listener';
 
 // We don't want Next.js to cache this session value
 export const revalidate = 0;
@@ -16,17 +11,7 @@ export const revalidate = 0;
 // Static metadata
 export const metadata: Metadata = { ...NEXT_SEO_DEFAULT };
 
-const RootLayout = async ({
-  children,
-}: {
-  children: { children: React.ReactNode };
-}) => {
-  const supabase = createServerComponentClient({ cookies });
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
+const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <head>
@@ -58,17 +43,7 @@ const RootLayout = async ({
         <meta name="theme-color" content="#ffffff" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
-      <body className="flex min-h-screen flex-col">
-        <Providers session={session}>
-          <>
-            <SupabaseListener
-              serverAccessToken={session?.access_token}
-              userId={session?.user?.id}
-            />
-            {children}
-          </>
-        </Providers>
-      </body>
+      <body className="flex min-h-screen flex-col">{children}</body>
     </html>
   );
 };

@@ -13,5 +13,5 @@ export const validationSchema = object().shape({
   confirmPassword: string()
     .oneOf([ref('password')], 'Les mots de passe doivent être identiques')
     .required('Confirmer votre mot de passe'),
-  acceptTerms: bool().oneOf([true], 'Veuillez accepter les termes'),
+  acceptTerms: bool().required().oneOf([true], 'Veuillez accepter les termes'),
 });

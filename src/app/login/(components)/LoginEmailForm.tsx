@@ -1,6 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useMutation } from '@tanstack/react-query';
 import { logException } from 'logger';
 import Link from 'next/link';
@@ -14,7 +15,7 @@ import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
-import supabase from '@/supabase/client/supabase-browser';
+import type { Database } from '@/types/supabase';
 import { loginWithEmailUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './LoginFormValidation';
@@ -22,7 +23,6 @@ import { validationSchema } from './LoginFormValidation';
 interface LoginFormType {
   email: string;
   password: string;
-  rememberMe: boolean;
 }
 
 const LoginEmailForm = () => {
@@ -30,6 +30,7 @@ const LoginEmailForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const formOptions = { resolver: yupResolver(validationSchema) };
+  const supabase = createClientComponentClient<Database>();
 
   const {
     register,
@@ -64,11 +65,10 @@ const LoginEmailForm = () => {
     data: LoginFormType,
   ) => {
     setIsLoading(true);
-    const { email, password, rememberMe } = data;
+    const { email, password } = data;
     mutate({
       email,
       password,
-      rememberMe,
     });
   };
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
@@ -9,7 +10,7 @@ import { isMobile } from 'react-device-detect';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useToast } from '@/hooks/useToast';
 import GoogleSVG from '@/logo/GoogleSVG';
-import supabase from '@/supabase/client/supabase-browser';
+import type { Database } from '@/types/supabase';
 import { loginWithGoogleUseCase } from '@/usecases/usecases';
 
 const DynamicModal = dynamic(
@@ -29,6 +30,7 @@ const DynamicLoginWithMagikLinkForm = dynamic(
 const LoginOtherPlatformForm = () => {
   const toast = useToast(15000);
   const [isMagikLinkModalOpen, setOpenMagikLinkModal] = useState(false);
+  const supabase = createClientComponentClient<Database>();
 
   const handleLoginGoogle = async () => {
     try {

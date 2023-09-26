@@ -1,3 +1,4 @@
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import {
   companyServiceDi,
   inventoryRepository,
@@ -7,7 +8,7 @@ import {
   userRepository,
 } from 'di';
 
-import supabase from '@/supabase/client/supabase-browser';
+import type { Database } from '@/types/supabase';
 
 import { chooseSubRoleOnFirstConnection } from './auth/chooseSubRoleOnFirstConnection';
 import { loginWithEmail } from './auth/loginWithEmail';
@@ -21,6 +22,9 @@ import { deleteProduct } from './product/deleteProduct';
 import { getInventoryProducts } from './product/getInventoryProducts';
 import { updatePhotoProduct } from './product/updatePhotoProduct';
 import { updateUser } from './user/updateUser';
+
+// TODO : CHECK IF THIS IS WORKING OR IF IT HAS TO BE INJECTED IN THE COMPONENT
+const supabase = createClientComponentClient<Database>();
 
 // AUTH
 export const registerWithEmailUseCase = registerWithEmail();
