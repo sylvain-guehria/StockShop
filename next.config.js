@@ -18,9 +18,6 @@ const nextConfig = {
   trailingSlash: true,
   basePath: '',
   reactStrictMode: true,
-  experimental: {
-    appDir: true,
-  },
   images: {
     domains: [
       'assets.vercel.com',
