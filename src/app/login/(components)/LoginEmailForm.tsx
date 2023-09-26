@@ -4,7 +4,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 import { logException } from 'logger';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -24,7 +23,6 @@ interface LoginFormType {
 
 const LoginEmailForm = () => {
   const toast = useToast(10000);
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -44,19 +42,15 @@ const LoginEmailForm = () => {
         body: JSON.stringify({ email, password }),
       }).then((res) => res.json()),
 
-    onSuccess: (response) => {
+    onSuccess: (response: string) => {
+      // Success of the query but not of the login (else it redirects)
       setIsLoading(false);
-      if (response.data.user) {
-        router.push(mainRoutes.home.path);
-      }
-      if (response.error) throw new Error(response.error.message);
+      toast(ToasterTypeEnum.ERROR, response);
     },
-    onError: (error) => {
+    onError: (error: string) => {
+      setIsLoading(false);
       logException(error, { when: 'LoginEmailForm' });
-      toast(
-        ToasterTypeEnum.ERROR,
-        'Une erreur est survenue, veuillez réessayer',
-      );
+      toast(ToasterTypeEnum.ERROR, error);
     },
   });
 

@@ -1,6 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/20/solid';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
@@ -12,8 +11,6 @@ import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { mainRoutes } from '@/routes/mainRoutes';
-import type { Database } from '@/types/supabase';
-import { logoutUseCase } from '@/usecases/usecases';
 
 type Props = {
   mobileMenuOpen: boolean;
@@ -21,15 +18,18 @@ type Props = {
 };
 
 const Drawer: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
-  const { user, reinitializeUser } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
   const toast = useToast(10000);
-  const supabase = createClientComponentClient<Database>();
 
   const handleSingOut = async () => {
     try {
-      await logoutUseCase({ supabase });
-      reinitializeUser();
+      await fetch('/auth/sign-out', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then((res) => res.json());
       router.push(mainRoutes.home.path);
     } catch (error: any) {
       toast(ToasterTypeEnum.ERROR, error.message);
