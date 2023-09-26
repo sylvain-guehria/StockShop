@@ -42,15 +42,15 @@ const LoginEmailForm = () => {
         body: JSON.stringify({ email, password }),
       }).then((res) => res.json()),
 
-    onSuccess: (response: string) => {
+    onSuccess: (response) => {
       // Success of the query but not of the login (else it redirects)
       setIsLoading(false);
-      toast(ToasterTypeEnum.ERROR, response);
+      toast(ToasterTypeEnum.ERROR, response.message);
     },
-    onError: (error: string) => {
+    onError: (error: Error) => {
       setIsLoading(false);
       logException(error, { when: 'LoginEmailForm' });
-      toast(ToasterTypeEnum.ERROR, error);
+      toast(ToasterTypeEnum.ERROR, error.message);
     },
   });
 
