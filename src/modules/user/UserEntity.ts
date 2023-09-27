@@ -121,6 +121,12 @@ class UserEntity implements User {
     return this.email;
   }
 
+  getTruncatedEmail(): string {
+    return `${this.email.slice(0, 3)}...${this.email.slice(
+      this.email.indexOf('@'),
+    )}`;
+  }
+
   getUsername(): string | undefined {
     return this.username;
   }

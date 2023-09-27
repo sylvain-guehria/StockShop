@@ -53,7 +53,7 @@ const ProfileDropdown: FC<Props> = ({ logo, user }) => {
             )}
             <span className="ml-3 hidden text-sm font-medium text-gray-700 lg:block">
               <span className="sr-only">Open user menu for </span>
-              {userEntity.getUsername()}
+              {userEntity.getUsername() || userEntity.getTruncatedEmail()}
             </span>
             <ChevronDownIcon
               className="ml-1 hidden h-5 w-5 shrink-0 text-gray-400 lg:block"
