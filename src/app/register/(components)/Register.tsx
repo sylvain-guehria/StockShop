@@ -4,7 +4,6 @@ import NextImage from '@/components/lib/nextImage/NextImage';
 import { mainRoutes } from '@/routes/mainRoutes';
 
 import inventoryMarketLogo from '../../../../public/assets/images/inventoryMarket.png';
-import LoginOtherPlatformForm from '../../login/(components)/LoginOtherPlatformForm';
 import RegisterForm from './RegisterForm';
 
 const Register = () => {
@@ -40,13 +39,14 @@ const Register = () => {
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-gray-300" />
                 </div>
-                <div className="relative flex justify-center text-sm">
+                {/* <div className="relative flex justify-center text-sm">
                   <span className="bg-white px-2 text-gray-500">
                     Ou continuer avec
                   </span>
-                </div>
+                </div> */}
               </div>
-              <LoginOtherPlatformForm />
+              {/* UNCOMMENT THIS GOOGLE AVAILABLE */}
+              {/* <LoginOtherPlatformForm /> */}
             </div>
           </div>
         </div>
