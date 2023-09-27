@@ -27,12 +27,14 @@ const ProfileDropdown: FC<Props> = ({ logo, user }) => {
 
   const handleSingOut = async () => {
     try {
-      await fetch('/auth/sign-out', {
+      const response = await fetch('/auth/sign-out', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
       }).then((res) => res.json());
+
+      if (response?.error) throw new Error(response.error.message);
 
       router.push(mainRoutes.home.path);
     } catch (error: any) {

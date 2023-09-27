@@ -4,14 +4,12 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-export async function POST(request: Request) {
-  const requestUrl = new URL(request.url);
+export async function POST() {
   const supabase = createRouteHandlerClient({ cookies });
 
-  await supabase.auth.signOut();
+  const { error } = await supabase.auth.signOut();
 
-  return NextResponse.redirect(`${requestUrl.origin}`, {
-    // a 301 status is required to redirect from a POST to a GET route
-    status: 301,
-  });
+  if (error) return NextResponse.json({ error });
+
+  return NextResponse.json({});
 }
