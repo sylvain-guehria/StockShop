@@ -14,11 +14,11 @@ import Input from '../../../components/lib/inputs/Input';
 import { validationSchema } from './ContactFormValidation';
 
 interface ContactFormType {
-  fullName: string;
-  company: string;
-  phone: string;
+  fullName?: string;
+  company?: string;
+  phone?: string;
   message: string;
-  soureOfHeard: string;
+  soureOfHeard?: string;
   email: string;
 }
 
