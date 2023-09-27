@@ -1,6 +1,7 @@
 'use client';
 
 import { Dialog, Transition } from '@headlessui/react';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { logException } from 'logger';
 import { useRouter } from 'next/navigation';
@@ -14,7 +15,7 @@ import { useToast } from '@/hooks/useToast';
 import { SUBROLES } from '@/modules/user/userType';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { marketplaceRoutes } from '@/routes/marketplaceRoutes';
-import { useSupabase } from '@/supabase/client/SupabaseProvider';
+import type { Database } from '@/types/supabase';
 import { chooseSubRoleOnFirstConnectionUseCase } from '@/usecases/usecases';
 
 import NextImage from './lib/nextImage/NextImage';
@@ -28,9 +29,9 @@ const FirstConnectionModal: FC<Props> = () => {
   const toast = useToast(10000);
   const router = useRouter();
   const queryClient = useQueryClient();
+  const supabase = createClientComponentClient<Database>();
 
   const { user } = useAuth();
-  const { supabase } = useSupabase();
   supabase.auth.getSession();
 
   const { mutate, isLoading } = useMutation({

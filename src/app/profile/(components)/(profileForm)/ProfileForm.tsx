@@ -18,8 +18,8 @@ import { validationSchema } from './ProfileFormValidation';
 
 type ProfileFormType = {
   username: string;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
 };
 
 const ProfileForm: FC = () => {
@@ -64,8 +64,8 @@ const ProfileForm: FC = () => {
     data: ProfileFormType,
   ) => {
     const { username, firstName, lastName } = data;
-    user.setLastName(lastName);
-    user.setFirstName(firstName);
+    user.setLastName(lastName || '');
+    user.setFirstName(firstName || '');
     user.setUserName(username);
 
     mutate(user);

@@ -28,7 +28,7 @@ const { BLACK, BLUE, GRAY, GREEN, ORANGE, PRIMARY, RED, YELLOW } =
 interface EditInventoryFormType {
   name: string;
   isPublic: string;
-  color: InventoryColor;
+  color?: string;
 }
 
 const publicStates = [
@@ -94,7 +94,7 @@ const EditInventoryForm: FC<Props> = ({ inventory, setIsEditModalOpen }) => {
         id: inventory.id,
         name: data.name,
         isPublic: data.isPublic as unknown as boolean,
-        color: data.color,
+        color: data.color as InventoryColor,
         isDefaultInventory: inventory.isDefaultInventory,
       },
     });

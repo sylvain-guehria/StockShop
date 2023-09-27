@@ -45,7 +45,7 @@ const DeleteInventoryForm: FC<Props> = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<{ inventoryName: string }>(formOptions);
+  } = useForm<{ inventoryName?: string }>(formOptions);
 
   const { isLoading, mutate } = useMutation({
     mutationFn: (params: DeleteInventoryParams) =>

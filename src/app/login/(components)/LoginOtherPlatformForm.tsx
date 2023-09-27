@@ -37,8 +37,6 @@ const LoginOtherPlatformForm = () => {
         },
       }).then((res) => res.json());
 
-      console.log('response', response);
-
       if (response.error) throw new Error(response.error.message);
     } catch (error: any) {
       logException(error, { when: 'LoginOtherPlatformForm' });

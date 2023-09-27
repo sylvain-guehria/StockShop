@@ -17,7 +17,7 @@ import { updateUserUseCase } from '@/usecases/usecases';
 import { validationSchema } from './SettingsFormValidation';
 
 type SettingsFormType = {
-  hasInventoryManagementServiceActivated: boolean;
+  hasInventoryManagementServiceActivated?: boolean;
 };
 
 const SettingsForm: FC = () => {

@@ -30,14 +30,15 @@ export interface EditProductFormType {
   [ProductAttributes.OPTIMUM_QUANTITY]?: number;
   [ProductAttributes.BUYING_PRICE]?: number;
   [ProductAttributes.SELLING_PRICE]?: number;
+  [ProductAttributes.TVA]?: number;
   [ProductAttributes.DESCRIPTION]?: string;
   [ProductAttributes.CATEGORY_ID]?: string;
   [ProductAttributes.SUB_CATEGORY_ID]?: string;
   [ProductAttributes.IS_PUBLIC]?: boolean;
-  [ProductAttributes.TVA]?: number;
   [ProductAttributes.PUBLIC_DISPONIBILITY]?: PublicDisponibilityEnum;
-  [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]?: Record<string, any>;
+  [ProductAttributes.CAT_SUBCAT_ATTRIBUTES]?: any;
   [ProductAttributes.CONDITION]?: ConditionTypeEnum;
+  [ProductAttributes.PHOTO_LINK]?: string;
 }
 
 type Props = {
