@@ -6,11 +6,11 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
   const requestUrl = new URL(request.url);
-  const data = await request.json();
-  const { email, password } = data;
+  const requestData = await request.json();
+  const { email, password } = requestData;
   const supabase = createRouteHandlerClient({ cookies });
 
-  const { error } = await supabase.auth.signUp({
+  const { error, data } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     },
   });
 
-  if (error) return NextResponse.json(error);
+  if (error) return NextResponse.json({ error });
 
-  return NextResponse.redirect(`${requestUrl.origin}/auth/sign-in`);
+  return NextResponse.json(data);
 }

@@ -44,7 +44,13 @@ const RegisterForm = () => {
         body: JSON.stringify({ email, password }),
       }).then((res) => res.json());
 
-      if (response.message) throw new Error(response.message);
+      if (response?.error?.message) throw new Error(response?.error?.message);
+      if (response?.user) {
+        toast(
+          ToasterTypeEnum.SUCCESS,
+          'Un email vous a été envoyé pour confirmer votre inscription.',
+        );
+      }
     } catch (error: any) {
       logException(error, { when: 'RegisterForm' });
       toast(ToasterTypeEnum.ERROR, error.message);

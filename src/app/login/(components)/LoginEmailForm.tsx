@@ -1,9 +1,9 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@tanstack/react-query';
 import { logException } from 'logger';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -25,6 +25,7 @@ const LoginEmailForm = () => {
   const toast = useToast(10000);
   const [isLoading, setIsLoading] = useState(false);
   const formOptions = { resolver: yupResolver(validationSchema) };
+  const router = useRouter();
 
   const {
     register,
@@ -32,37 +33,30 @@ const LoginEmailForm = () => {
     formState: { errors },
   } = useForm<LoginFormType>(formOptions);
 
-  const { mutate } = useMutation({
-    mutationFn: ({ email, password }: LoginFormType) =>
-      fetch('/auth/sign-in', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      }).then((res) => res.json()),
-
-    onSuccess: (response) => {
-      // Success of the query but not of the login (else it redirects)
-      setIsLoading(false);
-      toast(ToasterTypeEnum.ERROR, response.message);
-    },
-    onError: (error: Error) => {
-      setIsLoading(false);
-      logException(error, { when: 'LoginEmailForm' });
-      toast(ToasterTypeEnum.ERROR, error.message);
-    },
-  });
-
   const onSubmit: SubmitHandler<LoginFormType> = async (
     data: LoginFormType,
   ) => {
     setIsLoading(true);
     const { email, password } = data;
-    mutate({
-      email,
-      password,
-    });
+    try {
+      const response = await fetch('/auth/sign-in', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      }).then((res) => res.json());
+
+      if (response?.error?.message) throw new Error(response?.error?.message);
+      if (response?.session) {
+        router.push(mainRoutes.home.path);
+      }
+    } catch (error: any) {
+      logException(error, { when: 'LoginEmailForm' });
+      toast(ToasterTypeEnum.ERROR, error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
