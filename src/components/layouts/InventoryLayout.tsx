@@ -6,13 +6,15 @@ import { useState } from 'react';
 
 import InventoryManagementHeader from '@/app/dashboard/(layout)/InventoryManagementHeader';
 import InventoryManagementSideBar from '@/app/dashboard/(layout)/InventoryManagementSideBar';
+import type { User } from '@/modules/user/userType';
 
 type Props = {
   children: ReactNode;
   bgColor?: string;
+  user: User | null;
 };
 
-const InventoryLayout: FC<Props> = ({ children, bgColor }) => {
+const InventoryLayout: FC<Props> = ({ children, bgColor, user }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sideBarMini, setSideBarMini] = useState(false);
 
@@ -33,6 +35,7 @@ const InventoryLayout: FC<Props> = ({ children, bgColor }) => {
           setSidebarOpen={setSidebarOpen}
           setSideBarMini={setSideBarMini}
           sideBarMini={sideBarMini}
+          user={user}
         />
         {children}
       </div>

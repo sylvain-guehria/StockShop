@@ -8,19 +8,21 @@ import { Fragment } from 'react';
 import { navigation } from '@/app/marketplace/(components)/fakeDatas';
 import MobileServicesButton from '@/components/lib/Popovers/MobileServicesButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
+import UserEntity from '@/modules/user/UserEntity';
+import type { User } from '@/modules/user/userType';
 import { mainRoutes } from '@/routes/mainRoutes';
 
 type Props = {
   mobileMenuOpen: boolean;
   setMobileMenuOpen: (value: boolean) => void;
+  user: User | null;
 };
 
-const Drawer: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
-  const { user } = useAuth();
+const Drawer: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen, user }) => {
   const router = useRouter();
   const toast = useToast(10000);
+  const userEntity = UserEntity.new(user);
 
   const handleSingOut = async () => {
     try {
@@ -92,7 +94,7 @@ const Drawer: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
                 ))}
               </div>
 
-              {user.isLoggedOut() && (
+              {userEntity.isLoggedOut() && (
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <div className="flow-root">
                     <Link href={mainRoutes.login.path}>
@@ -104,7 +106,7 @@ const Drawer: FC<Props> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
                 </div>
               )}
 
-              {user.isLoggedIn() && (
+              {userEntity.isLoggedIn() && (
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <button
                     onClick={handleSingOut}

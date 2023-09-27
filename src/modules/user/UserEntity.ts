@@ -31,7 +31,7 @@ class UserEntity implements User {
 
   avatarUrl: string;
 
-  static new(user?: User): UserEntity {
+  static new(user?: User | null): UserEntity {
     return user
       ? new UserEntity({
           ...user,

@@ -6,18 +6,21 @@ import type { FC } from 'react';
 import { useWindowSize } from 'usehooks-ts';
 
 import ProfileDropdown from '@/app/profile/(components)/ProfileDropdown';
+import type { User } from '@/modules/user/userType';
 import { getBreakpointValue } from '@/utils/tailwindUtils';
 
 type Props = {
   setSidebarOpen: (value: boolean) => void;
   setSideBarMini: (value: boolean) => void;
   sideBarMini: boolean;
+  user: User | null;
 };
 
 const InventoryManagementHeader: FC<Props> = ({
   setSidebarOpen,
   setSideBarMini,
   sideBarMini,
+  user,
 }) => {
   const { width } = useWindowSize();
   const lgBreakpointValue = getBreakpointValue('lg');
@@ -59,6 +62,7 @@ const InventoryManagementHeader: FC<Props> = ({
           <div className="flex text-gray-400 hover:text-gray-500">
             <span className="sr-only">Account</span>
             <ProfileDropdown
+              user={user}
               logo={<UserIcon className="h-6 w-6" aria-hidden="true" />}
             />
           </div>

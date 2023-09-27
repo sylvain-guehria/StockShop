@@ -6,8 +6,9 @@ import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 import { Fragment } from 'react';
 
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
+import UserEntity from '@/modules/user/UserEntity';
+import type { User } from '@/modules/user/userType';
 import { mainRoutes } from '@/routes/mainRoutes';
 
 import avatarImg from '../../../../public/assets/images/defaultAvatar.png';
@@ -16,12 +17,13 @@ import { ToasterTypeEnum } from '../../../components/toaster/toasterEnum';
 
 type Props = {
   logo?: React.ComponentProps<'svg'>;
+  user: User | null;
 };
 
-const ProfileDropdown: FC<Props> = ({ logo }) => {
+const ProfileDropdown: FC<Props> = ({ logo, user }) => {
   const router = useRouter();
-  const { user } = useAuth();
   const toast = useToast(10000);
+  const userEntity = UserEntity.new(user);
 
   const handleSingOut = async () => {
     try {
@@ -51,7 +53,7 @@ const ProfileDropdown: FC<Props> = ({ logo }) => {
             )}
             <span className="ml-3 hidden text-sm font-medium text-gray-700 lg:block">
               <span className="sr-only">Open user menu for </span>
-              {user.getUsername()}
+              {userEntity.getUsername()}
             </span>
             <ChevronDownIcon
               className="ml-1 hidden h-5 w-5 shrink-0 text-gray-400 lg:block"

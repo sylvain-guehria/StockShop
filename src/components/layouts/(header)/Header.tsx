@@ -11,7 +11,8 @@ import { Suspense, useState } from 'react';
 import ProfileDropdown from '@/app/profile/(components)/ProfileDropdown';
 import NextImage from '@/components/lib/nextImage/NextImage';
 import ServicesButton from '@/components/lib/Popovers/ServicesButton';
-import { useAuth } from '@/hooks/useAuth';
+import UserEntity from '@/modules/user/UserEntity';
+import type { User } from '@/modules/user/userType';
 import { mainRoutes } from '@/routes/mainRoutes';
 
 import inventoryMarketLogo from '../../../../public/assets/images/inventoryMarket.png';
@@ -22,11 +23,13 @@ const SearchBarModal = dynamic(() => import('./SearchBarModal'), {
 
 type Props = {
   setMobileMenuOpen: (value: boolean) => void;
+  user: User | null;
 };
 
-const Header: FC<Props> = ({ setMobileMenuOpen }) => {
+const Header: FC<Props> = ({ setMobileMenuOpen, user }) => {
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
-  const { user } = useAuth();
+
+  const userEntity = UserEntity.new(user);
 
   return (
     <>
@@ -110,10 +113,11 @@ const Header: FC<Props> = ({ setMobileMenuOpen }) => {
                           </div>
                         </div>
 
-                        {user.isLoggedIn() && (
+                        {userEntity.isLoggedIn() && (
                           <div className="flex text-gray-400 hover:text-gray-500">
                             <span className="sr-only">Account</span>
                             <ProfileDropdown
+                              user={userEntity}
                               logo={
                                 <UserIcon
                                   className="h-6 w-6"
@@ -147,7 +151,7 @@ const Header: FC<Props> = ({ setMobileMenuOpen }) => {
                           </span>
                         </a>
                       </div> */}
-                      {user.isLoggedOut() && (
+                      {userEntity.isLoggedOut() && (
                         <Link href={mainRoutes.login.path}>
                           <div className="ml-6 mr-1 inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-100 px-4 py-2 text-base font-medium text-primary-600 hover:bg-primary-200">
                             {mainRoutes.login.label}
