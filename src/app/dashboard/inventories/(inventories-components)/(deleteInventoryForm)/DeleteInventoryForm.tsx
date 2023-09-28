@@ -12,24 +12,25 @@ import Input from '@/components/lib/inputs/Input';
 import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import type { Inventory } from '@/modules/inventory/inventoryType';
+import type UserEntity from '@/modules/user/UserEntity';
 import type { DeleteInventoryParams } from '@/usecases/inventoy/deleteInventory';
 import { deleteInventoryUseCase } from '@/usecases/usecases';
 
 type Props = {
   inventory: Inventory;
   setIsDeleteModalOpen: (isOpen: boolean) => void;
+  user: UserEntity;
 };
 
 const DeleteInventoryForm: FC<Props> = ({
   inventory,
   setIsDeleteModalOpen,
+  user,
 }) => {
   const queryClient = useQueryClient();
   const toast = useToast(10000);
-  const { user } = useAuth();
 
   const validationSchema = object().shape({
     inventoryName: string()

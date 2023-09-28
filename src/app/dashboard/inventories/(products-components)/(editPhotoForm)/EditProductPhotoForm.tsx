@@ -12,9 +12,9 @@ import { useForm } from 'react-hook-form';
 import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import EmptyPictureSVG from '@/logo/EmptyPictureSVG';
+import type UserEntity from '@/modules/user/UserEntity';
 import { updatePhotoProductUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './EditProductFormValidation';
@@ -27,6 +27,7 @@ const DynamicDeleteModal = dynamic(
 );
 
 type Props = {
+  user: UserEntity;
   productId: string;
 };
 
@@ -35,8 +36,7 @@ interface PhotoAttributesType {
   type: string;
 }
 
-const EditProductPhotoForm: FC<Props> = ({ productId }) => {
-  const { user } = useAuth();
+const EditProductPhotoForm: FC<Props> = ({ productId, user }) => {
   const queryClient = useQueryClient();
   const toast = useToast(10000);
   const [isDeletePhotoModalOpen, setIsDeletePhotoModalOpen] = useState(false);

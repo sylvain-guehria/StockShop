@@ -12,7 +12,8 @@ import { useState } from 'react';
 
 import Dropdown from '@/components/lib/dropdown/Dropdown';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
-import { useAuth } from '@/hooks/useAuth';
+import UserEntity from '@/modules/user/UserEntity';
+import type { User } from '@/modules/user/userType';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { getUserInventoriesUseCase } from '@/usecases/usecases';
 
@@ -21,8 +22,9 @@ import CreateInventoryButton from './CreateInventoryButton';
 import CreateProductButton from './CreateProductButton';
 import PinnedInventories from './PinnedInventories';
 
-const Inventories: FC = () => {
-  const { user } = useAuth();
+const Inventories: FC<{ user: User }> = ({ user: _user }) => {
+  const user = UserEntity.new(_user);
+
   const oneHourInMilliseconds = 1000 * 60 * 60;
 
   const [currentInventoryId, setCurrentInventoryId] = useState('');
@@ -88,13 +90,14 @@ const Inventories: FC = () => {
                   childrens={[
                     {
                       key: 'create-inventory',
-                      render: <CreateInventoryButton />,
+                      render: <CreateInventoryButton user={user} />,
                     },
                     {
                       key: 'create-product',
                       render: (
                         <CreateProductButton
                           currentInventoryId={currentInventoryId}
+                          user={user}
                         />
                       ),
                     },
@@ -109,6 +112,7 @@ const Inventories: FC = () => {
                   onSelectInventory={onSelectInventory}
                   inventories={inventories}
                   isLoadingInventory={isLoadingInventory}
+                  user={user}
                 />
               )}
             </div>
@@ -129,7 +133,7 @@ const Inventories: FC = () => {
               </div>
             </div>
             {/* <MobileProductTable /> */}
-            <ProductTable currentInventoryId={currentInventoryId} />
+            <ProductTable currentInventoryId={currentInventoryId} user={user} />
           </main>
         </div>
       </div>

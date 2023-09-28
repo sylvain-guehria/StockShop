@@ -5,19 +5,24 @@ import type { FC } from 'react';
 import DeleteModal from '@/components/lib/modal/DeleteModal';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import type ProductEntity from '@/modules/product/ProductEntity';
+import type UserEntity from '@/modules/user/UserEntity';
 import { deleteProductUseCase } from '@/usecases/usecases';
 
 type Props = {
   open: boolean;
   handleCloseModal: () => void;
   product: ProductEntity;
+  user: UserEntity;
 };
 
-const DeleteProductModal: FC<Props> = ({ product, open, handleCloseModal }) => {
-  const { user } = useAuth();
+const DeleteProductModal: FC<Props> = ({
+  product,
+  open,
+  handleCloseModal,
+  user,
+}) => {
   const queryClient = useQueryClient();
   const toast = useToast(10000);
 

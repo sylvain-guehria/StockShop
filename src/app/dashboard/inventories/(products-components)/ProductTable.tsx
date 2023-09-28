@@ -14,12 +14,12 @@ import Spinner from '@/components/lib/spinner/Spinner';
 import Tag from '@/components/lib/tag/Tag';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { CustomEvents } from '@/enums/eventEnums';
-import { useAuth } from '@/hooks/useAuth';
 import {
   getCategoryById,
   getSubCategoryById,
 } from '@/modules/category/categoryUtils';
 import type ProductEntity from '@/modules/product/ProductEntity';
+import type UserEntity from '@/modules/user/UserEntity';
 import { getInventoryProductsUseCase } from '@/usecases/usecases';
 
 import { ProductsFilters } from './(filters)/ProductsFilters';
@@ -68,10 +68,10 @@ const DynamicProductView = dynamic(() => import('./ProductView'), {
 
 type Props = {
   currentInventoryId: string;
+  user: UserEntity;
 };
 
-const ProductTable: FC<Props> = ({ currentInventoryId }) => {
-  const { user } = useAuth();
+const ProductTable: FC<Props> = ({ currentInventoryId, user }) => {
   const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
   const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] =
     useState(false);
@@ -186,6 +186,7 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
           product={productToEdit as ProductEntity}
           open={isDeleteProductModalOpen}
           handleCloseModal={handleCloseModal}
+          user={user}
         />
       )}
       {isEditPhotoModalOpen && (
@@ -196,7 +197,10 @@ const ProductTable: FC<Props> = ({ currentInventoryId }) => {
           width="w-full"
         >
           {productToEdit && (
-            <DynamicEditProductPhotoForm productId={productToEdit.getId()} />
+            <DynamicEditProductPhotoForm
+              productId={productToEdit.getId()}
+              user={user}
+            />
           )}
         </DynamicModal>
       )}

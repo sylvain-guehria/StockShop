@@ -2,12 +2,14 @@
 
 import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
+import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 
 import Spinner from '@/components/lib/spinner/Spinner';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
+import UserEntity from '@/modules/user/UserEntity';
+import type { User } from '@/modules/user/userType';
 
 import DisclosureSection from './DisclosureSection';
 import ProfileContainerSideBar, {
@@ -29,8 +31,8 @@ const DynamicSettingsForm = dynamic(
   },
 );
 
-const Profile = () => {
-  const { user } = useAuth();
+const Profile: FC<{ user: User }> = ({ user: _user }) => {
+  const user = UserEntity.new(_user);
 
   const toast = useToast(10000);
   const searchParams = useSearchParams();
@@ -61,11 +63,11 @@ const Profile = () => {
                 setSelectedTab={setSelectedTab}
               />
               {user.isLoggedIn() && seletedTab === subNavigation[0]?.tab && (
-                <DynamicProfileForm />
+                <DynamicProfileForm user={user} />
               )}
 
               {user.isLoggedIn() && seletedTab === subNavigation[1]?.tab && (
-                <DynamicSettingsForm />
+                <DynamicSettingsForm user={user} />
               )}
 
               {!user.isLoggedIn() && (

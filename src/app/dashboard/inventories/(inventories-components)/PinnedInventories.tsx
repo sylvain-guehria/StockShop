@@ -9,6 +9,7 @@ import Spinner from '@/components/lib/spinner/Spinner';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import type InventoryEntity from '@/modules/inventory/InventoryEntity';
 import type { Inventory } from '@/modules/inventory/inventoryType';
+import type UserEntity from '@/modules/user/UserEntity';
 import { setInventoryAsDefaultUseCase } from '@/usecases/usecases';
 
 import CardInventory from './CardInventory';
@@ -39,6 +40,7 @@ type Props = {
   inventories: InventoryEntity[];
   isLoadingInventory: boolean;
   onSelectInventory: (inventoryId: string) => void;
+  user: UserEntity;
 };
 
 const PinnedInventories: FC<Props> = ({
@@ -46,6 +48,7 @@ const PinnedInventories: FC<Props> = ({
   inventories,
   isLoadingInventory,
   onSelectInventory,
+  user,
 }) => {
   const queryClient = useQueryClient();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -106,6 +109,7 @@ const PinnedInventories: FC<Props> = ({
           <DynamicDeleteInventoryForm
             inventory={selectedInventory as unknown as Inventory}
             setIsDeleteModalOpen={setIsDeleteModalOpen}
+            user={user}
           />
         </DynamicModal>
       )}

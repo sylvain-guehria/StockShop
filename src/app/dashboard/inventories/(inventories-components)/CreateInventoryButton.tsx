@@ -8,13 +8,12 @@ import type { FC } from 'react';
 
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import type { CreateInventoryParams } from '@/modules/inventory/inventoryService';
+import type UserEntity from '@/modules/user/UserEntity';
 
-const CreateInventoryButton: FC = () => {
+const CreateInventoryButton: FC<{ user: UserEntity }> = ({ user }) => {
   const queryClient = useQueryClient();
-  const { user } = useAuth();
   const toast = useToast(10000);
 
   const { mutate } = useMutation({

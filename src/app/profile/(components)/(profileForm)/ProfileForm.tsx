@@ -9,9 +9,8 @@ import { useForm } from 'react-hook-form';
 import Input from '@/components/lib/inputs/Input';
 import LinkButton from '@/components/lib/LinkButton/LinkButton';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
-import UserEntity from '@/modules/user/UserEntity';
+import type UserEntity from '@/modules/user/UserEntity';
 import { updateUserUseCase } from '@/usecases/usecases';
 
 import { validationSchema } from './ProfileFormValidation';
@@ -22,10 +21,9 @@ type ProfileFormType = {
   lastName?: string;
 };
 
-const ProfileForm: FC = () => {
+const ProfileForm: FC<{ user: UserEntity }> = ({ user }) => {
   const [errorUserNameExist, setErrorUserNameExist] = useState(false);
   const toast = useToast(10000);
-  const { user, setUser } = useAuth();
 
   const formOptions = {
     resolver: yupResolver(validationSchema),
@@ -46,7 +44,7 @@ const ProfileForm: FC = () => {
     mutationFn: (userParam: UserEntity) => updateUserUseCase(userParam),
 
     onSuccess: () => {
-      setUser(UserEntity.new(user));
+      // setUser(UserEntity.new(user));
       toast(ToasterTypeEnum.SUCCESS, 'Vos informations ont été mises à jour');
     },
 

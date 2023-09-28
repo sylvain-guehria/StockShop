@@ -10,8 +10,9 @@ import type { FC } from 'react';
 import { Fragment, useState } from 'react';
 
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
+import UserEntity from '@/modules/user/UserEntity';
+import type { User } from '@/modules/user/userType';
 import { SUBROLES } from '@/modules/user/userType';
 import { inventoryManagementRoutes } from '@/routes/inventoryManagementRoutes';
 import { marketplaceRoutes } from '@/routes/marketplaceRoutes';
@@ -22,16 +23,19 @@ import NextImage from './lib/nextImage/NextImage';
 import Spinner from './lib/spinner/Spinner';
 import { ToasterTypeEnum } from './toaster/toasterEnum';
 
-type Props = {};
+type Props = {
+  user: User;
+};
 
-const FirstConnectionModal: FC<Props> = () => {
+const FirstConnectionModal: FC<Props> = ({ user: _user }) => {
+  const user = UserEntity.new(_user);
+
   const [open, setOpen] = useState(true);
   const toast = useToast(10000);
   const router = useRouter();
   const queryClient = useQueryClient();
   const supabase = createClientComponentClient<Database>();
 
-  const { user } = useAuth();
   supabase.auth.getSession();
 
   const { mutate, isLoading } = useMutation({

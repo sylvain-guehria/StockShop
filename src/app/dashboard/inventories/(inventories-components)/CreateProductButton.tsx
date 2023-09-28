@@ -9,16 +9,16 @@ import type { FC } from 'react';
 import { ToasterTypeEnum } from '@/components/toaster/toasterEnum';
 import { ApiRequestEnums } from '@/enums/apiRequestEnums';
 import { CustomEvents } from '@/enums/eventEnums';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
+import type UserEntity from '@/modules/user/UserEntity';
 
 type Props = {
   currentInventoryId: string;
+  user: UserEntity;
 };
 
-const CreateProductButton: FC<Props> = ({ currentInventoryId }) => {
+const CreateProductButton: FC<Props> = ({ currentInventoryId, user }) => {
   const queryClient = useQueryClient();
-  const { user } = useAuth();
   const toast = useToast(10000);
 
   const { mutate } = useMutation({
