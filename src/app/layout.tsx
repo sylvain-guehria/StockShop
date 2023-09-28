@@ -5,7 +5,9 @@ import type { Metadata } from 'next';
 import { NEXT_SEO_DEFAULT } from 'next-seo.config';
 import React from 'react';
 
+import FirstConnectionModal from '@/components/FirstConnectionModal';
 import Providers from '@/components/layouts/Providers';
+import { getUserInServerComponant } from '@/supabase/getUserInServerComponant';
 
 // We don't want Next.js to cache this session value
 export const revalidate = 0;
@@ -14,6 +16,7 @@ export const revalidate = 0;
 export const metadata: Metadata = { ...NEXT_SEO_DEFAULT };
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
+  const user = await getUserInServerComponant();
   return (
     <html lang="en">
       <head>
@@ -46,7 +49,10 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
       <body className="flex min-h-screen flex-col">
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <FirstConnectionModal user={user} />
+        </Providers>
       </body>
     </html>
   );

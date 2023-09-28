@@ -16,6 +16,7 @@ export const chooseSubRoleOnFirstConnection =
     }
 
     user.markFirstConnectionModalAsSeen();
+
     const success = userRepository.update(user);
 
     if (!success) {
