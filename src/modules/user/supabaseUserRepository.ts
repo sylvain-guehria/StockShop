@@ -81,7 +81,7 @@ class SupabaseUserRepository extends UserRepository {
   async update(user: UserEntity): Promise<boolean> {
     logInfoInConsole(`update user id: ${user.getId()}`);
 
-    const success = await axios.post(
+    const response = await axios.post(
       `${this.baseUrl}/api/user/${user.getId()}`,
       {
         id: user.getId(),
@@ -99,8 +99,7 @@ class SupabaseUserRepository extends UserRepository {
         companyId: user.getCompanyId(),
       },
     );
-    console.log('success', success);
-    if (success) return true;
+    if (response.data) return true;
     return false;
   }
 }

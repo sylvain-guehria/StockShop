@@ -1,26 +1,30 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
 import { TableNames } from '@/supabase/enums/tableNames';
 import type { Database } from '@/types/supabase';
 
-const addCompany = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { company } = req.body;
+export async function POST(request: Request) {
+  const body = await request.json();
 
-  if (!company) throw new Error('company is required to add company');
+  if (!body) {
+    return NextResponse.json({ error: 'company is required to add company' });
+  }
 
   const supabase = createServerComponentClient<Database>({ cookies });
 
-  const { error } = await supabase.from(TableNames.COMPANIES).insert(company);
+  const { error, status } = await supabase
+    .from(TableNames.COMPANIES)
+    .insert(body);
 
   if (error) {
     logException(error);
-    res.status(400).end();
+    NextResponse.json({ error });
     return;
   }
-  res.status(200).json(true);
-};
 
-export default addCompany;
+  // 201 = created successfully
+  return NextResponse.json(status === 201);
+}

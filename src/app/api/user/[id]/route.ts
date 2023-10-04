@@ -21,41 +21,42 @@ export async function POST(
 
   const supabase = createServerComponentClient<Database>({ cookies });
 
-  const { error, data } = await supabase
+  const { error, status } = await supabase
     .from(TableNames.PROFILES)
     .update(removeKeysWithNoValues(body))
     .eq('id', id);
   if (error) {
     logException(error, { when: 'updating user profile' });
-    NextResponse.json({ error: 'Error when updating user profile' });
+    NextResponse.json({ error });
     return;
   }
-  return NextResponse.json({ data });
+
+  return NextResponse.json(status === 204);
 }
 
-// export async function GET(
-//   _request: Request,
-//   { params }: { params: { slug: string } },
-// ) {
-//   const id = params.slug;
+export async function GET(
+  _request: Request,
+  { params }: { params: { slug: string } },
+) {
+  const id = params.slug;
 
-//   if (!id) {
-//     NextResponse.json({ error: 'User id is mandatory to get profile' });
-//     return;
-//   }
+  if (!id) {
+    NextResponse.json({ error: 'User id is mandatory to get profile' });
+    return;
+  }
 
-//   const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createServerComponentClient<Database>({ cookies });
 
-//   const { data: profile, error } = await supabase
-//     .from(TableNames.PROFILES)
-//     .select('*')
-//     .eq('id', id)
-//     .single();
+  const { data: profile, error } = await supabase
+    .from(TableNames.PROFILES)
+    .select('*')
+    .eq('id', id)
+    .single();
 
-//   if (error) {
-//     logException(error, { when: 'getting user profile by id' });
-//     NextResponse.json({ error: 'Error when getting user profile by id' });
-//     return;
-//   }
-//   NextResponse.json(profile);
-// }
+  if (error) {
+    logException(error, { when: 'getting user profile by id' });
+    NextResponse.json({ error: 'Error when getting user profile by id' });
+    return;
+  }
+  NextResponse.json(profile);
+}

@@ -24,10 +24,9 @@ class SupabaseCompanyRepository extends CompanyRepository {
   async add(company: Company): Promise<CompanyEntity | null> {
     console.info('adding company in db...');
 
-    const res = await axios.post(`${this.baseUrl}/api/company/add`, {
-      company,
-    });
-    const success = res.status === 200;
+    const res = await axios.post(`${this.baseUrl}/api/company/add`, company);
+    console.log('res', res);
+    const success = res.data;
     if (success) {
       console.info('Company added in DB, id: ', company.id);
       return CompanyEntity.new({ ...company });
