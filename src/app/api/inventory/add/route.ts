@@ -29,8 +29,7 @@ export async function POST(request: Request) {
 
   if (error) {
     logException(error, { when: 'adding inventory' });
-    NextResponse.json({ error });
-    return;
+    return NextResponse.json({ error });
   }
 
   // 201 = created successfully

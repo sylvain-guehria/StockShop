@@ -87,6 +87,7 @@ class SupabaseInventoryRepository extends InventoryRepository {
         params: { companyId },
       },
     );
+
     const inventories = response.data.inventories || [];
     const inventoriesProductCount = response.data.inventoriesProductCount || {};
 

@@ -15,8 +15,7 @@ export async function POST(
   const body = await request.json();
 
   if (!id) {
-    NextResponse.json({ error: 'User id is mandatory to get profile' });
-    return;
+    return NextResponse.json({ error: 'User id is mandatory to get profile' });
   }
 
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -27,8 +26,7 @@ export async function POST(
     .eq('id', id);
   if (error) {
     logException(error, { when: 'updating user profile' });
-    NextResponse.json({ error });
-    return;
+    return NextResponse.json({ error });
   }
 
   return NextResponse.json(status === 204);
@@ -41,8 +39,7 @@ export async function GET(
   const id = params.slug;
 
   if (!id) {
-    NextResponse.json({ error: 'User id is mandatory to get profile' });
-    return;
+    return NextResponse.json({ error: 'User id is mandatory to get profile' });
   }
 
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -55,8 +52,9 @@ export async function GET(
 
   if (error) {
     logException(error, { when: 'getting user profile by id' });
-    NextResponse.json({ error: 'Error when getting user profile by id' });
-    return;
+    return NextResponse.json({
+      error: 'Error when getting user profile by id',
+    });
   }
-  NextResponse.json(profile);
+  return NextResponse.json(profile);
 }

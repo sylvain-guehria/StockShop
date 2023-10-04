@@ -1,22 +1,20 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { cookies } from 'next/headers';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 import { TableNames } from '@/supabase/enums/tableNames';
 import type { Database } from '@/types/supabase';
 
-const getInventoriesByCompanyId = async (
-  req: NextApiRequest,
-  res: NextApiResponse,
-) => {
-  const {
-    query: { companyId },
-  } = req;
+export async function GET(request: NextRequest) {
+  const { searchParams } = request.nextUrl;
+  const companyId = searchParams.get('companyId');
 
   if (!companyId) {
-    res.status(400).end('companyId is mandatory to get inventories');
-    return [];
+    return NextResponse.json({
+      error: 'companyId is mandatory to get inventories',
+    });
   }
 
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -39,13 +37,11 @@ const getInventoriesByCompanyId = async (
 
   if (error) {
     logException(error, { when: 'getting inventory by company id' });
-    res.status(400).end();
+    NextResponse.json({ error });
     return [];
   }
-  return res.status(200).json({
+  return NextResponse.json({
     inventories,
     inventoriesProductCount,
   });
-};
-
-export default getInventoriesByCompanyId;
+}
