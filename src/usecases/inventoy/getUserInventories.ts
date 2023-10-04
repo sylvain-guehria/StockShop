@@ -36,6 +36,15 @@ export const getUserInventories =
       const inventories =
         await inventoryRepository.getInventoriesByCompanyId(userCompanyId);
 
+      if (!inventories.length) {
+        const newInventory =
+          await inventoryServiceDi.createInventoryWithCompanyId({
+            companyId: userCompanyId,
+            isFirstInventory: true,
+          });
+        return [newInventory];
+      }
+
       return inventories;
     } catch (error: any) {
       logException(error, { when: 'getting user inventories usecase' });
