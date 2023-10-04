@@ -3,7 +3,6 @@ import 'server-only';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 
-import type { User } from '@/modules/user/userType';
 import type { Database } from '@/types/supabase';
 
 import { TableNames } from './enums/tableNames';
@@ -21,7 +20,7 @@ export const getUserInServerComponant = async () => {
       .single();
     userProfile = profileData || null;
   }
-  return userProfile as User;
+  return userProfile;
 };
 
 export const getUserByIdInServerComponant = async (userId?: string) => {
@@ -34,5 +33,5 @@ export const getUserByIdInServerComponant = async (userId?: string) => {
     .eq('id', userId)
     .single();
 
-  return profileData as User;
+  return profileData;
 };

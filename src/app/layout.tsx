@@ -7,6 +7,7 @@ import React from 'react';
 
 import FirstConnectionModal from '@/components/FirstConnectionModal';
 import Providers from '@/components/layouts/Providers';
+import type { User } from '@/modules/user/userType';
 import { getUserInServerComponant } from '@/supabase/getUserInServerComponant';
 
 // We don't want Next.js to cache this session value
@@ -51,7 +52,9 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       <body className="flex min-h-screen flex-col">
         <Providers>
           {children}
-          <FirstConnectionModal user={user} />
+          {!user?.hasSeenFirstConnectionModal && (
+            <FirstConnectionModal user={user as User} />
+          )}
         </Providers>
       </body>
     </html>

@@ -25,10 +25,11 @@ class SupabaseInventoryRepository extends InventoryRepository {
 
   async add(inventory: Inventory): Promise<InventoryEntity | null> {
     console.info('adding inventory in db...');
-    const res = await axios.post(`${this.baseUrl}/api/inventory/add`, {
+    const res = await axios.post(
+      `${this.baseUrl}/api/inventory/add`,
       inventory,
-    });
-    const success = res.status === 200;
+    );
+    const success = res.data;
     if (success) {
       console.info('Inventory added in DB, id: ', inventory.id);
       return InventoryEntity.new({ ...inventory });

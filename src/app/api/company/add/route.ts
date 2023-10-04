@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     .insert(body);
 
   if (error) {
-    logException(error);
+    logException(error, { when: 'adding company' });
     NextResponse.json({ error });
     return;
   }
