@@ -1,61 +1,79 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
 import { TableNames } from '@/supabase/enums/tableNames';
 import type { Database } from '@/types/supabase';
 
-const inventoryById = async (req: NextApiRequest, res: NextApiResponse) => {
-  const {
-    query: { id },
-    method,
-  } = req;
+export async function POST(
+  request: Request,
+  { params }: { params: { id: string } },
+) {
+  const { id } = params;
+  const body = await request.json();
+
+  if (!id) {
+    return NextResponse.json({
+      error: 'Inventory id is mandatory to update an inventory',
+    });
+  }
+
+  if (!body) {
+    return NextResponse.json({
+      error: 'Inventory body is mandatory to update an inventory',
+    });
+  }
 
   const inventory = {
-    id: req.body.id,
-    name: req.body.name,
-    isPublic: req.body.isPublic,
-    isDefaultInventory: req.body.isDefaultInventory,
-    color: req.body.color,
+    id: body.id,
+    name: body.name,
+    isPublic: body.isPublic,
+    isDefaultInventory: body.isDefaultInventory,
+    color: body.color,
   };
-
-  if (!id) throw new Error('Inventory id is mandatory to update an inventory');
 
   const supabase = createServerComponentClient<Database>({ cookies });
 
-  if (method === 'GET') {
-    const { data: inventor, error } = await supabase
-      .from(TableNames.INVENTORIES)
-      .select('*')
-      .eq('id', id)
-      .single();
+  const { error, status } = await supabase
+    .from(TableNames.INVENTORIES)
+    .update({ ...inventory })
+    .eq('id', id)
+    .single();
 
-    if (error) {
-      logException(error, { when: 'getting inventory' });
-      res.status(400).end();
-      return;
-    }
-    res.status(200).json(inventor);
-    return;
-  }
-  if (method === 'PUT') {
-    const { error } = await supabase
-      .from(TableNames.INVENTORIES)
-      .update({ ...inventory })
-      .eq('id', id)
-      .single();
-    if (error) {
-      logException(error, { when: 'updating inventory' });
-      res.status(400).end();
-      return;
-    }
-    res.status(200).json(true);
-    return;
+  if (error) {
+    logException(error, { when: 'updating inventory' });
+    return NextResponse.json({ error });
   }
 
-  res.setHeader('Allow', ['GET', 'PUT']);
-  res.status(405).end(`Method ${method} Not Allowed`);
-};
+  return NextResponse.json(status === 204);
+}
 
-export default inventoryById;
+export async function GET(
+  _request: Request,
+  { params }: { params: { slug: string } },
+) {
+  const id = params.slug;
+
+  if (!id) {
+    return NextResponse.json({
+      error: 'Inventory id is mandatory to get an inventory',
+    });
+  }
+
+  const supabase = createServerComponentClient<Database>({ cookies });
+
+  const { data: inventory, error } = await supabase
+    .from(TableNames.INVENTORIES)
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    logException(error, { when: 'updating inventory' });
+    return NextResponse.json({
+      error: 'Error when updating inventory',
+    });
+  }
+  return NextResponse.json(inventory);
+}

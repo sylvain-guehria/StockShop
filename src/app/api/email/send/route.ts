@@ -1,20 +1,12 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 
 import sendTransacEmail from '@/sendinblue/sendTransacEmail';
-import type { Receiver, Sender } from '@/sendinblue/type';
 
-const sendEmail = async (req: NextApiRequest, res: NextApiResponse) => {
-  const {
-    sender,
-    receiver,
-    message,
-    templateId,
-  }: {
-    sender: Sender;
-    receiver: Receiver;
-    message: string;
-    templateId: number;
-  } = req.body;
+export async function POST(request: Request) {
+  const body = await request.json();
+
+  const { sender, receiver, message, templateId } = body || {};
+
   const sendSmtpEmail = {
     to: [
       {
@@ -34,7 +26,5 @@ const sendEmail = async (req: NextApiRequest, res: NextApiResponse) => {
     },
   };
   const success = await sendTransacEmail(sendSmtpEmail);
-  return res.status(success ? 200 : 400).end();
-};
-
-export default sendEmail;
+  return NextResponse.json(success);
+}

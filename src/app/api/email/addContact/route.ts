@@ -1,21 +1,13 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 
 import createSendinblueContact from '@/sendinblue/addContact';
 
-const addContact = async (req: NextApiRequest, res: NextApiResponse) => {
-  const {
-    email,
-    listIds,
-  }: {
-    email: string;
-    listIds: number[];
-  } = req.body;
+export async function POST(request: Request) {
+  const body = await request.json();
 
   const success = await createSendinblueContact({
-    email,
-    listIds,
+    email: body.email,
+    listIds: body.listIds,
   });
-  return res.status(success ? 200 : 400).end();
-};
-
-export default addContact;
+  return NextResponse.json(success);
+}
