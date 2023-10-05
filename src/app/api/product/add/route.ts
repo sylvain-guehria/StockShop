@@ -1,26 +1,35 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
 import { TableNames } from '@/supabase/enums/tableNames';
 import type { Database } from '@/types/supabase';
 
-const addProduct = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { product } = req.body;
+export async function POST(request: Request) {
+  const body = await request.json();
 
-  if (!product) throw new Error('product is required to add product');
+  if (!body) {
+    return NextResponse.json({
+      error: 'product is required to add product',
+    });
+  }
+
+  if (!body.productId) {
+    return NextResponse.json({
+      error: 'productId is required to add product',
+    });
+  }
 
   const supabase = createServerComponentClient<Database>({ cookies });
 
-  const { error } = await supabase.from(TableNames.PRODUCTS).insert(product);
+  const { error, status } = await supabase
+    .from(TableNames.PRODUCTS)
+    .insert(body);
 
   if (error) {
     logException(error, { when: 'adding inventory' });
-    res.status(400).end();
-    return;
+    return NextResponse.json({ error });
   }
-  res.status(200).json(true);
-};
-
-export default addProduct;
+  return NextResponse.json(status === 201);
+}

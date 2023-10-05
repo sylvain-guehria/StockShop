@@ -55,7 +55,7 @@ class SupabaseCompanyRepository extends CompanyRepository {
 
   async update(company: CompanyEntity): Promise<void> {
     console.info('update company id: ', company.getId());
-    await axios.put(`${this.baseUrl}/api/company/${company.getId()}`, {
+    await axios.post(`${this.baseUrl}/api/company/${company.getId()}`, {
       id: company.getId(),
       name: company.getName(),
       vat: company.getVat(),

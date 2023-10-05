@@ -66,15 +66,16 @@ class SupabaseInventoryRepository extends InventoryRepository {
     );
   }
 
-  async update(inventory: InventoryEntity): Promise<void> {
+  async update(inventory: InventoryEntity): Promise<InventoryEntity | null> {
     console.info('update inventory id: ', inventory.getId());
-    await axios.put(`/api/inventory/${inventory.getId()}`, {
+    const { data } = await axios.post(`/api/inventory/${inventory.getId()}`, {
       id: inventory.getId(),
       name: inventory.getName(),
       isPublic: inventory.getIsPublic(),
       isDefaultInventory: inventory.isDefault(),
       color: inventory.getColor(),
     });
+    return data ? InventoryEntity.new(inventory) : null;
   }
 
   async getInventoriesByCompanyId(

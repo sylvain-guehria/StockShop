@@ -51,7 +51,7 @@ class FirebaseCategoryRepository extends CategoryRepository {
 
   async update(category: CategoryEntity): Promise<void> {
     console.info('update category id: ', category.getId());
-    await axios.put(`${this.baseUrl}/api/category/${category.getId()}`, {
+    await axios.post(`${this.baseUrl}/api/category/${category.getId()}`, {
       id: category.getId(),
       label: category.getLabel(),
       inputs: category.getInputs(),

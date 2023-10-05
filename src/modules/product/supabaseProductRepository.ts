@@ -92,55 +92,34 @@ class SupabaseProductRepository extends ProductRepository {
     return false;
   }
 
-  async update(product: ProductEntity): Promise<ProductEntity> {
+  async update(product: ProductEntity): Promise<ProductEntity | null> {
     console.info('update product id: ', product.getId());
-    const { data } = await axios.put(
+    const { data } = await axios.post(
       `${this.baseUrl}/api/product/${product.getId()}`,
       {
-        product: {
-          id: product.getId(),
-          label: product.getLabel(),
-          quantityInInventory: product.getQuantityInInventory(),
-          optimumQuantity: product.getOptimumQuantity(),
-          buyingPrice: product.getBuyingPrice(),
-          sellingPrice: product.getSellingPrice(),
-          description: product.getDescription(),
-          toBuy: product.getToBuy(),
-          isPublic: product.getIsPublic(),
-          tva: product.getTva(),
-          categoryId: product.getCategoryId(),
-          subCategoryId: product.getSubCategoryId(),
-          publicDisponibility: product.getPublicDisponibility(),
-          catSubcatAttributes: product.getCatSubcatAttributes(),
-          condition: product.getCondition(),
-          photoLink: product.getPhotoLink(),
-          createdAt: product.getCreationDate(),
-          updatedAt: new Date().toISOString(),
-          inventoryId: product.getInventoryId(),
-        },
+        id: product.getId(),
+        label: product.getLabel(),
+        quantityInInventory: product.getQuantityInInventory(),
+        optimumQuantity: product.getOptimumQuantity(),
+        buyingPrice: product.getBuyingPrice(),
+        sellingPrice: product.getSellingPrice(),
+        description: product.getDescription(),
+        toBuy: product.getToBuy(),
+        isPublic: product.getIsPublic(),
+        tva: product.getTva(),
+        categoryId: product.getCategoryId(),
+        subCategoryId: product.getSubCategoryId(),
+        publicDisponibility: product.getPublicDisponibility(),
+        catSubcatAttributes: product.getCatSubcatAttributes(),
+        condition: product.getCondition(),
+        photoLink: product.getPhotoLink(),
+        createdAt: product.getCreationDate(),
+        updatedAt: new Date().toISOString(),
+        inventoryId: product.getInventoryId(),
       },
     );
-    return ProductEntity.new({
-      id: data.id,
-      label: data.label,
-      quantityInInventory: data.quantityInInventory,
-      optimumQuantity: data.optimumQuantity,
-      buyingPrice: data.buyingPrice,
-      sellingPrice: data.sellingPrice,
-      description: data.description,
-      toBuy: data.toBuy,
-      isPublic: data.isPublic,
-      tva: data.tva,
-      categoryId: data.categoryId,
-      subCategoryId: data.subCategoryId,
-      publicDisponibility: data.publicDisponibility,
-      inventoryId: data.inventoryId,
-      catSubcatAttributes: data.catSubcatAttributes,
-      condition: data.condition,
-      photoLink: data.photoLink,
-      createdAt: data.createdAt,
-      updatedAt: data.updatedAt,
-    });
+
+    return data ? ProductEntity.new(product) : null;
   }
 
   async getProductsByInventoryId({
