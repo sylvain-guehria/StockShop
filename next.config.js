@@ -38,8 +38,4 @@ const nextConfig = {
 
 module.exports = withBundleAnalyzer(nextConfig);
 
-module.exports = withSentryConfig(
-  module.exports,
-  { silent: true },
-  { hideSourcemaps: true },
-);
+module.exports = withSentryConfig(module.exports, { silent: true });
