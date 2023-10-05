@@ -1,7 +1,7 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { cookies } from 'next/headers';
+import { type NextRequest, NextResponse } from 'next/server';
 
 import { ProductAttributes } from '@/modules/product/productType';
 import { TableNames } from '@/supabase/enums/tableNames';
@@ -10,23 +10,17 @@ import { getPagination } from '@/utils/apiUtils';
 import { removeKeysWithNoValues } from '@/utils/objectUtils';
 import { parseBoolean } from '@/utils/primitiveUtils';
 
-const getProductsByInventoryId = async (
-  req: NextApiRequest,
-  res: NextApiResponse,
-) => {
-  const {
-    query: {
-      inventoryId,
-      currentPage,
-      numberOfProductsPerPage,
-      sorterField,
-      sorterOrder,
-      filterCategoryId,
-      filterSubCategoryId,
-      filterToBuy,
-      filterIsPublic,
-    },
-  } = req;
+export async function GET(request: NextRequest) {
+  const { searchParams } = request.nextUrl;
+  const inventoryId = searchParams.get('inventoryId');
+  const currentPage = searchParams.get('currentPage');
+  const numberOfProductsPerPage = searchParams.get('numberOfProductsPerPage');
+  const sorterField = searchParams.get('sorterField');
+  const sorterOrder = searchParams.get('sorterOrder');
+  const filterCategoryId = searchParams.get('filterCategoryId');
+  const filterSubCategoryId = searchParams.get('filterSubCategoryId');
+  const filterToBuy = searchParams.get('filterToBuy');
+  const filterIsPublic = searchParams.get('filterIsPublic');
 
   const supabase = createServerComponentClient<Database>({ cookies });
 
@@ -64,13 +58,11 @@ const getProductsByInventoryId = async (
 
   if (error) {
     logException(error, { when: 'getting products by inventory id' });
-    res.status(400).end();
+    NextResponse.json({ error });
     return [];
   }
-  return res.status(200).json({
+  return NextResponse.json({
     count,
     results: data,
   });
-};
-
-export default getProductsByInventoryId;
+}
