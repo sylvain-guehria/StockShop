@@ -45,7 +45,7 @@ export abstract class InventoryRepository {
 
   async getInventoriesByCompanyId(
     companyId: string,
-  ): Promise<InventoryEntity[]> {
+  ): Promise<InventoryEntity[] | null> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{ companyId }}`,
     );
