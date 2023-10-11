@@ -14,24 +14,24 @@ export abstract class UserRepository {
     }
   }
 
-  getById(id: string): Promise<UserEntity> {
+  getById(id: string): Promise<UserEntity | null> {
     throw new Error(`You tried to call an abstract methode, arg: ${id}`);
   }
 
-  async add(user: UserEntity): Promise<UserEntity> {
+  async add(user: UserEntity): Promise<UserEntity | null> {
     throw new Error(`You tried to call an abstract methode, arg: ${user}`);
   }
 
-  async delete(id: string): Promise<void> {
+  async update(user: UserEntity): Promise<UserEntity | null> {
+    throw new Error(`You tried to call an abstract methode, arg: ${{ user }}`);
+  }
+
+  async delete(id: string): Promise<boolean> {
     throw new Error(`You tried to call an abstract methode, arg: ${id}`);
   }
 
-  async getAll(): Promise<UserEntity[]> {
+  async getAll(): Promise<UserEntity[] | null> {
     throw new Error(`You tried to call an abstract methode, arg`);
-  }
-
-  async update(user: UserEntity): Promise<boolean> {
-    throw new Error(`You tried to call an abstract methode, arg: ${{ user }}`);
   }
 }
 

@@ -9,117 +9,42 @@ import { ProductRepository } from './productRepository';
 class SupabaseProductRepository extends ProductRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 
-  async getById(productId: string): Promise<ProductEntity> {
+  async getById(productId: string): Promise<ProductEntity | null> {
     console.info('get product in db with id: ', productId);
-    const response = await axios.get(
-      `${this.baseUrl}/api/product/${productId}`,
+    const { data } = await axios.get(
+      `${this.baseUrl}/api/product/${productId}/`,
     );
-    const {
-      label,
-      quantityInInventory,
-      optimumQuantity,
-      buyingPrice,
-      sellingPrice,
-      description,
-      toBuy,
-      isPublic,
-      tva,
-      categoryId,
-      subCategoryId,
-      publicDisponibility,
-      catSubcatAttributes,
-      condition,
-      photoLink,
-      createdAt,
-      inventoryId,
-    } = response.data;
-
-    return ProductEntity.new({
-      id: productId,
-      label,
-      quantityInInventory,
-      optimumQuantity,
-      buyingPrice,
-      sellingPrice,
-      description,
-      toBuy,
-      isPublic,
-      tva,
-      categoryId,
-      subCategoryId,
-      publicDisponibility,
-      inventoryId,
-      catSubcatAttributes,
-      condition,
-      photoLink,
-      createdAt,
-    });
+    return data ? ProductEntity.new(data) : null;
   }
 
   async add(product: ProductEntity): Promise<ProductEntity | null> {
     console.info('adding product in db...');
-    const res = await axios.post(`${this.baseUrl}/api/product/add`, {
-      product: {
-        id: product.getId(),
-        label: product.getLabel(),
-        inventoryId: product.getInventoryId(),
-        createdAt: product.getCreationDate(),
-        isPublic: product.getIsPublic(),
-        updatedAt: product.getLastUpdateDate(),
-      },
-    });
-    const success = res.status === 200;
-    if (success) {
-      console.info('Product added in DB, id: ', product.getId());
-      return product;
-    }
-    return null;
-  }
-
-  async delete(productId: string): Promise<boolean> {
-    console.info(`Deleting product with id ${productId} in db...`);
-    const res = await axios.delete(`${this.baseUrl}/api/product/delete`, {
-      params: {
-        productId,
-      },
-    });
-    const success = res.status === 200;
-
-    if (success) {
-      console.info('Product deleted in DB, id: ', productId);
-      return true;
-    }
-    return false;
+    const { data } = await axios.post(
+      `${this.baseUrl}/api/product/add/`,
+      product,
+    );
+    console.info('Product added in DB, id: ', product.getId());
+    return data ? ProductEntity.new(data) : null;
   }
 
   async update(product: ProductEntity): Promise<ProductEntity | null> {
     console.info('update product id: ', product.getId());
     const { data } = await axios.post(
-      `${this.baseUrl}/api/product/${product.getId()}`,
-      {
-        id: product.getId(),
-        label: product.getLabel(),
-        quantityInInventory: product.getQuantityInInventory(),
-        optimumQuantity: product.getOptimumQuantity(),
-        buyingPrice: product.getBuyingPrice(),
-        sellingPrice: product.getSellingPrice(),
-        description: product.getDescription(),
-        toBuy: product.getToBuy(),
-        isPublic: product.getIsPublic(),
-        tva: product.getTva(),
-        categoryId: product.getCategoryId(),
-        subCategoryId: product.getSubCategoryId(),
-        publicDisponibility: product.getPublicDisponibility(),
-        catSubcatAttributes: product.getCatSubcatAttributes(),
-        condition: product.getCondition(),
-        photoLink: product.getPhotoLink(),
-        createdAt: product.getCreationDate(),
-        updatedAt: new Date().toISOString(),
-        inventoryId: product.getInventoryId(),
-      },
+      `${this.baseUrl}/api/product/${product.getId()}/`,
+      product,
     );
 
-    return data ? ProductEntity.new(product) : null;
+    return data ? ProductEntity.new(data) : null;
+  }
+
+  async delete(productId: string): Promise<boolean> {
+    console.info(`Deleting product with id ${productId} in db...`);
+    const { data } = await axios.delete(`${this.baseUrl}/api/product/delete/`, {
+      params: {
+        productId,
+      },
+    });
+    return data;
   }
 
   async getProductsByInventoryId({
@@ -131,10 +56,10 @@ class SupabaseProductRepository extends ProductRepository {
   }: GetProductsByInventoryId): Promise<{
     count: number;
     products: ProductEntity[];
-  }> {
+  } | null> {
     console.info('get all products by userId, companyId and inventoryId in db');
-    const response = await axios.get(
-      `${this.baseUrl}/api/product/getProductsByInventoryId`,
+    const { data } = await axios.get(
+      `${this.baseUrl}/api/product/getProductsByInventoryId/`,
       {
         params: {
           inventoryId,
@@ -149,33 +74,14 @@ class SupabaseProductRepository extends ProductRepository {
         },
       },
     );
-    return {
-      count: response.data.count,
-      products: response.data.results.map(
-        (product: ProductEntity) =>
-          new ProductEntity({
-            id: product.id,
-            label: product.label,
-            quantityInInventory: product.quantityInInventory,
-            optimumQuantity: product.optimumQuantity,
-            buyingPrice: product.buyingPrice,
-            sellingPrice: product.sellingPrice,
-            description: product.description,
-            toBuy: product.toBuy,
-            isPublic: product.isPublic,
-            tva: product.tva,
-            categoryId: product.categoryId,
-            subCategoryId: product.subCategoryId,
-            publicDisponibility: product.publicDisponibility,
-            inventoryId: product.inventoryId,
-            catSubcatAttributes: product.catSubcatAttributes,
-            condition: product.condition,
-            photoLink: product.photoLink,
-            createdAt: product.createdAt,
-            updatedAt: product.updatedAt,
-          }),
-      ),
-    };
+    return data
+      ? {
+          count: data.count,
+          products: data.results.map(
+            (product: ProductEntity) => new ProductEntity(product),
+          ),
+        }
+      : null;
   }
 }
 

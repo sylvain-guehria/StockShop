@@ -62,6 +62,7 @@ export enum PublicDisponibilityEnum {
   AVAILABLE_ON_ORDER = 'availableOnOrder',
   AVAILABLE_SOON = 'availableSoon',
   NOT_KNOW = 'notKnow',
+  NA = '',
 }
 
 export const PublicDisponibilityLabels = {

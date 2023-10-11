@@ -14,26 +14,26 @@ export abstract class CategoryRepository {
     }
   }
 
-  getById(id: string): Promise<CategoryEntity> {
+  getById(id: string): Promise<CategoryEntity | null> {
     throw new Error(`You tried to call an abstract methode, arg: ${id}`);
   }
 
-  async add(category: CategoryEntity): Promise<string> {
+  async add(category: CategoryEntity): Promise<CategoryEntity | null> {
     throw new Error(`You tried to call an abstract methode, arg: ${category}`);
   }
 
-  async delete(id: string): Promise<void> {
-    throw new Error(`You tried to call an abstract methode, arg: ${id}`);
-  }
-
-  async getAll(): Promise<CategoryEntity[]> {
-    throw new Error(`You tried to call an abstract methode, arg`);
-  }
-
-  async update(category: CategoryEntity): Promise<void> {
+  async update(category: CategoryEntity): Promise<CategoryEntity | null> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{ category }}`,
     );
+  }
+
+  async delete(id: string): Promise<boolean> {
+    throw new Error(`You tried to call an abstract methode, arg: ${id}`);
+  }
+
+  async getAll(): Promise<CategoryEntity[] | null> {
+    throw new Error(`You tried to call an abstract methode, arg`);
   }
 }
 

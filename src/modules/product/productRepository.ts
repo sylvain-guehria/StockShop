@@ -19,7 +19,7 @@ export abstract class ProductRepository {
     }
   }
 
-  getById(productId: string): Promise<ProductEntity> {
+  getById(productId: string): Promise<ProductEntity | null> {
     throw new Error(`You tried to call an abstract methode, arg: ${productId}`);
   }
 
@@ -31,16 +31,16 @@ export abstract class ProductRepository {
     );
   }
 
-  async delete(productId: string): Promise<boolean> {
-    throw new Error(`You tried to call an abstract methode, arg: ${productId}`);
-  }
-
   async update(product: ProductEntity): Promise<ProductEntity | null> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
         product,
       }}`,
     );
+  }
+
+  async delete(productId: string): Promise<boolean> {
+    throw new Error(`You tried to call an abstract methode, arg: ${productId}`);
   }
 
   async getProductsByInventoryId({
@@ -52,7 +52,7 @@ export abstract class ProductRepository {
   }: GetProductsByInventoryId): Promise<{
     count: number;
     products: ProductEntity[];
-  }> {
+  } | null> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{
         inventoryId,

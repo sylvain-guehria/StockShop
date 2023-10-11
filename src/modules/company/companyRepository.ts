@@ -15,7 +15,7 @@ export abstract class CompanyRepository {
     }
   }
 
-  getById(id: string): Promise<CompanyEntity> {
+  getById(id: string): Promise<CompanyEntity | null> {
     throw new Error(`You tried to call an abstract methode, arg: ${id}`);
   }
 
@@ -23,18 +23,18 @@ export abstract class CompanyRepository {
     throw new Error(`You tried to call an abstract methode, arg: ${company}`);
   }
 
-  async delete(id: string): Promise<void> {
-    throw new Error(`You tried to call an abstract methode, arg: ${id}`);
-  }
-
-  async getAll(): Promise<CompanyEntity[]> {
-    throw new Error(`You tried to call an abstract methode, arg`);
-  }
-
-  async update(company: CompanyEntity): Promise<void> {
+  async update(company: CompanyEntity): Promise<CompanyEntity | null> {
     throw new Error(
       `You tried to call an abstract methode, arg: ${{ company }}`,
     );
+  }
+
+  async delete(id: string): Promise<boolean> {
+    throw new Error(`You tried to call an abstract methode, arg: ${id}`);
+  }
+
+  async getAll(): Promise<CompanyEntity[] | null> {
+    throw new Error(`You tried to call an abstract methode, arg`);
   }
 }
 

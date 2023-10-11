@@ -29,7 +29,7 @@ class ProductService {
     return createdProduct as ProductEntity;
   }
 
-  async updateProduct(product: Product): Promise<ProductEntity> {
+  async updateProduct(product: Product): Promise<ProductEntity | null> {
     return this.productRepository.update(
       ProductEntity.new({
         ...product,

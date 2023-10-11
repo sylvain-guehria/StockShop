@@ -8,54 +8,52 @@ import { CategoryRepository } from './categoryRepository';
 class FirebaseCategoryRepository extends CategoryRepository {
   baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 
-  async getById(id: string): Promise<CategoryEntity> {
+  async getById(id: string): Promise<CategoryEntity | null> {
     console.info('get category in db with id: ', id);
-    const response = await axios.get(`${this.baseUrl}/api/category/${id}`);
-    const { label, inputs } = response.data;
-
-    return CategoryEntity.new({
-      id,
-      label,
-      inputs,
-    });
+    const { data } = await axios.get(`${this.baseUrl}/api/category/${id}`);
+    return data ? CategoryEntity.new(data) : null;
   }
 
-  async add(category: CategoryEntity): Promise<string> {
+  async add(category: CategoryEntity): Promise<CategoryEntity | null> {
     console.info('adding category in db...');
-    const res = await axios.post(`${this.baseUrl}/api/category/add`, {
-      id: category.getId(),
-      label: category.getLabel(),
-      inputs: category.getInputs(),
-    });
-    console.info('Category added in DB, id: ', category.getId());
-    return res.data;
-  }
-
-  async delete(id: string): Promise<void> {
-    console.info(`Deleting category with id ${id} in db...`);
-    return axios.post(`${this.baseUrl}/api/category/delete`, { id });
-  }
-
-  async getAll(): Promise<CategoryEntity[]> {
-    console.info('get all categorys in db');
-    const response = await axios.get('/api/category/getAll');
-    return response.data.map(
-      (category: CategoryEntity) =>
-        new CategoryEntity({
-          id: category.id,
-          label: category.label,
-          inputs: category.inputs,
-        }),
+    const { data } = await axios.post(
+      `${this.baseUrl}/api/category/add`,
+      category,
     );
+    console.info('Category added in DB, id: ', category.getId());
+    return data ? CategoryEntity.new(data) : null;
   }
 
-  async update(category: CategoryEntity): Promise<void> {
+  async update(category: CategoryEntity): Promise<CategoryEntity | null> {
     console.info('update category id: ', category.getId());
-    await axios.post(`${this.baseUrl}/api/category/${category.getId()}`, {
-      id: category.getId(),
-      label: category.getLabel(),
-      inputs: category.getInputs(),
+    const { data } = await axios.post(
+      `${this.baseUrl}/api/category/${category.getId()}`,
+      category,
+    );
+    return data ? CategoryEntity.new(data) : null;
+  }
+
+  async delete(id: string): Promise<boolean> {
+    console.info(`Deleting category with id ${id} in db...`);
+    const { data } = await axios.post(`${this.baseUrl}/api/category/delete`, {
+      id,
     });
+    return data;
+  }
+
+  async getAll(): Promise<CategoryEntity[] | null> {
+    console.info('get all categorys in db');
+    const { data } = await axios.get('/api/category/getAll');
+    return data
+      ? data.map(
+          (category: CategoryEntity) =>
+            new CategoryEntity({
+              id: category.id,
+              label: category.label,
+              inputs: category.inputs,
+            }),
+        )
+      : null;
   }
 }
 
