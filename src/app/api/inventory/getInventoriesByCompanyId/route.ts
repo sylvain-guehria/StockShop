@@ -30,7 +30,8 @@ export async function GET(request: NextRequest) {
     (inventories || []).map(async (inventory) => {
       const { count: numberOfProduct } = await supabase
         .from(TableNames.PRODUCTS)
-        .select('*', { count: 'exact', head: true });
+        .select('*', { count: 'exact', head: true })
+        .eq('inventoryId', inventory.id);
       inventoriesProductCount[inventory.id] = numberOfProduct;
     }),
   );
@@ -39,6 +40,7 @@ export async function GET(request: NextRequest) {
     logException(error, { when: 'getting inventory by company id' });
     return NextResponse.json(null);
   }
+
   return NextResponse.json({
     inventories,
     inventoriesProductCount,
