@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     });
   }
 
-  if (!body.productId) {
+  if (!body.id) {
     return NextResponse.json({
       error: 'productId is required to add product',
     });

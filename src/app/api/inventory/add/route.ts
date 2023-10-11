@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     });
   }
 
-  if (!body.companyId) {
+  if (!body.id) {
     return NextResponse.json({
       error: 'companyId is required to add inventory',
     });
