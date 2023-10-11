@@ -26,10 +26,10 @@ export async function POST(
     .eq('id', id);
   if (error) {
     logException(error, { when: 'updating user profile' });
-    return NextResponse.json({ error });
+    return NextResponse.json(null);
   }
 
-  return NextResponse.json(status === 204);
+  return NextResponse.json(status === 204 ? body : null);
 }
 
 export async function GET(
@@ -52,9 +52,7 @@ export async function GET(
 
   if (error) {
     logException(error, { when: 'getting user profile by id' });
-    return NextResponse.json({
-      error: 'Error when getting user profile by id',
-    });
+    return NextResponse.json(null);
   }
   return NextResponse.json(profile);
 }

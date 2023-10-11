@@ -35,10 +35,10 @@ export async function POST(
 
   if (error) {
     logException(error, { when: 'updating product' });
-    return NextResponse.json({ error });
+    return NextResponse.json(null);
   }
 
-  return NextResponse.json(status === 204);
+  return NextResponse.json(status === 204 ? body : null);
 }
 
 export async function GET(

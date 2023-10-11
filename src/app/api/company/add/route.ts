@@ -21,10 +21,9 @@ export async function POST(request: Request) {
 
   if (error) {
     logException(error, { when: 'adding company' });
-    NextResponse.json({ error });
+    NextResponse.json(null);
     return;
   }
 
-  // 201 = created successfully
-  return NextResponse.json(status === 201);
+  return NextResponse.json(status === 201 ? body : null);
 }

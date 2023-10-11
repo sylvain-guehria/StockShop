@@ -12,7 +12,7 @@ export async function DELETE(request: NextRequest) {
   const inventoryId = searchParams.get('inventoryId');
 
   if (!inventoryId) {
-    throw new Error('inventoryId is required to delete the inventory');
+    return NextResponse.json(null);
   }
 
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -24,7 +24,7 @@ export async function DELETE(request: NextRequest) {
 
   if (error) {
     logException(error, { when: 'deleting inventory' });
-    return NextResponse.json({ error });
+    return NextResponse.json(null);
   }
-  return NextResponse.json(status === 201);
+  return NextResponse.json(status === 204);
 }

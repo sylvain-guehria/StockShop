@@ -29,9 +29,9 @@ export async function POST(request: Request) {
 
   if (error) {
     logException(error, { when: 'adding inventory' });
-    return NextResponse.json({ error });
+    return NextResponse.json(null);
   }
 
   // 201 = created successfully
-  return NextResponse.json(status === 201);
+  return NextResponse.json(status === 201 ? body : null);
 }

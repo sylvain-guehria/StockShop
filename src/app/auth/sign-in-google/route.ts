@@ -19,7 +19,7 @@ export async function POST() {
     },
   });
 
-  if (error) return NextResponse.json({ error });
+  if (error) return NextResponse.json(null);
 
   return NextResponse.json(data);
 }

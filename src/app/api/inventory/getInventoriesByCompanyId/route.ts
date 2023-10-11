@@ -37,8 +37,7 @@ export async function GET(request: NextRequest) {
 
   if (error) {
     logException(error, { when: 'getting inventory by company id' });
-    NextResponse.json({ error });
-    return [];
+    return NextResponse.json(null);
   }
   return NextResponse.json({
     inventories,

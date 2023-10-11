@@ -25,28 +25,20 @@ export async function POST(
     });
   }
 
-  const inventory = {
-    id: body.id,
-    name: body.name,
-    isPublic: body.isPublic,
-    isDefaultInventory: body.isDefaultInventory,
-    color: body.color,
-  };
-
   const supabase = createServerComponentClient<Database>({ cookies });
 
   const { error, status } = await supabase
     .from(TableNames.INVENTORIES)
-    .update({ ...inventory })
+    .update(body)
     .eq('id', id)
     .single();
 
   if (error) {
     logException(error, { when: 'updating inventory' });
-    return NextResponse.json({ error });
+    return NextResponse.json(null);
   }
 
-  return NextResponse.json(status === 204);
+  return NextResponse.json(status === 204 ? body : null);
 }
 
 export async function GET(
@@ -71,9 +63,7 @@ export async function GET(
 
   if (error) {
     logException(error, { when: 'updating inventory' });
-    return NextResponse.json({
-      error: 'Error when updating inventory',
-    });
+    return NextResponse.json(null);
   }
   return NextResponse.json(inventory);
 }

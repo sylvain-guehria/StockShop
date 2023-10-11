@@ -24,6 +24,7 @@ class SupabaseProductRepository extends ProductRepository {
       product,
     );
     console.info('Product added in DB, id: ', product.getId());
+
     return data ? ProductEntity.new(data) : null;
   }
 

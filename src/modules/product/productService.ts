@@ -30,11 +30,7 @@ class ProductService {
   }
 
   async updateProduct(product: Product): Promise<ProductEntity | null> {
-    return this.productRepository.update(
-      ProductEntity.new({
-        ...product,
-      }),
-    );
+    return this.productRepository.update(ProductEntity.new(product));
   }
 }
 

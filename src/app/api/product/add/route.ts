@@ -10,15 +10,11 @@ export async function POST(request: Request) {
   const body = await request.json();
 
   if (!body) {
-    return NextResponse.json({
-      error: 'product is required to add product',
-    });
+    return NextResponse.json(null);
   }
 
   if (!body.id) {
-    return NextResponse.json({
-      error: 'productId is required to add product',
-    });
+    return NextResponse.json(null);
   }
 
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -29,7 +25,7 @@ export async function POST(request: Request) {
 
   if (error) {
     logException(error, { when: 'adding inventory' });
-    return NextResponse.json({ error });
+    return NextResponse.json(null);
   }
-  return NextResponse.json(status === 201);
+  return NextResponse.json(status === 201 ? body : null);
 }

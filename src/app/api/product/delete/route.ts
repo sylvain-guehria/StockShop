@@ -1,39 +1,31 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { logException } from 'logger';
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { cookies } from 'next/headers';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 import { TableNames } from '@/supabase/enums/tableNames';
 import type { Database } from '@/types/supabase';
 
-const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) => {
-  const {
-    query: { productId },
-    method,
-  } = req;
+export async function DELETE(request: NextRequest) {
+  const { searchParams } = request.nextUrl;
+  const productId = searchParams.get('productId');
 
-  if (!productId)
-    throw new Error('productId is required to delete the product');
-
-  if (method !== 'DELETE') {
-    res.setHeader('Allow', ['DELETE']);
-    res.status(405).end(`Method ${method} Not Allowed`);
-    return;
+  if (!productId) {
+    return NextResponse.json(null);
   }
 
   const supabase = createServerComponentClient<Database>({ cookies });
 
-  const { error } = await supabase
+  const { error, status } = await supabase
     .from(TableNames.PRODUCTS)
     .delete()
     .eq('id', productId);
 
   if (error) {
-    logException(error, { when: 'deleting inventory' });
-    res.status(400).end();
-    return;
+    logException(error, { when: 'deleting product' });
+    return NextResponse.json(null);
   }
-  res.status(200).json(true);
-};
 
-export default deleteProduct;
+  return NextResponse.json(status === 204);
+}
