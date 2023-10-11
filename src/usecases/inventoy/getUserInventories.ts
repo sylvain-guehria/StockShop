@@ -36,7 +36,7 @@ export const getUserInventories =
       const inventories =
         await inventoryRepository.getInventoriesByCompanyId(userCompanyId);
 
-      if (!inventories.length) {
+      if (!inventories?.length) {
         const newInventory =
           await inventoryServiceDi.createInventoryWithCompanyId({
             companyId: userCompanyId,

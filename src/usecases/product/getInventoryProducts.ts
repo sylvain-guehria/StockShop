@@ -59,8 +59,8 @@ export const getInventoryProducts =
       });
 
       return {
-        count: response.count,
-        products: response.products,
+        count: response?.count || 0,
+        products: response?.products || [],
       };
     } catch (error: any) {
       logException(error, {

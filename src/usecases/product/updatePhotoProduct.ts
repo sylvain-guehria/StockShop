@@ -26,7 +26,7 @@ export const updatePhotoProduct =
     companyId,
     product,
     currentFile,
-  }: UpdatePhotoProductInterface): Promise<ProductEntity> => {
+  }: UpdatePhotoProductInterface): Promise<ProductEntity | null> => {
     let uploadedFile: File | null = currentFile;
 
     if (!companyId)

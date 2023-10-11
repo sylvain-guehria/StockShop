@@ -27,7 +27,7 @@ export const setInventoryAsDefault =
       inventoryEntity.setAsDefaultInventory();
       await inventoryRepository.update(inventoryEntity);
 
-      const formerDefaultInventory = inventories.find(
+      const formerDefaultInventory = inventories?.find(
         (retrievedInventory) => retrievedInventory.isDefaultInventory,
       );
       if (formerDefaultInventory) {

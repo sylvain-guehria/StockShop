@@ -37,7 +37,7 @@ class InventoryService {
   }
 
   async updateInventory({ inventory }: UpdateInventoryParams): Promise<void> {
-    return this.inventoryRepository.update(
+    this.inventoryRepository.update(
       InventoryEntity.new({
         id: inventory.id,
         name: inventory.name,

@@ -29,6 +29,7 @@ const FirstConnectionModal: FC<Props> = ({ user: _user }) => {
   const user = UserEntity.new(_user);
 
   const [open, setOpen] = useState(true);
+
   const toast = useToast(10000);
   const router = useRouter();
   const queryClient = useQueryClient();

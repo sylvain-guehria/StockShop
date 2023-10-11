@@ -15,7 +15,6 @@ import {
   getSubCategoryById,
   getSubCategoryInputsFromDatabase,
 } from '@/modules/category/categoryUtils';
-import type { PublicDisponibilityEnum } from '@/modules/product/productType';
 import {
   ConditionLabels,
   ProductAttributes,
@@ -241,9 +240,7 @@ const ProductView: FC<Props> = ({ productId }) => {
             <Input
               type="text"
               value={
-                PublicDisponibilityLabels[
-                  product.getPublicDisponibility() as PublicDisponibilityEnum
-                ]
+                PublicDisponibilityLabels[product.getPublicDisponibility()]
               }
               disabled={true}
               name={ProductAttributes.PUBLIC_DISPONIBILITY}

@@ -65,13 +65,17 @@ export enum PublicDisponibilityEnum {
   NA = '',
 }
 
-export const PublicDisponibilityLabels = {
+export const PublicDisponibilityLabels: Record<
+  PublicDisponibilityEnum,
+  string
+> = {
   [PublicDisponibilityEnum.IN_STOCK]: 'En stock',
   [PublicDisponibilityEnum.OUT_OF_STOCK]: 'Rupture de stock',
   [PublicDisponibilityEnum.NOT_MUCH_LEFT]: 'Quelques un restant',
   [PublicDisponibilityEnum.AVAILABLE_ON_ORDER]: 'Disponible sur commande',
   [PublicDisponibilityEnum.AVAILABLE_SOON]: 'Bientôt disponible',
   [PublicDisponibilityEnum.NOT_KNOW]: '',
+  [PublicDisponibilityEnum.NA]: '',
 };
 
 export interface Product {

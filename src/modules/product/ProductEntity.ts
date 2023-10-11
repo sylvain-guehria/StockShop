@@ -236,7 +236,7 @@ class ProductEntity implements Product {
     return this.getSellingPriceWithTva() * this.quantityInInventory;
   }
 
-  getPublicDisponibility(): string {
+  getPublicDisponibility(): PublicDisponibilityEnum {
     return this.publicDisponibility;
   }
 
