@@ -52,7 +52,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       <body className="flex min-h-screen flex-col">
         <Providers>
           {children}
-          {!user?.hasSeenFirstConnectionModal && (
+          {user && !user.hasSeenFirstConnectionModal && (
             <FirstConnectionModal user={user as User} />
           )}
         </Providers>
