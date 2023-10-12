@@ -17,13 +17,13 @@ export const chooseSubRoleOnFirstConnection =
 
     user.markFirstConnectionModalAsSeen();
 
-    const success = userRepository.update(user);
+    const updatedUser = await userRepository.update(user);
 
-    if (!success) {
+    if (!updatedUser) {
       throw new Error(
-        "Nous n'avons pas pu mettre à jour votre compte. Veuillez réessayer.",
+        "Une erreur est survenue lors de l'enregistrement de votre choix, veuillez réessayer.",
       );
     }
 
-    return user;
+    return updatedUser;
   };

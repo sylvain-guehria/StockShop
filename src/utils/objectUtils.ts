@@ -18,3 +18,16 @@ export const removeKeysWithNoValues = (obj: any): any => {
   );
   return newObj;
 };
+
+export const remplaceEmptyStringWithNull = (obj: any): any => {
+  if (!obj) return {};
+  const newObj = Object.fromEntries(
+    Object.entries(obj).map(([key, value]) => {
+      if (value === '') {
+        return [key, null];
+      }
+      return [key, value];
+    }),
+  );
+  return newObj;
+};

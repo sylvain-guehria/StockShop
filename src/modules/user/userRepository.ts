@@ -18,10 +18,6 @@ export abstract class UserRepository {
     throw new Error(`You tried to call an abstract methode, arg: ${id}`);
   }
 
-  async add(user: UserEntity): Promise<UserEntity | null> {
-    throw new Error(`You tried to call an abstract methode, arg: ${user}`);
-  }
-
   async update(user: UserEntity): Promise<UserEntity | null> {
     throw new Error(`You tried to call an abstract methode, arg: ${{ user }}`);
   }

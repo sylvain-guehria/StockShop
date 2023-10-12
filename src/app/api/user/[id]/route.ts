@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 
 import { TableNames } from '@/supabase/enums/tableNames';
 import type { Database } from '@/types/supabase';
-import { removeKeysWithNoValues } from '@/utils/objectUtils';
+import { remplaceEmptyStringWithNull } from '@/utils/objectUtils';
 
 export async function POST(
   request: Request,
@@ -14,15 +14,11 @@ export async function POST(
   const { id } = params;
   const body = await request.json();
 
-  if (!id) {
-    return NextResponse.json({ error: 'User id is mandatory to get profile' });
-  }
-
   const supabase = createServerComponentClient<Database>({ cookies });
 
   const { error, status } = await supabase
     .from(TableNames.PROFILES)
-    .update(removeKeysWithNoValues(body))
+    .update(remplaceEmptyStringWithNull(body))
     .eq('id', id);
   if (error) {
     logException(error, { when: 'updating user profile' });

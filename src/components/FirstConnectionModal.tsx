@@ -52,7 +52,7 @@ const FirstConnectionModal: FC<Props> = ({ user: _user }) => {
       logException(error, { when: 'FirstConnectionModal' });
       toast(
         ToasterTypeEnum.ERROR,
-        'Une erreur est survenue lors de la création de l&apos;inventaire',
+        'Une erreur est survenue veuillez réessayer',
       );
     },
   });

@@ -1,6 +1,5 @@
-/* eslint-disable complexity */
-import type { LocaleType, ProviderType, RoleType, User } from './userType';
-import { LOCALES, PROVIDERS, ROLES } from './userType';
+import type { LocaleType, RoleType, User } from './userType';
+import { LOCALES, ROLES } from './userType';
 
 class UserEntity implements User {
   email: string;
@@ -9,8 +8,6 @@ class UserEntity implements User {
 
   id: string;
 
-  password: string;
-
   firstName: string;
 
   lastName: string;
@@ -18,8 +15,6 @@ class UserEntity implements User {
   phone: string;
 
   role: RoleType;
-
-  provider: ProviderType;
 
   hasInventoryManagementServiceActivated: boolean;
 
@@ -41,10 +36,8 @@ class UserEntity implements User {
 
   constructor(user: User) {
     this.email = user.email || '';
-    this.provider = user.provider || PROVIDERS.NOTKNOWN;
     this.username = user.username || undefined;
     this.id = user.id || '';
-    this.password = user.password || '';
     this.firstName = user.firstName || '';
     this.lastName = user.lastName || '';
     this.phone = user.phone || '';
@@ -60,10 +53,6 @@ class UserEntity implements User {
 
   getId(): string {
     return this.id;
-  }
-
-  getProvider(): ProviderType {
-    return this.provider;
   }
 
   setRole(role: RoleType): UserEntity {
@@ -207,12 +196,10 @@ class UserEntity implements User {
       email: this.email,
       username: this.username,
       id: this.id,
-      password: this.password,
       firstName: this.firstName,
       lastName: this.lastName,
       phone: this.phone,
       role: this.role,
-      provider: this.provider,
       hasInventoryManagementServiceActivated:
         this.hasInventoryManagementServiceActivated,
       hasSeenFirstConnectionModal: this.hasSeenFirstConnectionModal,

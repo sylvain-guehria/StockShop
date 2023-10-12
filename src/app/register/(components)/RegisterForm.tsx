@@ -27,6 +27,7 @@ const RegisterForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<RegisterFormType>(formOptions);
 
@@ -46,6 +47,7 @@ const RegisterForm = () => {
 
       if (response?.error?.message) throw new Error(response?.error?.message);
       if (response?.user) {
+        reset();
         toast(
           ToasterTypeEnum.SUCCESS,
           'Un email vous a été envoyé pour confirmer votre inscription.',
