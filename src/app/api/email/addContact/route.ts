@@ -2,12 +2,9 @@ import { NextResponse } from 'next/server';
 
 import createSendinblueContact from '@/sendinblue/addContact';
 
-export async function POST(request: Request) {
-  const body = await request.json();
+export async function POST() {
+  // const body = await request.json();
 
-  const success = await createSendinblueContact({
-    email: body.email,
-    listIds: body.listIds,
-  });
+  const success = await createSendinblueContact();
   return NextResponse.json(success);
 }
