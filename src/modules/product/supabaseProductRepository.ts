@@ -14,6 +14,7 @@ class SupabaseProductRepository extends ProductRepository {
     const { data } = await axios.get(
       `${this.baseUrl}/api/product/${productId}/`,
     );
+    console.log('data: ', data);
     return data ? ProductEntity.new(data) : null;
   }
 

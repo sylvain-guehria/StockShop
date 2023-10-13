@@ -34,6 +34,8 @@ const ProductView: FC<Props> = ({ productId }) => {
     staleTime: 30000,
   });
 
+  console.log('product', product);  
+
   if (!product) return null;
 
   const categoryInputs = getCategoryInputFromDatabase(

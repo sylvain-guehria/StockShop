@@ -32,13 +32,13 @@ export async function POST(
 
 export async function GET(
   _request: Request,
-  { params }: { params: { slug: string } },
+  { params }: { params: { id: string } },
 ) {
-  const id = params.slug;
+  const { id } = params;
 
   if (!id) {
     return NextResponse.json({
-      error: 'Product id is mandatory to update an product',
+      error: 'Product id is mandatory to get a product',
     });
   }
 
