@@ -14,7 +14,5 @@ export async function POST(request: Request) {
     password,
   });
 
-  if (error) return NextResponse.json(null);
-
-  return NextResponse.json(data);
+  return NextResponse.json({ error } || data);
 }

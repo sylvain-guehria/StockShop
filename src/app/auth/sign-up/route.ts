@@ -18,7 +18,5 @@ export async function POST(request: Request) {
     },
   });
 
-  if (error) return NextResponse.json(null);
-
-  return NextResponse.json(data);
+  return NextResponse.json({ error } || data);
 }
