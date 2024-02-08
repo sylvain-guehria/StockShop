@@ -14,5 +14,5 @@ export async function POST(request: Request) {
     password,
   });
 
-  return NextResponse.json({ error } || data);
+  return NextResponse.json(error ? { error } : data);
 }

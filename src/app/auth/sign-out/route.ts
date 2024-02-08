@@ -9,5 +9,5 @@ export async function POST() {
 
   const { error } = await supabase.auth.signOut();
 
-  return NextResponse.json({ error } || {});
+  return NextResponse.json(error ? { error } : {});
 }
